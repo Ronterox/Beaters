@@ -1833,7 +1833,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 563556794157037301, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Name
-      value: Falling Arrow
+      value: Note Object
       objectReference: {fileID: 0}
     - target: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_RootOrder
