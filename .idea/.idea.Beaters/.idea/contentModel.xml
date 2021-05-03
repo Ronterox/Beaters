@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.3/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.3/resharper-host/local/Transient/Rider/v203/SolutionCaches/_Beaters.1340218249.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Plugins" t="Include">
+          <e p="GUI" t="Include">
+            <e p="MainMenu.cs" t="Include" />
+            <e p="MenuButton.cs" t="Include" />
+            <e p="PauseMenu.cs" t="Include" />
+            <e p="SettingsMenu.cs" t="Include" />
+            <e p="Timer.cs" t="Include" />
+          </e>
+          <e p="Properties" t="Include">
+            <e p="ConditionalHideAttribute.cs" t="Include" />
+            <e p="Editor" t="Include">
+              <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
+              <e p="HiddenAttributeDrawer.cs" t="Include" />
+              <e p="InformationDrawer.cs" t="Include" />
+              <e p="ReadOnlyAttributeDrawer.cs" t="Include" />
+              <e p="SceneAttributeDrawer.cs" t="Include" />
+              <e p="SceneDrawer.cs" t="Include" />
+              <e p="SingleUnityLayerDrawer.cs" t="Include" />
+              <e p="SortingLayerPropertyDrawer.cs" t="Include" />
+              <e p="TagSelectorPropertyDrawer.cs" t="Include" />
+            </e>
+            <e p="HiddenAttribute.cs" t="Include" />
+            <e p="InformationAttribute.cs" t="Include" />
+            <e p="InspectorButtonAttribute.cs" t="Include" />
+            <e p="ReadOnlyAttribute.cs" t="Include" />
+            <e p="SceneAttribute.cs" t="Include" />
+            <e p="SingleUnityLayer.cs" t="Include" />
+            <e p="SortingLayerAttribute.cs" t="Include" />
+            <e p="TagSelectorAttribute.cs" t="Include" />
+          </e>
+          <e p="Tools" t="Include">
+            <e p="Events" t="Include">
+              <e p="GameEvent.cs" t="Include" />
+              <e p="GameEventListener.cs" t="Include" />
+              <e p="MMEventManager.cs" t="Include" />
+            </e>
+            <e p="FPSCounter.cs" t="Include" />
+            <e p="LevelGenerator.cs" t="Include" />
+            <e p="MMEventManager.cs" t="Include" />
+            <e p="SaveLoadManager.cs" t="Include" />
+            <e p="SingleInstance.cs" t="Include" />
+            <e p="SoundManager.cs" t="Include" />
+            <e p="Timer.cs" t="Include" />
+            <e p="TimerUI.cs" t="Include" />
+            <e p="UtilityMethods.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="UICarousel.cs" t="Include" />
+            <e p="UICarouselElement.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Beaters.sln" t="IncludeFlat" />
+      <e p="Temp/Bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
