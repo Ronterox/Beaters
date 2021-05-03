@@ -85,9 +85,14 @@
             <e p="MapScroller.cs" t="Include" />
             <e p="NoteObject.cs" t="Include" />
           </e>
+          <e p="General" t="Include">
+            <e p="Character.cs" t="Include" />
+            <e p="Song.cs" t="Include" />
+          </e>
           <e p="Item.cs" t="Include" />
           <e p="Managers" t="Include">
             <e p="ArchievementsManager.cs" t="Include" />
+            <e p="DataManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
           </e>
         </e>
