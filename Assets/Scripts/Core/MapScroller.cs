@@ -1,3 +1,5 @@
+using System.Collections;
+using DG.Tweening;
 using Plugins.Tools;
 using UnityEngine;
 using SoundManager = Plugins.Audio.SoundManager;
@@ -8,20 +10,52 @@ namespace Core
     public struct Instrument
     {
         public AudioClip c, d, e, f, g, a, b;
+
+        public AudioClip GetAudioClip(Chord chord) =>
+            chord switch
+            {
+                Chord.C => c,
+                Chord.D => d,
+                Chord.E => e,
+                Chord.F => f,
+                Chord.G => g,
+                Chord.A => a,
+                Chord.B => b,
+                _ => c
+            };
     }
 
-    public class MapScroller : Singleton<MapScroller>
+    public enum Chord { C, D, E, F, G, A, B }
+
+    public class MapScroller : MonoBehaviour
     {
         public float bpm;
+        private float bps;
         private bool m_IsStarted;
+
         [Space]
         public AudioClip mapSong;
         public Instrument instrument;
 
-        protected override void Awake()
+        [Header("Visual Feedback")]
+        public Transform[] animateByBpm;
+        
+        [Space]
+        public Vector3 targetScale, defaultScale;
+        private float m_AnimationDuration;
+
+        private bool m_WaitingForBeat;
+        private WaitForSeconds m_WaitForSeconds;
+
+        private void Awake()
         {
-            base.Awake();
-            bpm /= 60;
+            bps = bpm / 60;
+            
+            float ms = 60000 / bpm;
+            float secs = ms * 0.001f;
+            
+            m_WaitForSeconds = new WaitForSeconds(secs);
+            m_AnimationDuration = secs * .5f;
         }
 
         public void StartMap()
@@ -31,9 +65,7 @@ namespace Core
 
             gameObject.SetActiveChildren();
 
-            SoundManager soundManager = SoundManager.Instance;
-            soundManager.PlayBackgroundMusic(mapSong);
-            soundManager.ResumeBackgroundMusic();
+            SoundManager.Instance.PlayBackgroundMusicInstantly(mapSong);
         }
 
         public void ResumeMap()
@@ -51,7 +83,25 @@ namespace Core
         private void Update()
         {
             if (!m_IsStarted) return;
-            transform.position -= new Vector3(0f, bpm * Time.deltaTime, 0f);
+            transform.position -= new Vector3(0f, bps * Time.deltaTime, 0f);
+
+            AnimateBeat();
+        }
+
+        private void AnimateBeat()
+        {
+            if (m_WaitingForBeat) return;
+            StartCoroutine(AnimateBeatCoroutine());
+        }
+
+        private IEnumerator AnimateBeatCoroutine()
+        {
+            m_WaitingForBeat = true;
+
+            animateByBpm.ForEach(t => t.DOScale(targetScale, m_AnimationDuration).OnComplete(() => t.DOScale(defaultScale, m_AnimationDuration)));
+
+            yield return m_WaitForSeconds;
+            m_WaitingForBeat = false;
         }
     }
 }

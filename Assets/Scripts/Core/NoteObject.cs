@@ -1,4 +1,3 @@
-using System;
 using Plugins.Audio;
 using UnityEngine;
 
@@ -6,9 +5,11 @@ namespace Core
 {
     public class NoteObject : MonoBehaviour
     {
-        private ArrowButton m_ArrowButton;
+        [Header("Config")]
+        public MapScroller mapScroller;
+        public Chord sound;
 
-        public AudioClip noteSound;
+        private ArrowButton m_ArrowButton;
 
         private bool m_WasPressed, m_OverButton;
 
@@ -24,7 +25,7 @@ namespace Core
             GameManager.Instance.HitArrow();
             RemoveNote();
 
-            if (noteSound) SoundManager.Instance.PlayNonDiegeticSound(noteSound);
+            //SoundManager.Instance.PlayNonDiegeticSound(mapScroller.instrument.GetAudioClip(sound));
         }
 
         private void RemoveNote()
