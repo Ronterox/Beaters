@@ -23,6 +23,9 @@ namespace Core
 
         private void OnDisable() => onButtonPress -= CheckButton;
 
+        
+        public void PressButton() => onButtonPress?.Invoke();
+
         private void CheckButton()
         {
             if (!isNoteAbove) GameManager.Instance.MissArrow();

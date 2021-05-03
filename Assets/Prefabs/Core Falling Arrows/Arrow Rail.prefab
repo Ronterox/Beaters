@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4565530725697789064}
   - component: {fileID: 935360409569842405}
-  - component: {fileID: 2281426338587803840}
   m_Layer: 0
   m_Name: Arrow Rail
   m_TagString: Untagged
@@ -83,15 +82,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2281426338587803840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6821661714910685925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9642284a305aeacf590d5e4e14dfe1b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
