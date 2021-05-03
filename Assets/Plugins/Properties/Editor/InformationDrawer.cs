@@ -12,11 +12,11 @@ namespace Plugins.Properties.Editor
     public class InformationAttributeDrawer : PropertyDrawer
     {
         // determines the space after the help box, the space before the text box, and the width of the help box icon
-        const int spaceBeforeTheTextBox = 5;
-        const int spaceAfterTheTextBox = 10;
-        const int iconWidth = 55;
+        private const int spaceBeforeTheTextBox = 5;
+        private const int spaceAfterTheTextBox = 10;
+        private const int iconWidth = 55;
 
-        InformationAttribute informationAttribute { get { return ((InformationAttribute)attribute); } }
+        private InformationAttribute informationAttribute => (InformationAttribute)attribute;
 
         /// <summary>
         /// OnGUI, displays the property and the textbox in the specified order
@@ -32,10 +32,10 @@ namespace Plugins.Properties.Editor
                 Rect helpPosition = rect;
                 Rect textFieldPosition = rect;
 
-                if (!informationAttribute.MessageAfterProperty)
+                if (!informationAttribute.messageAfterProperty)
                 {
                     // we position the message before the property
-                    helpPosition.height = DetermineTextboxHeight(informationAttribute.Message);
+                    helpPosition.height = DetermineTextboxHeight(informationAttribute.message);
 
                     textFieldPosition.y += helpPosition.height + spaceBeforeTheTextBox;
                     textFieldPosition.height = GetPropertyHeight(prop, label);
@@ -45,12 +45,12 @@ namespace Plugins.Properties.Editor
                     // we position the property first, then the message
                     textFieldPosition.height = GetPropertyHeight(prop, label);
 
-                    helpPosition.height = DetermineTextboxHeight(informationAttribute.Message);
+                    helpPosition.height = DetermineTextboxHeight(informationAttribute.message);
                     // we add the complete property height (property + helpbox, as overridden in this very script), and substract both to get just the property
-                    helpPosition.y += GetPropertyHeight(prop, label) - DetermineTextboxHeight(informationAttribute.Message) - spaceAfterTheTextBox;
+                    helpPosition.y += GetPropertyHeight(prop, label) - DetermineTextboxHeight(informationAttribute.message) - spaceAfterTheTextBox;
                 }
 
-                EditorGUI.HelpBox(helpPosition, informationAttribute.Message, informationAttribute.Type);
+                EditorGUI.HelpBox(helpPosition, informationAttribute.message, informationAttribute.type);
                 EditorGUI.PropertyField(textFieldPosition, prop, label, true);
             }
             else
@@ -71,12 +71,9 @@ namespace Plugins.Properties.Editor
         {
             if (HelpEnabled())
             {
-                return EditorGUI.GetPropertyHeight(property) + DetermineTextboxHeight(informationAttribute.Message) + spaceAfterTheTextBox + spaceBeforeTheTextBox;
+                return EditorGUI.GetPropertyHeight(property) + DetermineTextboxHeight(informationAttribute.message) + spaceAfterTheTextBox + spaceBeforeTheTextBox;
             }
-            else
-            {
-                return EditorGUI.GetPropertyHeight(property);
-            }
+            return EditorGUI.GetPropertyHeight(property);
         }
 
         /// <summary>
@@ -85,7 +82,7 @@ namespace Plugins.Properties.Editor
         /// <returns><c>true</c>, if enabled was helped, <c>false</c> otherwise.</returns>
         protected virtual bool HelpEnabled()
         {
-            bool helpEnabled = false;
+            var helpEnabled = false;
             if (EditorPrefs.HasKey("MMShowHelpInInspectors"))
             {
                 if (EditorPrefs.GetBool("MMShowHelpInInspectors"))
@@ -100,11 +97,10 @@ namespace Plugins.Properties.Editor
         /// Determines the height of the textbox.
         /// </summary>
         /// <returns>The textbox height.</returns>
-        /// <param name="message">Message.</param>
+        /// <param name="message">message.</param>
         protected virtual float DetermineTextboxHeight(string message)
         {
-            GUIStyle style = new GUIStyle(EditorStyles.helpBox);
-            style.richText = true;
+            var style = new GUIStyle(EditorStyles.helpBox) { richText = true };
 
             float newHeight = style.CalcHeight(new GUIContent(message), EditorGUIUtility.currentViewWidth - iconWidth);
             return newHeight;

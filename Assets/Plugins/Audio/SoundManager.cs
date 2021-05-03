@@ -58,7 +58,7 @@ namespace Plugins.Audio
 
         // Volume Params
         private const string MASTER_VOLUME_PARAM = "Master_Volume";
-        
+
         private const string MUSIC_VOLUME_PARAM = "Music_Volume";
         private const string VOICE_VOLUME_PARAM = "Voice_Volume";
         private const string SFX_VOLUME_PARAM = "SFX_Volume";
@@ -93,8 +93,8 @@ namespace Plugins.Audio
         /// <param name="arg1"></param>
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
         {
-            if (m_CurrentInGamePooler != null) Destroy(m_CurrentInGamePooler.gameObject);
-            m_CurrentInGamePooler = Instantiate(inGamePoolerPrefab).GetComponent<SoundPooler>();
+            if (m_CurrentInGamePooler) Destroy(m_CurrentInGamePooler.gameObject);
+            if (inGamePoolerPrefab) m_CurrentInGamePooler = Instantiate(inGamePoolerPrefab).GetComponent<SoundPooler>();
         }
 
         /// <summary>

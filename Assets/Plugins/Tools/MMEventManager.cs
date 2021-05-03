@@ -155,7 +155,7 @@ namespace Plugins.Tools
         /// Checks if there are subscribers for a certain type of events
         /// </summary>
         /// <returns><c>true</c>, if exists was suscriptioned, <c>false</c> otherwise.</returns>
-        /// <param name="type">Type.</param>
+        /// <param name="type">type.</param>
         /// <param name="receiver">Receiver.</param>
         private static bool SubscriptionExists(Type type, MMEventListenerBase receiver) => m_SubscribersList.TryGetValue(type, out List<MMEventListenerBase> receivers) && receivers.Any(t => t == receiver);
     }

@@ -16,9 +16,10 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ArchievementsManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Item.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/UI/UICarousel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -26,6 +27,14 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/UICarousel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ArchievementsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Item.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Player/PlayerInput.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Properties/InformationAttribute.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Properties/Editor/InformationDrawer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/FallingArrow.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" />
     </changedPaths>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
