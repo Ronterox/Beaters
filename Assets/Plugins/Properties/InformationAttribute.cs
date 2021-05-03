@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+
 #if UNITY_EDITOR
 
 #endif
@@ -11,18 +12,15 @@ namespace Plugins.Properties
         public enum InformationType { Error, Info, None, Warning }
 
 #if UNITY_EDITOR
-        public string Message;
-        public MessageType Type;
-        public bool MessageAfterProperty;
+        public string message;
+        public MessageType type;
+        public bool messageAfterProperty;
 
         public InformationAttribute(string message, InformationType type, bool messageAfterProperty)
         {
-            this.Message = message;
-            if (type == InformationType.Error) { this.Type = UnityEditor.MessageType.Error; }
-            if (type == InformationType.Info) { this.Type = UnityEditor.MessageType.Info; }
-            if (type == InformationType.Warning) { this.Type = UnityEditor.MessageType.Warning; }
-            if (type == InformationType.None) { this.Type = UnityEditor.MessageType.None; }
-            this.MessageAfterProperty = messageAfterProperty;
+            this.message = message;
+            this.type = type switch { InformationType.Error => UnityEditor.MessageType.Error, InformationType.Info => UnityEditor.MessageType.Info, InformationType.Warning => UnityEditor.MessageType.Warning, InformationType.None => UnityEditor.MessageType.None, _ => this.type };
+            this.messageAfterProperty = messageAfterProperty;
         }
 #else
 		public InformationAttribute(string message, InformationType type, bool messageAfterProperty)

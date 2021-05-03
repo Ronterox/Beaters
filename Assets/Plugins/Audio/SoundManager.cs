@@ -58,7 +58,7 @@ namespace Plugins.Audio
 
         // Volume Params
         private const string MASTER_VOLUME_PARAM = "Master_Volume";
-        
+
         private const string MUSIC_VOLUME_PARAM = "Music_Volume";
         private const string VOICE_VOLUME_PARAM = "Voice_Volume";
         private const string SFX_VOLUME_PARAM = "SFX_Volume";
@@ -93,8 +93,8 @@ namespace Plugins.Audio
         /// <param name="arg1"></param>
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
         {
-            if (m_CurrentInGamePooler != null) Destroy(m_CurrentInGamePooler.gameObject);
-            m_CurrentInGamePooler = Instantiate(inGamePoolerPrefab).GetComponent<SoundPooler>();
+            if (m_CurrentInGamePooler) Destroy(m_CurrentInGamePooler.gameObject);
+            if (inGamePoolerPrefab) m_CurrentInGamePooler = Instantiate(inGamePoolerPrefab).GetComponent<SoundPooler>();
         }
 
         /// <summary>
@@ -105,7 +105,11 @@ namespace Plugins.Audio
         /// <param name="fadeDuration"></param>
         public IEnumerator _PlayBackgroundMusic(AudioClip clip, float fadeDuration = 1f)
         {
-            if (m_BackgroundMusic.clip == clip) yield break;
+            if (m_BackgroundMusic.clip == clip)
+            {
+                m_BackgroundMusic.Play();
+                yield break;
+            }
 
             yield return StartCoroutine(FadeMixerVolume(m_BackgroundMusic.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, 0f));
 
@@ -150,6 +154,26 @@ namespace Plugins.Audio
         /// <param name="clip"></param>
         /// <param name="fadeDuration"></param>
         public void PlayBackgroundMusic(AudioClip clip, float fadeDuration = 1) => StartCoroutine(_PlayBackgroundMusic(clip, fadeDuration));
+
+        /// <summary>
+        /// Plays the background music instantly
+        /// </summary>
+        /// <param name="clip"></param>
+        public void PlayBackgroundMusicInstantly(AudioClip clip)
+        {
+            if (m_BackgroundMusic.clip == clip)
+            {
+                m_BackgroundMusic.Play();
+                return;
+            }
+            
+            m_BackgroundMusic.clip = clip;
+            // we set the loop setting to true, the music will loop forever
+            m_BackgroundMusic.loop = true;
+
+            // we start playing the background music
+            m_BackgroundMusic.Play();
+        }
 
         /// <summary>
         /// Set master volume
