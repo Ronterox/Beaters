@@ -64,6 +64,21 @@ namespace Plugins.Audio
         private const string SFX_VOLUME_PARAM = "SFX_Volume";
 
         private const string SOUND_OBJECT_POOL = "SoundFXPool_Item";
+        
+        #region RYTHM_GAME
+        
+        private float timeLastFrame;
+        public static float songDeltaTime;
+
+        private void LateUpdate()
+        {
+            float time = m_BackgroundMusic.time;
+            songDeltaTime = time - timeLastFrame;
+            timeLastFrame = time;
+        }
+        
+        #endregion
+
 
         /// <summary>
         /// Awake

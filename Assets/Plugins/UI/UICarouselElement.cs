@@ -1,17 +1,18 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Plugins.UI
 {
-    public abstract class UICarouselElement : Button
+    public class UICarouselElement : Button
     {
         [System.Serializable]
         public struct ElementAnim
         {
             public float scale;
             public float duration;
-            //public Ease easeType;
+            public Ease easeType;
         }
 
         public int ID;
@@ -29,7 +30,7 @@ namespace Plugins.UI
         {
             base.OnEnable();
             RectTransform = transform as RectTransform;
-            //PlayDeselectAnim();
+            PlayDeselectAnim();
         }
 
         public override void OnSelect(BaseEventData eventData)
@@ -46,18 +47,14 @@ namespace Plugins.UI
             PlayDeselectAnim();
         }
 
-        public virtual void PlaySelectAnim() { }
+        public virtual void PlaySelectAnim() =>
+            transform.DOScale(selectAnim.scale, selectAnim.duration).SetEase(selectAnim.easeType).OnUpdate(() =>
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(transform.parent as RectTransform);
+            });
 
-        //transform.DOScale(selectAnim.scale, selectAnim.duration).SetEase(selectAnim.easeType).OnUpdate(() =>
-            //{
-               // LayoutRebuilder.ForceRebuildLayoutImmediate(transform.parent as RectTransform);
-           // });
+        public virtual void PlayDeselectAnim() => transform.DOScale(deselectAnim.scale, deselectAnim.duration).SetEase(deselectAnim.easeType);
 
-        public virtual void PlayDeselectAnim()
-        {
-            //transform.DOScale(deselectAnim.scale, deselectAnim.duration).SetEase(deselectAnim.easeType);
-        }
-
-        public abstract UICarouselElement Setup(params object[] parameters);
+        public virtual UICarouselElement Setup(params object[] parameters) => this;
     }
 }

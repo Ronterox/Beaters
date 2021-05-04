@@ -1,5 +1,6 @@
 using System.Collections;
 using DG.Tweening;
+using Managers;
 using Plugins.Tools;
 using UnityEngine;
 using SoundManager = Plugins.Audio.SoundManager;
@@ -27,14 +28,17 @@ namespace Core
 
     public enum Chord { C, D, E, F, G, A, B }
 
-    public class MapScroller : MonoBehaviour
+    [System.Serializable]
+    public struct SoundMap
     {
         public float bpm;
-        private float bps;
-        private bool m_IsStarted;
-
-        [Space]
         public AudioClip mapSong;
+        public Difficulty difficulty;
+    }
+
+    public class MapScroller : MonoBehaviour
+    {
+        public SoundMap soundMap;
         public Instrument instrument;
 
         [Header("Visual Feedback")]
@@ -44,14 +48,17 @@ namespace Core
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
 
+        private float bps;
+        private bool m_IsStarted;
+        
         private bool m_WaitingForBeat;
         private WaitForSeconds m_WaitForSeconds;
 
         private void Awake()
         {
-            bps = bpm / 60;
-            
-            float ms = 60000 / bpm;
+            bps = soundMap.bpm / 60 * (float)soundMap.difficulty;
+
+            float ms = 60000 / soundMap.bpm;
             float secs = ms * 0.001f;
             
             m_WaitForSeconds = new WaitForSeconds(secs);
@@ -63,9 +70,10 @@ namespace Core
             m_IsStarted = true;
             transform.position = Vector3.zero;
 
+            gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
 
-            SoundManager.Instance.PlayBackgroundMusicInstantly(mapSong);
+            SoundManager.Instance.PlayBackgroundMusicInstantly(soundMap.mapSong);
         }
 
         public void ResumeMap()
@@ -83,7 +91,7 @@ namespace Core
         private void Update()
         {
             if (!m_IsStarted) return;
-            transform.position -= new Vector3(0f, bps * Time.deltaTime, 0f);
+            transform.position -= new Vector3(0f, bps * SoundManager.songDeltaTime, 0f);
 
             AnimateBeat();
         }

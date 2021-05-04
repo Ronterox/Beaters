@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Managers;
 using UnityEngine;
 
 namespace Core
@@ -10,7 +11,7 @@ namespace Core
         public Vector3 targetScale;
         private Vector3 m_DefaultScale;
 
-        [Plugins.Properties.ReadOnly] 
+        [Plugins.Properties.ReadOnly]
         public bool isNoteAbove;
 
         public delegate void ButtonEvent();
@@ -23,7 +24,6 @@ namespace Core
 
         private void OnDisable() => onButtonPress -= CheckButton;
 
-        
         public void PressButton() => onButtonPress?.Invoke();
 
         private void CheckButton()
