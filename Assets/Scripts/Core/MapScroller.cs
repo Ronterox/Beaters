@@ -31,20 +31,21 @@ namespace Core
 
     public class MapScroller : MonoBehaviour
     {
+        [Plugins.Properties.ReadOnly]
         public SoundMap soundMap;
         public Difficulty difficulty;
         public Instrument instrument;
 
         [Header("Visual Feedback")]
         public Transform[] animateByBpm;
-        
+
         [Space]
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
 
         private float bps;
         private bool m_IsStarted;
-        
+
         private bool m_WaitingForBeat;
         private WaitForSeconds m_WaitForSeconds;
 
@@ -54,7 +55,7 @@ namespace Core
 
             float ms = 60000 / soundMap.bpm;
             float secs = ms * 0.001f;
-            
+
             m_WaitForSeconds = new WaitForSeconds(secs);
             m_AnimationDuration = secs * .5f;
         }
@@ -62,12 +63,12 @@ namespace Core
         public void StartMap()
         {
             m_IsStarted = true;
-            transform.position = Vector3.zero;
+            transform.position.Set(0, 0,0);
 
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
-
-            SoundManager.Instance.PlayBackgroundMusicInstantly(soundMap.audioClip);
+            
+            SoundManager.Instance.PlayBackgroundMusicNoFade(soundMap.audioClip);
         }
 
         public void ResumeMap()

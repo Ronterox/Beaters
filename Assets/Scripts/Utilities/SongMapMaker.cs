@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Core;
 using Plugins.Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,18 +11,20 @@ namespace Utilities
     [System.Serializable]
     public struct SoundMap
     {
-        public string name;
-        public float bpm;
+        public ushort id;
+        public float bpm, startDelay;
         //public SerializedAudioClip mapSong;
         public AudioClip audioClip;
         public Note[] notes;
+
+        public void SetNotes(Note[] newNotes) => notes = newNotes;
     }
 
     [System.Serializable]
     public struct Note
     {
         public ushort id;
-        public int x, y, z;
+        public float x, y, z;
     }
 
     [System.Serializable]
@@ -52,59 +56,71 @@ namespace Utilities
     [System.Serializable]
     public struct MakerNote
     {
-        public int id;
+        public ushort id;
         public Image image;
-        public GameObject noteGameObject;
+        public NoteObject noteObject;
         [Space]
         public Button button;
     }
 
     public class SongMapMaker : MonoBehaviour
     {
-        public MakerNote[] notesObject;
+        [Header("Config")]
+        public MakerNote[] makerNotes;
         private Camera m_MainCamera;
         public LayerMask notesLayer;
 
-        [Header("Config")]
+        [Header("Feedback Config")]
         public SpriteRenderer preview;
         private Transform m_PreviewTransform;
-        
+
         private GameObject m_SelectedGameObject;
-        [Space]
+        private ushort m_SelectedId;
+
+        [Header("My Maps")]
         public List<SoundMap> soundMaps;
+        public bool IsCreating { get; private set; }
+        private GameObject m_CurrentMapGameObject;
 
         private const string MAPS_FILE = "soundmaps.data";
-
-        public bool isCreating = true;
 
         private void Awake()
         {
             m_PreviewTransform = preview.transform;
             m_MainCamera = Camera.main;
+
+            IsCreating = true;
         }
 
         private void Start()
         {
-            foreach (MakerNote makerNote in notesObject)
+            foreach (MakerNote makerNote in makerNotes)
             {
                 makerNote.button.onClick.AddListener(() =>
                 {
-                    preview.sprite = makerNote.image.sprite;
-                    m_SelectedGameObject = makerNote.noteGameObject;
+                    if (IsCreating)
+                    {
+                        preview.sprite = makerNote.image.sprite;
+                        preview.color = makerNote.image.color;
+                        m_SelectedGameObject = makerNote.noteObject.gameObject;
+                        m_SelectedId = makerNote.id;
+                    }
                 });
             }
+
+            StartCreating("Test");
         }
 
         private void Update()
         {
-            if(!isCreating) return;
-            
+            if (!IsCreating) return;
+
             Vector3 mousePosition = Input.mousePosition;
 
             mousePosition.z = Mathf.Abs(m_MainCamera.transform.position.z);
 
             mousePosition = m_MainCamera.ScreenToWorldPoint(mousePosition);
-            
+
             mousePosition.x = Mathf.RoundToInt(mousePosition.x);
             mousePosition.y = Mathf.RoundToInt(mousePosition.y);
             mousePosition.z = 0;
@@ -113,10 +129,18 @@ namespace Utilities
 
             if (Input.GetMouseButtonDown(0))
             {
-                if(EventSystem.current.IsPointerOverGameObject() || Physics2D.CircleCast(mousePosition, .4f, Vector2.zero)) return;
-                
-                if (m_SelectedGameObject) Instantiate(m_SelectedGameObject, mousePosition, m_SelectedGameObject.transform.rotation);
-            } else if (Input.GetMouseButtonDown(1))
+                if (EventSystem.current.IsPointerOverGameObject() || Physics2D.CircleCast(mousePosition, .4f, Vector2.zero)) return;
+
+                if (m_SelectedGameObject && m_CurrentMapGameObject)
+                {
+                    Instantiate(m_SelectedGameObject,
+                                mousePosition,
+                                m_SelectedGameObject.transform.rotation,
+                                m_CurrentMapGameObject.transform)
+                        .GetComponent<NoteObject>().MakerId = m_SelectedId;
+                }
+            }
+            else if (Input.GetMouseButtonDown(1))
             {
                 RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, notesLayer);
                 if (result)
@@ -124,6 +148,41 @@ namespace Utilities
                     Destroy(result.collider.gameObject);
                 }
             }
+        }
+
+        public void StartCreating(string map)
+        {
+            IsCreating = true;
+            if (m_CurrentMapGameObject)
+            {
+                string currentMap = m_CurrentMapGameObject.name;
+
+                if (currentMap.Equals(map)) return;
+
+                SaveMap(currentMap);
+                Destroy(m_CurrentMapGameObject);
+
+                CreateMapHolder(map);
+            }
+            else
+                CreateMapHolder(map);
+        }
+
+        private void CreateMapHolder(string map)
+        {
+            if (m_CurrentMapGameObject) Destroy(m_CurrentMapGameObject);
+            
+            m_CurrentMapGameObject = new GameObject { name = map };
+            //TODO: add audio clip somehow
+            soundMaps.Add(new SoundMap { id = (ushort)map.GetHashCode() });
+        }
+
+        public void StopCreating()
+        {
+            IsCreating = false;
+            preview.sprite = null;
+            m_SelectedGameObject = null;
+            if (m_CurrentMapGameObject) SaveMap(m_CurrentMapGameObject.name);
         }
 
         public void LoadMapsData()
@@ -136,11 +195,54 @@ namespace Utilities
 
         public void SaveMapsData() => SaveLoadManager.Save(soundMaps, MAPS_FILE);
 
-        public void DeleteMap(string mapName) => soundMaps.RemoveOne(map => map.name.Equals(mapName));
+        public void DeleteMap(string mapName)
+        {
+            var hashName = (ushort)mapName.GetHashCode();
+            soundMaps.RemoveOne(map => map.id == hashName);
+        }
 
 
-        public void LoadMap(string mapName) { }
+        public void LoadMap(string mapName)
+        {
+            var hashName = (ushort)mapName.GetHashCode();
+            SoundMap soundMap = soundMaps.FirstOrDefault(map => map.id == hashName);
+            soundMap.notes.ForEach(GenerateNote);
+        }
 
-        public void SaveMap(string mapName) { }
+        private void GenerateNote(Note note)
+        {
+            foreach (MakerNote makerNote in makerNotes)
+            {
+                if (note.id == makerNote.id)
+                {
+                    var position = new Vector3 { x = note.x, y = note.y, z = note.z };
+                    GameObject obj = makerNote.noteObject.gameObject;
+                    Instantiate(obj,
+                                position,
+                                obj.transform.rotation,
+                                m_CurrentMapGameObject.transform)
+                        .GetComponent<NoteObject>().MakerId = m_SelectedId;
+                    return;
+                }
+            }
+        }
+
+        public void SaveMap(string mapName)
+        {
+            var hashName = (ushort)mapName.GetHashCode();
+
+            NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
+
+            List<Note> notes = (from noteObject in noteObjects let position = noteObject.transform.position select new Note { id = noteObject.MakerId, x = position.x, y = position.y, z = position.z }).ToList();
+
+            for (var i = 0; i < soundMaps.Count; i++)
+            {
+                if (soundMaps[i].id == hashName)
+                {
+                    soundMaps[i].SetNotes(notes.ToArray());
+                    return;
+                }
+            }
+        }
     }
 }

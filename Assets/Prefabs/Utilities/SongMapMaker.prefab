@@ -44,10 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a9085559a1187649d842a1f2370313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notes:
+  notesObject:
   - id: 0
     image: {fileID: 0}
-    noteGameObject: {fileID: 563556794157037301, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+    noteGameObject: {fileID: 0}
+    button: {fileID: 0}
+  - id: 0
+    image: {fileID: 0}
+    noteGameObject: {fileID: 0}
+    button: {fileID: 0}
+  - id: 0
+    image: {fileID: 0}
+    noteGameObject: {fileID: 0}
+    button: {fileID: 0}
+  - id: 0
+    image: {fileID: 0}
+    noteGameObject: {fileID: 0}
     button: {fileID: 0}
   notesLayer:
     serializedVersion: 2
@@ -58,6 +70,7 @@ MonoBehaviour:
     bpm: 125
     audioClip: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
     notes: []
+  isCreating: 1
 --- !u!212 &1113148079
 SpriteRenderer:
   m_ObjectHideFlags: 0

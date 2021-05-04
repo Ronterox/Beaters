@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Plugins.Tools;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -122,6 +123,7 @@ namespace Plugins.Audio
         {
             if (m_BackgroundMusic.clip == clip)
             {
+                m_BackgroundMusic.Stop();
                 m_BackgroundMusic.Play();
                 yield break;
             }
@@ -174,20 +176,27 @@ namespace Plugins.Audio
         /// Plays the background music instantly
         /// </summary>
         /// <param name="clip"></param>
-        public void PlayBackgroundMusicInstantly(AudioClip clip)
+        /// <param name="delay">optional delay</param>
+        public void PlayBackgroundMusicNoFade(AudioClip clip, float delay = 0f)
         {
-            if (m_BackgroundMusic.clip == clip)
+            Action playSong = () =>
             {
-                m_BackgroundMusic.Play();
-                return;
-            }
-            
-            m_BackgroundMusic.clip = clip;
-            // we set the loop setting to true, the music will loop forever
-            m_BackgroundMusic.loop = true;
+                if (m_BackgroundMusic.clip == clip)
+                {
+                    m_BackgroundMusic.Stop();
+                    m_BackgroundMusic.Play();
+                    return;
+                }
 
-            // we start playing the background music
-            m_BackgroundMusic.Play();
+                m_BackgroundMusic.clip = clip;
+                // we set the loop setting to true, the music will loop forever
+                m_BackgroundMusic.loop = true;
+
+                // we start playing the background music
+                m_BackgroundMusic.Play();
+            };
+            
+            playSong.DelayAction(delay);
         }
 
         /// <summary>

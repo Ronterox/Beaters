@@ -5,6 +5,8 @@ namespace Core
 {
     public class NoteObject : MonoBehaviour
     {
+        public ushort MakerId { get; set; }
+        
         [Header("Config")]
         public MapScroller mapScroller;
         public Chord sound;
