@@ -29,9 +29,9 @@ namespace Core
             //SoundManager.Instance.PlayNonDiegeticSound(mapScroller.instrument.GetAudioClip(sound));
         }
 
-        private void OnDisable() => RemoveNote();
+        private void OnDisable() => RemoveNoteCallbacks();
 
-        private void RemoveNote()
+        private void RemoveNoteCallbacks()
         {
             m_OverButton = false;
             if (m_ArrowButton)
@@ -46,7 +46,7 @@ namespace Core
         {
             if (!other.CompareTag("Player")) return;
 
-            if (m_ArrowButton) RemoveNote();
+            if (m_ArrowButton) RemoveNoteCallbacks();
 
             (m_ArrowButton = other.GetComponent<ArrowButton>()).onButtonPress += OnButtonPressCallback;
             m_ArrowButton.isNoteAbove = true;
