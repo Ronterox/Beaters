@@ -37,14 +37,16 @@ namespace Core
             if (m_ArrowButton)
             {
                 m_ArrowButton.isNoteAbove = false;
-                //TODO: check why after restarting the map, this event isn't removed
                 m_ArrowButton.onButtonPress -= OnButtonPressCallback;
+                m_ArrowButton = null;
             }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player")) return;
+
+            if (m_ArrowButton) RemoveNote();
 
             (m_ArrowButton = other.GetComponent<ArrowButton>()).onButtonPress += OnButtonPressCallback;
             m_ArrowButton.isNoteAbove = true;
