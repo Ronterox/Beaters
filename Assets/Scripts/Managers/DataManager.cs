@@ -106,12 +106,14 @@ namespace Managers
             
             for (var i = 0; i < m_ItemsList.Count; i++)
             {
-                //TODO: Change this additions, i don't like them
                 SerializableItem sItem = m_ItemsList[i];
                 if (sItem.itemId == serializableItem.itemId)
                 {
-                    serializableItem.quantity += sItem.quantity; 
-                    m_ItemsList[i] = serializableItem;
+                    serializableItem.quantity += sItem.quantity;
+                    
+                    if (serializableItem.quantity <= 0) m_ItemsList.Remove(sItem);
+                    else m_ItemsList[i] = serializableItem;
+                    
                     return;
                 }
             }
@@ -120,11 +122,18 @@ namespace Managers
 
         public static void AddCharacter(Character character)
         {
-            //if (m_CharactersList.Contains(character))
+            var serializableCharacter = new SerializableCharacter { characterId = (ushort)character.name.GetHashCode(), lvl = character.lvl, xp = character.xp };
+
+            for (var i = 0; i < m_CharactersList.Count; i++)
             {
-                
+                SerializableCharacter sChar = m_CharactersList[i];
+                if (sChar.characterId == serializableCharacter.characterId)
+                {
+                    m_CharactersList[i] = serializableCharacter;
+                    return;
+                }
             }
-            //else m_CharactersList.Add(character);
+            m_CharactersList.Add(serializableCharacter);
         }
     }
 }
