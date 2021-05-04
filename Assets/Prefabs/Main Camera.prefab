@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 3790687837816191672}
-  rotationSpeed: 5
+  rotationSpeed: 90
   thirdDimensionRotation: {x: -50, y: 0, z: 0}
   secondDimensionRotation: {x: 0, y: 0, z: 0}
   movementSpeed: 4
