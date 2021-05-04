@@ -48,9 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundMap:
+    name: 
     bpm: 125
-    mapSong: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
-    difficulty: 2
+    audioClip: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
+    notes: []
+  difficulty: 3
   instrument:
     c: {fileID: 0}
     d: {fileID: 0}
@@ -83,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.03
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -137,15 +139,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Color.b
-      value: 0.9534545
+      value: 0.86603355
       objectReference: {fileID: 0}
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 563556794157037301, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Name
@@ -157,7 +159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.94000006
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -211,11 +213,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.21603727
       objectReference: {fileID: 0}
     - target: {fileID: 563556794157037301, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Name
@@ -227,7 +229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.06
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -281,15 +283,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Color.b
-      value: 0.86603355
+      value: 0.9534545
       objectReference: {fileID: 0}
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 563556794157037301, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Name
@@ -301,7 +303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.03
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_LocalPosition.y

@@ -10,7 +10,7 @@ namespace Core
         public float animationDuration;
         public Vector3 targetScale;
         private Vector3 m_DefaultScale;
-
+        
         [Plugins.Properties.ReadOnly]
         public bool isNoteAbove;
 

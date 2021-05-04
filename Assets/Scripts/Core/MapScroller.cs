@@ -3,6 +3,7 @@ using DG.Tweening;
 using Managers;
 using Plugins.Tools;
 using UnityEngine;
+using Utilities;
 using SoundManager = Plugins.Audio.SoundManager;
 
 namespace Core
@@ -28,17 +29,10 @@ namespace Core
 
     public enum Chord { C, D, E, F, G, A, B }
 
-    [System.Serializable]
-    public struct SoundMap
-    {
-        public float bpm;
-        public AudioClip mapSong;
-        public Difficulty difficulty;
-    }
-
     public class MapScroller : MonoBehaviour
     {
         public SoundMap soundMap;
+        public Difficulty difficulty;
         public Instrument instrument;
 
         [Header("Visual Feedback")]
@@ -56,7 +50,7 @@ namespace Core
 
         private void Awake()
         {
-            bps = soundMap.bpm / 60 * (float)soundMap.difficulty;
+            bps = soundMap.bpm / 60 * (float)difficulty;
 
             float ms = 60000 / soundMap.bpm;
             float secs = ms * 0.001f;
@@ -73,7 +67,7 @@ namespace Core
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
 
-            SoundManager.Instance.PlayBackgroundMusicInstantly(soundMap.mapSong);
+            SoundManager.Instance.PlayBackgroundMusicInstantly(soundMap.audioClip);
         }
 
         public void ResumeMap()
