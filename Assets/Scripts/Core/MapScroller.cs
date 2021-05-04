@@ -43,8 +43,8 @@ namespace Core
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
 
+        public bool IsStarted { get; private set; }
         private float bps;
-        private bool m_IsStarted;
 
         private bool m_WaitingForBeat;
         private WaitForSeconds m_WaitForSeconds;
@@ -62,31 +62,39 @@ namespace Core
 
         public void StartMap()
         {
-            m_IsStarted = true;
+            IsStarted = true;
             transform.position.Set(0, 0,0);
 
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
             
-            SoundManager.Instance.PlayBackgroundMusicNoFade(soundMap.audioClip);
+            SoundManager.Instance.PlayBackgroundMusicNoFade(soundMap.audioClip, soundMap.startDelay);
+            
+            print("Started Map!");
         }
 
         public void ResumeMap()
         {
-            m_IsStarted = true;
+            IsStarted = true;
             SoundManager.Instance.UnPauseBackgroundMusic();
+
+            print("Resumed Map!");
         }
 
         public void StopMap()
         {
-            m_IsStarted = false;
+            IsStarted = false;
             SoundManager.Instance.PauseBackgroundMusic();
+
+            print("Stopped Map!");
         }
 
         private void Update()
         {
-            if (!m_IsStarted) return;
-            transform.position -= new Vector3(0f, bps * SoundManager.songDeltaTime, 0f);
+            if (!IsStarted) return;
+            
+            //TODO: Have song so we can use songDeltaTime
+            transform.position -= new Vector3(0f, bps * Time.deltaTime, 0f);
 
             AnimateBeat();
         }

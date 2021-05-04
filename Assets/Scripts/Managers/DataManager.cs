@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using General;
 using Plugins.Tools;
 using UnityEngine;
@@ -20,6 +21,12 @@ namespace Managers
     {
         public ushort itemId;
         public int quantity;
+
+        public void Set(SerializableItem serializableItem)
+        {
+            itemId = serializableItem.itemId;
+            quantity = serializableItem.quantity;
+        }
     }
 
     [System.Serializable]
@@ -31,6 +38,14 @@ namespace Managers
         public bool isCompleted;
 
         public int highestCombo;
+
+        public void Set(SerializableSong serializableSong)
+        {
+            songId = serializableSong.songId;
+            completedDifficulties = serializableSong.completedDifficulties;
+            isCompleted = serializableSong.isCompleted;
+            highestCombo = serializableSong.highestCombo;
+        }
     }
 
     [System.Serializable]
@@ -38,6 +53,13 @@ namespace Managers
     {
         public ushort characterId;
         public int lvl, xp;
+
+        public void Set(SerializableCharacter character)
+        {
+            characterId = character.characterId;
+            lvl = character.lvl;
+            xp = character.xp;
+        }
     }
     public class DataManager : PersistentSingleton<DataManager>
     {
@@ -86,52 +108,55 @@ namespace Managers
 
         public static void AddSong(Song song)
         {
-            var serializableSong = new SerializableSong { songId = (ushort)song.name.GetHashCode(), isCompleted = song.isCompleted, highestCombo = song.highestCombo, completedDifficulties = song.completedDifficulties };
-
-            for (var i = 0; i < m_SongsList.Count; i++)
+            var serializableSong = new SerializableSong
             {
-                if (m_SongsList[i].songId == serializableSong.songId)
-                {
-                    m_SongsList[i] = serializableSong;
-                    return;
-                }
-            }
+                songId = song.name.GetHashCodeUshort(),
+                isCompleted = song.isCompleted,
+                highestCombo = song.highestCombo,
+                completedDifficulties = song.completedDifficulties
+            };
 
+            foreach (SerializableSong sSong in m_SongsList.Where(sSong => sSong.songId == serializableSong.songId))
+            {
+                sSong.Set(serializableSong);
+                return;
+            }
             m_SongsList.Add(serializableSong);
         }
 
         public static void AddItem(Item item, int quantity = 1)
         {
-            var serializableItem = new SerializableItem { itemId = item.id, quantity = quantity};
-            
-            for (var i = 0; i < m_ItemsList.Count; i++)
+            var serializableItem = new SerializableItem
             {
-                SerializableItem sItem = m_ItemsList[i];
-                if (sItem.itemId == serializableItem.itemId)
-                {
-                    serializableItem.quantity += sItem.quantity;
-                    
-                    if (serializableItem.quantity <= 0) m_ItemsList.Remove(sItem);
-                    else m_ItemsList[i] = serializableItem;
-                    
-                    return;
-                }
+                itemId = item.id,
+                quantity = quantity
+            };
+
+            foreach (SerializableItem sItem in m_ItemsList.Where(sItem => sItem.itemId == serializableItem.itemId))
+            {
+                serializableItem.quantity += sItem.quantity;
+
+                if (serializableItem.quantity <= 0) m_ItemsList.Remove(sItem);
+                else sItem.Set(serializableItem);
+
+                return;
             }
             m_ItemsList.Add(serializableItem);
         }
 
         public static void AddCharacter(Character character)
         {
-            var serializableCharacter = new SerializableCharacter { characterId = (ushort)character.name.GetHashCode(), lvl = character.lvl, xp = character.xp };
-
-            for (var i = 0; i < m_CharactersList.Count; i++)
+            var serializableCharacter = new SerializableCharacter
             {
-                SerializableCharacter sChar = m_CharactersList[i];
-                if (sChar.characterId == serializableCharacter.characterId)
-                {
-                    m_CharactersList[i] = serializableCharacter;
-                    return;
-                }
+                characterId = character.name.GetHashCodeUshort(),
+                lvl = character.lvl,
+                xp = character.xp
+            };
+
+            foreach (SerializableCharacter sChar in m_CharactersList.Where(chara => chara.characterId == serializableCharacter.characterId))
+            {
+                sChar.Set(serializableCharacter);
+                return;
             }
             m_CharactersList.Add(serializableCharacter);
         }

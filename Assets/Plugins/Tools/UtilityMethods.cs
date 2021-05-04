@@ -345,5 +345,12 @@ namespace Plugins.Tools
             }
             return false;
         }
+
+        /// <summary>
+        /// Returns the hashcode as ushort
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static ushort GetHashCodeUshort(this string text) => (ushort)text.GetHashCode();
     }
 }

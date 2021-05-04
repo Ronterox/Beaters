@@ -8,7 +8,6 @@ namespace Core
         public ushort MakerId { get; set; }
         
         [Header("Config")]
-        public MapScroller mapScroller;
         public Chord sound;
 
         private ArrowButton m_ArrowButton;

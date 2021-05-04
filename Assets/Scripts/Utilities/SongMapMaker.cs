@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core;
 using Plugins.Tools;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,6 +19,12 @@ namespace Utilities
         public Note[] notes;
 
         public void SetNotes(Note[] newNotes) => notes = newNotes;
+
+        public void SetBpmDelay(int newBpm, float delay)
+        {
+            bpm = newBpm;
+            startDelay = delay;
+        }
     }
 
     [System.Serializable]
@@ -66,34 +73,43 @@ namespace Utilities
     public class SongMapMaker : MonoBehaviour
     {
         [Header("Config")]
+        public TMP_Text stateText;
+        public MapScroller mapScroller;
+        [Space]
         public MakerNote[] makerNotes;
-        private Camera m_MainCamera;
         public LayerMask notesLayer;
+        public TMP_InputField bpmInputField, songDelayInputField;
+        public TMP_InputField songNameInputField;
 
         [Header("Feedback Config")]
         public SpriteRenderer preview;
+
+        [Header("My Maps")]
+        public List<SoundMap> soundMaps;
+        public bool IsCreating { get; private set; }
+
+        private GameObject m_CurrentMapGameObject;
+
+        private Camera m_MainCamera;
         private Transform m_PreviewTransform;
 
         private GameObject m_SelectedGameObject;
         private ushort m_SelectedId;
 
-        [Header("My Maps")]
-        public List<SoundMap> soundMaps;
-        public bool IsCreating { get; private set; }
-        private GameObject m_CurrentMapGameObject;
-
         private const string MAPS_FILE = "soundmaps.data";
+        private const int DEFAULT_BPM = 120;
 
         private void Awake()
         {
             m_PreviewTransform = preview.transform;
             m_MainCamera = Camera.main;
-
-            IsCreating = true;
         }
 
         private void Start()
         {
+            songNameInputField.onSubmit.AddListener(StartCreating);
+            SetState("Not working on map");
+
             foreach (MakerNote makerNote in makerNotes)
             {
                 makerNote.button.onClick.AddListener(() =>
@@ -107,8 +123,6 @@ namespace Utilities
                     }
                 });
             }
-
-            StartCreating("Test");
         }
 
         private void Update()
@@ -153,6 +167,8 @@ namespace Utilities
         public void StartCreating(string map)
         {
             IsCreating = true;
+            SetState($"Working on {map}");
+
             if (m_CurrentMapGameObject)
             {
                 string currentMap = m_CurrentMapGameObject.name;
@@ -168,13 +184,58 @@ namespace Utilities
                 CreateMapHolder(map);
         }
 
+        private void SetState(string text)
+        {
+            if (stateText) stateText.text = text;
+        }
+
+        private int GetBpm()
+        {
+            int.TryParse(bpmInputField.text, out int bpm);
+            return bpm;
+        }
+
+        private float GetDelay()
+        {
+            float.TryParse(songDelayInputField.text, out float delay);
+            return delay;
+        }
+
+        private void UpdateBpmDelay(string mapName)
+        {
+            ushort hashName = mapName.GetHashCodeUshort();
+            foreach (SoundMap soundMap in soundMaps.Where(soundMap => soundMap.id == hashName))
+            {
+                soundMap.SetBpmDelay(GetBpm(), GetDelay());
+            }
+        }
+
         private void CreateMapHolder(string map)
         {
             if (m_CurrentMapGameObject) Destroy(m_CurrentMapGameObject);
-            
-            m_CurrentMapGameObject = new GameObject { name = map };
+
+            bpmInputField.onSubmit.AddListener(UpdateBpmDelay);
+            songDelayInputField.onSubmit.AddListener(UpdateBpmDelay);
+
+            m_CurrentMapGameObject = new GameObject
+            {
+                name = map, 
+                transform = { parent = mapScroller.transform }
+            };
+
+            int beatsPerMinutes = GetBpm();
+            if (beatsPerMinutes == 0) beatsPerMinutes = DEFAULT_BPM;
+
             //TODO: add audio clip somehow
-            soundMaps.Add(new SoundMap { id = (ushort)map.GetHashCode() });
+            var soundMap = new SoundMap
+            {
+                id = map.GetHashCodeUshort(),
+                startDelay = GetDelay(),
+                bpm = beatsPerMinutes
+            };
+            
+            mapScroller.soundMap = soundMap;
+            soundMaps.Add(soundMap);
         }
 
         public void StopCreating()
@@ -182,7 +243,15 @@ namespace Utilities
             IsCreating = false;
             preview.sprite = null;
             m_SelectedGameObject = null;
-            if (m_CurrentMapGameObject) SaveMap(m_CurrentMapGameObject.name);
+            if (m_CurrentMapGameObject)
+            {
+                SaveMap(m_CurrentMapGameObject.name);
+                
+                bpmInputField.onSubmit.RemoveListener(UpdateBpmDelay);
+                songDelayInputField.onSubmit.RemoveListener(UpdateBpmDelay);
+            }
+
+            SetState(mapScroller.IsStarted ? "Playing Map" : "Not working on map");
         }
 
         public void LoadMapsData()
@@ -197,16 +266,30 @@ namespace Utilities
 
         public void DeleteMap(string mapName)
         {
-            var hashName = (ushort)mapName.GetHashCode();
+            ushort hashName = mapName.GetHashCodeUshort();
             soundMaps.RemoveOne(map => map.id == hashName);
         }
 
 
         public void LoadMap(string mapName)
         {
-            var hashName = (ushort)mapName.GetHashCode();
+            if (string.IsNullOrEmpty(mapName))
+            {
+                SetState("Please, write the map name!");
+                return;
+            }
+
+            ushort hashName = mapName.GetHashCodeUshort();
             SoundMap soundMap = soundMaps.FirstOrDefault(map => map.id == hashName);
-            soundMap.notes.ForEach(GenerateNote);
+            if (soundMap.id != hashName)
+            {
+                StartCreating(mapName);
+            }
+            else
+            {
+                soundMap.notes.ForEach(GenerateNote);
+                SetState($"Loaded map {mapName} successfully!");
+            }
         }
 
         private void GenerateNote(Note note)
@@ -229,20 +312,38 @@ namespace Utilities
 
         public void SaveMap(string mapName)
         {
-            var hashName = (ushort)mapName.GetHashCode();
-
-            NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
-
-            List<Note> notes = (from noteObject in noteObjects let position = noteObject.transform.position select new Note { id = noteObject.MakerId, x = position.x, y = position.y, z = position.z }).ToList();
-
-            for (var i = 0; i < soundMaps.Count; i++)
+            if (string.IsNullOrEmpty(mapName))
             {
-                if (soundMaps[i].id == hashName)
+                SetState("Please, write the map name!");
+                return;
+            }
+
+            ushort hashName = mapName.GetHashCodeUshort();
+
+            foreach (SoundMap soundMap in soundMaps)
+            {
+                if (soundMap.id == hashName)
                 {
-                    soundMaps[i].SetNotes(notes.ToArray());
+                    NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
+
+                    List<Note> notes = (
+                        from noteObject in noteObjects
+                        let position = noteObject.transform.position
+                        select new Note { id = noteObject.MakerId, x = position.x, y = position.y, z = position.z }).ToList();
+
+                    soundMap.SetNotes(notes.ToArray());
+                    soundMap.SetBpmDelay(GetBpm(), GetDelay());
                     return;
                 }
             }
+
+            StartCreating(mapName);
         }
+
+        public void LoadMap() => LoadMap(songNameInputField.text);
+
+        public void SaveMap() => SaveMap(songNameInputField.text);
+
+        public void ContinueCreating() => StartCreating(songNameInputField.text);
     }
 }
