@@ -47,8 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31bbf7bf012067a2954b5d620a32319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 125
-  mapSong: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
+  soundMap:
+    bpm: 125
+    mapSong: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
+    difficulty: 2
   instrument:
     c: {fileID: 0}
     d: {fileID: 0}
@@ -62,7 +64,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  targetScale: {x: 3, y: 21, z: 1}
+  targetScale: {x: 2.5, y: 20, z: 1}
   defaultScale: {x: 2, y: 20, z: 1}
 --- !u!1001 &3071806788519106539
 PrefabInstance:

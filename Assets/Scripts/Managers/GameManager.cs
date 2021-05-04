@@ -4,7 +4,7 @@ namespace Managers
 {
     public enum Difficulty
     {
-        Normal, Hard, Hardcore
+        Normal = 2, Hard = 3, Hardcore = 4
     }
 
     public class GameManager : Singleton<GameManager>
