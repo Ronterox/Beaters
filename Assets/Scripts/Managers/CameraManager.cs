@@ -1,3 +1,4 @@
+using System;
 using Plugins.Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -36,6 +37,8 @@ namespace Managers
 
         private static readonly float[] BOUNDS_X = { -5f, 5f };
         private static readonly float[] BOUNDS_Y = { -5f, 18f };
+        private static readonly float[] BOUNDS_Y_3D = { -10f, 10f };
+
         private static readonly float[] ZOOM_BOUNDS = { 10f, 85f };
 
         private void Awake()
@@ -60,9 +63,7 @@ namespace Managers
 
         public void See2DView()
         {
-            mainCamera.orthographic = true;
-
-            RotateCameraTowards(secondDimensionRotation);
+            RotateCameraTowards(secondDimensionRotation, () => mainCamera.orthographic = true);
             MoveCameraTowards(secondDimensionPosition);
 
             m_In2D = true;
@@ -90,7 +91,7 @@ namespace Managers
                                                  ));
         }
 
-        private void RotateCameraTowards(Vector3 target)
+        private void RotateCameraTowards(Vector3 target, Action onEnd = null)
         {
             if (m_RotatingCoroutine != null) StopCoroutine(m_RotatingCoroutine);
 
@@ -100,7 +101,10 @@ namespace Managers
                                                  (
                                                      () => cameraTransform.rotation != targetRotation,
                                                      () => cameraTransform.rotation =
-                                                         Quaternion.RotateTowards(cameraTransform.rotation, targetRotation, animationRotationSpeed * Time.deltaTime)
+                                                         Quaternion.RotateTowards(cameraTransform.rotation, targetRotation, animationRotationSpeed * Time.deltaTime),
+                                                     null,
+                                                     null,
+                                                     onEnd
                                                  ));
         }
 
@@ -178,9 +182,7 @@ namespace Managers
             if (EventSystem.current.IsPointerOverGameObject()) return;
             // Determine how much to move the camera
             Vector3 offset = mainCamera.ScreenToViewportPoint(lastPanPosition - newPanPosition);
-            Vector3 move = m_In2D ?
-                new Vector3(offset.x * PAN_SPEED, offset.y * PAN_SPEED, 0f) :
-                new Vector3(offset.x * PAN_SPEED, 0f, offset.y * PAN_SPEED);
+            var move = new Vector3(offset.x * PAN_SPEED, offset.y * PAN_SPEED, 0f);
 
             // Perform the movement
             Transform movedTransform;
@@ -190,9 +192,7 @@ namespace Managers
             Vector3 position = movedTransform.position;
 
             position.x = Mathf.Clamp(position.x, BOUNDS_X[0], BOUNDS_X[1]);
-
-            if (m_In2D) position.y = Mathf.Clamp(position.y, BOUNDS_Y[0], BOUNDS_Y[1]);
-            else position.z = Mathf.Clamp(position.z, BOUNDS_Y[0], BOUNDS_Y[1]);
+            position.y = m_In2D ? Mathf.Clamp(position.y, BOUNDS_Y[0], BOUNDS_Y[1]) : Mathf.Clamp(position.y, BOUNDS_Y_3D[0], BOUNDS_Y_3D[1]);
 
             transform.position = position;
 
