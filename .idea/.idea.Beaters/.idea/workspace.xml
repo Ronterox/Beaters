@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Utilities/FPS COUNTER.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Utilities/FPS COUNTER.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,13 +62,14 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/MakerNote.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/NoteObject.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -85,8 +86,8 @@
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -118,7 +119,7 @@
       <updated>1620082581743</updated>
       <workItem from="1620082589263" duration="8680000" />
       <workItem from="1620128877234" duration="15877000" />
-      <workItem from="1620149915488" duration="18282000" />
+      <workItem from="1620149915488" duration="19818000" />
     </task>
     <servers />
   </component>

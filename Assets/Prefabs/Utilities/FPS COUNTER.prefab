@@ -46,3 +46,5 @@ MonoBehaviour:
   updateInterval: 0.5
   screenPosOffset: {x: 0, y: 0}
   fontSize: 24
+  seeFps: 1
+  seeMemoryUsage: 1

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Core;
+using DG.Tweening;
 using Plugins.Tools;
 using TMPro;
 using UnityEngine;
@@ -14,8 +15,7 @@ namespace Utilities
     {
         public ushort id;
         public float bpm, startDelay;
-        //public SerializedAudioClip mapSong;
-        public AudioClip audioClip;
+        public SerializedAudioClip mapSong;
         public Note[] notes;
 
         public void SetNotes(Note[] newNotes) => notes = newNotes;
@@ -105,6 +105,10 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
+        private void OnEnable() => LoadMapsData();
+
+        private void OnDisable() => SaveMapsData();
+
         private void Start()
         {
             songNameInputField.onSubmit.AddListener(StartCreating);
@@ -187,6 +191,9 @@ namespace Utilities
         private void SetState(string text)
         {
             if (stateText) stateText.text = text;
+
+            const float duration = .2f;
+            stateText.transform.DOScale(2, duration).OnComplete(() => stateText.transform.DOScale(1, duration));
         }
 
         private int GetBpm()
@@ -281,7 +288,7 @@ namespace Utilities
 
             ushort hashName = mapName.GetHashCodeUshort();
             SoundMap soundMap = soundMaps.FirstOrDefault(map => map.id == hashName);
-            if (soundMap.id != hashName)
+            if (soundMap == null)
             {
                 StartCreating(mapName);
             }

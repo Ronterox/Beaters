@@ -68,7 +68,8 @@ namespace Core
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
             
-            SoundManager.Instance.PlayBackgroundMusicNoFade(soundMap.audioClip, soundMap.startDelay);
+            //TODO:Get Audio clip was serializable
+            //SoundManager.Instance.PlayBackgroundMusicNoFade(soundMap.audioClip, soundMap.startDelay);
             
             print("Started Map!");
         }
