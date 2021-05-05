@@ -292,16 +292,15 @@ namespace Utilities
 
             ushort hashName = mapName.GetHashCodeUshort();
             SoundMap soundMap = soundMaps.FirstOrDefault(map => map.id == hashName);
+
             if (soundMap == null)
             {
-                StartCreating(mapName);
+                StartCreating(mapName);   
             }
             else
             {
-                if (m_CurrentMapGameObject) Destroy(m_CurrentMapGameObject);
-                
-                StartCreating(mapName);
-
+                IsCreating = true;
+                CreateMapHolder(mapName);
                 soundMap.notes?.ForEach(GenerateNote);
                 SetState($"Loaded map {mapName} successfully!");
             }
