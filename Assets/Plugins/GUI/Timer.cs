@@ -15,7 +15,7 @@ namespace Plugins.GUI
         private bool hasText;
         private bool started;
 
-        protected virtual void Awake() => hasText = timerText != null;
+        protected virtual void Start() => hasText = timerText != null;
         private void Update()
         {
             if (!started || p_timer < 0) return;

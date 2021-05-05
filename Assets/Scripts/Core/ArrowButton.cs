@@ -18,7 +18,7 @@ namespace Core
 
         public event ButtonEvent onButtonPress, onButtonRelease;
 
-        private void Awake() => m_DefaultScale = transform.localScale;
+        private void Start() => m_DefaultScale = transform.localScale;
 
         private void OnEnable() => onButtonPress += CheckButton;
 

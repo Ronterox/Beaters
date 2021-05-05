@@ -97,6 +97,7 @@
             <e p="GameManager.cs" t="Include" />
           </e>
           <e p="Utilities" t="Include">
+            <e p="HoldableButton.cs" t="Include" />
             <e p="SongMapMaker.cs" t="Include" />
           </e>
         </e>

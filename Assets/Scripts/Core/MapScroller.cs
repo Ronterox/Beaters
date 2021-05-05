@@ -53,7 +53,7 @@ namespace Core
 
         private AudioClip m_CurrentSong;
 
-        private void Awake() => ResetPos();
+        private void Start() => ResetPos();
 
         public void StartMap()
         {

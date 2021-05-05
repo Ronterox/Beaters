@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Core;
 using DG.Tweening;
-using Plugins.Properties;
 using Plugins.Tools;
 using TMPro;
 using UnityEngine;
@@ -39,6 +38,7 @@ namespace Utilities
     public struct SerializableAudioClip
     {
         public string name;
+        [HideInInspector]
         public float[] audioData;
         public int samples, channels, frecuency;
 
@@ -72,12 +72,11 @@ namespace Utilities
         public Image image;
         public NoteObject noteObject;
         [Space]
-        public Button button;
+        public HoldableButton button;
     }
 
     public class SongMapMaker : MonoBehaviour
     {
-        [Information("This is temporal", InformationAttribute.InformationType.Info, true)]
         public AudioClip defaultSong;
         [Header("Config")]
         public TMP_Text stateText;
@@ -106,15 +105,15 @@ namespace Utilities
         private const string MAPS_FILE = "soundmaps";
         private const int DEFAULT_BPM = 120;
 
+        private bool m_IsHoldingNote;
+
         private void Awake()
         {
             m_PreviewTransform = preview.transform;
             m_MainCamera = Camera.main;
         }
 
-        private void OnEnable() => LoadMapsData();
-
-        private void OnDisable() => SaveMapsData();
+        //TODO: OnEnable is called and OnDisable whenever you exit or entered the inspector. Don't load things on start or awake (files)
 
         private void Start()
         {
@@ -126,7 +125,7 @@ namespace Utilities
 
             foreach (MakerNote makerNote in makerNotes)
             {
-                makerNote.button.onClick.AddListener(() =>
+                makerNote.button.onButtonDown += () =>
                 {
                     if (IsCreating)
                     {
@@ -134,9 +133,16 @@ namespace Utilities
                         preview.color = makerNote.image.color;
                         m_SelectedGameObject = makerNote.noteObject.gameObject;
                         m_SelectedId = makerNote.id;
+                        m_IsHoldingNote = true;
                     }
-                });
+                };
             }
+        }
+
+        private void CleanPreview()
+        {
+            preview.sprite = null;
+            m_SelectedGameObject = null;
         }
 
         private void Update()
@@ -145,6 +151,7 @@ namespace Utilities
 
             Vector3 mousePosition = Input.mousePosition;
 
+            //Set the position relative to the camera vision
             mousePosition.z = Mathf.Abs(m_MainCamera.transform.position.z);
 
             mousePosition = m_MainCamera.ScreenToWorldPoint(mousePosition);
@@ -153,22 +160,11 @@ namespace Utilities
             mousePosition.y = Mathf.RoundToInt(mousePosition.y);
             mousePosition.z = 0;
 
+            //Position preview where the mouse is supposed to be
             m_PreviewTransform.position = mousePosition;
 
+            //Check to destroy a tile note
             if (Input.GetMouseButtonDown(0))
-            {
-                if (EventSystem.current.IsPointerOverGameObject() || Physics2D.CircleCast(mousePosition, .4f, Vector2.zero)) return;
-
-                if (m_SelectedGameObject && m_CurrentMapGameObject)
-                {
-                    Instantiate(m_SelectedGameObject,
-                                mousePosition,
-                                m_SelectedGameObject.transform.rotation,
-                                m_CurrentMapGameObject.transform)
-                        .GetComponent<NoteObject>().MakerId = m_SelectedId;
-                }
-            }
-            else if (Input.GetMouseButtonDown(1))
             {
                 RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, notesLayer);
                 if (result)
@@ -176,6 +172,23 @@ namespace Utilities
                     Destroy(result.collider.gameObject);
                 }
             }
+
+            //Check for holding note and dropping
+            if (!m_IsHoldingNote || !Input.GetMouseButtonUp(0)) return;
+
+            if (EventSystem.current.IsPointerOverGameObject() || Physics2D.CircleCast(mousePosition, .4f, Vector2.zero)) return;
+
+            if (m_SelectedGameObject && m_CurrentMapGameObject)
+            {
+                Instantiate(m_SelectedGameObject,
+                            mousePosition,
+                            m_SelectedGameObject.transform.rotation,
+                            m_CurrentMapGameObject.transform)
+                    .GetComponent<NoteObject>().MakerId = m_SelectedId;
+
+                CleanPreview();
+            }
+            m_IsHoldingNote = false;
         }
 
         public void StartCreating(string map)
@@ -260,8 +273,7 @@ namespace Utilities
         public void StopCreating()
         {
             IsCreating = false;
-            preview.sprite = null;
-            m_SelectedGameObject = null;
+            CleanPreview();
             SetState(mapScroller.IsStarted ? "Playing Map" : "Not working on map");
         }
 
@@ -295,7 +307,7 @@ namespace Utilities
 
             if (soundMap == null)
             {
-                StartCreating(mapName);   
+                StartCreating(mapName);
             }
             else
             {
@@ -305,7 +317,7 @@ namespace Utilities
 
                 bpmInputField.text = soundMap.bpm + "";
                 songDelayInputField.text = soundMap.startDelay + "";
-                
+
                 SetState($"Loaded map {mapName} successfully!");
             }
 

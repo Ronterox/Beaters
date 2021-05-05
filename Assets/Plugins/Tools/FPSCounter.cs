@@ -64,7 +64,7 @@ namespace Plugins.Tools
 
             float height = style.lineHeight + 16 + fontSize;
             float width = 200 - m_SafeZone + fontSize * 2.5f;
-            
+
             if (seeFps)
             {
                 var frameBox = new Rect(Screen.width - (width + screenPosOffset.x), screenPosOffset.y, width, height);
