@@ -69,7 +69,7 @@ namespace Plugins.Tools
             {
                 var frameBox = new Rect(Screen.width - (width + screenPosOffset.x), screenPosOffset.y, width, height);
                 UnityEngine.GUI.Box(frameBox, $"FPS, Build v{Application.version}", labelStyle);
-                UnityEngine.GUI.Label(frameBox, $"{m_Fps:F2}");
+                UnityEngine.GUI.Label(frameBox, $"{m_Fps:F2}", style);
             }
 
             if (seeMemoryUsage)
@@ -79,7 +79,7 @@ namespace Plugins.Tools
                 UnityEngine.GUI.Box(frameBox2, "Memory", labelStyle);
                 UnityEngine.GUI.Label(frameBox2, $"TotalAllocatedMemory : {Profiler.GetTotalAllocatedMemoryLong() / 1048576}mb"
                                                  + $"\nTotalReservedMemory : {Profiler.GetTotalReservedMemoryLong() / 1048576}mb"
-                                                 + $"\nTotalUnusedReservedMemory : {Profiler.GetTotalUnusedReservedMemoryLong() / 1048576}mb");
+                                                 + $"\nTotalUnusedReservedMemory : {Profiler.GetTotalUnusedReservedMemoryLong() / 1048576}mb", style);
 
                 var frameBox3 = new Rect(Screen.width - 150, 30 + height * 2, 300 - m_SafeZone, height);
                 UnityEngine.GUI.Label(frameBox3, $"Room : {SceneManager.GetActiveScene().name}");
