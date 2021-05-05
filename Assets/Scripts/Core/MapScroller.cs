@@ -32,7 +32,8 @@ namespace Core
     public class MapScroller : MonoBehaviour
     {
         [Plugins.Properties.ReadOnly]
-        public SoundMap soundMap;
+        [SerializeField] private SoundMap m_SoundMap;
+
         public Difficulty difficulty;
         public Instrument instrument;
 
@@ -49,11 +50,13 @@ namespace Core
         private bool m_WaitingForBeat;
         private WaitForSeconds m_WaitForSeconds;
 
+        private AudioClip m_CurrentSong;
+
         private void Awake()
         {
-            bps = soundMap.bpm / 60 * (float)difficulty;
+            bps = m_SoundMap.bpm / 60 * (float)difficulty;
 
-            float ms = 60000 / soundMap.bpm;
+            float ms = 60000 / m_SoundMap.bpm;
             float secs = ms * 0.001f;
 
             m_WaitForSeconds = new WaitForSeconds(secs);
@@ -63,14 +66,13 @@ namespace Core
         public void StartMap()
         {
             IsStarted = true;
-            transform.position.Set(0, 0,0);
+            transform.position.Set(0, 0, 0);
 
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
-            
-            //TODO:Get Audio clip was serializable
-            //SoundManager.Instance.PlayBackgroundMusicNoFade(soundMap.audioClip, soundMap.startDelay);
-            
+
+            SoundManager.Instance.PlayBackgroundMusicNoFade(m_SoundMap.audioClip, m_SoundMap.startDelay);
+
             print("Started Map!");
         }
 
@@ -93,9 +95,8 @@ namespace Core
         private void Update()
         {
             if (!IsStarted) return;
-            
-            //TODO: Have song so we can use songDeltaTime
-            transform.position -= new Vector3(0f, bps * Time.deltaTime, 0f);
+
+            transform.position -= new Vector3(0f, bps * SoundManager.songDeltaTime, 0f);
 
             AnimateBeat();
         }
@@ -114,6 +115,12 @@ namespace Core
 
             yield return m_WaitForSeconds;
             m_WaitingForBeat = false;
+        }
+
+        public void SetSoundMap(SoundMap soundMap)
+        {
+            m_SoundMap = soundMap;
+            m_CurrentSong = m_SoundMap.audioClip;
         }
     }
 }

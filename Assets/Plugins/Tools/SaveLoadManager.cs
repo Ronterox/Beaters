@@ -84,7 +84,7 @@ namespace Plugins.Tools
             // if the MMSaves directory or the save file doesn't exist, there's nothing to load, we do nothing and exit
             if (!Directory.Exists(savePath) || !File.Exists(saveFileName))
             {
-                Debug.LogError("File doesn't exist" + saveFileName);
+                throw new SavedGameNotFoundException(saveFileName);
             }
 
             try
@@ -94,7 +94,7 @@ namespace Plugins.Tools
                 returnObject = (T)formatter.Deserialize(saveFile);
                 saveFile.Close();
             }
-            catch { throw new SavedGameNotFoundException(saveFileName); }
+            catch(Exception exception) { throw new Exception($"Error: {exception.Message}. \nWhile deserializing {saveFileName}"); }
 
             return returnObject;
         }

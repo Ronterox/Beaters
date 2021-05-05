@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a9085559a1187649d842a1f2370313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultSong: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
+  stateText: {fileID: 0}
+  mapScroller: {fileID: 0}
   makerNotes:
   - id: 0
     image: {fileID: 0}
@@ -64,13 +67,11 @@ MonoBehaviour:
   notesLayer:
     serializedVersion: 2
     m_Bits: 8
+  bpmInputField: {fileID: 0}
+  songDelayInputField: {fileID: 0}
+  songNameInputField: {fileID: 0}
   preview: {fileID: 1113148079}
-  soundMaps:
-  - id: 0
-    bpm: 125
-    startDelay: 0
-    audioClip: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
-    notes: []
+  soundMaps: []
 --- !u!212 &1113148079
 SpriteRenderer:
   m_ObjectHideFlags: 0

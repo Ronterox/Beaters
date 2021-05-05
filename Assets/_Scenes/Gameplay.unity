@@ -701,10 +701,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1626954210}
     - target: {fileID: 3680194893683865145, guid: b4f54655fb247cb60b05ce69455882ee, type: 3}
-      propertyPath: soundMaps.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3680194893683865145, guid: b4f54655fb247cb60b05ce69455882ee, type: 3}
       propertyPath: makerNotes.Array.data[0].image
       value: 
       objectReference: {fileID: 1737805827}

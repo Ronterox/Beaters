@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core;
 using DG.Tweening;
+using Plugins.Properties;
 using Plugins.Tools;
 using TMPro;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Utilities
     {
         public ushort id;
         public float bpm, startDelay;
-        public SerializedAudioClip mapSong;
+        public SerializableAudioClip audioClip;
         public Note[] notes;
 
         public void SetNotes(Note[] newNotes) => notes = newNotes;
@@ -35,29 +36,33 @@ namespace Utilities
     }
 
     [System.Serializable]
-    public class SerializedAudioClip
+    public struct SerializableAudioClip
     {
         public string name;
-        public int sampleRate = 44100;
-        public float frequency = 440;
+        public float[] audioData;
+        public int samples, channels, frecuency;
 
-        /*
-        public AudioClip GetAudio()
+        public SerializableAudioClip(AudioClip audioClip)
         {
-            AudioSource audioSource = GetComponent<AudioSource>();
-            float[] samples = new float[audioSource.clip.samples * audioSource.clip.channels];
-            audioSource.clip.GetData(samples, 0);
+            name = audioClip.name;
+            samples = audioClip.samples;
+            channels = audioClip.channels;
+            audioData = new float[samples * channels];
+            frecuency = audioClip.frequency;
 
-            for (int i = 0; i < samples.Length; ++i)
-            {
-                samples[i] = samples[i] * 0.5f;
-            }
+            audioClip.GetData(audioData, 0);
 
-            audioSource.clip.SetData(samples, 0);
-            
-            AudioClip myClip = AudioClip.Create("MySinusoid", samplerate * 2, 1, samplerate, true, OnAudioRead, OnAudioSetPosition);
+            for (var i = 0; i < audioData.Length; ++i) audioData[i] = audioData[i] * 0.5f;
         }
-        */
+
+        public static implicit operator AudioClip(SerializableAudioClip serializableAudioClip)
+        {
+            var clip = AudioClip.Create(serializableAudioClip.name, serializableAudioClip.samples, serializableAudioClip.channels, serializableAudioClip.frecuency, false);
+            clip.SetData(serializableAudioClip.audioData, 0);
+            return clip;
+        }
+
+        public static implicit operator SerializableAudioClip(AudioClip audioClip) => new SerializableAudioClip(audioClip);
     }
 
     [System.Serializable]
@@ -72,6 +77,8 @@ namespace Utilities
 
     public class SongMapMaker : MonoBehaviour
     {
+        [Information("This is temporal", InformationAttribute.InformationType.Info, true)]
+        public AudioClip defaultSong;
         [Header("Config")]
         public TMP_Text stateText;
         public MapScroller mapScroller;
@@ -96,7 +103,7 @@ namespace Utilities
         private GameObject m_SelectedGameObject;
         private ushort m_SelectedId;
 
-        private const string MAPS_FILE = "soundmaps.data";
+        private const string MAPS_FILE = "soundmaps";
         private const int DEFAULT_BPM = 120;
 
         private void Awake()
@@ -105,9 +112,9 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
-        private void OnEnable() => LoadMapsData();
+        //private void OnEnable() => LoadMapsData();
 
-        private void OnDisable() => SaveMapsData();
+        //private void OnDisable() => SaveMapsData();
 
         private void Start()
         {
@@ -215,6 +222,7 @@ namespace Utilities
             {
                 soundMap.SetBpmDelay(GetBpm(), GetDelay());
             }
+            print("Updated bpm and Delay!");
         }
 
         private void CreateMapHolder(string map)
@@ -232,16 +240,18 @@ namespace Utilities
 
             int beatsPerMinutes = GetBpm();
             if (beatsPerMinutes == 0) beatsPerMinutes = DEFAULT_BPM;
+            
+            //TODO: upload a song file.
 
-            //TODO: add audio clip somehow
             var soundMap = new SoundMap
             {
                 id = map.GetHashCodeUshort(),
                 startDelay = GetDelay(),
-                bpm = beatsPerMinutes
+                bpm = beatsPerMinutes,
+                audioClip = defaultSong
             };
 
-            mapScroller.soundMap = soundMap;
+            mapScroller.SetSoundMap(soundMap);
             soundMaps.Add(soundMap);
         }
 
@@ -252,8 +262,6 @@ namespace Utilities
             m_SelectedGameObject = null;
             if (m_CurrentMapGameObject)
             {
-                SaveMap(m_CurrentMapGameObject.name);
-
                 bpmInputField.onSubmit.RemoveListener(UpdateBpmDelay);
                 songDelayInputField.onSubmit.RemoveListener(UpdateBpmDelay);
             }

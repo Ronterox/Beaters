@@ -49,10 +49,10 @@ namespace Managers
     
     public class DataManager : PersistentSingleton<DataManager>
     {
-        public static PlayerData playerData;
+        public static PlayerData playerData = new PlayerData();
 
         private static double startPlayingTime;
-        private const string PLAYER_FILE = "player.data";
+        private const string PLAYER_FILE = "player";
 
         private static List<SerializableSong> m_SongsList = new List<SerializableSong>();
         private static List<SerializableItem> m_ItemsList = new List<SerializableItem>();
