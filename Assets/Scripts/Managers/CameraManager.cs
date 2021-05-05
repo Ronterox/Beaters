@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Managers
 {
-    public class CameraManager : MonoBehaviour
+    public class CameraManager : Singleton<CameraManager>
     {
         public Camera mainCamera;
 
@@ -30,6 +30,8 @@ namespace Managers
         
         private const float ZOOM_SPEED_TOUCH = 0.1f;
 #endif
+        public bool CanDoPanning { get; set; }
+        
         private bool m_IsPanning;
 
         private const float PAN_SPEED = 20f;
@@ -41,13 +43,17 @@ namespace Managers
 
         private static readonly float[] ZOOM_BOUNDS = { 10f, 85f };
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             if (!mainCamera) mainCamera = Camera.main;
+            CanDoPanning = true;
         }
 
         private void Update()
         {
+            if(!CanDoPanning) return;
+            
 #if UNITY_ANDROID || UNITY_IPHONE
             HandleTouch();
 #else

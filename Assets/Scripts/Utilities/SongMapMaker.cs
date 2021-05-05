@@ -164,7 +164,7 @@ namespace Utilities
             m_PreviewTransform.position = mousePosition;
 
             //Check to destroy a tile note
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !m_IsHoldingNote)
             {
                 RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, notesLayer);
                 if (result)

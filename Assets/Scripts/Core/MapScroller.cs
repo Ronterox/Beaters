@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using DG.Tweening;
 using Managers;
@@ -65,6 +64,8 @@ namespace Core
 
             SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, m_SoundMap.startDelay);
 
+            CameraManager.Instance.CanDoPanning = false;
+
             print("Started Map!");
         }
 
@@ -74,6 +75,8 @@ namespace Core
         {
             IsStarted = true;
             SoundManager.Instance.UnPauseBackgroundMusic();
+            
+            CameraManager.Instance.CanDoPanning = false;
 
             print("Resumed Map!");
         }
@@ -85,6 +88,8 @@ namespace Core
 
             StopCoroutine(AnimateBeatCoroutine());
             m_WaitingForBeat = false;
+            
+            CameraManager.Instance.CanDoPanning = true;
 
             print("Stopped Map!");
         }
