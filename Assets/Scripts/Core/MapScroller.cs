@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using Managers;
@@ -52,12 +53,12 @@ namespace Core
 
         private AudioClip m_CurrentSong;
 
+        private void Awake() => ResetPos();
+
         public void StartMap()
         {
-            if (IsStarted) StopMap();
-            else IsStarted = true;
-            
-            transform.position.Set(0f, 0f, 0f);
+            ResetPos();
+            IsStarted = true;
 
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
@@ -66,6 +67,8 @@ namespace Core
 
             print("Started Map!");
         }
+
+        public void ResetPos() => transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         public void ResumeMap()
         {

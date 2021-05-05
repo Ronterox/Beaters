@@ -302,8 +302,14 @@ namespace Utilities
                 IsCreating = true;
                 CreateMapHolder(mapName);
                 soundMap.notes?.ForEach(GenerateNote);
+
+                bpmInputField.text = soundMap.bpm + "";
+                songDelayInputField.text = soundMap.startDelay + "";
+                
                 SetState($"Loaded map {mapName} successfully!");
             }
+
+            mapScroller.ResetPos();
         }
 
         private void GenerateNote(Note note)
