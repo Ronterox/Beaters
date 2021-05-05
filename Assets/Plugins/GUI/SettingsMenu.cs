@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Plugins.GUI
 {
     [System.Serializable]
-    public struct Settings
+    public class Settings
     {
         public float generalVolume;
         public float uiVolume;
@@ -20,8 +20,8 @@ namespace Plugins.GUI
 
     public class SettingsMenu : MonoBehaviour
     {
-        private Settings settings;
-
+        public Settings settings;
+        
         private Resolution[] resolutions;
 
         [SerializeField] private Slider generalVolume;
@@ -34,7 +34,6 @@ namespace Plugins.GUI
         [SerializeField] private TMP_Dropdown resolutionDropdown;
 
         private const string SAVED_FILENAME = "settings.cfg";
-        private const string SAVED_FOLDERNAME = "SavedStates";
         private void Start()
         {
             SetSystemResolutions();
@@ -67,9 +66,9 @@ namespace Plugins.GUI
         /// </summary>
         private void CheckForSavedSettings()
         {
-            if (SaveLoadManager.SaveExists(SAVED_FILENAME, SAVED_FOLDERNAME))
+            if (SaveLoadManager.SaveExists(SAVED_FILENAME))
             {
-                settings = SaveLoadManager.Load<Settings>(SAVED_FILENAME, SAVED_FOLDERNAME);
+                settings = SaveLoadManager.Load<Settings>(SAVED_FILENAME);
 #if !UNITY_EDITOR
                 SetResolution(settings.resolution);
                 SetFullscreen(settings.fullScreen);
@@ -150,6 +149,6 @@ namespace Plugins.GUI
         /// <param name="isFullscreen"></param>
         public void SetFullscreen(bool isFullscreen) => Screen.fullScreen = settings.fullScreen = isFullscreen;
 
-        private void SaveSettings() => SaveLoadManager.Save(settings, SAVED_FILENAME, SAVED_FOLDERNAME);
+        private void SaveSettings() => SaveLoadManager.Save(settings, SAVED_FILENAME);
     }
 }

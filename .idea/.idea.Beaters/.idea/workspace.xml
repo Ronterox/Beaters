@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Utilities/SongMapMaker Interface.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Utilities/SongMapMaker Interface.prefab.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Utilities/SongMapMaker.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Utilities/SongMapMaker.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/NoteObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/NoteObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,9 +64,11 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/NoteObject.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -121,7 +118,7 @@
       <updated>1620082581743</updated>
       <workItem from="1620082589263" duration="8680000" />
       <workItem from="1620128877234" duration="15877000" />
-      <workItem from="1620149915488" duration="16317000" />
+      <workItem from="1620149915488" duration="18282000" />
     </task>
     <servers />
   </component>

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace Utilities
 {
     [System.Serializable]
-    public struct SoundMap
+    public class SoundMap
     {
         public ushort id;
         public float bpm, startDelay;
@@ -219,7 +219,7 @@ namespace Utilities
 
             m_CurrentMapGameObject = new GameObject
             {
-                name = map, 
+                name = map,
                 transform = { parent = mapScroller.transform }
             };
 
@@ -233,7 +233,7 @@ namespace Utilities
                 startDelay = GetDelay(),
                 bpm = beatsPerMinutes
             };
-            
+
             mapScroller.soundMap = soundMap;
             soundMaps.Add(soundMap);
         }
@@ -246,7 +246,7 @@ namespace Utilities
             if (m_CurrentMapGameObject)
             {
                 SaveMap(m_CurrentMapGameObject.name);
-                
+
                 bpmInputField.onSubmit.RemoveListener(UpdateBpmDelay);
                 songDelayInputField.onSubmit.RemoveListener(UpdateBpmDelay);
             }
@@ -294,19 +294,15 @@ namespace Utilities
 
         private void GenerateNote(Note note)
         {
-            foreach (MakerNote makerNote in makerNotes)
+            foreach (MakerNote makerNote in makerNotes.Where(mNote => mNote.id == note.id))
             {
-                if (note.id == makerNote.id)
-                {
-                    var position = new Vector3 { x = note.x, y = note.y, z = note.z };
-                    GameObject obj = makerNote.noteObject.gameObject;
-                    Instantiate(obj,
-                                position,
-                                obj.transform.rotation,
-                                m_CurrentMapGameObject.transform)
-                        .GetComponent<NoteObject>().MakerId = m_SelectedId;
-                    return;
-                }
+                var position = new Vector3 { x = note.x, y = note.y, z = note.z };
+                GameObject obj = makerNote.noteObject.gameObject;
+                Instantiate(obj,
+                            position,
+                            obj.transform.rotation,
+                            m_CurrentMapGameObject.transform)
+                    .GetComponent<NoteObject>().MakerId = m_SelectedId;
             }
         }
 
@@ -319,22 +315,18 @@ namespace Utilities
             }
 
             ushort hashName = mapName.GetHashCodeUshort();
-
-            foreach (SoundMap soundMap in soundMaps)
+            foreach (SoundMap soundMap in soundMaps.Where(soundMap => soundMap.id == hashName))
             {
-                if (soundMap.id == hashName)
-                {
-                    NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
+                NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
+                List<Note> notes = (
+                    from noteObject in noteObjects
+                    let position = noteObject.transform.position
+                    select new Note { id = noteObject.MakerId, x = position.x, y = position.y, z = position.z }).ToList();
 
-                    List<Note> notes = (
-                        from noteObject in noteObjects
-                        let position = noteObject.transform.position
-                        select new Note { id = noteObject.MakerId, x = position.x, y = position.y, z = position.z }).ToList();
+                soundMap.SetNotes(notes.ToArray());
 
-                    soundMap.SetNotes(notes.ToArray());
-                    soundMap.SetBpmDelay(GetBpm(), GetDelay());
-                    return;
-                }
+                soundMap.SetBpmDelay(GetBpm(), GetDelay());
+                return;
             }
 
             StartCreating(mapName);

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Managers
 {
     [System.Serializable]
-    public struct PlayerData
+    public class PlayerData
     {
         public int tapsDone;
         public double timePlayed;
@@ -17,20 +17,20 @@ namespace Managers
     }
 
     [System.Serializable]
-    public struct SerializableItem
+    public class SerializableItem
     {
         public ushort itemId;
         public int quantity;
 
-        public void Set(SerializableItem serializableItem)
+        public void SetItem(SerializableItem item)
         {
-            itemId = serializableItem.itemId;
-            quantity = serializableItem.quantity;
+            itemId = item.itemId;
+            quantity = item.quantity;
         }
     }
 
     [System.Serializable]
-    public struct SerializableSong
+    public class SerializableSong
     {
         public ushort songId;
 
@@ -38,36 +38,21 @@ namespace Managers
         public bool isCompleted;
 
         public int highestCombo;
-
-        public void Set(SerializableSong serializableSong)
-        {
-            songId = serializableSong.songId;
-            completedDifficulties = serializableSong.completedDifficulties;
-            isCompleted = serializableSong.isCompleted;
-            highestCombo = serializableSong.highestCombo;
-        }
     }
 
     [System.Serializable]
-    public struct SerializableCharacter
+    public class SerializableCharacter
     {
         public ushort characterId;
         public int lvl, xp;
-
-        public void Set(SerializableCharacter character)
-        {
-            characterId = character.characterId;
-            lvl = character.lvl;
-            xp = character.xp;
-        }
     }
+    
     public class DataManager : PersistentSingleton<DataManager>
     {
         public static PlayerData playerData;
 
         private static double startPlayingTime;
         private const string PLAYER_FILE = "player.data";
-
 
         private static List<SerializableSong> m_SongsList = new List<SerializableSong>();
         private static List<SerializableItem> m_ItemsList = new List<SerializableItem>();
@@ -116,9 +101,8 @@ namespace Managers
                 completedDifficulties = song.completedDifficulties
             };
 
-            foreach (SerializableSong sSong in m_SongsList.Where(sSong => sSong.songId == serializableSong.songId))
+            if (m_SongsList.Where(sSong => sSong.songId == serializableSong.songId).Select(sSong => serializableSong).Any())
             {
-                sSong.Set(serializableSong);
                 return;
             }
             m_SongsList.Add(serializableSong);
@@ -136,8 +120,11 @@ namespace Managers
             {
                 serializableItem.quantity += sItem.quantity;
 
-                if (serializableItem.quantity <= 0) m_ItemsList.Remove(sItem);
-                else sItem.Set(serializableItem);
+                if (serializableItem.quantity <= 0)
+                {
+                    m_ItemsList.Remove(sItem);
+                }
+                else sItem.SetItem(serializableItem);
 
                 return;
             }
@@ -153,9 +140,8 @@ namespace Managers
                 xp = character.xp
             };
 
-            foreach (SerializableCharacter sChar in m_CharactersList.Where(chara => chara.characterId == serializableCharacter.characterId))
+            if (m_CharactersList.Where(chara => chara.characterId == serializableCharacter.characterId).Select(sChar => serializableCharacter).Any())
             {
-                sChar.Set(serializableCharacter);
                 return;
             }
             m_CharactersList.Add(serializableCharacter);
