@@ -52,26 +52,17 @@ namespace Core
 
         private AudioClip m_CurrentSong;
 
-        private void Awake()
-        {
-            bps = m_SoundMap.bpm / 60 * (float)difficulty;
-
-            float ms = 60000 / m_SoundMap.bpm;
-            float secs = ms * 0.001f;
-
-            m_WaitForSeconds = new WaitForSeconds(secs);
-            m_AnimationDuration = secs * .5f;
-        }
-
         public void StartMap()
         {
-            IsStarted = true;
-            transform.position.Set(0, 0, 0);
+            if (IsStarted) StopMap();
+            else IsStarted = true;
+            
+            transform.position.Set(0f, 0f, 0f);
 
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
 
-            SoundManager.Instance.PlayBackgroundMusicNoFade(m_SoundMap.audioClip, m_SoundMap.startDelay);
+            SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, m_SoundMap.startDelay);
 
             print("Started Map!");
         }
@@ -88,6 +79,9 @@ namespace Core
         {
             IsStarted = false;
             SoundManager.Instance.PauseBackgroundMusic();
+
+            StopCoroutine(AnimateBeatCoroutine());
+            m_WaitingForBeat = false;
 
             print("Stopped Map!");
         }
@@ -121,6 +115,14 @@ namespace Core
         {
             m_SoundMap = soundMap;
             m_CurrentSong = m_SoundMap.audioClip;
+
+            bps = m_SoundMap.bpm / 60 * (float)difficulty;
+
+            float ms = 60000 / m_SoundMap.bpm;
+            float secs = ms * 0.001f;
+
+            m_WaitForSeconds = new WaitForSeconds(secs);
+            m_AnimationDuration = secs * .5f;
         }
     }
 }

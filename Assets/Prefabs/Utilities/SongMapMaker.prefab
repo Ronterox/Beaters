@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6236228753896143599}
   - component: {fileID: 3680194893683865145}
-  - component: {fileID: 1113148079}
   m_Layer: 0
   m_Name: SongMapMaker
   m_TagString: Untagged
@@ -28,7 +27,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 43.541656, y: 465.20834, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8762197727855858574}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -70,15 +70,46 @@ MonoBehaviour:
   bpmInputField: {fileID: 0}
   songDelayInputField: {fileID: 0}
   songNameInputField: {fileID: 0}
-  preview: {fileID: 1113148079}
+  preview: {fileID: 8762562728396556573}
   soundMaps: []
---- !u!212 &1113148079
+--- !u!1 &9095424532083064560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8762197727855858574}
+  - component: {fileID: 8762562728396556573}
+  m_Layer: 0
+  m_Name: Preview GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8762197727855858574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095424532083064560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6236228753896143599}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &8762562728396556573
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7538077716341244227}
+  m_GameObject: {fileID: 9095424532083064560}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

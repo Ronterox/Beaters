@@ -112,13 +112,16 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
-        //private void OnEnable() => LoadMapsData();
+        private void OnEnable() => LoadMapsData();
 
-        //private void OnDisable() => SaveMapsData();
+        private void OnDisable() => SaveMapsData();
 
         private void Start()
         {
+            bpmInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
+            songDelayInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
             songNameInputField.onSubmit.AddListener(StartCreating);
+
             SetState("Not working on map");
 
             foreach (MakerNote makerNote in makerNotes)
@@ -221,16 +224,15 @@ namespace Utilities
             foreach (SoundMap soundMap in soundMaps.Where(soundMap => soundMap.id == hashName))
             {
                 soundMap.SetBpmDelay(GetBpm(), GetDelay());
+                mapScroller.SetSoundMap(soundMap);
             }
+
             print("Updated bpm and Delay!");
         }
 
         private void CreateMapHolder(string map)
         {
             if (m_CurrentMapGameObject) Destroy(m_CurrentMapGameObject);
-
-            bpmInputField.onSubmit.AddListener(UpdateBpmDelay);
-            songDelayInputField.onSubmit.AddListener(UpdateBpmDelay);
 
             m_CurrentMapGameObject = new GameObject
             {
@@ -240,7 +242,7 @@ namespace Utilities
 
             int beatsPerMinutes = GetBpm();
             if (beatsPerMinutes == 0) beatsPerMinutes = DEFAULT_BPM;
-            
+
             //TODO: upload a song file.
 
             var soundMap = new SoundMap
@@ -260,12 +262,6 @@ namespace Utilities
             IsCreating = false;
             preview.sprite = null;
             m_SelectedGameObject = null;
-            if (m_CurrentMapGameObject)
-            {
-                bpmInputField.onSubmit.RemoveListener(UpdateBpmDelay);
-                songDelayInputField.onSubmit.RemoveListener(UpdateBpmDelay);
-            }
-
             SetState(mapScroller.IsStarted ? "Playing Map" : "Not working on map");
         }
 
@@ -277,7 +273,7 @@ namespace Utilities
             }
         }
 
-        public void SaveMapsData() => SaveLoadManager.Save(soundMaps, MAPS_FILE);
+        public void SaveMapsData() => SaveLoadManager.Save(soundMaps.ToArray(), MAPS_FILE);
 
         public void DeleteMap(string mapName)
         {
@@ -302,7 +298,11 @@ namespace Utilities
             }
             else
             {
-                soundMap.notes.ForEach(GenerateNote);
+                if (m_CurrentMapGameObject) Destroy(m_CurrentMapGameObject);
+                
+                StartCreating(mapName);
+
+                soundMap.notes?.ForEach(GenerateNote);
                 SetState($"Loaded map {mapName} successfully!");
             }
         }
@@ -333,12 +333,12 @@ namespace Utilities
             foreach (SoundMap soundMap in soundMaps.Where(soundMap => soundMap.id == hashName))
             {
                 NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
-                List<Note> notes = (
+                Note[] notes = (
                     from noteObject in noteObjects
                     let position = noteObject.transform.position
-                    select new Note { id = noteObject.MakerId, x = position.x, y = position.y, z = position.z }).ToList();
+                    select new Note { id = noteObject.MakerId, x = position.x, y = position.y, z = position.z }).ToArray();
 
-                soundMap.SetNotes(notes.ToArray());
+                soundMap.SetNotes(notes);
 
                 soundMap.SetBpmDelay(GetBpm(), GetDelay());
                 return;
