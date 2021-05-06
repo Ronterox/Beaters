@@ -27,6 +27,7 @@ namespace Core
 
             gameObject.SetActive(false);
 
+            //TODO: Long note
             //SoundManager.Instance.PlayNonDiegeticSound(mapScroller.instrument.GetAudioClip(sound));
         }
 

@@ -16,26 +16,28 @@ namespace Managers
         [Header("Positions")]
         public float animationMoveSpeed;
         public Vector3 thirdDimensionPosition, secondDimensionPosition;
+        public bool CanDoPanning { get; set; }
 
         private bool m_In2D = true;
 
         private Coroutine m_RotatingCoroutine, m_MovementCoroutine;
 
+        //TODO: Test Touch mode
         private Vector3 lastPanPosition;
+
+        private bool m_IsPanning;
+
 #if UNITY_ANDROID || UNITY_IPHONE
         private int panFingerId; // Touch mode only
 
         private bool wasZoomingLastFrame;    // Touch mode only
         private Vector2[] lastZoomPositions; // Touch mode only
-        
-        private const float ZOOM_SPEED_TOUCH = 0.1f;
-#endif
-        public bool CanDoPanning { get; set; }
-        
-        private bool m_IsPanning;
 
-        private const float PAN_SPEED = 20f;
+        private const float ZOOM_SPEED_TOUCH = 0.1f;
+#else
         private const float ZOOM_SPEED_MOUSE = 10f;
+#endif
+        private const float PAN_SPEED = 20f;
 
         private static readonly float[] BOUNDS_X = { -5f, 5f };
         private static readonly float[] BOUNDS_Y = { -5f, 18f };
@@ -52,8 +54,8 @@ namespace Managers
 
         private void Update()
         {
-            if(!CanDoPanning) return;
-            
+            if (!CanDoPanning) return;
+
 #if UNITY_ANDROID || UNITY_IPHONE
             HandleTouch();
 #else
@@ -163,7 +165,6 @@ namespace Managers
             }
         }
 #else
-
         private void HandleMouse()
         {
             // On mouse down, capture it's position.

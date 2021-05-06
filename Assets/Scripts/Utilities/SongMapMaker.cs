@@ -86,6 +86,8 @@ namespace Utilities
         public LayerMask notesLayer;
         public TMP_InputField bpmInputField, songDelayInputField;
         public TMP_InputField songNameInputField;
+        [Space]
+        public TMP_Text songNameText;
 
         [Header("Feedback Config")]
         public SpriteRenderer preview;
@@ -113,7 +115,7 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
-        //TODO: OnEnable is called and OnDisable whenever you exit or entered the inspector. Don't load things on start or awake (files)
+        //TODO: Show List of maps, OnEnable is called and OnDisable whenever you exit or entered the inspector. Don't load things on start or awake (files)
 
         private void Start()
         {
@@ -317,6 +319,7 @@ namespace Utilities
 
                 bpmInputField.text = soundMap.bpm + "";
                 songDelayInputField.text = soundMap.startDelay + "";
+                songNameText.text = soundMap.audioClip.name;
 
                 SetState($"Loaded map {mapName} successfully!");
             }
@@ -369,5 +372,10 @@ namespace Utilities
         public void SaveMap() => SaveMap(songNameInputField.text);
 
         public void ContinueCreating() => StartCreating(songNameInputField.text);
+
+        public void AskForSoundFile()
+        {
+            
+        }
     }
 }
