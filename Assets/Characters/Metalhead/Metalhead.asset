@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e277ea999410e234c95f9661dfefdb6b, type: 3}
+  m_Name: Metalhead
+  m_EditorClassIdentifier: 
+  id: 1
+  name: Metalhead
+  skill: []
+  colorPalette:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0.03901875, g: 1, b: 0, a: 0}
+  sprites:
+  - {fileID: 21300000, guid: b7e73b010fd3db7b1b0bea3fe5600cb0, type: 3}
+  - {fileID: 21300000, guid: bf1eb0087be170edeb418a8530b11535, type: 3}
+  - {fileID: 21300000, guid: bac2a8c8b296e9a62ad8b82737909d9a, type: 3}
+  - {fileID: 21300000, guid: 7978be4701f65adeb9d0963c4961a92a, type: 3}
+  - {fileID: 21300000, guid: f6ae56a8cd9ce7c4d9414f7c14498a5b, type: 3}
+  items:
+  - {fileID: 11400000, guid: aaaa7a2cc3af499bb975e2e691e2e191, type: 2}
+  - {fileID: 11400000, guid: 1ce0ba3e289b79c889465534fdb2f3e8, type: 2}
+  hp: 100
+  level: 1
