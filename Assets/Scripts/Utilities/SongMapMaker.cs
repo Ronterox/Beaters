@@ -119,7 +119,6 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
-        //TODO: Fix distance of putting 3d view click in case of different pov
 #if !UNITY_EDITOR
         private void OnDestroy() => SaveMapsData();
 #endif

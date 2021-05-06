@@ -5,546 +5,550 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 using UnityEngine.InputSystem;
 #endif
 
 namespace SimpleFileBrowser
 {
-	public class FileBrowser : MonoBehaviour, IListViewAdapter
-	{
-		public enum Permission { Denied = 0, Granted = 1, ShouldAsk = 2 };
-		public enum PickMode { Files = 0, Folders = 1, FilesAndFolders = 2 };
+    public class FileBrowser : MonoBehaviour, IListViewAdapter
+    {
+        public enum Permission { Denied = 0, Granted = 1, ShouldAsk = 2 };
 
-		#region Structs
+        public enum PickMode { Files = 0, Folders = 1, FilesAndFolders = 2 };
+
+        #region Structs
+
 #pragma warning disable 0649
-		[Serializable]
-		private struct FiletypeIcon
-		{
-			public string extension;
-			public Sprite icon;
-		}
+        [Serializable]
+        private struct FiletypeIcon
+        {
+            public string extension;
+            public Sprite icon;
+        }
 
-		[Serializable]
-		private struct QuickLink
-		{
+        [Serializable]
+        private struct QuickLink
+        {
 #if UNITY_EDITOR || ( !UNITY_WSA && !UNITY_WSA_10_0 )
-			public Environment.SpecialFolder target;
+            public Environment.SpecialFolder target;
 #endif
-			public string name;
-			public Sprite icon;
-		}
+            public string name;
+            public Sprite icon;
+        }
 #pragma warning restore 0649
-		#endregion
 
-		#region Inner Classes
-		public class Filter
-		{
-			public readonly string name;
-			public readonly HashSet<string> extensions;
-			public readonly string defaultExtension;
+        #endregion
 
-			internal Filter( string name )
-			{
-				this.name = name;
-				extensions = null;
-				defaultExtension = null;
-			}
+        #region Inner Classes
 
-			public Filter( string name, string extension )
-			{
-				this.name = name;
+        public class Filter
+        {
+            public readonly string name;
+            public readonly HashSet<string> extensions;
+            public readonly string defaultExtension;
 
-				extension = extension.ToLowerInvariant();
-				extensions = new HashSet<string>() { extension };
-				defaultExtension = extension;
-			}
+            internal Filter(string name)
+            {
+                this.name = name;
+                extensions = null;
+                defaultExtension = null;
+            }
 
-			public Filter( string name, params string[] extensions )
-			{
-				this.name = name;
+            public Filter(string name, string extension)
+            {
+                this.name = name;
 
-				for( int i = 0; i < extensions.Length; i++ )
-					extensions[i] = extensions[i].ToLowerInvariant();
+                extension = extension.ToLowerInvariant();
+                extensions = new HashSet<string> { extension };
+                defaultExtension = extension;
+            }
 
-				this.extensions = new HashSet<string>( extensions );
-				defaultExtension = extensions[0];
-			}
+            public Filter(string name, params string[] extensions)
+            {
+                this.name = name;
 
-			public override string ToString()
-			{
-				string result = string.Empty;
+                for (int i = 0; i < extensions.Length; i++)
+                    extensions[i] = extensions[i].ToLowerInvariant();
 
-				if( name != null )
-					result += name;
+                this.extensions = new HashSet<string>(extensions);
+                defaultExtension = extensions[0];
+            }
 
-				if( extensions != null )
-				{
-					if( name != null )
-						result += " (";
+            public override string ToString()
+            {
+                string result = string.Empty;
 
-					int index = 0;
-					foreach( string extension in extensions )
-					{
-						if( index++ > 0 )
-							result += ", " + extension;
-						else
-							result += extension;
-					}
+                if (name != null)
+                    result += name;
 
-					if( name != null )
-						result += ")";
-				}
+                if (extensions != null)
+                {
+                    if (name != null)
+                        result += " (";
 
-				return result;
-			}
-		}
-		#endregion
+                    int index = 0;
+                    foreach (string extension in extensions)
+                    {
+                        if (index++ > 0)
+                            result += ", " + extension;
+                        else
+                            result += extension;
+                    }
 
-		#region Constants
-		private const int FILENAME_INPUT_FIELD_MAX_FILE_COUNT = 7;
-		private const string SAF_PICK_FOLDER_QUICK_LINK_PATH = "SAF_PICK_FOLDER";
-		#endregion
+                    if (name != null)
+                        result += ")";
+                }
 
-		#region Static Variables
-		public static bool IsOpen { get; private set; }
+                return result;
+            }
+        }
 
-		public static bool Success { get; private set; }
-		public static string[] Result { get; private set; }
+        #endregion
 
-		private static bool m_askPermissions = true;
-		public static bool AskPermissions
-		{
-			get { return m_askPermissions; }
-			set { m_askPermissions = value; }
-		}
+        #region Constants
 
-		private static bool m_singleClickMode = false;
-		public static bool SingleClickMode
-		{
-			get { return m_singleClickMode; }
-			set { m_singleClickMode = value; }
-		}
+        private const int FILENAME_INPUT_FIELD_MAX_FILE_COUNT = 7;
+        private const string SAF_PICK_FOLDER_QUICK_LINK_PATH = "SAF_PICK_FOLDER";
+
+        #endregion
+
+        #region Static Variables
+
+        public static bool IsOpen { get; private set; }
+
+        public static bool Success { get; private set; }
+        public static string[] Result { get; private set; }
+
+        private static bool m_askPermissions = true;
+        public static bool AskPermissions
+        {
+            get => m_askPermissions;
+            set => m_askPermissions = value;
+        }
+
+        private static bool m_singleClickMode = false;
+        public static bool SingleClickMode
+        {
+            get => m_singleClickMode;
+            set => m_singleClickMode = value;
+        }
 
 #if UNITY_EDITOR || ( !UNITY_ANDROID && !UNITY_IOS && !UNITY_WSA && !UNITY_WSA_10_0 )
-		private static float m_drivesRefreshInterval = 5f;
+        private static float m_drivesRefreshInterval = 5f;
 #else
 		private static float m_drivesRefreshInterval = -1f;
 #endif
-		public static float DrivesRefreshInterval
-		{
-			get { return m_drivesRefreshInterval; }
-			set { m_drivesRefreshInterval = value; }
-		}
+        public static float DrivesRefreshInterval
+        {
+            get => m_drivesRefreshInterval;
+            set => m_drivesRefreshInterval = value;
+        }
 
-		public static bool ShowHiddenFiles
-		{
-			get { return Instance.showHiddenFilesToggle.isOn; }
-			set { Instance.showHiddenFilesToggle.isOn = value; }
-		}
+        public static bool ShowHiddenFiles
+        {
+            get => Instance.showHiddenFilesToggle.isOn;
+            set => Instance.showHiddenFilesToggle.isOn = value;
+        }
 
-		private static bool m_displayHiddenFilesToggle = true;
-		public static bool DisplayHiddenFilesToggle
-		{
-			get { return m_displayHiddenFilesToggle; }
-			set
-			{
-				if( m_displayHiddenFilesToggle != value )
-				{
-					m_displayHiddenFilesToggle = value;
+        private static bool m_displayHiddenFilesToggle = true;
+        public static bool DisplayHiddenFilesToggle
+        {
+            get { return m_displayHiddenFilesToggle; }
+            set
+            {
+                if (m_displayHiddenFilesToggle == value) return;
+                
+                m_displayHiddenFilesToggle = value;
 
-					if( m_instance )
-					{
-						if( !value )
-							m_instance.showHiddenFilesToggle.gameObject.SetActive( false );
-						else if( m_instance.windowTR.sizeDelta.x >= m_instance.narrowScreenWidth )
-						{
+                if (m_instance)
+                {
+                    if (!value)
+                        m_instance.showHiddenFilesToggle.gameObject.SetActive(false);
+                    else if (m_instance.windowTR.sizeDelta.x >= m_instance.narrowScreenWidth)
+                    {
 #if !UNITY_EDITOR && UNITY_ANDROID
 							if( !FileBrowserHelpers.ShouldUseSAF )
 #endif
-							m_instance.showHiddenFilesToggle.gameObject.SetActive( true );
-						}
-					}
-				}
-			}
-		}
+                        m_instance.showHiddenFilesToggle.gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
 
-		private static string m_allFilesFilterText = "All Files (.*)";
-		public static string AllFilesFilterText
-		{
-			get { return m_allFilesFilterText; }
-			set
-			{
-				if( m_allFilesFilterText != value )
-				{
-					string oldValue = m_allFilesFilterText;
-					m_allFilesFilterText = value;
+        private static string m_allFilesFilterText = "All Files (.*)";
+        public static string AllFilesFilterText
+        {
+            get => m_allFilesFilterText;
+            set
+            {
+                if (m_allFilesFilterText != value)
+                {
+                    string oldValue = m_allFilesFilterText;
+                    m_allFilesFilterText = value;
 
-					if( m_instance )
-					{
-						Filter oldAllFilesFilter = m_instance.allFilesFilter;
-						m_instance.allFilesFilter = new Filter( value );
+                    if (m_instance)
+                    {
+                        Filter oldAllFilesFilter = m_instance.allFilesFilter;
+                        m_instance.allFilesFilter = new Filter(value);
 
-						if( m_instance.filters.Count > 0 && m_instance.filters[0] == oldAllFilesFilter )
-							m_instance.filters[0] = m_instance.allFilesFilter;
+                        if (m_instance.filters.Count > 0 && m_instance.filters[0] == oldAllFilesFilter)
+                            m_instance.filters[0] = m_instance.allFilesFilter;
 
-						if( m_instance.filtersDropdown.options[0].text == oldValue )
-							m_instance.filtersDropdown.options[0].text = value;
-					}
-				}
-			}
-		}
-
-
-		private static string m_foldersFilterText = "Folders";
-		public static string FoldersFilterText
-		{
-			get { return m_foldersFilterText; }
-			set
-			{
-				if( m_foldersFilterText != value )
-				{
-					string oldValue = m_foldersFilterText;
-					m_foldersFilterText = value;
-
-					if( m_instance && m_instance.filtersDropdown.options[0].text == oldValue )
-						m_instance.filtersDropdown.options[0].text = value;
-				}
-			}
-		}
+                        if (m_instance.filtersDropdown.options[0].text == oldValue)
+                            m_instance.filtersDropdown.options[0].text = value;
+                    }
+                }
+            }
+        }
 
 
-		private static string m_pickFolderQuickLinkText = "Browse...";
-		public static string PickFolderQuickLinkText
-		{
-			get { return m_pickFolderQuickLinkText; }
-			set
-			{
-				if( m_pickFolderQuickLinkText != value )
-				{
-					m_pickFolderQuickLinkText = value;
+        private static string m_foldersFilterText = "Folders";
+        public static string FoldersFilterText
+        {
+            get => m_foldersFilterText;
+            set
+            {
+                if (m_foldersFilterText != value)
+                {
+                    string oldValue = m_foldersFilterText;
+                    m_foldersFilterText = value;
 
-					if( m_instance )
-					{
-						for( int i = 0; i < m_instance.allQuickLinks.Count; i++ )
-						{
-							FileBrowserQuickLink quickLink = m_instance.allQuickLinks[i];
-							if( quickLink && quickLink.TargetPath == SAF_PICK_FOLDER_QUICK_LINK_PATH )
-							{
-								quickLink.SetQuickLink( m_instance.driveIcon, value, SAF_PICK_FOLDER_QUICK_LINK_PATH );
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
+                    if (m_instance && m_instance.filtersDropdown.options[0].text == oldValue)
+                        m_instance.filtersDropdown.options[0].text = value;
+                }
+            }
+        }
 
-		private static FileBrowser m_instance = null;
-		private static FileBrowser Instance
-		{
-			get
-			{
-				if( !m_instance )
-				{
-					m_instance = Instantiate( Resources.Load<GameObject>( "SimpleFileBrowserCanvas" ) ).GetComponent<FileBrowser>();
-					DontDestroyOnLoad( m_instance.gameObject );
-					m_instance.gameObject.SetActive( false );
-				}
 
-				return m_instance;
-			}
-		}
-		#endregion
+        private static string m_pickFolderQuickLinkText = "Browse...";
+        public static string PickFolderQuickLinkText
+        {
+            get => m_pickFolderQuickLinkText;
+            set
+            {
+                if (m_pickFolderQuickLinkText == value) return;
+                
+                m_pickFolderQuickLinkText = value;
 
-		#region Variables
+                if (m_instance)
+                {
+                    foreach (FileBrowserQuickLink quickLink in m_instance.allQuickLinks.Where(quickLink => quickLink && quickLink.TargetPath == SAF_PICK_FOLDER_QUICK_LINK_PATH))
+                    {
+                        quickLink.SetQuickLink(m_instance.driveIcon, value, SAF_PICK_FOLDER_QUICK_LINK_PATH);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private static FileBrowser m_instance = null;
+        private static FileBrowser Instance
+        {
+            get
+            {
+                if (m_instance) return m_instance;
+                
+                m_instance = Instantiate(Resources.Load<GameObject>("SimpleFileBrowserCanvas")).GetComponent<FileBrowser>();
+                DontDestroyOnLoad(m_instance.gameObject);
+                m_instance.gameObject.SetActive(false);
+
+                return m_instance;
+            }
+        }
+
+        #endregion
+
+        #region Variables
+
 #pragma warning disable 0649
-		[Header( "Settings" )]
+        [Header("Settings")]
+        [SerializeField]
+        internal Color normalFileColor = Color.white;
+        [SerializeField]
+        internal Color hoveredFileColor = new Color32(225, 225, 255, 255);
+        [SerializeField]
+        internal Color selectedFileColor = new Color32(0, 175, 255, 255);
+        [SerializeField]
+        internal Color wrongFilenameColor = new Color32(255, 100, 100, 255);
 
-		[SerializeField]
-		internal Color normalFileColor = Color.white;
-		[SerializeField]
-		internal Color hoveredFileColor = new Color32( 225, 225, 255, 255 );
-		[SerializeField]
-		internal Color selectedFileColor = new Color32( 0, 175, 255, 255 );
-		[SerializeField]
-		internal Color wrongFilenameColor = new Color32( 255, 100, 100, 255 );
+        [SerializeField]
+        internal int minWidth = 380;
+        [SerializeField]
+        internal int minHeight = 300;
 
-		[SerializeField]
-		internal int minWidth = 380;
-		[SerializeField]
-		internal int minHeight = 300;
+        [SerializeField]
+        private float narrowScreenWidth = 380f;
 
-		[SerializeField]
-		private float narrowScreenWidth = 380f;
+        [SerializeField]
+        private float quickLinksMaxWidthPercentage = 0.4f;
 
-		[SerializeField]
-		private float quickLinksMaxWidthPercentage = 0.4f;
+        [SerializeField]
+        private bool sortFilesByName = true;
 
-		[SerializeField]
-		private bool sortFilesByName = true;
-
-		[SerializeField]
-		private string[] excludeExtensions;
+        [SerializeField]
+        private string[] excludeExtensions;
 
 #pragma warning disable 0414
-		[SerializeField]
-		private QuickLink[] quickLinks;
-		private static bool quickLinksInitialized;
+        [SerializeField]
+        private QuickLink[] quickLinks;
+        private static bool quickLinksInitialized;
 #pragma warning restore 0414
 
-		private readonly HashSet<string> excludedExtensionsSet = new HashSet<string>();
+        private readonly HashSet<string> excludedExtensionsSet = new HashSet<string>();
 
-		[SerializeField]
-		private bool generateQuickLinksForDrives = true;
+        [SerializeField]
+        private bool generateQuickLinksForDrives = true;
 
-		[SerializeField]
-		private bool contextMenuShowDeleteButton = true;
+        [SerializeField]
+        private bool contextMenuShowDeleteButton = true;
 
-		[SerializeField]
-		private bool contextMenuShowRenameButton = true;
+        [SerializeField]
+        private bool contextMenuShowRenameButton = true;
 
-		[SerializeField]
-		private bool showResizeCursor = true;
+        [SerializeField]
+        private bool showResizeCursor = true;
 
-		[Header( "Icons" )]
+        [Header("Icons")]
+        [SerializeField]
+        private Sprite folderIcon;
 
-		[SerializeField]
-		private Sprite folderIcon;
+        [SerializeField]
+        private Sprite driveIcon;
 
-		[SerializeField]
-		private Sprite driveIcon;
+        [SerializeField]
+        private Sprite defaultIcon;
 
-		[SerializeField]
-		private Sprite defaultIcon;
+        [SerializeField]
+        private FiletypeIcon[] filetypeIcons;
 
-		[SerializeField]
-		private FiletypeIcon[] filetypeIcons;
+        private Dictionary<string, Sprite> filetypeToIcon;
 
-		private Dictionary<string, Sprite> filetypeToIcon;
+        [SerializeField]
+        internal Sprite multiSelectionToggleOffIcon;
+        [SerializeField]
+        internal Sprite multiSelectionToggleOnIcon;
 
-		[SerializeField]
-		internal Sprite multiSelectionToggleOffIcon;
-		[SerializeField]
-		internal Sprite multiSelectionToggleOnIcon;
+        [Header("Internal References")]
+        [SerializeField]
+        private FileBrowserMovement window;
+        private RectTransform windowTR;
 
-		[Header( "Internal References" )]
+        [SerializeField]
+        private RectTransform topViewNarrowScreen;
 
-		[SerializeField]
-		private FileBrowserMovement window;
-		private RectTransform windowTR;
+        [SerializeField]
+        private RectTransform middleView;
+        private Vector2 middleViewOriginalPosition;
+        private Vector2 middleViewOriginalSize;
 
-		[SerializeField]
-		private RectTransform topViewNarrowScreen;
+        [SerializeField]
+        private RectTransform middleViewQuickLinks;
+        private Vector2 middleViewQuickLinksOriginalSize;
 
-		[SerializeField]
-		private RectTransform middleView;
-		private Vector2 middleViewOriginalPosition;
-		private Vector2 middleViewOriginalSize;
+        [SerializeField]
+        private RectTransform middleViewFiles;
 
-		[SerializeField]
-		private RectTransform middleViewQuickLinks;
-		private Vector2 middleViewQuickLinksOriginalSize;
+        [SerializeField]
+        private RectTransform middleViewSeparator;
 
-		[SerializeField]
-		private RectTransform middleViewFiles;
+        [SerializeField]
+        private FileBrowserItem itemPrefab;
+        private readonly List<FileBrowserItem> allItems = new List<FileBrowserItem>(16);
+        private float itemHeight;
 
-		[SerializeField]
-		private RectTransform middleViewSeparator;
+        [SerializeField]
+        private FileBrowserQuickLink quickLinkPrefab;
+        private readonly List<FileBrowserQuickLink> allQuickLinks = new List<FileBrowserQuickLink>(8);
 
-		[SerializeField]
-		private FileBrowserItem itemPrefab;
-		private readonly List<FileBrowserItem> allItems = new List<FileBrowserItem>( 16 );
-		private float itemHeight;
+        [SerializeField]
+        private Text titleText;
 
-		[SerializeField]
-		private FileBrowserQuickLink quickLinkPrefab;
-		private readonly List<FileBrowserQuickLink> allQuickLinks = new List<FileBrowserQuickLink>( 8 );
+        [SerializeField]
+        private Button backButton;
 
-		[SerializeField]
-		private Text titleText;
+        [SerializeField]
+        private Button forwardButton;
 
-		[SerializeField]
-		private Button backButton;
+        [SerializeField]
+        private Button upButton;
 
-		[SerializeField]
-		private Button forwardButton;
+        [SerializeField]
+        private InputField pathInputField;
 
-		[SerializeField]
-		private Button upButton;
+        [SerializeField]
+        private RectTransform pathInputFieldSlotTop;
 
-		[SerializeField]
-		private InputField pathInputField;
+        [SerializeField]
+        private RectTransform pathInputFieldSlotBottom;
 
-		[SerializeField]
-		private RectTransform pathInputFieldSlotTop;
+        [SerializeField]
+        private InputField searchInputField;
 
-		[SerializeField]
-		private RectTransform pathInputFieldSlotBottom;
+        [SerializeField]
+        private RectTransform quickLinksContainer;
 
-		[SerializeField]
-		private InputField searchInputField;
+        [SerializeField]
+        private RectTransform filesContainer;
 
-		[SerializeField]
-		private RectTransform quickLinksContainer;
+        [SerializeField]
+        private ScrollRect filesScrollRect;
 
-		[SerializeField]
-		private RectTransform filesContainer;
+        [SerializeField]
+        private RecycledListView listView;
 
-		[SerializeField]
-		private ScrollRect filesScrollRect;
+        [SerializeField]
+        private InputField filenameInputField;
 
-		[SerializeField]
-		private RecycledListView listView;
+        [SerializeField]
+        private Text filenameInputFieldOverlayText;
 
-		[SerializeField]
-		private InputField filenameInputField;
+        [SerializeField]
+        private Image filenameImage;
 
-		[SerializeField]
-		private Text filenameInputFieldOverlayText;
+        [SerializeField]
+        private Dropdown filtersDropdown;
 
-		[SerializeField]
-		private Image filenameImage;
+        [SerializeField]
+        private RectTransform filtersDropdownContainer;
 
-		[SerializeField]
-		private Dropdown filtersDropdown;
+        [SerializeField]
+        private Text filterItemTemplate;
 
-		[SerializeField]
-		private RectTransform filtersDropdownContainer;
+        [SerializeField]
+        private Toggle showHiddenFilesToggle;
 
-		[SerializeField]
-		private Text filterItemTemplate;
+        [SerializeField]
+        private Text submitButtonText;
 
-		[SerializeField]
-		private Toggle showHiddenFilesToggle;
+        [SerializeField]
+        private RectTransform moreOptionsContextMenuPosition;
 
-		[SerializeField]
-		private Text submitButtonText;
+        [SerializeField]
+        private FileBrowserRenamedItem renameItem;
 
-		[SerializeField]
-		private RectTransform moreOptionsContextMenuPosition;
+        [SerializeField]
+        private FileBrowserContextMenu contextMenu;
 
-		[SerializeField]
-		private FileBrowserRenamedItem renameItem;
+        [SerializeField]
+        private FileBrowserDeleteConfirmationPanel deleteConfirmationPanel;
 
-		[SerializeField]
-		private FileBrowserContextMenu contextMenu;
-
-		[SerializeField]
-		private FileBrowserDeleteConfirmationPanel deleteConfirmationPanel;
-
-		[SerializeField]
-		private FileBrowserCursorHandler resizeCursorHandler;
+        [SerializeField]
+        private FileBrowserCursorHandler resizeCursorHandler;
 #pragma warning restore 0649
 
-		internal RectTransform rectTransform;
-		private Canvas canvas;
+        internal RectTransform rectTransform;
+        private Canvas canvas;
 
-		private FileAttributes ignoredFileAttributes = FileAttributes.System;
+        private FileAttributes ignoredFileAttributes = FileAttributes.System;
 
-		private FileSystemEntry[] allFileEntries;
-		private readonly List<FileSystemEntry> validFileEntries = new List<FileSystemEntry>();
-		private readonly List<int> selectedFileEntries = new List<int>( 4 );
-		private readonly List<string> pendingFileEntrySelection = new List<string>();
+        private FileSystemEntry[] allFileEntries;
+        private readonly List<FileSystemEntry> validFileEntries = new List<FileSystemEntry>();
+        private readonly List<int> selectedFileEntries = new List<int>(4);
+        private readonly List<string> pendingFileEntrySelection = new List<string>();
 
 #pragma warning disable 0414 // Value is assigned but never used on Android & iOS
-		private int multiSelectionPivotFileEntry;
+        private int multiSelectionPivotFileEntry;
 #pragma warning restore 0414
-		private StringBuilder multiSelectionFilenameBuilder;
+        private StringBuilder multiSelectionFilenameBuilder;
 
-		private readonly List<Filter> filters = new List<Filter>();
-		private Filter allFilesFilter;
+        private readonly List<Filter> filters = new List<Filter>();
+        private Filter allFilesFilter;
 
-		private bool showAllFilesFilter = true;
+        private bool showAllFilesFilter = true;
 
-		private string defaultInitialPath;
+        private string defaultInitialPath;
 
-		private int currentPathIndex = -1;
-		private readonly List<string> pathsFollowed = new List<string>();
+        private int currentPathIndex = -1;
+        private readonly List<string> pathsFollowed = new List<string>();
 
-		private HashSet<char> invalidFilenameChars;
+        private HashSet<char> invalidFilenameChars;
 
-		private float drivesNextRefreshTime;
+        private float drivesNextRefreshTime;
 #if !UNITY_EDITOR && UNITY_ANDROID
 		private string driveQuickLinks;
 #else
-		private string[] driveQuickLinks;
+        private string[] driveQuickLinks;
 #endif
-		private int numberOfDriveQuickLinks;
+        private int numberOfDriveQuickLinks;
 
-		private bool canvasDimensionsChanged;
+        private bool canvasDimensionsChanged;
 
-		// Required in RefreshFiles() function
-		private PointerEventData nullPointerEventData;
-		#endregion
+        // Required in RefreshFiles() function
+        private PointerEventData nullPointerEventData;
 
-		#region Properties
-		private string m_currentPath = string.Empty;
-		private string CurrentPath
-		{
-			get { return m_currentPath; }
-			set
-			{
+        #endregion
+
+        #region Properties
+
+        private string m_currentPath = string.Empty;
+        private string CurrentPath
+        {
+            get { return m_currentPath; }
+            set
+            {
 #if !UNITY_EDITOR && UNITY_ANDROID
 				if( !FileBrowserHelpers.ShouldUseSAF )
 #endif
-				if( value != null )
-					value = GetPathWithoutTrailingDirectorySeparator( value.Trim() );
+                if (value != null)
+                    value = GetPathWithoutTrailingDirectorySeparator(value.Trim());
 
-				if( string.IsNullOrEmpty( value ) )
-				{
-					pathInputField.text = m_currentPath;
-					return;
-				}
+                if (string.IsNullOrEmpty(value))
+                {
+                    pathInputField.text = m_currentPath;
+                    return;
+                }
 
-				if( m_currentPath != value )
-				{
-					if( !FileBrowserHelpers.DirectoryExists( value ) )
-					{
-						pathInputField.text = m_currentPath;
-						return;
-					}
+                if (m_currentPath != value)
+                {
+                    if (!FileBrowserHelpers.DirectoryExists(value))
+                    {
+                        pathInputField.text = m_currentPath;
+                        return;
+                    }
 
-					m_currentPath = value;
-					pathInputField.text = m_currentPath;
+                    m_currentPath = value;
+                    pathInputField.text = m_currentPath;
 
-					if( currentPathIndex == -1 || pathsFollowed[currentPathIndex] != m_currentPath )
-					{
-						currentPathIndex++;
-						if( currentPathIndex < pathsFollowed.Count )
-						{
-							pathsFollowed[currentPathIndex] = value;
-							for( int i = pathsFollowed.Count - 1; i >= currentPathIndex + 1; i-- )
-								pathsFollowed.RemoveAt( i );
-						}
-						else
-							pathsFollowed.Add( m_currentPath );
-					}
+                    if (currentPathIndex == -1 || pathsFollowed[currentPathIndex] != m_currentPath)
+                    {
+                        currentPathIndex++;
+                        if (currentPathIndex < pathsFollowed.Count)
+                        {
+                            pathsFollowed[currentPathIndex] = value;
+                            for (int i = pathsFollowed.Count - 1; i >= currentPathIndex + 1; i--)
+                                pathsFollowed.RemoveAt(i);
+                        }
+                        else
+                            pathsFollowed.Add(m_currentPath);
+                    }
 
-					backButton.interactable = currentPathIndex > 0;
-					forwardButton.interactable = currentPathIndex < pathsFollowed.Count - 1;
+                    backButton.interactable = currentPathIndex > 0;
+                    forwardButton.interactable = currentPathIndex < pathsFollowed.Count - 1;
 #if !UNITY_EDITOR && UNITY_ANDROID
 					if( FileBrowserHelpers.ShouldUseSAF )
 						upButton.interactable = !string.IsNullOrEmpty( FileBrowserHelpers.GetDirectoryName( m_currentPath ) );
 					else
 #endif
-					upButton.interactable = Directory.GetParent( m_currentPath ) != null;
+                    upButton.interactable = Directory.GetParent(m_currentPath) != null;
 
-					m_searchString = string.Empty;
-					searchInputField.text = m_searchString;
+                    m_searchString = string.Empty;
+                    searchInputField.text = m_searchString;
 
-					multiSelectionPivotFileEntry = 0;
-					filesScrollRect.verticalNormalizedPosition = 1;
+                    multiSelectionPivotFileEntry = 0;
+                    filesScrollRect.verticalNormalizedPosition = 1;
 
-					filenameImage.color = Color.white;
-					if( m_pickerMode != PickMode.Files )
-					{
-						filenameInputField.text = string.Empty;
-						filenameInputField.interactable = true;
-					}
+                    filenameImage.color = Color.white;
+                    if (m_pickerMode != PickMode.Files)
+                    {
+                        filenameInputField.text = string.Empty;
+                        filenameInputField.interactable = true;
+                    }
 
-					// If a quick link points to this directory, highlight it
+                    // If a quick link points to this directory, highlight it
 #if !UNITY_EDITOR && UNITY_ANDROID
 					// Path strings aren't deterministic on Storage Access Framework but the paths' absolute parts usually are
 					if( FileBrowserHelpers.ShouldUseSAF )
@@ -564,137 +568,141 @@ namespace SimpleFileBrowser
 					}
 					else
 #endif
-					{
-						for( int i = 0; i < allQuickLinks.Count; i++ )
-							allQuickLinks[i].SetSelected( allQuickLinks[i].TargetPath == m_currentPath );
-					}
-				}
+                    {
+                        foreach (FileBrowserQuickLink browserQuickLink in allQuickLinks)
+                            browserQuickLink.SetSelected(browserQuickLink.TargetPath == m_currentPath);
+                    }
+                }
 
-				m_multiSelectionToggleSelectionMode = false;
-				RefreshFiles( true );
-			}
-		}
+                m_multiSelectionToggleSelectionMode = false;
+                RefreshFiles(true);
+            }
+        }
 
-		private string m_searchString = string.Empty;
-		private string SearchString
-		{
-			get { return m_searchString; }
-			set
-			{
-				if( m_searchString != value )
-				{
-					m_searchString = value;
-					searchInputField.text = m_searchString;
+        private string m_searchString = string.Empty;
+        private string SearchString
+        {
+            get => m_searchString;
+            set
+            {
+                if (m_searchString == value) return;
+                
+                m_searchString = value;
+                searchInputField.text = m_searchString;
 
-					RefreshFiles( false );
-				}
-			}
-		}
+                RefreshFiles(false);
+            }
+        }
 
-		private bool m_acceptNonExistingFilename = false;
-		private bool AcceptNonExistingFilename
-		{
-			get { return m_acceptNonExistingFilename; }
-			set { m_acceptNonExistingFilename = value; }
-		}
+        private bool m_acceptNonExistingFilename = false;
+        private bool AcceptNonExistingFilename
+        {
+            get => m_acceptNonExistingFilename;
+            set => m_acceptNonExistingFilename = value;
+        }
 
-		private PickMode m_pickerMode = PickMode.Files;
-		internal PickMode PickerMode
-		{
-			get { return m_pickerMode; }
-			private set
-			{
-				m_pickerMode = value;
+        private PickMode m_pickerMode = PickMode.Files;
+        internal PickMode PickerMode
+        {
+            get => m_pickerMode;
+            private set
+            {
+                m_pickerMode = value;
 
-				if( m_pickerMode == PickMode.Folders )
-				{
-					filtersDropdown.options[0].text = FoldersFilterText;
-					filtersDropdown.value = 0;
-					filtersDropdown.RefreshShownValue();
-					filtersDropdown.interactable = false;
-				}
-				else
-				{
-					filtersDropdown.options[0].text = filters[0].ToString();
-					filtersDropdown.interactable = true;
-				}
+                if (m_pickerMode == PickMode.Folders)
+                {
+                    filtersDropdown.options[0].text = FoldersFilterText;
+                    filtersDropdown.value = 0;
+                    filtersDropdown.RefreshShownValue();
+                    filtersDropdown.interactable = false;
+                }
+                else
+                {
+                    filtersDropdown.options[0].text = filters[0].ToString();
+                    filtersDropdown.interactable = true;
+                }
 
-				Text placeholder = filenameInputField.placeholder as Text;
-				if( placeholder )
-					placeholder.gameObject.SetActive( m_pickerMode != PickMode.Folders );
-			}
-		}
+                var placeholder = filenameInputField.placeholder as Text;
+                if (placeholder)
+                    placeholder.gameObject.SetActive(m_pickerMode != PickMode.Folders);
+            }
+        }
 
-		private bool m_allowMultiSelection;
-		internal bool AllowMultiSelection
-		{
-			get { return m_allowMultiSelection; }
-			private set { m_allowMultiSelection = value; }
-		}
+        private bool m_allowMultiSelection;
+        internal bool AllowMultiSelection
+        {
+            get => m_allowMultiSelection;
+            private set => m_allowMultiSelection = value;
+        }
 
-		private bool m_multiSelectionToggleSelectionMode;
-		internal bool MultiSelectionToggleSelectionMode
-		{
-			get { return m_multiSelectionToggleSelectionMode; }
-			private set
-			{
-				if( m_multiSelectionToggleSelectionMode != value )
-				{
-					m_multiSelectionToggleSelectionMode = value;
+        private bool m_multiSelectionToggleSelectionMode;
+        internal bool MultiSelectionToggleSelectionMode
+        {
+            get { return m_multiSelectionToggleSelectionMode; }
+            private set
+            {
+                if (m_multiSelectionToggleSelectionMode != value)
+                {
+                    m_multiSelectionToggleSelectionMode = value;
 
-					for( int i = 0; i < allItems.Count; i++ )
-					{
-						if( allItems[i].gameObject.activeSelf )
-							allItems[i].SetSelected( selectedFileEntries.Contains( allItems[i].Position ) );
-					}
-				}
-			}
-		}
+                    for (int i = 0; i < allItems.Count; i++)
+                    {
+                        if (allItems[i].gameObject.activeSelf)
+                            allItems[i].SetSelected(selectedFileEntries.Contains(allItems[i].Position));
+                    }
+                }
+            }
+        }
 
-		private string Title
-		{
-			get { return titleText.text; }
-			set { titleText.text = value; }
-		}
+        private string Title
+        {
+            get => titleText.text;
+            set => titleText.text = value;
+        }
 
-		private string SubmitButtonText
-		{
-			get { return submitButtonText.text; }
-			set { submitButtonText.text = value; }
-		}
-		#endregion
+        private string SubmitButtonText
+        {
+            get => submitButtonText.text;
+            set => submitButtonText.text = value;
+        }
 
-		#region Delegates
-		public delegate void OnSuccess( string[] paths );
-		public delegate void OnCancel();
+        #endregion
+
+        #region Delegates
+
+        public delegate void OnSuccess(string[] paths);
+
+        public delegate void OnCancel();
 #if !UNITY_EDITOR && UNITY_ANDROID
 		public delegate void DirectoryPickCallback( string rawUri, string name );
 #endif
 
-		private OnSuccess onSuccess;
-		private OnCancel onCancel;
-		#endregion
+        private OnSuccess onSuccess;
+        private OnCancel onCancel;
 
-		#region Messages
-		private void Awake()
-		{
-			m_instance = this;
+        #endregion
 
-			rectTransform = (RectTransform) transform;
-			windowTR = (RectTransform) window.transform;
-			canvas = GetComponent<Canvas>();
+        #region Messages
 
-			middleViewOriginalPosition = middleView.anchoredPosition;
-			middleViewOriginalSize = middleView.sizeDelta;
-			middleViewQuickLinksOriginalSize = middleViewQuickLinks.sizeDelta;
+        private void Awake()
+        {
+            m_instance = this;
 
-			itemHeight = ( (RectTransform) itemPrefab.transform ).sizeDelta.y;
-			nullPointerEventData = new PointerEventData( null );
+            rectTransform = (RectTransform)transform;
+            windowTR = (RectTransform)window.transform;
+            canvas = GetComponent<Canvas>();
+
+            middleViewOriginalPosition = middleView.anchoredPosition;
+            middleViewOriginalSize = middleView.sizeDelta;
+            middleViewQuickLinksOriginalSize = middleViewQuickLinks.sizeDelta;
+
+            itemHeight = ((RectTransform)itemPrefab.transform).sizeDelta.y;
+            nullPointerEventData = new PointerEventData(null);
 
 #if !UNITY_EDITOR && ( UNITY_ANDROID || UNITY_IOS || UNITY_WSA || UNITY_WSA_10_0 )
 			defaultInitialPath = Application.persistentDataPath;
 #else
-			defaultInitialPath = Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments );
+            defaultInitialPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 #endif
 
 #if !UNITY_EDITOR && UNITY_ANDROID
@@ -706,33 +714,33 @@ namespace SimpleFileBrowser
 			}
 #endif
 
-			InitializeFiletypeIcons();
-			filetypeIcons = null;
+            InitializeFiletypeIcons();
+            filetypeIcons = null;
 
-			SetExcludedExtensions( excludeExtensions );
-			excludeExtensions = null;
+            SetExcludedExtensions(excludeExtensions);
+            excludeExtensions = null;
 
-			backButton.interactable = false;
-			forwardButton.interactable = false;
-			upButton.interactable = false;
+            backButton.interactable = false;
+            forwardButton.interactable = false;
+            upButton.interactable = false;
 
-			filenameInputField.onValidateInput += OnValidateFilenameInput;
-			filenameInputField.onValueChanged.AddListener( OnFilenameInputChanged );
+            filenameInputField.onValidateInput += OnValidateFilenameInput;
+            filenameInputField.onValueChanged.AddListener(OnFilenameInputChanged);
 
-			allFilesFilter = new Filter( AllFilesFilterText );
-			filters.Add( allFilesFilter );
+            allFilesFilter = new Filter(AllFilesFilterText);
+            filters.Add(allFilesFilter);
 
-			invalidFilenameChars = new HashSet<char>( Path.GetInvalidFileNameChars() )
-			{
-				Path.DirectorySeparatorChar,
-				Path.AltDirectorySeparatorChar
-			};
+            invalidFilenameChars = new HashSet<char>(Path.GetInvalidFileNameChars())
+            {
+                Path.DirectorySeparatorChar,
+                Path.AltDirectorySeparatorChar
+            };
 
-			window.Initialize( this );
-			listView.SetAdapter( this );
+            window.Initialize(this);
+            listView.SetAdapter(this);
 
-			if( !showResizeCursor )
-				Destroy( resizeCursorHandler );
+            if (!showResizeCursor)
+                Destroy(resizeCursorHandler);
 
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 			// On new Input System, scroll sensitivity is much higher than legacy Input system
@@ -740,148 +748,148 @@ namespace SimpleFileBrowser
 			quickLinksContainer.GetComponentInParent<ScrollRect>().scrollSensitivity *= 0.25f;
 			filtersDropdownContainer.GetComponent<ScrollRect>().scrollSensitivity *= 0.25f;
 #endif
-		}
+        }
 
-		private void OnRectTransformDimensionsChange()
-		{
-			canvasDimensionsChanged = true;
-		}
+        private void OnRectTransformDimensionsChange() => canvasDimensionsChanged = true;
 
-		private void LateUpdate()
-		{
-			if( canvasDimensionsChanged )
-			{
-				canvasDimensionsChanged = false;
+        private void LateUpdate()
+        {
+            if (canvasDimensionsChanged)
+            {
+                canvasDimensionsChanged = false;
 
-				Vector2 windowSize = windowTR.sizeDelta;
-				EnsureWindowIsWithinBounds();
-				if( windowTR.sizeDelta != windowSize )
-					OnWindowDimensionsChanged( windowTR.sizeDelta );
+                Vector2 windowSize = windowTR.sizeDelta;
+                EnsureWindowIsWithinBounds();
+                if (windowTR.sizeDelta != windowSize)
+                    OnWindowDimensionsChanged(windowTR.sizeDelta);
 
-				deleteConfirmationPanel.OnCanvasDimensionsChanged( rectTransform.sizeDelta );
+                deleteConfirmationPanel.OnCanvasDimensionsChanged(rectTransform.sizeDelta);
 
-				if( contextMenu.gameObject.activeSelf )
-					contextMenu.Hide();
-			}
+                if (contextMenu.gameObject.activeSelf)
+                    contextMenu.Hide();
+            }
 
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA || UNITY_WSA_10_0
-			// Handle keyboard shortcuts
-			if( !EventSystem.current.currentSelectedGameObject )
-			{
+            // Handle keyboard shortcuts
+            if (!EventSystem.current.currentSelectedGameObject)
+            {
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 				if( Keyboard.current != null )
 #endif
-				{
+                {
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 					if( Keyboard.current[Key.Delete].wasPressedThisFrame )
 #else
-					if( Input.GetKeyDown( KeyCode.Delete ) )
+                    if (Input.GetKeyDown(KeyCode.Delete))
 #endif
-						DeleteSelectedFiles();
+                        DeleteSelectedFiles();
 
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 					if( Keyboard.current[Key.F2].wasPressedThisFrame )
 #else
-					if( Input.GetKeyDown( KeyCode.F2 ) )
+                    if (Input.GetKeyDown(KeyCode.F2))
 #endif
-						RenameSelectedFile();
+                        RenameSelectedFile();
 
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 					if( Keyboard.current[Key.A].wasPressedThisFrame && Keyboard.current.ctrlKey.isPressed )
 #else
-					if( Input.GetKeyDown( KeyCode.A ) && ( Input.GetKey( KeyCode.LeftControl ) || Input.GetKey( KeyCode.LeftCommand ) ) )
+                    if (Input.GetKeyDown(KeyCode.A) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.LeftCommand)))
 #endif
-						SelectAllFiles();
-				}
-			}
+                        SelectAllFiles();
+                }
+            }
 #endif
 
-			// 2 Text objects are used in the filename input field:
-			// filenameInputField.textComponent: visible when editing the text, has Horizontal Overflow set to Wrap (cuts out words, ugly)
-			// filenameInputFieldOverlayText: visible when not editing the text, has Horizontal Overflow set to Overflow (doesn't cut out words)
-			if( EventSystem.current.currentSelectedGameObject == filenameInputField.gameObject )
-			{
-				if( filenameInputFieldOverlayText.enabled )
-				{
-					filenameInputFieldOverlayText.enabled = false;
+            // 2 Text objects are used in the filename input field:
+            // filenameInputField.textComponent: visible when editing the text, has Horizontal Overflow set to Wrap (cuts out words, ugly)
+            // filenameInputFieldOverlayText: visible when not editing the text, has Horizontal Overflow set to Overflow (doesn't cut out words)
+            if (EventSystem.current.currentSelectedGameObject == filenameInputField.gameObject)
+            {
+                if (filenameInputFieldOverlayText.enabled)
+                {
+                    filenameInputFieldOverlayText.enabled = false;
 
-					Color c = filenameInputField.textComponent.color;
-					c.a = 1f;
-					filenameInputField.textComponent.color = c;
-				}
-			}
-			else if( !filenameInputFieldOverlayText.enabled )
-			{
-				filenameInputFieldOverlayText.enabled = true;
+                    Color c = filenameInputField.textComponent.color;
+                    c.a = 1f;
+                    filenameInputField.textComponent.color = c;
+                }
+            }
+            else if (!filenameInputFieldOverlayText.enabled)
+            {
+                filenameInputFieldOverlayText.enabled = true;
 
-				Color c = filenameInputField.textComponent.color;
-				c.a = 0f;
-				filenameInputField.textComponent.color = c;
-			}
+                Color c = filenameInputField.textComponent.color;
+                c.a = 0f;
+                filenameInputField.textComponent.color = c;
+            }
 
-			// Refresh drive quick links
+            // Refresh drive quick links
 #if UNITY_EDITOR || ( !UNITY_IOS && !UNITY_WSA && !UNITY_WSA_10_0 )
 #if !UNITY_EDITOR && UNITY_ANDROID
 			if( !FileBrowserHelpers.ShouldUseSAF )
 #endif
-			if( quickLinksInitialized && generateQuickLinksForDrives && m_drivesRefreshInterval >= 0f && Time.realtimeSinceStartup >= drivesNextRefreshTime )
-			{
-				drivesNextRefreshTime = Time.realtimeSinceStartup + m_drivesRefreshInterval;
-				RefreshDriveQuickLinks();
-			}
+            if (quickLinksInitialized && generateQuickLinksForDrives && m_drivesRefreshInterval >= 0f && Time.realtimeSinceStartup >= drivesNextRefreshTime)
+            {
+                drivesNextRefreshTime = Time.realtimeSinceStartup + m_drivesRefreshInterval;
+                RefreshDriveQuickLinks();
+            }
 #endif
-		}
+        }
 
-		private void OnApplicationFocus( bool focus )
-		{
-			if( !focus )
-				PersistFileEntrySelection();
-			else
-				RefreshFiles( true );
-		}
-		#endregion
+        private void OnApplicationFocus(bool focus)
+        {
+            if (!focus)
+                PersistFileEntrySelection();
+            else
+                RefreshFiles(true);
+        }
 
-		#region Interface Methods
-		OnItemClickedHandler IListViewAdapter.OnItemClicked { get { return null; } set { } }
+        #endregion
 
-		int IListViewAdapter.Count { get { return validFileEntries.Count; } }
-		float IListViewAdapter.ItemHeight { get { return itemHeight; } }
+        #region Interface Methods
 
-		ListItem IListViewAdapter.CreateItem()
-		{
-			FileBrowserItem item = (FileBrowserItem) Instantiate( itemPrefab, filesContainer, false );
-			item.SetFileBrowser( this );
-			allItems.Add( item );
+        OnItemClickedHandler IListViewAdapter.OnItemClicked { get => null; set { } }
 
-			return item;
-		}
+        int IListViewAdapter.Count => validFileEntries.Count;
+        float IListViewAdapter.ItemHeight => itemHeight;
 
-		void IListViewAdapter.SetItemContent( ListItem item )
-		{
-			FileBrowserItem file = (FileBrowserItem) item;
-			FileSystemEntry fileInfo = validFileEntries[item.Position];
+        ListItem IListViewAdapter.CreateItem()
+        {
+            FileBrowserItem item = Instantiate(itemPrefab, filesContainer, false);
+            item.SetFileBrowser(this);
+            allItems.Add(item);
 
-			file.SetFile( GetIconForFileEntry( fileInfo ), fileInfo.Name, fileInfo.IsDirectory );
-			file.SetSelected( selectedFileEntries.Contains( file.Position ) );
-			file.SetHidden( ( fileInfo.Attributes & FileAttributes.Hidden ) == FileAttributes.Hidden );
-		}
-		#endregion
+            return item;
+        }
 
-		#region Initialization Functions
-		private void InitializeFiletypeIcons()
-		{
-			filetypeToIcon = new Dictionary<string, Sprite>();
-			for( int i = 0; i < filetypeIcons.Length; i++ )
-			{
-				FiletypeIcon thisIcon = filetypeIcons[i];
-				filetypeToIcon[thisIcon.extension] = thisIcon.icon;
-			}
-		}
+        void IListViewAdapter.SetItemContent(ListItem item)
+        {
+            FileBrowserItem file = (FileBrowserItem)item;
+            FileSystemEntry fileInfo = validFileEntries[item.Position];
 
-		private void InitializeQuickLinks()
-		{
-			quickLinksInitialized = true;
-			drivesNextRefreshTime = Time.realtimeSinceStartup + m_drivesRefreshInterval;
+            file.SetFile(GetIconForFileEntry(fileInfo), fileInfo.Name, fileInfo.IsDirectory);
+            file.SetSelected(selectedFileEntries.Contains(file.Position));
+            file.SetHidden((fileInfo.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden);
+        }
+
+        #endregion
+
+        #region Initialization Functions
+
+        private void InitializeFiletypeIcons()
+        {
+            filetypeToIcon = new Dictionary<string, Sprite>();
+            foreach (FiletypeIcon thisIcon in filetypeIcons)
+            {
+                filetypeToIcon[thisIcon.extension] = thisIcon.icon;
+            }
+        }
+
+        private void InitializeQuickLinks()
+        {
+            quickLinksInitialized = true;
+            drivesNextRefreshTime = Time.realtimeSinceStartup + m_drivesRefreshInterval;
 
 #if !UNITY_EDITOR && UNITY_ANDROID
 			if( FileBrowserHelpers.ShouldUseSAF )
@@ -901,10 +909,10 @@ namespace SimpleFileBrowser
 			}
 #endif
 
-			if( generateQuickLinksForDrives )
-			{
+            if (generateQuickLinksForDrives)
+            {
 #if UNITY_EDITOR || ( !UNITY_IOS && !UNITY_WSA && !UNITY_WSA_10_0 )
-				RefreshDriveQuickLinks();
+                RefreshDriveQuickLinks();
 #else
 				AddQuickLink( driveIcon, "Files", Application.persistentDataPath );
 #endif
@@ -915,29 +923,29 @@ namespace SimpleFileBrowser
 				if( !string.IsNullOrEmpty( userDirectory ) )
 					AddQuickLink( driveIcon, userDirectory.Substring( userDirectory.LastIndexOf( '/' ) + 1 ), userDirectory );
 #endif
-			}
+            }
 
 #if UNITY_EDITOR || ( !UNITY_ANDROID && !UNITY_WSA && !UNITY_WSA_10_0 )
-			for( int i = 0; i < quickLinks.Length; i++ )
-			{
-				QuickLink quickLink = quickLinks[i];
-				string quickLinkPath = Environment.GetFolderPath( quickLink.target );
+            for (int i = 0; i < quickLinks.Length; i++)
+            {
+                QuickLink quickLink = quickLinks[i];
+                string quickLinkPath = Environment.GetFolderPath(quickLink.target);
 #if UNITY_STANDALONE_OSX
 				// Documents folder must be appended manually on Mac OS
 				if( quickLink.target == Environment.SpecialFolder.MyDocuments && !string.IsNullOrEmpty( quickLinkPath ) )
 					quickLinkPath = Path.Combine( quickLinkPath, "Documents" );
 #endif
 
-				AddQuickLink( quickLink.icon, quickLink.name, quickLinkPath );
-			}
+                AddQuickLink(quickLink.icon, quickLink.name, quickLinkPath);
+            }
 
-			quickLinks = null;
+            quickLinks = null;
 #endif
-		}
+        }
 
-		private void RefreshDriveQuickLinks()
-		{
-			// Check if drives has changed since the last refresh
+        private void RefreshDriveQuickLinks()
+        {
+            // Check if drives has changed since the last refresh
 #if !UNITY_EDITOR && UNITY_ANDROID
 			string drivesList = FileBrowserHelpers.AJC.CallStatic<string>( "GetExternalDrives" );
 			if( drivesList == driveQuickLinks || ( string.IsNullOrEmpty( drivesList ) && string.IsNullOrEmpty( driveQuickLinks ) ) )
@@ -945,40 +953,32 @@ namespace SimpleFileBrowser
 
 			driveQuickLinks = drivesList;
 #else
-			string[] drives = Directory.GetLogicalDrives();
+            string[] drives = Directory.GetLogicalDrives();
 
-			if( driveQuickLinks != null && drives.Length == driveQuickLinks.Length )
-			{
-				bool drivesListHasntChanged = true;
-				for( int i = 0; i < drives.Length; i++ )
-				{
-					if( drives[i] != driveQuickLinks[i] )
-					{
-						drivesListHasntChanged = false;
-						break;
-					}
-				}
+            if (driveQuickLinks != null && drives.Length == driveQuickLinks.Length)
+            {
+                bool drivesListHasntChanged = !drives.Where((t, i) => t != driveQuickLinks[i]).Any();
 
-				if( drivesListHasntChanged )
-					return;
-			}
+                if (drivesListHasntChanged)
+                    return;
+            }
 
-			driveQuickLinks = drives;
+            driveQuickLinks = drives;
 #endif
 
-			// Drives has changed, remove previous drive quick links
-			for( ; numberOfDriveQuickLinks > 0; numberOfDriveQuickLinks-- )
-			{
-				Destroy( allQuickLinks[numberOfDriveQuickLinks - 1].gameObject );
-				allQuickLinks.RemoveAt( numberOfDriveQuickLinks - 1 );
-			}
+            // Drives has changed, remove previous drive quick links
+            for (; numberOfDriveQuickLinks > 0; numberOfDriveQuickLinks--)
+            {
+                Destroy(allQuickLinks[numberOfDriveQuickLinks - 1].gameObject);
+                allQuickLinks.RemoveAt(numberOfDriveQuickLinks - 1);
+            }
 
-			FileBrowserQuickLink[] customQuickLinks = allQuickLinks.Count > 0 ? allQuickLinks.ToArray() : null;
-			allQuickLinks.Clear();
+            FileBrowserQuickLink[] customQuickLinks = allQuickLinks.Count > 0 ? allQuickLinks.ToArray() : null;
+            allQuickLinks.Clear();
 
-			quickLinksContainer.sizeDelta = Vector2.zero;
+            quickLinksContainer.sizeDelta = Vector2.zero;
 
-			// Create drive quick links
+            // Create drive quick links
 #if !UNITY_EDITOR && UNITY_ANDROID
 			if( drivesList != null && drivesList.Length > 0 )
 			{
@@ -1027,10 +1027,10 @@ namespace SimpleFileBrowser
 				}
 			}
 #else
-			for( int i = 0; i < drives.Length; i++ )
-			{
-				if( string.IsNullOrEmpty( drives[i] ) )
-					continue;
+            for (int i = 0; i < drives.Length; i++)
+            {
+                if (string.IsNullOrEmpty(drives[i]))
+                    continue;
 
 #if UNITY_STANDALONE_OSX
 				// There are a number of useless drives listed on Mac OS, filter them
@@ -1045,58 +1045,61 @@ namespace SimpleFileBrowser
 						numberOfDriveQuickLinks++;
 				}
 #else
-				if( AddQuickLink( driveIcon, drives[i], drives[i] ) )
-					numberOfDriveQuickLinks++;
+                if (AddQuickLink(driveIcon, drives[i], drives[i]))
+                    numberOfDriveQuickLinks++;
 #endif
-			}
+            }
 #endif
 
-			// Reposition custom quick links
-			if( customQuickLinks != null )
-			{
-				Vector2 anchoredPos = new Vector2( 0f, -quickLinksContainer.sizeDelta.y );
-				for( int i = 0; i < customQuickLinks.Length; i++ )
-				{
-					customQuickLinks[i].TransformComponent.anchoredPosition = anchoredPos;
-					anchoredPos.y -= itemHeight;
+            // Reposition custom quick links
+            if (customQuickLinks != null)
+            {
+                Vector2 anchoredPos = new Vector2(0f, -quickLinksContainer.sizeDelta.y);
+                foreach (FileBrowserQuickLink browserQuickLink in customQuickLinks)
+                {
+                    browserQuickLink.TransformComponent.anchoredPosition = anchoredPos;
+                    anchoredPos.y -= itemHeight;
 
-					allQuickLinks.Add( customQuickLinks[i] );
-				}
+                    allQuickLinks.Add(browserQuickLink);
+                }
 
-				quickLinksContainer.sizeDelta = new Vector2( 0f, -anchoredPos.y );
-			}
+                quickLinksContainer.sizeDelta = new Vector2(0f, -anchoredPos.y);
+            }
 
-			// Verify that current directory still exists
-			try
-			{
-				if( !string.IsNullOrEmpty( m_currentPath ) && !Directory.Exists( m_currentPath ) )
-				{
-					string currentPathRoot = Path.GetPathRoot( m_currentPath );
-					if( !string.IsNullOrEmpty( currentPathRoot ) && Directory.Exists( currentPathRoot ) )
-						CurrentPath = currentPathRoot;
-					else if( allQuickLinks.Count > 0 )
-						CurrentPath = allQuickLinks[0].TargetPath;
-				}
-			}
-			catch { }
-		}
-		#endregion
+            // Verify that current directory still exists
+            try
+            {
+                if (string.IsNullOrEmpty(m_currentPath) || Directory.Exists(m_currentPath)) return;
+                
+                string currentPathRoot = Path.GetPathRoot(m_currentPath);
+                
+                if (!string.IsNullOrEmpty(currentPathRoot) && Directory.Exists(currentPathRoot)) CurrentPath = currentPathRoot;
+                else if (allQuickLinks.Count > 0) CurrentPath = allQuickLinks[0].TargetPath;
+            }
+            catch
+            {
+                // ignored
+            }
+        }
 
-		#region Button Events
-		public void OnBackButtonPressed()
-		{
-			if( currentPathIndex > 0 )
-				CurrentPath = pathsFollowed[--currentPathIndex];
-		}
+        #endregion
 
-		public void OnForwardButtonPressed()
-		{
-			if( currentPathIndex < pathsFollowed.Count - 1 )
-				CurrentPath = pathsFollowed[++currentPathIndex];
-		}
+        #region Button Events
 
-		public void OnUpButtonPressed()
-		{
+        public void OnBackButtonPressed()
+        {
+            if (currentPathIndex > 0)
+                CurrentPath = pathsFollowed[--currentPathIndex];
+        }
+
+        public void OnForwardButtonPressed()
+        {
+            if (currentPathIndex < pathsFollowed.Count - 1)
+                CurrentPath = pathsFollowed[++currentPathIndex];
+        }
+
+        public void OnUpButtonPressed()
+        {
 #if !UNITY_EDITOR && UNITY_ANDROID
 			if( FileBrowserHelpers.ShouldUseSAF )
 			{
@@ -1106,181 +1109,166 @@ namespace SimpleFileBrowser
 			}
 			else
 #endif
-			{
-				DirectoryInfo parentPath = Directory.GetParent( m_currentPath );
-				if( parentPath != null )
-					CurrentPath = parentPath.FullName;
-			}
-		}
+            {
+                DirectoryInfo parentPath = Directory.GetParent(m_currentPath);
+                if (parentPath != null)
+                    CurrentPath = parentPath.FullName;
+            }
+        }
 
-		public void OnMoreOptionsButtonClicked()
-		{
-			ShowContextMenuAt( rectTransform.InverseTransformPoint( moreOptionsContextMenuPosition.position ), true );
-		}
+        public void OnMoreOptionsButtonClicked() => ShowContextMenuAt(rectTransform.InverseTransformPoint(moreOptionsContextMenuPosition.position), true);
 
-		internal void OnContextMenuTriggered( Vector2 pointerPos )
-		{
-			filesScrollRect.velocity = Vector2.zero;
+        internal void OnContextMenuTriggered(Vector2 pointerPos)
+        {
+            filesScrollRect.velocity = Vector2.zero;
 
-			Vector2 position;
-			RectTransformUtility.ScreenPointToLocalPointInRectangle( rectTransform, pointerPos, canvas.worldCamera, out position );
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, pointerPos, canvas.worldCamera, out Vector2 position);
 
-			ShowContextMenuAt( position, false );
-		}
+            ShowContextMenuAt(position, false);
+        }
 
-		private void ShowContextMenuAt( Vector2 position, bool isMoreOptionsMenu )
-		{
-			if( string.IsNullOrEmpty( m_currentPath ) )
-				return;
+        private void ShowContextMenuAt(Vector2 position, bool isMoreOptionsMenu)
+        {
+            if (string.IsNullOrEmpty(m_currentPath))
+                return;
 
-			bool selectAllButtonVisible = isMoreOptionsMenu && m_allowMultiSelection && validFileEntries.Count > 0;
-			bool deselectAllButtonVisible = isMoreOptionsMenu && selectedFileEntries.Count > 1;
-			bool deleteButtonVisible = contextMenuShowDeleteButton && selectedFileEntries.Count > 0;
-			bool renameButtonVisible = contextMenuShowRenameButton && selectedFileEntries.Count == 1;
+            bool selectAllButtonVisible = isMoreOptionsMenu && m_allowMultiSelection && validFileEntries.Count > 0;
+            bool deselectAllButtonVisible = isMoreOptionsMenu && selectedFileEntries.Count > 1;
+            bool deleteButtonVisible = contextMenuShowDeleteButton && selectedFileEntries.Count > 0;
+            bool renameButtonVisible = contextMenuShowRenameButton && selectedFileEntries.Count == 1;
 
-			if( selectAllButtonVisible && m_pickerMode == PickMode.Files )
-			{
-				// In file selection mode, if only folders exist in the current path, "Select All" option shouldn't be visible
-				selectAllButtonVisible = false;
-				for( int i = 0; i < validFileEntries.Count; i++ )
-				{
-					if( !validFileEntries[i].IsDirectory )
-					{
-						selectAllButtonVisible = true;
-						break;
-					}
-				}
-			}
+            if (selectAllButtonVisible && m_pickerMode == PickMode.Files)
+            {
+                // In file selection mode, if only folders exist in the current path, "Select All" option shouldn't be visible
+                selectAllButtonVisible = validFileEntries.Any(validEntry => !validEntry.IsDirectory);
+            }
 
-			contextMenu.Show( selectAllButtonVisible, deselectAllButtonVisible, deleteButtonVisible, renameButtonVisible, position, isMoreOptionsMenu );
-		}
+            contextMenu.Show(selectAllButtonVisible, deselectAllButtonVisible, deleteButtonVisible, renameButtonVisible, position, isMoreOptionsMenu);
+        }
 
-		public void OnSubmitButtonClicked()
-		{
-			string filenameInput = filenameInputField.text.Trim();
-			if( filenameInput.Length == 0 )
-			{
-				if( m_pickerMode != PickMode.Files )
-					OnOperationSuccessful( new string[1] { m_currentPath } );
-				else
-					filenameImage.color = wrongFilenameColor;
+        public void OnSubmitButtonClicked()
+        {
+            string filenameInput = filenameInputField.text.Trim();
+            if (filenameInput.Length == 0)
+            {
+                if (m_pickerMode != PickMode.Files)
+                    OnOperationSuccessful(new string[1] { m_currentPath });
+                else
+                    filenameImage.color = wrongFilenameColor;
 
-				return;
-			}
+                return;
+            }
 
-			if( m_allowMultiSelection && selectedFileEntries.Count > 1 )
-			{
-				// When multiple files are selected via file browser UI, filenameInputField is not interactable and will show
-				// only the first FILENAME_INPUT_FIELD_MAX_FILE_COUNT entries for performance reasons. We should iterate over
-				// selectedFileEntries instead of filenameInputField
+            if (m_allowMultiSelection && selectedFileEntries.Count > 1)
+            {
+                // When multiple files are selected via file browser UI, filenameInputField is not interactable and will show
+                // only the first FILENAME_INPUT_FIELD_MAX_FILE_COUNT entries for performance reasons. We should iterate over
+                // selectedFileEntries instead of filenameInputField
 
-				// Beforehand, check if a folder is selected in file selection mode. If so, open that directory
-				if( m_pickerMode == PickMode.Files )
-				{
-					for( int i = 0; i < selectedFileEntries.Count; i++ )
-					{
-						if( validFileEntries[selectedFileEntries[i]].IsDirectory )
-						{
-							CurrentPath = validFileEntries[selectedFileEntries[i]].Path;
-							return;
-						}
-					}
-				}
+                // Beforehand, check if a folder is selected in file selection mode. If so, open that directory
+                if (m_pickerMode == PickMode.Files)
+                {
+                    foreach (int selectedFileEntry in selectedFileEntries.Where(selectedFileEntry => validFileEntries[selectedFileEntry].IsDirectory))
+                    {
+                        CurrentPath = validFileEntries[selectedFileEntry].Path;
+                        return;
+                    }
+                }
 
-				string[] result = new string[selectedFileEntries.Count];
-				for( int i = 0; i < selectedFileEntries.Count; i++ )
-					result[i] = validFileEntries[selectedFileEntries[i]].Path;
+                string[] result = new string[selectedFileEntries.Count];
+                for (int i = 0; i < selectedFileEntries.Count; i++)
+                    result[i] = validFileEntries[selectedFileEntries[i]].Path;
 
-				OnOperationSuccessful( result );
-			}
-			else
-			{
-				// When multiple files aren't selected via file browser UI, we must consider the rare case where user manually enters
-				// multiple filenames to filenameInputField in format "file1" "file2" and so on. So, we must parse filenameInputField
+                OnOperationSuccessful(result);
+            }
+            else
+            {
+                // When multiple files aren't selected via file browser UI, we must consider the rare case where user manually enters
+                // multiple filenames to filenameInputField in format "file1" "file2" and so on. So, we must parse filenameInputField
 
-				// In the first iteration, verify that all filenames entered to the input field are valid
-				// ExtractFilenameFromInput doesn't use Substring, so this iteration is GC-free
-				int fileCount = 0;
-				int startIndex = 0, nextStartIndex;
-				while( startIndex < filenameInput.Length )
-				{
-					int filenameLength = ExtractFilenameFromInput( filenameInput, ref startIndex, out nextStartIndex );
-					if( filenameLength == 0 )
-						continue;
+                // In the first iteration, verify that all filenames entered to the input field are valid
+                // ExtractFilenameFromInput doesn't use Substring, so this iteration is GC-free
+                int fileCount = 0;
+                int startIndex = 0, nextStartIndex;
+                while (startIndex < filenameInput.Length)
+                {
+                    int filenameLength = ExtractFilenameFromInput(filenameInput, ref startIndex, out nextStartIndex);
+                    if (filenameLength == 0)
+                        continue;
 
-					if( !VerifyFilenameInput( filenameInput, startIndex, filenameLength ) )
-					{
-						// Filename contains invalid characters or is completely whitespace
-						filenameImage.color = wrongFilenameColor;
-						return;
-					}
+                    if (!VerifyFilenameInput(filenameInput, startIndex, filenameLength))
+                    {
+                        // Filename contains invalid characters or is completely whitespace
+                        filenameImage.color = wrongFilenameColor;
+                        return;
+                    }
 
-					if( m_acceptNonExistingFilename )
-						fileCount++;
-					else
-					{
-						int fileEntryIndex = FilenameInputToFileEntryIndex( filenameInput, startIndex, filenameLength );
-						if( fileEntryIndex < 0 )
-						{
-							// File doesn't exist
-							filenameImage.color = wrongFilenameColor;
-							return;
-						}
+                    if (m_acceptNonExistingFilename)
+                        fileCount++;
+                    else
+                    {
+                        int fileEntryIndex = FilenameInputToFileEntryIndex(filenameInput, startIndex, filenameLength);
+                        if (fileEntryIndex < 0)
+                        {
+                            // File doesn't exist
+                            filenameImage.color = wrongFilenameColor;
+                            return;
+                        }
 
-						if( !validFileEntries[fileEntryIndex].IsDirectory )
-							fileCount++;
-						else
-						{
-							if( m_pickerMode != PickMode.Files )
-								fileCount++;
-							else
-							{
-								// Selected a directory in file selection mode, open that directory
-								CurrentPath = validFileEntries[fileEntryIndex].Path;
-								return;
-							}
-						}
-					}
+                        if (!validFileEntries[fileEntryIndex].IsDirectory)
+                            fileCount++;
+                        else
+                        {
+                            if (m_pickerMode != PickMode.Files)
+                                fileCount++;
+                            else
+                            {
+                                // Selected a directory in file selection mode, open that directory
+                                CurrentPath = validFileEntries[fileEntryIndex].Path;
+                                return;
+                            }
+                        }
+                    }
 
-					startIndex = nextStartIndex;
-				}
+                    startIndex = nextStartIndex;
+                }
 
-				if( fileCount == 0 )
-				{
-					filenameImage.color = wrongFilenameColor;
-					return;
-				}
+                if (fileCount == 0)
+                {
+                    filenameImage.color = wrongFilenameColor;
+                    return;
+                }
 
-				// In the second iteration, extract filenames from the input field
-				string[] result = new string[fileCount];
+                // In the second iteration, extract filenames from the input field
+                string[] result = new string[fileCount];
 
-				startIndex = 0;
-				fileCount = 0;
-				while( startIndex < filenameInput.Length )
-				{
-					int filenameLength = ExtractFilenameFromInput( filenameInput, ref startIndex, out nextStartIndex );
-					if( filenameLength == 0 )
-						continue;
+                startIndex = 0;
+                fileCount = 0;
+                while (startIndex < filenameInput.Length)
+                {
+                    int filenameLength = ExtractFilenameFromInput(filenameInput, ref startIndex, out nextStartIndex);
+                    if (filenameLength == 0)
+                        continue;
 
-					int fileEntryIndex = FilenameInputToFileEntryIndex( filenameInput, startIndex, filenameLength );
-					if( fileEntryIndex >= 0 )
-					{
-						// This is an existing file
-						result[fileCount++] = validFileEntries[fileEntryIndex].Path;
-					}
-					else
-					{
-						try
-						{
-							// This is a nonexisting file
-							string filename = filenameInput.Substring( startIndex, filenameLength );
-							if( m_pickerMode != PickMode.Folders && filters[filtersDropdown.value].defaultExtension != null )
-							{
-								// In file selection mode, make sure that nonexisting files' extensions match one of the required extensions
-								string fileExtension = Path.GetExtension( filename );
-								if( string.IsNullOrEmpty( fileExtension ) || !filters[filtersDropdown.value].extensions.Contains( fileExtension.ToLowerInvariant() ) )
-									filename = Path.ChangeExtension( filename, filters[filtersDropdown.value].defaultExtension );
-							}
+                    int fileEntryIndex = FilenameInputToFileEntryIndex(filenameInput, startIndex, filenameLength);
+                    if (fileEntryIndex >= 0)
+                    {
+                        // This is an existing file
+                        result[fileCount++] = validFileEntries[fileEntryIndex].Path;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            // This is a nonexisting file
+                            string filename = filenameInput.Substring(startIndex, filenameLength);
+                            if (m_pickerMode != PickMode.Folders && filters[filtersDropdown.value].defaultExtension != null)
+                            {
+                                // In file selection mode, make sure that nonexisting files' extensions match one of the required extensions
+                                string fileExtension = Path.GetExtension(filename);
+                                if (string.IsNullOrEmpty(fileExtension) || !filters[filtersDropdown.value].extensions.Contains(fileExtension.ToLowerInvariant()))
+                                    filename = Path.ChangeExtension(filename, filters[filtersDropdown.value].defaultExtension);
+                            }
 
 #if !UNITY_EDITOR && UNITY_ANDROID
 							if( FileBrowserHelpers.ShouldUseSAF )
@@ -1292,207 +1280,204 @@ namespace SimpleFileBrowser
 							}
 							else
 #endif
-							{
-								result[fileCount++] = Path.Combine( m_currentPath, filename );
-							}
-						}
-						catch( ArgumentException e )
-						{
-							filenameImage.color = wrongFilenameColor;
-							Debug.LogException( e );
-							return;
-						}
-					}
+                            {
+                                result[fileCount++] = Path.Combine(m_currentPath, filename);
+                            }
+                        }
+                        catch (ArgumentException e)
+                        {
+                            filenameImage.color = wrongFilenameColor;
+                            Debug.LogException(e);
+                            return;
+                        }
+                    }
 
-					startIndex = nextStartIndex;
-				}
+                    startIndex = nextStartIndex;
+                }
 
-				OnOperationSuccessful( result );
-			}
-		}
+                OnOperationSuccessful(result);
+            }
+        }
 
-		public void OnCancelButtonClicked()
-		{
-			OnOperationCanceled( true );
-		}
-		#endregion
+        public void OnCancelButtonClicked() => OnOperationCanceled(true);
 
-		#region Other Events
-		private void OnOperationSuccessful( string[] paths )
-		{
-			Success = true;
-			Result = paths;
+        #endregion
 
-			Hide();
+        #region Other Events
 
-			OnSuccess _onSuccess = onSuccess;
-			onSuccess = null;
-			onCancel = null;
+        private void OnOperationSuccessful(string[] paths)
+        {
+            Success = true;
+            Result = paths;
 
-			if( _onSuccess != null )
-				_onSuccess( paths );
-		}
+            Hide();
 
-		private void OnOperationCanceled( bool invokeCancelCallback )
-		{
-			Success = false;
-			Result = null;
+            OnSuccess _onSuccess = onSuccess;
+            onSuccess = null;
+            onCancel = null;
 
-			Hide();
+            _onSuccess?.Invoke(paths);
+        }
 
-			OnCancel _onCancel = onCancel;
-			onSuccess = null;
-			onCancel = null;
+        private void OnOperationCanceled(bool invokeCancelCallback)
+        {
+            Success = false;
+            Result = null;
 
-			if( invokeCancelCallback && _onCancel != null )
-				_onCancel();
-		}
+            Hide();
 
-		public void OnPathChanged( string newPath )
-		{
-			// Fixes harmless NullReferenceException that occurs when Play button is clicked while SimpleFileBrowserCanvas prefab is open in prefab mode
-			// https://github.com/yasirkula/UnitySimpleFileBrowser/issues/30
-			if( !canvas )
-				return;
+            OnCancel _onCancel = onCancel;
+            onSuccess = null;
+            onCancel = null;
 
-			CurrentPath = newPath;
-		}
+            if (invokeCancelCallback)
+                _onCancel?.Invoke();
+        }
 
-		public void OnSearchStringChanged( string newSearchString )
-		{
-			if( !canvas ) // Same as OnPathChanged
-				return;
+        public void OnPathChanged(string newPath)
+        {
+            // Fixes harmless NullReferenceException that occurs when Play button is clicked while SimpleFileBrowserCanvas prefab is open in prefab mode
+            // https://github.com/yasirkula/UnitySimpleFileBrowser/issues/30
+            if (!canvas)
+                return;
 
-			PersistFileEntrySelection();
-			SearchString = newSearchString;
-		}
+            CurrentPath = newPath;
+        }
 
-		public void OnFilterChanged()
-		{
-			if( !canvas ) // Same as OnPathChanged
-				return;
+        public void OnSearchStringChanged(string newSearchString)
+        {
+            if (!canvas) // Same as OnPathChanged
+                return;
 
-			PersistFileEntrySelection();
-			RefreshFiles( false );
-		}
+            PersistFileEntrySelection();
+            SearchString = newSearchString;
+        }
 
-		public void OnShowHiddenFilesToggleChanged()
-		{
-			if( !canvas ) // Same as OnPathChanged
-				return;
+        public void OnFilterChanged()
+        {
+            if (!canvas) // Same as OnPathChanged
+                return;
 
-			PersistFileEntrySelection();
-			RefreshFiles( false );
-		}
+            PersistFileEntrySelection();
+            RefreshFiles(false);
+        }
 
-		public void OnItemSelected( FileBrowserItem item, bool isDoubleClick )
-		{
-			if( item == null )
-				return;
+        public void OnShowHiddenFilesToggleChanged()
+        {
+            if (!canvas) // Same as OnPathChanged
+                return;
 
-			if( item is FileBrowserQuickLink )
-			{
+            PersistFileEntrySelection();
+            RefreshFiles(false);
+        }
+
+        public void OnItemSelected(FileBrowserItem item, bool isDoubleClick)
+        {
+            if (item == null)
+                return;
+
+            if (item is FileBrowserQuickLink)
+            {
 #if !UNITY_EDITOR && UNITY_ANDROID
 				if( ( (FileBrowserQuickLink) item ).TargetPath == SAF_PICK_FOLDER_QUICK_LINK_PATH )
 					FileBrowserHelpers.AJC.CallStatic( "PickSAFFolder", FileBrowserHelpers.Context, new FBDirectoryReceiveCallbackAndroid( OnSAFDirectoryPicked ) );
 				else
 #endif
-				CurrentPath = ( (FileBrowserQuickLink) item ).TargetPath;
+                CurrentPath = ((FileBrowserQuickLink)item).TargetPath;
 
-				return;
-			}
+                return;
+            }
 
-			if( m_multiSelectionToggleSelectionMode )
-			{
-				// In file selection mode, we shouldn't include folders in the multi-selection
-				if( item.IsDirectory && m_pickerMode == PickMode.Files && !selectedFileEntries.Contains( item.Position ) )
-					return;
+            if (m_multiSelectionToggleSelectionMode)
+            {
+                // In file selection mode, we shouldn't include folders in the multi-selection
+                if (item.IsDirectory && m_pickerMode == PickMode.Files && !selectedFileEntries.Contains(item.Position))
+                    return;
 
-				// If a file/folder is double clicked in multi-selection mode, instead of opening that file/folder, we want to toggle its selected state
-				isDoubleClick = false;
-			}
+                // If a file/folder is double clicked in multi-selection mode, instead of opening that file/folder, we want to toggle its selected state
+                isDoubleClick = false;
+            }
 
-			if( !isDoubleClick )
-			{
-				if( !m_allowMultiSelection )
-				{
-					selectedFileEntries.Clear();
-					selectedFileEntries.Add( item.Position );
-				}
-				else
-				{
+            if (!isDoubleClick)
+            {
+                if (!m_allowMultiSelection)
+                {
+                    selectedFileEntries.Clear();
+                    selectedFileEntries.Add(item.Position);
+                }
+                else
+                {
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA || UNITY_WSA_10_0
-					// When Shift key is held, all items from the pivot item to the clicked item will be selected
+                    // When Shift key is held, all items from the pivot item to the clicked item will be selected
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 					if( Keyboard.current != null && Keyboard.current.shiftKey.isPressed )
 #else
-					if( Input.GetKey( KeyCode.LeftShift ) || Input.GetKey( KeyCode.RightShift ) )
+                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
 #endif
-					{
-						multiSelectionPivotFileEntry = Mathf.Clamp( multiSelectionPivotFileEntry, 0, validFileEntries.Count - 1 );
+                    {
+                        multiSelectionPivotFileEntry = Mathf.Clamp(multiSelectionPivotFileEntry, 0, validFileEntries.Count - 1);
 
-						selectedFileEntries.Clear();
-						selectedFileEntries.Add( item.Position );
+                        selectedFileEntries.Clear();
+                        selectedFileEntries.Add(item.Position);
 
-						for( int i = multiSelectionPivotFileEntry; i < item.Position; i++ )
-							selectedFileEntries.Add( i );
+                        for (int i = multiSelectionPivotFileEntry; i < item.Position; i++)
+                            selectedFileEntries.Add(i);
 
-						for( int i = multiSelectionPivotFileEntry; i > item.Position; i-- )
-							selectedFileEntries.Add( i );
-					}
-					else
+                        for (int i = multiSelectionPivotFileEntry; i > item.Position; i--)
+                            selectedFileEntries.Add(i);
+                    }
+                    else
 #endif
-					{
-						multiSelectionPivotFileEntry = item.Position;
+                    {
+                        multiSelectionPivotFileEntry = item.Position;
 
-						// When in toggle selection mode or Control key is held, individual items can be multi-selected
+                        // When in toggle selection mode or Control key is held, individual items can be multi-selected
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL || UNITY_WSA || UNITY_WSA_10_0
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 						if( m_multiSelectionToggleSelectionMode || ( Keyboard.current != null && Keyboard.current.ctrlKey.isPressed ) )
 #else
-						if( m_multiSelectionToggleSelectionMode || Input.GetKey( KeyCode.LeftControl ) || Input.GetKey( KeyCode.RightControl ) )
+                        if (m_multiSelectionToggleSelectionMode || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
 #endif
 #else
 						if( m_multiSelectionToggleSelectionMode )
 #endif
-						{
-							if( !selectedFileEntries.Contains( item.Position ) )
-								selectedFileEntries.Add( item.Position );
-							else
-							{
-								selectedFileEntries.Remove( item.Position );
+                        {
+                            if (!selectedFileEntries.Contains(item.Position))
+                                selectedFileEntries.Add(item.Position);
+                            else
+                            {
+                                selectedFileEntries.Remove(item.Position);
 
-								if( selectedFileEntries.Count == 0 )
-									MultiSelectionToggleSelectionMode = false;
-							}
-						}
-						else
-						{
-							selectedFileEntries.Clear();
-							selectedFileEntries.Add( item.Position );
-						}
-					}
-				}
+                                if (selectedFileEntries.Count == 0)
+                                    MultiSelectionToggleSelectionMode = false;
+                            }
+                        }
+                        else
+                        {
+                            selectedFileEntries.Clear();
+                            selectedFileEntries.Add(item.Position);
+                        }
+                    }
+                }
 
-				UpdateFilenameInputFieldWithSelection();
-			}
+                UpdateFilenameInputFieldWithSelection();
+            }
 
-			for( int i = 0; i < allItems.Count; i++ )
-			{
-				if( allItems[i].gameObject.activeSelf )
-					allItems[i].SetSelected( selectedFileEntries.Contains( allItems[i].Position ) );
-			}
+            foreach (FileBrowserItem browserItem in allItems.Where(fileBrowserItem => fileBrowserItem.gameObject.activeSelf))
+            {
+                browserItem.SetSelected(selectedFileEntries.Contains(browserItem.Position));
+            }
 
-			if( selectedFileEntries.Count > 0 && ( isDoubleClick || ( SingleClickMode && !m_multiSelectionToggleSelectionMode ) ) )
-			{
-				if( !item.IsDirectory )
-				{
-					// Submit selection
-					OnSubmitButtonClicked();
-				}
-				else
-				{
-					// Enter the directory
+            if (selectedFileEntries.Count > 0 && (isDoubleClick || (SingleClickMode && !m_multiSelectionToggleSelectionMode)))
+            {
+                if (!item.IsDirectory)
+                {
+                    // Submit selection
+                    OnSubmitButtonClicked();
+                }
+                else
+                {
+                    // Enter the directory
 #if !UNITY_EDITOR && UNITY_ANDROID
 					if( FileBrowserHelpers.ShouldUseSAF )
 					{
@@ -1508,37 +1493,37 @@ namespace SimpleFileBrowser
 					}
 					else
 #endif
-					CurrentPath = Path.Combine( m_currentPath, item.Name );
-				}
-			}
-		}
+                    CurrentPath = Path.Combine(m_currentPath, item.Name);
+                }
+            }
+        }
 
-		public void OnItemHeld( FileBrowserItem item )
-		{
-			if( item is FileBrowserQuickLink )
-				OnItemSelected( item, false );
-			else if( m_allowMultiSelection && ( !item.IsDirectory || m_pickerMode != PickMode.Files ) ) // Holding a folder in file selection mode should do nothing
-			{
-				if( !MultiSelectionToggleSelectionMode )
-				{
-					if( m_pickerMode == PickMode.Files )
-					{
-						// If some folders are selected in file selection mode, deselect these folders before enabling the selection toggles because otherwise,
-						// user won't be able to deselect the selected folders without exiting MultiSelectionToggleSelectionMode
-						for( int i = selectedFileEntries.Count - 1; i >= 0; i-- )
-						{
-							if( validFileEntries[selectedFileEntries[i]].IsDirectory )
-								selectedFileEntries.RemoveAt( i );
-						}
-					}
+        public void OnItemHeld(FileBrowserItem item)
+        {
+            if (item is FileBrowserQuickLink)
+                OnItemSelected(item, false);
+            else if (m_allowMultiSelection && (!item.IsDirectory || m_pickerMode != PickMode.Files)) // Holding a folder in file selection mode should do nothing
+            {
+                if (!MultiSelectionToggleSelectionMode)
+                {
+                    if (m_pickerMode == PickMode.Files)
+                    {
+                        // If some folders are selected in file selection mode, deselect these folders before enabling the selection toggles because otherwise,
+                        // user won't be able to deselect the selected folders without exiting MultiSelectionToggleSelectionMode
+                        for (int i = selectedFileEntries.Count - 1; i >= 0; i--)
+                        {
+                            if (validFileEntries[selectedFileEntries[i]].IsDirectory)
+                                selectedFileEntries.RemoveAt(i);
+                        }
+                    }
 
-					MultiSelectionToggleSelectionMode = true;
-				}
+                    MultiSelectionToggleSelectionMode = true;
+                }
 
-				if( !selectedFileEntries.Contains( item.Position ) )
-					OnItemSelected( item, false );
-			}
-		}
+                if (!selectedFileEntries.Contains(item.Position))
+                    OnItemSelected(item, false);
+            }
+        }
 
 #if !UNITY_EDITOR && UNITY_ANDROID
 		private void OnSAFDirectoryPicked( string rawUri, string name )
@@ -1614,478 +1599,468 @@ namespace SimpleFileBrowser
 		}
 #endif
 
-		private char OnValidateFilenameInput( string text, int charIndex, char addedChar )
-		{
-			if( addedChar == '\n' )
-			{
-				OnSubmitButtonClicked();
-				return '\0';
-			}
+        private char OnValidateFilenameInput(string text, int charIndex, char addedChar)
+        {
+            if (addedChar == '\n')
+            {
+                OnSubmitButtonClicked();
+                return '\0';
+            }
 
-			return addedChar;
-		}
+            return addedChar;
+        }
 
-		private void OnFilenameInputChanged( string text )
-		{
-			filenameInputFieldOverlayText.text = text;
-			filenameImage.color = Color.white;
-		}
-		#endregion
+        private void OnFilenameInputChanged(string text)
+        {
+            filenameInputFieldOverlayText.text = text;
+            filenameImage.color = Color.white;
+        }
 
-		#region Helper Functions
-		public void Show( string initialPath, string initialFilename )
-		{
-			if( AskPermissions )
-				RequestPermission();
+        #endregion
 
-			if( !quickLinksInitialized )
-				InitializeQuickLinks();
+        #region Helper Functions
 
-			selectedFileEntries.Clear();
-			m_multiSelectionToggleSelectionMode = false;
+        public void Show(string initialPath, string initialFilename)
+        {
+            if (AskPermissions)
+                RequestPermission();
 
-			m_searchString = string.Empty;
-			searchInputField.text = m_searchString;
+            if (!quickLinksInitialized)
+                InitializeQuickLinks();
 
-			filesScrollRect.verticalNormalizedPosition = 1;
+            selectedFileEntries.Clear();
+            m_multiSelectionToggleSelectionMode = false;
 
-			IsOpen = true;
-			Success = false;
-			Result = null;
+            m_searchString = string.Empty;
+            searchInputField.text = m_searchString;
 
-			gameObject.SetActive( true );
+            filesScrollRect.verticalNormalizedPosition = 1;
 
-			CurrentPath = GetInitialPath( initialPath );
+            IsOpen = true;
+            Success = false;
+            Result = null;
 
-			filenameInputField.text = initialFilename ?? string.Empty;
-			filenameInputField.interactable = true;
-			filenameImage.color = Color.white;
-		}
+            gameObject.SetActive(true);
 
-		public void Hide()
-		{
-			IsOpen = false;
+            CurrentPath = GetInitialPath(initialPath);
 
-			currentPathIndex = -1;
-			pathsFollowed.Clear();
+            filenameInputField.text = initialFilename ?? string.Empty;
+            filenameInputField.interactable = true;
+            filenameImage.color = Color.white;
+        }
 
-			backButton.interactable = false;
-			forwardButton.interactable = false;
-			upButton.interactable = false;
+        public void Hide()
+        {
+            IsOpen = false;
 
-			gameObject.SetActive( false );
-		}
+            currentPathIndex = -1;
+            pathsFollowed.Clear();
 
-		public void RefreshFiles( bool pathChanged )
-		{
-			if( pathChanged )
-			{
-				if( !string.IsNullOrEmpty( m_currentPath ) )
-					allFileEntries = FileBrowserHelpers.GetEntriesInDirectory( m_currentPath );
-				else
-					allFileEntries = null;
-			}
+            backButton.interactable = false;
+            forwardButton.interactable = false;
+            upButton.interactable = false;
 
-			selectedFileEntries.Clear();
+            gameObject.SetActive(false);
+        }
 
-			if( !showHiddenFilesToggle.isOn )
-				ignoredFileAttributes |= FileAttributes.Hidden;
-			else
-				ignoredFileAttributes &= ~FileAttributes.Hidden;
+        public void RefreshFiles(bool pathChanged)
+        {
+            if (pathChanged)
+            {
+                if (!string.IsNullOrEmpty(m_currentPath))
+                    allFileEntries = FileBrowserHelpers.GetEntriesInDirectory(m_currentPath);
+                else
+                    allFileEntries = null;
+            }
 
-			string searchStringLowercase = m_searchString.ToLower();
+            selectedFileEntries.Clear();
 
-			validFileEntries.Clear();
+            if (!showHiddenFilesToggle.isOn)
+                ignoredFileAttributes |= FileAttributes.Hidden;
+            else
+                ignoredFileAttributes &= ~FileAttributes.Hidden;
 
-			if( allFileEntries != null )
-			{
-				if( sortFilesByName )
-				{
-					// Sort the files and folders in the following order:
-					// 1. Directories come before files
-					// 2. Directories and files are sorted by their names
-					Array.Sort( allFileEntries, ( entry1, entry2 ) =>
-					{
-						if( entry1.IsDirectory != entry2.IsDirectory )
-							return entry1.IsDirectory ? -1 : 1;
-						else
-							return entry1.Name.CompareTo( entry2.Name );
-					} );
-				}
+            string searchStringLowercase = m_searchString.ToLower();
 
-				for( int i = 0; i < allFileEntries.Length; i++ )
-				{
-					try
-					{
-						FileSystemEntry item = allFileEntries[i];
+            validFileEntries.Clear();
 
-						if( !item.IsDirectory )
-						{
-							if( m_pickerMode == PickMode.Folders )
-								continue;
+            if (allFileEntries != null)
+            {
+                if (sortFilesByName)
+                {
+                    // Sort the files and folders in the following order:
+                    // 1. Directories come before files
+                    // 2. Directories and files are sorted by their names
+                    Array.Sort(allFileEntries, (entry1, entry2) =>
+                    {
+                        if (entry1.IsDirectory != entry2.IsDirectory)
+                            return entry1.IsDirectory ? -1 : 1;
+                        else
+                            return entry1.Name.CompareTo(entry2.Name);
+                    });
+                }
 
-							if( ( item.Attributes & ignoredFileAttributes ) != 0 )
-								continue;
+                for (int i = 0; i < allFileEntries.Length; i++)
+                {
+                    try
+                    {
+                        FileSystemEntry item = allFileEntries[i];
 
-							string extension = item.Extension.ToLowerInvariant();
-							if( excludedExtensionsSet.Contains( extension ) )
-								continue;
+                        if (!item.IsDirectory)
+                        {
+                            if (m_pickerMode == PickMode.Folders)
+                                continue;
 
-							HashSet<string> extensions = filters[filtersDropdown.value].extensions;
-							if( extensions != null && !extensions.Contains( extension ) )
-								continue;
-						}
-						else
-						{
-							if( ( item.Attributes & ignoredFileAttributes ) != 0 )
-								continue;
-						}
+                            if ((item.Attributes & ignoredFileAttributes) != 0)
+                                continue;
 
-						if( m_searchString.Length == 0 || item.Name.ToLower().Contains( searchStringLowercase ) )
-							validFileEntries.Add( item );
-					}
-					catch( Exception e )
-					{
-						Debug.LogException( e );
-					}
-				}
-			}
+                            string extension = item.Extension.ToLowerInvariant();
+                            if (excludedExtensionsSet.Contains(extension))
+                                continue;
 
-			// Restore the selection
-			if( pendingFileEntrySelection.Count > 0 )
-			{
-				for( int i = 0; i < pendingFileEntrySelection.Count; i++ )
-				{
-					string pendingFileEntry = pendingFileEntrySelection[i];
-					for( int j = 0; j < validFileEntries.Count; j++ )
-					{
-						if( validFileEntries[j].Name == pendingFileEntry )
-						{
-							selectedFileEntries.Add( j );
-							break;
-						}
-					}
-				}
+                            HashSet<string> extensions = filters[filtersDropdown.value].extensions;
+                            if (extensions != null && !extensions.Contains(extension))
+                                continue;
+                        }
+                        else
+                        {
+                            if ((item.Attributes & ignoredFileAttributes) != 0)
+                                continue;
+                        }
 
-				pendingFileEntrySelection.Clear();
-			}
+                        if (m_searchString.Length == 0 || item.Name.ToLower().Contains(searchStringLowercase))
+                            validFileEntries.Add(item);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                    }
+                }
+            }
 
-			if( !filenameInputField.interactable && selectedFileEntries.Count <= 1 )
-			{
-				filenameInputField.interactable = true;
+            // Restore the selection
+            if (pendingFileEntrySelection.Count > 0)
+            {
+                foreach (string pendingFileEntry in pendingFileEntrySelection)
+                {
+                    for (var j = 0; j < validFileEntries.Count; j++)
+                    {
+                        if (validFileEntries[j].Name != pendingFileEntry) continue;
+                        
+                        selectedFileEntries.Add(j);
+                        break;
+                    }
+                }
 
-				if( selectedFileEntries.Count == 0 )
-					filenameInputField.text = string.Empty;
-			}
+                pendingFileEntrySelection.Clear();
+            }
 
-			listView.UpdateList();
+            if (!filenameInputField.interactable && selectedFileEntries.Count <= 1)
+            {
+                filenameInputField.interactable = true;
 
-			// Prevent the case where all the content stays offscreen after changing the search string
-			filesScrollRect.OnScroll( nullPointerEventData );
-		}
+                if (selectedFileEntries.Count == 0)
+                    filenameInputField.text = string.Empty;
+            }
 
-		// Quickly selects all files and folders in the current directory
-		public void SelectAllFiles()
-		{
-			if( !m_allowMultiSelection || validFileEntries.Count == 0 )
-				return;
+            listView.UpdateList();
 
-			multiSelectionPivotFileEntry = 0;
+            // Prevent the case where all the content stays offscreen after changing the search string
+            filesScrollRect.OnScroll(nullPointerEventData);
+        }
 
-			selectedFileEntries.Clear();
+        // Quickly selects all files and folders in the current directory
+        public void SelectAllFiles()
+        {
+            if (!m_allowMultiSelection || validFileEntries.Count == 0)
+                return;
 
-			if( m_pickerMode != PickMode.Files )
-			{
-				for( int i = 0; i < validFileEntries.Count; i++ )
-					selectedFileEntries.Add( i );
-			}
-			else
-			{
-				// Don't select folders in file picking mode if MultiSelectionToggleSelectionMode is enabled or about to be enabled
-				for( int i = 0; i < validFileEntries.Count; i++ )
-				{
+            multiSelectionPivotFileEntry = 0;
+
+            selectedFileEntries.Clear();
+
+            if (m_pickerMode != PickMode.Files)
+            {
+                for (int i = 0; i < validFileEntries.Count; i++)
+                    selectedFileEntries.Add(i);
+            }
+            else
+            {
+                // Don't select folders in file picking mode if MultiSelectionToggleSelectionMode is enabled or about to be enabled
+                for (int i = 0; i < validFileEntries.Count; i++)
+                {
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WSA || UNITY_WSA_10_0
-					if( !m_multiSelectionToggleSelectionMode || !validFileEntries[i].IsDirectory )
+                    if (!m_multiSelectionToggleSelectionMode || !validFileEntries[i].IsDirectory)
 #else
 					if( !validFileEntries[i].IsDirectory )
 #endif
-						selectedFileEntries.Add( i );
-				}
-			}
+                        selectedFileEntries.Add(i);
+                }
+            }
 
 #if !UNITY_EDITOR && !UNITY_STANDALONE && !UNITY_WSA && !UNITY_WSA_10_0
 			MultiSelectionToggleSelectionMode = true;
 #endif
 
-			UpdateFilenameInputFieldWithSelection();
-			listView.UpdateList();
-		}
+            UpdateFilenameInputFieldWithSelection();
+            listView.UpdateList();
+        }
 
-		// Quickly deselects all files and folders in the current directory
-		public void DeselectAllFiles()
-		{
-			if( selectedFileEntries.Count == 0 )
-				return;
+        // Quickly deselects all files and folders in the current directory
+        public void DeselectAllFiles()
+        {
+            if (selectedFileEntries.Count == 0)
+                return;
 
-			selectedFileEntries.Clear();
-			MultiSelectionToggleSelectionMode = false;
+            selectedFileEntries.Clear();
+            MultiSelectionToggleSelectionMode = false;
 
-			filenameInputField.text = string.Empty;
-			filenameInputField.interactable = true;
+            filenameInputField.text = string.Empty;
+            filenameInputField.interactable = true;
 
-			listView.UpdateList();
-		}
+            listView.UpdateList();
+        }
 
-		// Prompts user to create a new folder in the current directory
-		public void CreateNewFolder()
-		{
-			StartCoroutine( CreateNewFolderCoroutine() );
-		}
+        // Prompts user to create a new folder in the current directory
+        public void CreateNewFolder()
+        {
+            StartCoroutine(CreateNewFolderCoroutine());
+        }
 
-		private IEnumerator CreateNewFolderCoroutine()
-		{
-			filesScrollRect.verticalNormalizedPosition = 1f;
-			filesScrollRect.velocity = Vector2.zero;
+        private IEnumerator CreateNewFolderCoroutine()
+        {
+            filesScrollRect.verticalNormalizedPosition = 1f;
+            filesScrollRect.velocity = Vector2.zero;
 
-			if( selectedFileEntries.Count > 0 )
-			{
-				selectedFileEntries.Clear();
-				MultiSelectionToggleSelectionMode = false;
+            if (selectedFileEntries.Count > 0)
+            {
+                selectedFileEntries.Clear();
+                MultiSelectionToggleSelectionMode = false;
 
-				filenameInputField.text = string.Empty;
-				filenameInputField.interactable = true;
+                filenameInputField.text = string.Empty;
+                filenameInputField.interactable = true;
 
-				listView.UpdateList();
-			}
+                listView.UpdateList();
+            }
 
-			filesScrollRect.movementType = ScrollRect.MovementType.Unrestricted;
+            filesScrollRect.movementType = ScrollRect.MovementType.Unrestricted;
 
-			// The easiest way to insert a new item to the top of the list view is to just shift
-			// the list view downwards. However, it doesn't always work if we don't shift it twice
-			yield return null;
-			filesContainer.anchoredPosition = new Vector2( 0f, -itemHeight );
-			yield return null;
-			filesContainer.anchoredPosition = new Vector2( 0f, -itemHeight );
+            // The easiest way to insert a new item to the top of the list view is to just shift
+            // the list view downwards. However, it doesn't always work if we don't shift it twice
+            yield return null;
+            filesContainer.anchoredPosition = new Vector2(0f, -itemHeight);
+            yield return null;
+            filesContainer.anchoredPosition = new Vector2(0f, -itemHeight);
 
-			( (RectTransform) renameItem.transform ).anchoredPosition = new Vector2( 1f, itemHeight );
-			renameItem.Show( string.Empty, selectedFileColor, folderIcon, ( folderName ) =>
-			{
-				filesScrollRect.movementType = ScrollRect.MovementType.Clamped;
-				filesContainer.anchoredPosition = Vector2.zero;
+            ((RectTransform)renameItem.transform).anchoredPosition = new Vector2(1f, itemHeight);
+            renameItem.Show(string.Empty, selectedFileColor, folderIcon, (folderName) =>
+            {
+                filesScrollRect.movementType = ScrollRect.MovementType.Clamped;
+                filesContainer.anchoredPosition = Vector2.zero;
 
-				if( string.IsNullOrEmpty( folderName ) )
-					return;
+                if (string.IsNullOrEmpty(folderName))
+                    return;
 
-				FileBrowserHelpers.CreateFolderInDirectory( CurrentPath, folderName );
+                FileBrowserHelpers.CreateFolderInDirectory(CurrentPath, folderName);
 
-				pendingFileEntrySelection.Clear();
-				pendingFileEntrySelection.Add( folderName );
+                pendingFileEntrySelection.Clear();
+                pendingFileEntrySelection.Add(folderName);
 
-				RefreshFiles( true );
+                RefreshFiles(true);
 
-				if( m_pickerMode != PickMode.Files )
-					filenameInputField.text = folderName;
+                if (m_pickerMode != PickMode.Files)
+                    filenameInputField.text = folderName;
 
-				// Focus on the newly created folder
-				int fileEntryIndex = 0;
-				for( int i = 0; i < validFileEntries.Count; i++ )
-				{
-					if( validFileEntries[i].Name == folderName )
-					{
-						fileEntryIndex = i;
-						break;
-					}
-				}
+                // Focus on the newly created folder
+                int fileEntryIndex = 0;
+                for (int i = 0; i < validFileEntries.Count; i++)
+                {
+                    if (validFileEntries[i].Name == folderName)
+                    {
+                        fileEntryIndex = i;
+                        break;
+                    }
+                }
 
-				filesScrollRect.verticalNormalizedPosition = validFileEntries.Count > 1 ? ( 1f - (float) fileEntryIndex / ( validFileEntries.Count - 1 ) ) : 1f;
-			} );
-		}
+                filesScrollRect.verticalNormalizedPosition = validFileEntries.Count > 1 ? (1f - (float)fileEntryIndex / (validFileEntries.Count - 1)) : 1f;
+            });
+        }
 
-		// Prompts user to rename the selected file/folder
-		public void RenameSelectedFile()
-		{
-			if( selectedFileEntries.Count != 1 )
-				return;
+        // Prompts user to rename the selected file/folder
+        public void RenameSelectedFile()
+        {
+            if (selectedFileEntries.Count != 1)
+                return;
 
-			MultiSelectionToggleSelectionMode = false;
+            MultiSelectionToggleSelectionMode = false;
 
-			int fileEntryIndex = selectedFileEntries[0];
-			FileSystemEntry fileInfo = validFileEntries[fileEntryIndex];
+            int fileEntryIndex = selectedFileEntries[0];
+            FileSystemEntry fileInfo = validFileEntries[fileEntryIndex];
 
-			// Check if selected file is currently visible in ScrollRect
-			// We consider it visible if both the previous file entry and the next file entry are visible
-			bool prevFileEntryVisible = false, nextFileEntryVisible = false;
-			for( int i = 0; i < allItems.Count; i++ )
-			{
-				if( !allItems[i].gameObject.activeSelf )
-					continue;
+            // Check if selected file is currently visible in ScrollRect
+            // We consider it visible if both the previous file entry and the next file entry are visible
+            bool prevFileEntryVisible = false, nextFileEntryVisible = false;
+            foreach (FileBrowserItem item in allItems.Where(item => item.gameObject.activeSelf))
+            {
+                if (item.Position == fileEntryIndex - 1)
+                {
+                    prevFileEntryVisible = true;
 
-				if( allItems[i].Position == fileEntryIndex - 1 )
-				{
-					prevFileEntryVisible = true;
+                    if (prevFileEntryVisible && nextFileEntryVisible)
+                        break;
+                }
+                else if (item.Position == fileEntryIndex + 1)
+                {
+                    nextFileEntryVisible = true;
 
-					if( prevFileEntryVisible && nextFileEntryVisible )
-						break;
-				}
-				else if( allItems[i].Position == fileEntryIndex + 1 )
-				{
-					nextFileEntryVisible = true;
+                    if (prevFileEntryVisible && nextFileEntryVisible)
+                        break;
+                }
+            }
 
-					if( prevFileEntryVisible && nextFileEntryVisible )
-						break;
-				}
-			}
+            if (!prevFileEntryVisible || !nextFileEntryVisible)
+                filesScrollRect.verticalNormalizedPosition = validFileEntries.Count > 1 ? (1f - (float)fileEntryIndex / (validFileEntries.Count - 1)) : 1f;
 
-			if( !prevFileEntryVisible || !nextFileEntryVisible )
-				filesScrollRect.verticalNormalizedPosition = validFileEntries.Count > 1 ? ( 1f - (float) fileEntryIndex / ( validFileEntries.Count - 1 ) ) : 1f;
+            filesScrollRect.velocity = Vector2.zero;
 
-			filesScrollRect.velocity = Vector2.zero;
+            ((RectTransform)renameItem.transform).anchoredPosition = new Vector2(1f, -fileEntryIndex * itemHeight);
+            renameItem.Show(fileInfo.Name, selectedFileColor, GetIconForFileEntry(fileInfo), (newName) =>
+            {
+                if (string.IsNullOrEmpty(newName) || newName == fileInfo.Name)
+                    return;
 
-			( (RectTransform) renameItem.transform ).anchoredPosition = new Vector2( 1f, -fileEntryIndex * itemHeight );
-			renameItem.Show( fileInfo.Name, selectedFileColor, GetIconForFileEntry( fileInfo ), ( newName ) =>
-			{
-				if( string.IsNullOrEmpty( newName ) || newName == fileInfo.Name )
-					return;
+                if (fileInfo.IsDirectory)
+                    FileBrowserHelpers.RenameDirectory(fileInfo.Path, newName);
+                else
+                    FileBrowserHelpers.RenameFile(fileInfo.Path, newName);
 
-				if( fileInfo.IsDirectory )
-					FileBrowserHelpers.RenameDirectory( fileInfo.Path, newName );
-				else
-					FileBrowserHelpers.RenameFile( fileInfo.Path, newName );
+                pendingFileEntrySelection.Clear();
+                pendingFileEntrySelection.Add(newName);
 
-				pendingFileEntrySelection.Clear();
-				pendingFileEntrySelection.Add( newName );
+                RefreshFiles(true);
 
-				RefreshFiles( true );
+                if ((fileInfo.IsDirectory && m_pickerMode != PickMode.Files) || (!fileInfo.IsDirectory && m_pickerMode != PickMode.Folders))
+                    filenameInputField.text = newName;
+            });
+        }
 
-				if( ( fileInfo.IsDirectory && m_pickerMode != PickMode.Files ) || ( !fileInfo.IsDirectory && m_pickerMode != PickMode.Folders ) )
-					filenameInputField.text = newName;
-			} );
-		}
+        // Prompts user to delete the selected files & folders
+        public void DeleteSelectedFiles()
+        {
+            if (selectedFileEntries.Count == 0)
+                return;
 
-		// Prompts user to delete the selected files & folders
-		public void DeleteSelectedFiles()
-		{
-			if( selectedFileEntries.Count == 0 )
-				return;
+            selectedFileEntries.Sort();
 
-			selectedFileEntries.Sort();
+            deleteConfirmationPanel.Show(this, validFileEntries, selectedFileEntries, () =>
+            {
+                for (int i = selectedFileEntries.Count - 1; i >= 0; i--)
+                {
+                    FileSystemEntry fileInfo = validFileEntries[selectedFileEntries[i]];
+                    if (fileInfo.IsDirectory)
+                        FileBrowserHelpers.DeleteDirectory(fileInfo.Path);
+                    else
+                        FileBrowserHelpers.DeleteFile(fileInfo.Path);
+                }
 
-			deleteConfirmationPanel.Show( this, validFileEntries, selectedFileEntries, () =>
-			{
-				for( int i = selectedFileEntries.Count - 1; i >= 0; i-- )
-				{
-					FileSystemEntry fileInfo = validFileEntries[selectedFileEntries[i]];
-					if( fileInfo.IsDirectory )
-						FileBrowserHelpers.DeleteDirectory( fileInfo.Path );
-					else
-						FileBrowserHelpers.DeleteFile( fileInfo.Path );
-				}
+                selectedFileEntries.Clear();
 
-				selectedFileEntries.Clear();
+                MultiSelectionToggleSelectionMode = false;
+                RefreshFiles(true);
+            });
+        }
 
-				MultiSelectionToggleSelectionMode = false;
-				RefreshFiles( true );
-			} );
-		}
+        // Makes sure that the selection persists after Refreshing the file entries
+        private void PersistFileEntrySelection()
+        {
+            pendingFileEntrySelection.Clear();
+            foreach (int entry in selectedFileEntries)
+                pendingFileEntrySelection.Add(validFileEntries[entry].Name);
+        }
 
-		// Makes sure that the selection persists after Refreshing the file entries
-		private void PersistFileEntrySelection()
-		{
-			pendingFileEntrySelection.Clear();
-			for( int i = 0; i < selectedFileEntries.Count; i++ )
-				pendingFileEntrySelection.Add( validFileEntries[selectedFileEntries[i]].Name );
-		}
-
-		private bool AddQuickLink( Sprite icon, string name, string path )
-		{
-			if( string.IsNullOrEmpty( path ) )
-				return false;
+        private bool AddQuickLink(Sprite icon, string name, string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return false;
 
 #if !UNITY_EDITOR && UNITY_ANDROID
 			if( !FileBrowserHelpers.ShouldUseSAF )
 #endif
-			{
-				if( !Directory.Exists( path ) )
-					return false;
+            {
+                if (!Directory.Exists(path))
+                    return false;
 
-				path = GetPathWithoutTrailingDirectorySeparator( path.Trim() );
-			}
+                path = GetPathWithoutTrailingDirectorySeparator(path.Trim());
+            }
 
-			// Don't add quick link if it already exists
-			for( int i = 0; i < allQuickLinks.Count; i++ )
-			{
-				if( allQuickLinks[i].TargetPath == path )
-					return false;
-			}
+            // Don't add quick link if it already exists
+            if (allQuickLinks.Any(browserQuickLink => browserQuickLink.TargetPath == path)) return false;
 
-			FileBrowserQuickLink quickLink = (FileBrowserQuickLink) Instantiate( quickLinkPrefab, quickLinksContainer, false );
-			quickLink.SetFileBrowser( this );
+            FileBrowserQuickLink quickLink = Instantiate(quickLinkPrefab, quickLinksContainer, false);
+            quickLink.SetFileBrowser(this);
 
-			if( icon != null )
-				quickLink.SetQuickLink( icon, name, path );
-			else
-				quickLink.SetQuickLink( folderIcon, name, path );
+            quickLink.SetQuickLink(icon ? icon : folderIcon, name, path);
 
-			Vector2 anchoredPos = new Vector2( 0f, -quickLinksContainer.sizeDelta.y );
+            var anchoredPos = new Vector2(0f, -quickLinksContainer.sizeDelta.y);
 
-			quickLink.TransformComponent.anchoredPosition = anchoredPos;
-			anchoredPos.y -= itemHeight;
+            quickLink.TransformComponent.anchoredPosition = anchoredPos;
+            anchoredPos.y -= itemHeight;
 
-			quickLinksContainer.sizeDelta = new Vector2( 0f, -anchoredPos.y );
+            quickLinksContainer.sizeDelta = new Vector2(0f, -anchoredPos.y);
 
-			allQuickLinks.Add( quickLink );
+            allQuickLinks.Add(quickLink);
 
-			return true;
-		}
+            return true;
+        }
 
-		internal void EnsureWindowIsWithinBounds()
-		{
-			Vector2 canvasSize = rectTransform.sizeDelta;
-			Vector2 windowSize = windowTR.sizeDelta;
+        internal void EnsureWindowIsWithinBounds()
+        {
+            Vector2 canvasSize = rectTransform.sizeDelta;
+            Vector2 windowSize = windowTR.sizeDelta;
 
-			if( windowSize.x < minWidth )
-				windowSize.x = minWidth;
-			if( windowSize.y < minHeight )
-				windowSize.y = minHeight;
+            if (windowSize.x < minWidth)
+                windowSize.x = minWidth;
+            if (windowSize.y < minHeight)
+                windowSize.y = minHeight;
 
-			if( windowSize.x > canvasSize.x )
-				windowSize.x = canvasSize.x;
-			if( windowSize.y > canvasSize.y )
-				windowSize.y = canvasSize.y;
+            if (windowSize.x > canvasSize.x)
+                windowSize.x = canvasSize.x;
+            if (windowSize.y > canvasSize.y)
+                windowSize.y = canvasSize.y;
 
-			Vector2 windowPos = windowTR.anchoredPosition;
-			Vector2 canvasHalfSize = canvasSize * 0.5f;
-			Vector2 windowHalfSize = windowSize * 0.5f;
-			Vector2 windowBottomLeft = windowPos - windowHalfSize + canvasHalfSize;
-			Vector2 windowTopRight = windowPos + windowHalfSize + canvasHalfSize;
+            Vector2 windowPos = windowTR.anchoredPosition;
+            Vector2 canvasHalfSize = canvasSize * 0.5f;
+            Vector2 windowHalfSize = windowSize * 0.5f;
+            Vector2 windowBottomLeft = windowPos - windowHalfSize + canvasHalfSize;
+            Vector2 windowTopRight = windowPos + windowHalfSize + canvasHalfSize;
 
-			if( windowBottomLeft.x < 0f )
-				windowPos.x -= windowBottomLeft.x;
-			else if( windowTopRight.x > canvasSize.x )
-				windowPos.x -= windowTopRight.x - canvasSize.x;
+            if (windowBottomLeft.x < 0f)
+                windowPos.x -= windowBottomLeft.x;
+            else if (windowTopRight.x > canvasSize.x)
+                windowPos.x -= windowTopRight.x - canvasSize.x;
 
-			if( windowBottomLeft.y < 0f )
-				windowPos.y -= windowBottomLeft.y;
-			else if( windowTopRight.y > canvasSize.y )
-				windowPos.y -= windowTopRight.y - canvasSize.y;
+            if (windowBottomLeft.y < 0f)
+                windowPos.y -= windowBottomLeft.y;
+            else if (windowTopRight.y > canvasSize.y)
+                windowPos.y -= windowTopRight.y - canvasSize.y;
 
-			windowTR.anchoredPosition = windowPos;
-			windowTR.sizeDelta = windowSize;
-		}
+            windowTR.anchoredPosition = windowPos;
+            windowTR.sizeDelta = windowSize;
+        }
 
-		// Handles responsive user interface
-		internal void OnWindowDimensionsChanged( Vector2 size )
-		{
-			float windowWidth = size.x;
-			float quickLinksWidth = Mathf.Min( middleViewQuickLinksOriginalSize.x, windowWidth * quickLinksMaxWidthPercentage );
+        // Handles responsive user interface
+        internal void OnWindowDimensionsChanged(Vector2 size)
+        {
+            float windowWidth = size.x;
+            float quickLinksWidth = Mathf.Min(middleViewQuickLinksOriginalSize.x, windowWidth * quickLinksMaxWidthPercentage);
 
-			if( middleViewQuickLinks.sizeDelta.x != quickLinksWidth )
-			{
-				middleViewQuickLinks.sizeDelta = new Vector2( quickLinksWidth, middleViewQuickLinksOriginalSize.y );
-				middleViewFiles.anchoredPosition = new Vector2( quickLinksWidth, 0f );
-				middleViewFiles.sizeDelta = new Vector2( -quickLinksWidth, middleViewQuickLinksOriginalSize.y );
-				middleViewSeparator.anchoredPosition = new Vector2( quickLinksWidth, 0f );
-			}
+            if (Math.Abs(middleViewQuickLinks.sizeDelta.x - quickLinksWidth) > 0.01f)
+            {
+                middleViewQuickLinks.sizeDelta = new Vector2(quickLinksWidth, middleViewQuickLinksOriginalSize.y);
+                middleViewFiles.anchoredPosition = new Vector2(quickLinksWidth, 0f);
+                middleViewFiles.sizeDelta = new Vector2(-quickLinksWidth, middleViewQuickLinksOriginalSize.y);
+                middleViewSeparator.anchoredPosition = new Vector2(quickLinksWidth, 0f);
+            }
 
 #if !UNITY_EDITOR && UNITY_ANDROID
 			// Responsive layout doesn't affect any other visible UI elements on Storage Access Framework
@@ -2093,493 +2068,465 @@ namespace SimpleFileBrowser
 				return;
 #endif
 
-			if( windowWidth >= narrowScreenWidth )
-			{
-				if( pathInputField.transform.parent == pathInputFieldSlotBottom )
-				{
-					pathInputField.transform.SetParent( pathInputFieldSlotTop, false );
+            if (windowWidth >= narrowScreenWidth)
+            {
+                if (pathInputField.transform.parent != pathInputFieldSlotBottom) return;
 
-					middleView.anchoredPosition = middleViewOriginalPosition;
-					middleView.sizeDelta = middleViewOriginalSize;
+                pathInputField.transform.SetParent(pathInputFieldSlotTop, false);
 
-					showHiddenFilesToggle.gameObject.SetActive( m_displayHiddenFilesToggle );
+                middleView.anchoredPosition = middleViewOriginalPosition;
+                middleView.sizeDelta = middleViewOriginalSize;
 
-					listView.OnViewportDimensionsChanged();
-					filesScrollRect.OnScroll( nullPointerEventData );
-				}
-			}
-			else
-			{
-				if( pathInputField.transform.parent == pathInputFieldSlotTop )
-				{
-					pathInputField.transform.SetParent( pathInputFieldSlotBottom, false );
+                showHiddenFilesToggle.gameObject.SetActive(m_displayHiddenFilesToggle);
 
-					float topViewAdditionalHeight = topViewNarrowScreen.sizeDelta.y;
-					middleView.anchoredPosition = middleViewOriginalPosition - new Vector2( 0f, topViewAdditionalHeight * 0.5f );
-					middleView.sizeDelta = middleViewOriginalSize - new Vector2( 0f, topViewAdditionalHeight );
+                listView.OnViewportDimensionsChanged();
+                filesScrollRect.OnScroll(nullPointerEventData);
+            }
+            else
+            {
+                if (pathInputField.transform.parent != pathInputFieldSlotTop) return;
 
-					// Responsive layout for narrow screens doesn't include "Show Hidden Files" toggle.
-					// We simply hide it because I think creating a new row for it would be an overkill
-					showHiddenFilesToggle.gameObject.SetActive( false );
+                pathInputField.transform.SetParent(pathInputFieldSlotBottom, false);
 
-					listView.OnViewportDimensionsChanged();
-					filesScrollRect.OnScroll( nullPointerEventData );
-				}
-			}
-		}
+                float topViewAdditionalHeight = topViewNarrowScreen.sizeDelta.y;
+                middleView.anchoredPosition = middleViewOriginalPosition - new Vector2(0f, topViewAdditionalHeight * 0.5f);
+                middleView.sizeDelta = middleViewOriginalSize - new Vector2(0f, topViewAdditionalHeight);
 
-		internal Sprite GetIconForFileEntry( FileSystemEntry fileInfo )
-		{
-			Sprite icon;
-			if( fileInfo.IsDirectory )
-				icon = folderIcon;
-			else if( !filetypeToIcon.TryGetValue( fileInfo.Extension.ToLowerInvariant(), out icon ) )
-				icon = defaultIcon;
+                // Responsive layout for narrow screens doesn't include "Show Hidden Files" toggle.
+                // We simply hide it because I think creating a new row for it would be an overkill
+                showHiddenFilesToggle.gameObject.SetActive(false);
 
-			return icon;
-		}
+                listView.OnViewportDimensionsChanged();
+                filesScrollRect.OnScroll(nullPointerEventData);
+            }
+        }
 
-		private string GetPathWithoutTrailingDirectorySeparator( string path )
-		{
-			if( string.IsNullOrEmpty( path ) )
-				return null;
+        internal Sprite GetIconForFileEntry(FileSystemEntry fileInfo)
+        {
+            Sprite icon;
+            if (fileInfo.IsDirectory) icon = folderIcon;
+            else if (!filetypeToIcon.TryGetValue(fileInfo.Extension.ToLowerInvariant(), out icon)) icon = defaultIcon;
 
-			// Credit: http://stackoverflow.com/questions/6019227/remove-the-last-character-if-its-directoryseparatorchar-with-c-sharp
-			try
-			{
-				if( Path.GetDirectoryName( path ) != null )
-				{
-					char lastChar = path[path.Length - 1];
-					if( lastChar == Path.DirectorySeparatorChar || lastChar == Path.AltDirectorySeparatorChar )
-						path = path.Substring( 0, path.Length - 1 );
-				}
-			}
-			catch
-			{
-			}
+            return icon;
+        }
 
-			return path;
-		}
+        private string GetPathWithoutTrailingDirectorySeparator(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return null;
 
-		private void UpdateFilenameInputFieldWithSelection()
-		{
-			// Refresh filenameInputField as follows:
-			// 0 files selected: *blank*
-			// 1 file selected: file.Name
-			// 2+ files selected: "file1.Name" "file2.Name" ... (up to FILENAME_INPUT_FIELD_MAX_FILE_COUNT filenames are displayed for performance reasons)
-			int filenameContributingFileCount = 0;
-			if( m_pickerMode != PickMode.Files )
-				filenameContributingFileCount = selectedFileEntries.Count;
-			else
-			{
-				for( int i = 0; i < selectedFileEntries.Count; i++ )
-				{
-					if( !validFileEntries[selectedFileEntries[i]].IsDirectory )
-					{
-						filenameContributingFileCount++;
+            // Credit: http://stackoverflow.com/questions/6019227/remove-the-last-character-if-its-directoryseparatorchar-with-c-sharp
+            try
+            {
+                if (Path.GetDirectoryName(path) != null)
+                {
+                    char lastChar = path[path.Length - 1];
+                    if (lastChar == Path.DirectorySeparatorChar || lastChar == Path.AltDirectorySeparatorChar)
+                        path = path.Substring(0, path.Length - 1);
+                }
+            }
+            catch
+            {
+                // ignored
+            }
 
-						if( filenameContributingFileCount >= FILENAME_INPUT_FIELD_MAX_FILE_COUNT )
-							break;
-					}
-				}
-			}
+            return path;
+        }
 
-			filenameInputField.interactable = selectedFileEntries.Count <= 1;
+        private void UpdateFilenameInputFieldWithSelection()
+        {
+            // Refresh filenameInputField as follows:
+            // 0 files selected: *blank*
+            // 1 file selected: file.Name
+            // 2+ files selected: "file1.Name" "file2.Name" ... (up to FILENAME_INPUT_FIELD_MAX_FILE_COUNT filenames are displayed for performance reasons)
+            var filenameContributingFileCount = 0;
+            if (m_pickerMode != PickMode.Files)
+                filenameContributingFileCount = selectedFileEntries.Count;
+            else
+            {
+                foreach (int fileEntry in selectedFileEntries.Where(fileEntry => !validFileEntries[fileEntry].IsDirectory))
+                {
+                    filenameContributingFileCount++;
 
-			if( filenameContributingFileCount == 0 )
-				filenameInputField.text = string.Empty;
-			else
-			{
-				if( filenameContributingFileCount > 1 )
-				{
-					if( multiSelectionFilenameBuilder == null )
-						multiSelectionFilenameBuilder = new StringBuilder( 75 );
-					else
-						multiSelectionFilenameBuilder.Length = 0;
-				}
+                    if (filenameContributingFileCount >= FILENAME_INPUT_FIELD_MAX_FILE_COUNT) break;
+                }
+            }
 
-				for( int i = 0, fileCount = 0; i < selectedFileEntries.Count; i++ )
-				{
-					FileSystemEntry selectedFile = validFileEntries[selectedFileEntries[i]];
-					if( m_pickerMode != PickMode.Files || !selectedFile.IsDirectory )
-					{
-						if( filenameContributingFileCount == 1 )
-						{
-							filenameInputField.text = selectedFile.Name;
-							break;
-						}
-						else
-						{
-							multiSelectionFilenameBuilder.Append( "\"" ).Append( selectedFile.Name ).Append( "\" " );
+            filenameInputField.interactable = selectedFileEntries.Count <= 1;
 
-							if( ++fileCount >= FILENAME_INPUT_FIELD_MAX_FILE_COUNT )
-							{
-								multiSelectionFilenameBuilder.Append( "..." );
-								break;
-							}
-						}
-					}
-				}
+            if (filenameContributingFileCount == 0)
+                filenameInputField.text = string.Empty;
+            else
+            {
+                if (filenameContributingFileCount > 1)
+                {
+                    if (multiSelectionFilenameBuilder == null)
+                        multiSelectionFilenameBuilder = new StringBuilder(75);
+                    else
+                        multiSelectionFilenameBuilder.Length = 0;
+                }
 
-				if( filenameContributingFileCount > 1 )
-					filenameInputField.text = multiSelectionFilenameBuilder.ToString();
-			}
-		}
+                for (int i = 0, fileCount = 0; i < selectedFileEntries.Count; i++)
+                {
+                    FileSystemEntry selectedFile = validFileEntries[selectedFileEntries[i]];
+                    if (m_pickerMode == PickMode.Files && selectedFile.IsDirectory) continue;
+                    if (filenameContributingFileCount == 1)
+                    {
+                        filenameInputField.text = selectedFile.Name;
+                        break;
+                    }
+                    
+                    multiSelectionFilenameBuilder.Append("\"").Append(selectedFile.Name).Append("\" ");
 
-		// Extracts filenames from input field. Input can be in 2 formats:
-		// 1 filename: file.Name
-		// 2+ filenames: "file1.Name" "file2.Name" ...
-		// Returns the length of the iterated filename
-		private int ExtractFilenameFromInput( string input, ref int startIndex, out int nextStartIndex )
-		{
-			if( !m_allowMultiSelection || input[startIndex] != '"' )
-			{
-				// Single file is selected, return it
-				nextStartIndex = input.Length;
-				return input.Length - startIndex;
-			}
+                    if (++fileCount < FILENAME_INPUT_FIELD_MAX_FILE_COUNT) continue;
+                    
+                    multiSelectionFilenameBuilder.Append("...");
+                    break;
+                }
 
-			// Seems like multiple files are selected
+                if (filenameContributingFileCount > 1)
+                    filenameInputField.text = multiSelectionFilenameBuilder.ToString();
+            }
+        }
 
-			// Filename is " (a single quotation mark), very unlikely to happen but probably possible on some platforms
-			if( startIndex + 1 >= input.Length )
-			{
-				nextStartIndex = input.Length;
-				return 1;
-			}
+        // Extracts filenames from input field. Input can be in 2 formats:
+        // 1 filename: file.Name
+        // 2+ filenames: "file1.Name" "file2.Name" ...
+        // Returns the length of the iterated filename
+        private int ExtractFilenameFromInput(string input, ref int startIndex, out int nextStartIndex)
+        {
+            if (!m_allowMultiSelection || input[startIndex] != '"')
+            {
+                // Single file is selected, return it
+                nextStartIndex = input.Length;
+                return input.Length - startIndex;
+            }
 
-			int filenameEndIndex = input.IndexOf( '"', startIndex + 1 );
-			while( true )
-			{
-				// 1st iteration: filename is "abc
-				// 2nd iteration: filename is "abc"def
-				if( filenameEndIndex == -1 )
-				{
-					nextStartIndex = input.Length;
-					return input.Length - startIndex;
-				}
+            // Seems like multiple files are selected
 
-				// 1st iteration: filename is abc (extracted from "abc")
-				// 2nd iteration: filename is abc"def (extracted from "abc"def")
-				if( filenameEndIndex == input.Length - 1 || input[filenameEndIndex + 1] == ' ' )
-				{
-					startIndex++;
+            // Filename is " (a single quotation mark), very unlikely to happen but probably possible on some platforms
+            if (startIndex + 1 >= input.Length)
+            {
+                nextStartIndex = input.Length;
+                return 1;
+            }
 
-					nextStartIndex = filenameEndIndex + 1;
-					while( nextStartIndex < input.Length && input[nextStartIndex] == ' ' )
-						nextStartIndex++;
+            int filenameEndIndex = input.IndexOf('"', startIndex + 1);
+            while (true)
+            {
+                // 1st iteration: filename is "abc
+                // 2nd iteration: filename is "abc"def
+                if (filenameEndIndex == -1)
+                {
+                    nextStartIndex = input.Length;
+                    return input.Length - startIndex;
+                }
 
-					return filenameEndIndex - startIndex;
-				}
+                // 1st iteration: filename is abc (extracted from "abc")
+                // 2nd iteration: filename is abc"def (extracted from "abc"def")
+                if (filenameEndIndex == input.Length - 1 || input[filenameEndIndex + 1] == ' ')
+                {
+                    startIndex++;
 
-				// Filename contains a " char
-				filenameEndIndex = input.IndexOf( '"', filenameEndIndex + 1 );
-			}
-		}
+                    nextStartIndex = filenameEndIndex + 1;
+                    while (nextStartIndex < input.Length && input[nextStartIndex] == ' ')
+                        nextStartIndex++;
 
-		// Checks if a substring of the input field points to an existing file
-		private int FilenameInputToFileEntryIndex( string input, int startIndex, int length )
-		{
-			for( int i = 0; i < validFileEntries.Count; i++ )
-			{
-				if( validFileEntries[i].Name.Length == length && input.IndexOf( validFileEntries[i].Name, startIndex, length ) == startIndex )
-					return i;
-			}
+                    return filenameEndIndex - startIndex;
+                }
 
-			return -1;
-		}
+                // Filename contains a " char
+                filenameEndIndex = input.IndexOf('"', filenameEndIndex + 1);
+            }
+        }
 
-		// Verifies that filename doesn't contain any invalid characters
-		private bool VerifyFilenameInput( string input, int startIndex, int length )
-		{
-			bool isWhitespace = true;
-			for( int i = startIndex, endIndex = startIndex + length; i < endIndex; i++ )
-			{
-				char ch = input[i];
-				if( invalidFilenameChars.Contains( ch ) )
-					return false;
+        // Checks if a substring of the input field points to an existing file
+        private int FilenameInputToFileEntryIndex(string input, int startIndex, int length)
+        {
+            for (int i = 0; i < validFileEntries.Count; i++)
+            {
+                if (validFileEntries[i].Name.Length == length && input.IndexOf(validFileEntries[i].Name, startIndex, length, StringComparison.Ordinal) == startIndex)
+                    return i;
+            }
 
-				if( isWhitespace && !char.IsWhiteSpace( ch ) )
-					isWhitespace = false;
-			}
+            return -1;
+        }
 
-			return !isWhitespace;
-		}
+        // Verifies that filename doesn't contain any invalid characters
+        private bool VerifyFilenameInput(string input, int startIndex, int length)
+        {
+            bool isWhitespace = true;
+            for (int i = startIndex, endIndex = startIndex + length; i < endIndex; i++)
+            {
+                char ch = input[i];
+                if (invalidFilenameChars.Contains(ch))
+                    return false;
 
-		// Credit: http://answers.unity3d.com/questions/898770/how-to-get-the-width-of-ui-text-with-horizontal-ov.html
-		private int CalculateLengthOfDropdownText( string str )
-		{
-			Font font = filterItemTemplate.font;
-			font.RequestCharactersInTexture( str, filterItemTemplate.fontSize, filterItemTemplate.fontStyle );
+                if (isWhitespace && !char.IsWhiteSpace(ch))
+                    isWhitespace = false;
+            }
 
-			int totalLength = 0;
-			for( int i = 0; i < str.Length; i++ )
-			{
-				CharacterInfo characterInfo;
-				if( !font.GetCharacterInfo( str[i], out characterInfo, filterItemTemplate.fontSize ) )
-					totalLength += 5;
+            return !isWhitespace;
+        }
 
-				totalLength += characterInfo.advance;
-			}
+        // Credit: http://answers.unity3d.com/questions/898770/how-to-get-the-width-of-ui-text-with-horizontal-ov.html
+        private int CalculateLengthOfDropdownText(string str)
+        {
+            Font font = filterItemTemplate.font;
+            font.RequestCharactersInTexture(str, filterItemTemplate.fontSize, filterItemTemplate.fontStyle);
 
-			return totalLength;
-		}
+            int totalLength = 0;
+            foreach (char ch in str)
+            {
+                if (!font.GetCharacterInfo(ch, out CharacterInfo characterInfo, filterItemTemplate.fontSize)) totalLength += 5;
+                totalLength += characterInfo.advance;
+            }
 
-		private string GetInitialPath( string initialPath )
-		{
-			if( !string.IsNullOrEmpty( initialPath ) && !Directory.Exists( initialPath ) && File.Exists( initialPath ) )
-			{
-				// Path points to a file, use its parent directory's path instead
-				initialPath = Path.GetDirectoryName( initialPath );
-			}
+            return totalLength;
+        }
 
-			if( string.IsNullOrEmpty( initialPath ) || !Directory.Exists( initialPath ) )
-			{
-				if( CurrentPath.Length == 0 )
-					initialPath = defaultInitialPath;
-				else
-					initialPath = CurrentPath;
-			}
+        private string GetInitialPath(string initialPath)
+        {
+            if (!string.IsNullOrEmpty(initialPath) && !Directory.Exists(initialPath) && File.Exists(initialPath))
+            {
+                // Path points to a file, use its parent directory's path instead
+                initialPath = Path.GetDirectoryName(initialPath);
+            }
 
-			m_currentPath = string.Empty; // Needed to correctly reset the pathsFollowed
+            if (string.IsNullOrEmpty(initialPath) || !Directory.Exists(initialPath))
+            {
+                initialPath = CurrentPath.Length == 0 ? defaultInitialPath : CurrentPath;
+            }
 
-			return initialPath;
-		}
-		#endregion
+            m_currentPath = string.Empty; // Needed to correctly reset the pathsFollowed
 
-		#region File Browser Functions (static)
-		public static bool ShowSaveDialog( OnSuccess onSuccess, OnCancel onCancel,
-										   PickMode pickMode, bool allowMultiSelection = false,
-										   string initialPath = null, string initialFilename = null,
-										   string title = "Save", string saveButtonText = "Save" )
-		{
-			return ShowDialogInternal( onSuccess, onCancel, pickMode, allowMultiSelection, pickMode != PickMode.Folders, initialPath, initialFilename, title, saveButtonText );
-		}
+            return initialPath;
+        }
 
-		public static bool ShowLoadDialog( OnSuccess onSuccess, OnCancel onCancel,
-										   PickMode pickMode, bool allowMultiSelection = false,
-										   string initialPath = null, string initialFilename = null,
-										   string title = "Load", string loadButtonText = "Select" )
-		{
-			return ShowDialogInternal( onSuccess, onCancel, pickMode, allowMultiSelection, false, initialPath, initialFilename, title, loadButtonText );
-		}
+        #endregion
 
-		private static bool ShowDialogInternal( OnSuccess onSuccess, OnCancel onCancel,
-												PickMode pickMode, bool allowMultiSelection, bool acceptNonExistingFilename,
-												string initialPath, string initialFilename, string title, string submitButtonText )
-		{
-			// Instead of ignoring this dialog request, let's just override the currently visible dialog's properties
-			//if( Instance.gameObject.activeSelf )
-			//{
-			//	Debug.LogError( "Error: Multiple dialogs are not allowed!" );
-			//	return false;
-			//}
+        #region File Browser Functions (static)
 
-			Instance.onSuccess = onSuccess;
-			Instance.onCancel = onCancel;
+        public static bool ShowSaveDialog(OnSuccess onSuccess, OnCancel onCancel,
+            PickMode pickMode, bool allowMultiSelection = false,
+            string initialPath = null, string initialFilename = null,
+            string title = "Save", string saveButtonText = "Save") 
+            => ShowDialogInternal(onSuccess, onCancel, pickMode, allowMultiSelection, pickMode != PickMode.Folders, initialPath, initialFilename, title, saveButtonText);
 
-			Instance.PickerMode = pickMode;
-			Instance.AllowMultiSelection = allowMultiSelection;
-			Instance.Title = title;
-			Instance.SubmitButtonText = submitButtonText;
-			Instance.AcceptNonExistingFilename = acceptNonExistingFilename;
+        public static bool ShowLoadDialog(OnSuccess onSuccess, OnCancel onCancel,
+            PickMode pickMode, bool allowMultiSelection = false,
+            string initialPath = null, string initialFilename = null,
+            string title = "Load", string loadButtonText = "Select") 
+            => ShowDialogInternal(onSuccess, onCancel, pickMode, allowMultiSelection, false, initialPath, initialFilename, title, loadButtonText);
 
-			Instance.Show( initialPath, initialFilename );
+        private static bool ShowDialogInternal(OnSuccess onSuccess, OnCancel onCancel,
+            PickMode pickMode, bool allowMultiSelection, bool acceptNonExistingFilename,
+            string initialPath, string initialFilename, string title, string submitButtonText)
+        {
+            // Instead of ignoring this dialog request, let's just override the currently visible dialog's properties
+            //if( Instance.gameObject.activeSelf )
+            //{
+            //	Debug.LogError( "Error: Multiple dialogs are not allowed!" );
+            //	return false;
+            //}
 
-			return true;
-		}
+            Instance.onSuccess = onSuccess;
+            Instance.onCancel = onCancel;
 
-		public static void HideDialog( bool invokeCancelCallback = false )
-		{
-			Instance.OnOperationCanceled( invokeCancelCallback );
-		}
+            Instance.PickerMode = pickMode;
+            Instance.AllowMultiSelection = allowMultiSelection;
+            Instance.Title = title;
+            Instance.SubmitButtonText = submitButtonText;
+            Instance.AcceptNonExistingFilename = acceptNonExistingFilename;
 
-		public static IEnumerator WaitForSaveDialog( PickMode pickMode, bool allowMultiSelection = false,
-													 string initialPath = null, string initialFilename = null,
-													 string title = "Save", string saveButtonText = "Save" )
-		{
-			if( !ShowSaveDialog( null, null, pickMode, allowMultiSelection, initialPath, initialFilename, title, saveButtonText ) )
-				yield break;
+            Instance.Show(initialPath, initialFilename);
 
-			while( Instance.gameObject.activeSelf )
-				yield return null;
-		}
+            return true;
+        }
 
-		public static IEnumerator WaitForLoadDialog( PickMode pickMode, bool allowMultiSelection = false,
-													 string initialPath = null, string initialFilename = null,
-													 string title = "Load", string loadButtonText = "Select" )
-		{
-			if( !ShowLoadDialog( null, null, pickMode, allowMultiSelection, initialPath, initialFilename, title, loadButtonText ) )
-				yield break;
+        public static void HideDialog(bool invokeCancelCallback = false) => Instance.OnOperationCanceled(invokeCancelCallback);
 
-			while( Instance.gameObject.activeSelf )
-				yield return null;
-		}
+        public static IEnumerator WaitForSaveDialog(PickMode pickMode, bool allowMultiSelection = false,
+            string initialPath = null, string initialFilename = null,
+            string title = "Save", string saveButtonText = "Save")
+        {
+            if (!ShowSaveDialog(null, null, pickMode, allowMultiSelection, initialPath, initialFilename, title, saveButtonText))
+                yield break;
 
-		public static bool AddQuickLink( string name, string path, Sprite icon = null )
-		{
+            while (Instance.gameObject.activeSelf)
+                yield return null;
+        }
+
+        public static IEnumerator WaitForLoadDialog(PickMode pickMode, bool allowMultiSelection = false,
+            string initialPath = null, string initialFilename = null,
+            string title = "Load", string loadButtonText = "Select")
+        {
+            if (!ShowLoadDialog(null, null, pickMode, allowMultiSelection, initialPath, initialFilename, title, loadButtonText))
+                yield break;
+
+            while (Instance.gameObject.activeSelf)
+                yield return null;
+        }
+
+        public static bool AddQuickLink(string name, string path, Sprite icon = null)
+        {
 #if !UNITY_EDITOR && UNITY_ANDROID
 			if( FileBrowserHelpers.ShouldUseSAF )
 				return false;
 #endif
 
-			if( !quickLinksInitialized )
-			{
-				// Fetching the list of external drives is only possible with the READ_EXTERNAL_STORAGE permission granted on Android
-				if( AskPermissions )
-					RequestPermission();
+            if (!quickLinksInitialized)
+            {
+                // Fetching the list of external drives is only possible with the READ_EXTERNAL_STORAGE permission granted on Android
+                if (AskPermissions)
+                    RequestPermission();
 
-				Instance.InitializeQuickLinks();
-			}
+                Instance.InitializeQuickLinks();
+            }
 
-			return Instance.AddQuickLink( icon, name, path );
-		}
+            return Instance.AddQuickLink(icon, name, path);
+        }
 
-		public static void SetExcludedExtensions( params string[] excludedExtensions )
-		{
-			Instance.excludedExtensionsSet.Clear();
+        public static void SetExcludedExtensions(params string[] excludedExtensions)
+        {
+            Instance.excludedExtensionsSet.Clear();
 
-			if( excludedExtensions != null )
-			{
-				for( int i = 0; i < excludedExtensions.Length; i++ )
-					Instance.excludedExtensionsSet.Add( excludedExtensions[i].ToLowerInvariant() );
-			}
-		}
+            if (excludedExtensions == null) return;
+            
+            foreach (string excludedExtension in excludedExtensions)
+                Instance.excludedExtensionsSet.Add(excludedExtension.ToLowerInvariant());
+        }
 
-		public static void SetFilters( bool showAllFilesFilter, IEnumerable<string> filters )
-		{
-			SetFiltersPreProcessing( showAllFilesFilter );
+        public static void SetFilters(bool showAllFilesFilter, IEnumerable<string> filters)
+        {
+            SetFiltersPreProcessing(showAllFilesFilter);
 
-			if( filters != null )
-			{
-				foreach( string filter in filters )
-				{
-					if( filter != null && filter.Length > 0 )
-						Instance.filters.Add( new Filter( null, filter ) );
-				}
-			}
+            if (filters != null)
+            {
+                foreach (string filter in filters)
+                {
+                    if (!string.IsNullOrEmpty(filter))
+                        Instance.filters.Add(new Filter(null, filter));
+                }
+            }
 
-			SetFiltersPostProcessing();
-		}
+            SetFiltersPostProcessing();
+        }
 
-		public static void SetFilters( bool showAllFilesFilter, params string[] filters )
-		{
-			SetFiltersPreProcessing( showAllFilesFilter );
+        public static void SetFilters(bool showAllFilesFilter, params string[] filters)
+        {
+            SetFiltersPreProcessing(showAllFilesFilter);
 
-			if( filters != null )
-			{
-				for( int i = 0; i < filters.Length; i++ )
-				{
-					if( filters[i] != null && filters[i].Length > 0 )
-						Instance.filters.Add( new Filter( null, filters[i] ) );
-				}
-			}
+            if (filters != null)
+            {
+                foreach (string filter in filters)
+                {
+                    if (!string.IsNullOrEmpty(filter))
+                        Instance.filters.Add(new Filter(null, filter));
+                }
+            }
 
-			SetFiltersPostProcessing();
-		}
+            SetFiltersPostProcessing();
+        }
 
-		public static void SetFilters( bool showAllFilesFilter, IEnumerable<Filter> filters )
-		{
-			SetFiltersPreProcessing( showAllFilesFilter );
+        public static void SetFilters(bool showAllFilesFilter, IEnumerable<Filter> filters)
+        {
+            SetFiltersPreProcessing(showAllFilesFilter);
 
-			if( filters != null )
-			{
-				foreach( Filter filter in filters )
-				{
-					if( filter != null && filter.defaultExtension.Length > 0 )
-						Instance.filters.Add( filter );
-				}
-			}
+            if (filters != null)
+            {
+                foreach (Filter filter in filters)
+                {
+                    if (filter != null && filter.defaultExtension.Length > 0)
+                        Instance.filters.Add(filter);
+                }
+            }
 
-			SetFiltersPostProcessing();
-		}
+            SetFiltersPostProcessing();
+        }
 
-		public static void SetFilters( bool showAllFilesFilter, params Filter[] filters )
-		{
-			SetFiltersPreProcessing( showAllFilesFilter );
+        public static void SetFilters(bool showAllFilesFilter, params Filter[] filters)
+        {
+            SetFiltersPreProcessing(showAllFilesFilter);
 
-			if( filters != null )
-			{
-				for( int i = 0; i < filters.Length; i++ )
-				{
-					if( filters[i] != null && filters[i].defaultExtension.Length > 0 )
-						Instance.filters.Add( filters[i] );
-				}
-			}
+            if (filters != null)
+            {
+                foreach (Filter filter in filters)
+                {
+                    if (filter != null && filter.defaultExtension.Length > 0)
+                        Instance.filters.Add(filter);
+                }
+            }
 
-			SetFiltersPostProcessing();
-		}
+            SetFiltersPostProcessing();
+        }
 
-		private static void SetFiltersPreProcessing( bool showAllFilesFilter )
-		{
-			Instance.showAllFilesFilter = showAllFilesFilter;
+        private static void SetFiltersPreProcessing(bool showAllFilesFilter)
+        {
+            Instance.showAllFilesFilter = showAllFilesFilter;
 
-			Instance.filters.Clear();
+            Instance.filters.Clear();
 
-			if( showAllFilesFilter )
-				Instance.filters.Add( Instance.allFilesFilter );
-		}
+            if (showAllFilesFilter)
+                Instance.filters.Add(Instance.allFilesFilter);
+        }
 
-		private static void SetFiltersPostProcessing()
-		{
-			List<Filter> filters = Instance.filters;
+        private static void SetFiltersPostProcessing()
+        {
+            List<Filter> filters = Instance.filters;
 
-			if( filters.Count == 0 )
-				filters.Add( Instance.allFilesFilter );
+            if (filters.Count == 0)
+                filters.Add(Instance.allFilesFilter);
 
-			int maxFilterStrLength = 100;
-			List<string> dropdownValues = new List<string>( filters.Count );
-			for( int i = 0; i < filters.Count; i++ )
-			{
-				string filterStr = filters[i].ToString();
-				dropdownValues.Add( filterStr );
+            int maxFilterStrLength = 100;
+            var dropdownValues = new List<string>(filters.Count);
+            foreach (string filterStr in filters.Select(filter => filter.ToString()))
+            {
+                dropdownValues.Add(filterStr);
+                maxFilterStrLength = Mathf.Max(maxFilterStrLength, Instance.CalculateLengthOfDropdownText(filterStr));
+            }
 
-				maxFilterStrLength = Mathf.Max( maxFilterStrLength, Instance.CalculateLengthOfDropdownText( filterStr ) );
-			}
+            Vector2 size = Instance.filtersDropdownContainer.sizeDelta;
+            size.x = maxFilterStrLength + 28;
+            Instance.filtersDropdownContainer.sizeDelta = size;
 
-			Vector2 size = Instance.filtersDropdownContainer.sizeDelta;
-			size.x = maxFilterStrLength + 28;
-			Instance.filtersDropdownContainer.sizeDelta = size;
+            Instance.filtersDropdown.ClearOptions();
+            Instance.filtersDropdown.AddOptions(dropdownValues);
+            Instance.filtersDropdown.value = 0;
+        }
 
-			Instance.filtersDropdown.ClearOptions();
-			Instance.filtersDropdown.AddOptions( dropdownValues );
-			Instance.filtersDropdown.value = 0;
-		}
+        public static bool SetDefaultFilter(string defaultFilter)
+        {
+            if (defaultFilter == null)
+            {
+                if (!Instance.showAllFilesFilter) return false;
+                
+                Instance.filtersDropdown.value = 0;
+                Instance.filtersDropdown.RefreshShownValue();
 
-		public static bool SetDefaultFilter( string defaultFilter )
-		{
-			if( defaultFilter == null )
-			{
-				if( Instance.showAllFilesFilter )
-				{
-					Instance.filtersDropdown.value = 0;
-					Instance.filtersDropdown.RefreshShownValue();
+                return true;
 
-					return true;
-				}
+            }
 
-				return false;
-			}
+            defaultFilter = defaultFilter.ToLowerInvariant();
 
-			defaultFilter = defaultFilter.ToLowerInvariant();
+            for (int i = 0; i < Instance.filters.Count; i++)
+            {
+                HashSet<string> extensions = Instance.filters[i].extensions;
+                
+                if (extensions == null || !extensions.Contains(defaultFilter)) continue;
+                
+                Instance.filtersDropdown.value = i;
+                Instance.filtersDropdown.RefreshShownValue();
 
-			for( int i = 0; i < Instance.filters.Count; i++ )
-			{
-				HashSet<string> extensions = Instance.filters[i].extensions;
-				if( extensions != null && extensions.Contains( defaultFilter ) )
-				{
-					Instance.filtersDropdown.value = i;
-					Instance.filtersDropdown.RefreshShownValue();
+                return true;
+            }
 
-					return true;
-				}
-			}
+            return false;
+        }
 
-			return false;
-		}
-
-		public static Permission CheckPermission()
-		{
+        public static Permission CheckPermission()
+        {
 #if !UNITY_EDITOR && UNITY_ANDROID
 			Permission result = (Permission) FileBrowserHelpers.AJC.CallStatic<int>( "CheckPermission", FileBrowserHelpers.Context );
 			if( result == Permission.Denied && (Permission) PlayerPrefs.GetInt( "FileBrowserPermission", (int) Permission.ShouldAsk ) == Permission.ShouldAsk )
@@ -2587,12 +2534,12 @@ namespace SimpleFileBrowser
 
 			return result;
 #else
-			return Permission.Granted;
+            return Permission.Granted;
 #endif
-		}
+        }
 
-		public static Permission RequestPermission()
-		{
+        public static Permission RequestPermission()
+        {
 #if !UNITY_EDITOR && UNITY_ANDROID
 			object threadLock = new object();
 			lock( threadLock )
@@ -2613,9 +2560,10 @@ namespace SimpleFileBrowser
 				return (Permission) nativeCallback.Result;
 			}
 #else
-			return Permission.Granted;
+            return Permission.Granted;
 #endif
-		}
-		#endregion
-	}
+        }
+
+        #endregion
+    }
 }
