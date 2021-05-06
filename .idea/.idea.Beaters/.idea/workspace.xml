@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,16 +71,18 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/Timer.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/NoteObject.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/FileBrowserUpdate.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/AnotherFileBrowser/FileBrowser.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/File Management/FileBrowserUpdate.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/File Management/FileBrowser.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/MainMenuManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GUIManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -135,7 +135,7 @@
       <workItem from="1620149915488" duration="20453000" />
       <workItem from="1620212115872" duration="24562000" />
       <workItem from="1620249217627" duration="3019000" />
-      <workItem from="1620299050512" duration="6167000" />
+      <workItem from="1620299050512" duration="11152000" />
     </task>
     <servers />
   </component>
