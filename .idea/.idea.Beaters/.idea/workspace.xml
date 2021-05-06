@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Particles.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Particles/Touch Particle.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Particles/Touch Particle.prefab.meta" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ProjectSettings/TimelineSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Main Camera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Main Camera.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay.unity" afterDir="false" />
@@ -26,6 +31,7 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DB12E24F-2E90-40C4-AAAD-3E5C9B3FE877/2c/e5379b84/ParticleSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/Character.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.1/Scripts/Runtime/TMP_InputField.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/15/95600dd5/String.cs" root0="SKIP_HIGHLIGHTING" />
@@ -83,8 +89,8 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/MainMenuManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GUIManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
     </changedPaths>
@@ -142,7 +148,8 @@
       <workItem from="1620299050512" duration="11152000" />
       <workItem from="1620318187377" duration="13000" />
       <workItem from="1620318223403" duration="13000" />
-      <workItem from="1620318334841" duration="4535000" />
+      <workItem from="1620318334841" duration="5030000" />
+      <workItem from="1620326717590" duration="6601000" />
     </task>
     <servers />
   </component>

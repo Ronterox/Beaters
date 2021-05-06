@@ -16,9 +16,10 @@ namespace Managers
         [Header("Positions")]
         public float animationMoveSpeed;
         public Vector3 thirdDimensionPosition, secondDimensionPosition;
+
         public bool CanDoPanning { get; set; }
 
-        private bool m_In2D = true;
+        public static bool In2D { get; private set; } = true;
 
         private Coroutine m_RotatingCoroutine, m_MovementCoroutine;
 
@@ -38,10 +39,11 @@ namespace Managers
         private const float PAN_SPEED = 20f;
 
         private static readonly float[] BOUNDS_X = { -5f, 5f };
-        private static readonly float[] BOUNDS_Y = { -5f, 18f };
+        private static readonly float[] BOUNDS_Y_2D = { -5f, 18f };
         private static readonly float[] BOUNDS_Y_3D = { -10f, 10f };
 
-        private static readonly float[] ZOOM_BOUNDS = { 10f, 85f };
+        private static readonly float[] ZOOM_BOUNDS_2D = { 2.5f, 10f };
+        private static readonly float[] ZOOM_BOUNDS_3D = { 10f, 85f };
 
         protected override void Awake()
         {
@@ -63,16 +65,20 @@ namespace Managers
 
         public void InvertView()
         {
-            if (m_In2D) See3DView();
+            if (In2D) See3DView();
             else See2DView();
         }
 
         public void See2DView()
         {
-            RotateCameraTowards(secondDimensionRotation, () => mainCamera.orthographic = true);
+            RotateCameraTowards(secondDimensionRotation, () =>
+            {
+                mainCamera.orthographic = true;
+                mainCamera.orthographicSize = 5f;
+            });
             MoveCameraTowards(secondDimensionPosition);
 
-            m_In2D = true;
+            In2D = true;
         }
 
         public void See3DView()
@@ -82,7 +88,7 @@ namespace Managers
             RotateCameraTowards(thirdDimensionRotation);
             MoveCameraTowards(thirdDimensionPosition);
 
-            m_In2D = false;
+            In2D = false;
         }
 
         private void MoveCameraTowards(Vector3 target)
@@ -199,7 +205,7 @@ namespace Managers
             Vector3 position = movedTransform.position;
 
             position.x = Mathf.Clamp(position.x, BOUNDS_X[0], BOUNDS_X[1]);
-            position.y = m_In2D ? Mathf.Clamp(position.y, BOUNDS_Y[0], BOUNDS_Y[1]) : Mathf.Clamp(position.y, BOUNDS_Y_3D[0], BOUNDS_Y_3D[1]);
+            position.y = In2D ? Mathf.Clamp(position.y, BOUNDS_Y_2D[0], BOUNDS_Y_2D[1]) : Mathf.Clamp(position.y, BOUNDS_Y_3D[0], BOUNDS_Y_3D[1]);
 
             transform.position = position;
 
@@ -210,7 +216,9 @@ namespace Managers
         private void ZoomCamera(float offset, float speed)
         {
             if (offset == 0) return;
-            mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView - offset * speed, ZOOM_BOUNDS[0], ZOOM_BOUNDS[1]);
+
+            if (In2D) mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - offset * speed, ZOOM_BOUNDS_2D[0], ZOOM_BOUNDS_2D[1]);
+            else mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView - offset * speed, ZOOM_BOUNDS_3D[0], ZOOM_BOUNDS_3D[1]);
         }
     }
 }

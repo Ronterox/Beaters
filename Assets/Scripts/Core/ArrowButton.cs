@@ -17,9 +17,9 @@ namespace Core
         [Plugins.Properties.ReadOnly]
         public bool isNoteAbove;
 
-        public static int arrowTouches;
-        private const int TOUCHES_LIMIT = 2;
-
+#if UNITY_ANDROID || UNITY_IPHONE
+        private const int TOUCH_MAX_DISTANCE = 2;
+#endif
         public delegate void ButtonEvent();
 
         public event ButtonEvent onButtonPress;
@@ -39,13 +39,13 @@ namespace Core
 
 
 #if UNITY_ANDROID || UNITY_IPHONE
+        //If you need fps improvement you can reduce this code to be only on the CameraManager
         private void Update()
         {
-            if (Input.touchCount < 1 || arrowTouches == TOUCHES_LIMIT) return;
+            if (Input.touchCount < 1) return;
 
             foreach (Touch touch in Input.touches)
             {
-                if (arrowTouches == TOUCHES_LIMIT) return;
                 Vector3 touchPos = touch.position;
 
                 //Set the position relative to the camera vision
@@ -56,17 +56,11 @@ namespace Core
                 touchPos.x = Mathf.RoundToInt(touchPos.x);
                 touchPos.y = Mathf.RoundToInt(touchPos.y);
 
-                if (touchPos.Approximates(transform.position, 1f))
+                if (touchPos.Approximates(transform.position, TOUCH_MAX_DISTANCE))
                 {
-                    onButtonPress?.Invoke();
-                    arrowTouches++;
+                    if (touch.phase == TouchPhase.Began) onButtonPress?.Invoke();
                 }
             }
-        }
-
-        private void LateUpdate()
-        {
-            if (Input.touchCount < 1) arrowTouches = 0;
         }
 #else
         private void OnMouseDown() => onButtonPress?.Invoke();

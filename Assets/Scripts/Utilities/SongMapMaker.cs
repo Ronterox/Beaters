@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core;
 using DG.Tweening;
+using Managers;
 using Plugins.Tools;
 using TMPro;
 using UnityEngine;
@@ -93,6 +94,7 @@ namespace Utilities
 
         [Header("Feedback Config")]
         public SpriteRenderer preview;
+        public ParticleSystem touchParticle;
 
         [Header("My Maps")]
         public List<SoundMap> soundMaps;
@@ -117,7 +119,7 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
-        //TODO: Fix distance of 3d view click
+        //TODO: Fix distance of putting 3d view click in case of different pov
 #if !UNITY_EDITOR
         private void OnDestroy() => SaveMapsData();
 #endif
@@ -169,7 +171,7 @@ namespace Utilities
             mousePosition = m_MainCamera.ScreenToWorldPoint(mousePosition);
 
             mousePosition.x = Mathf.RoundToInt(mousePosition.x);
-            mousePosition.y = Mathf.RoundToInt(mousePosition.y);
+            mousePosition.y = Mathf.RoundToInt(CameraManager.In2D ? mousePosition.y : mousePosition.y + 5);
             mousePosition.z = 0;
 
             //Position preview where the mouse is supposed to be
@@ -179,11 +181,10 @@ namespace Utilities
             if (Input.GetMouseButtonDown(0) && !m_IsHoldingNote)
             {
                 RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, notesLayer);
-                if (result)
-                {
-                    Destroy(result.collider.gameObject);
-                }
+                if (result) Destroy(result.collider.gameObject);
             }
+
+            if (!m_IsHoldingNote && Input.GetMouseButtonUp(0)) ShowTouchParticle(mousePosition);
 
             //Check for holding note and dropping
             if (!m_IsHoldingNote || !Input.GetMouseButtonUp(0)) return;
@@ -201,6 +202,12 @@ namespace Utilities
                 CleanPreview();
             }
             m_IsHoldingNote = false;
+        }
+
+        private void ShowTouchParticle(Vector3 position)
+        {
+            touchParticle.Play();
+            touchParticle.transform.position = position;
         }
 
         public void StartCreating(string map)
@@ -369,15 +376,15 @@ namespace Utilities
                     select new Note
                     {
                         id = noteObject.MakerId,
-                        x = position.x, 
-                        y = position.y, 
+                        x = position.x,
+                        y = position.y,
                         z = position.z
                     }).ToArray();
 
                 soundMap.SetNotes(notes);
 
                 soundMap.SetBpmDelay(GetBpm(), GetDelay());
-                
+
                 UpdateSongsList();
                 return;
             }
