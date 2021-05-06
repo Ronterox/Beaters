@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Gameplay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/_Scenes/MainMenu.unity
+    guid: fd19a6e94e216b978b5cd49acd1e558b
+  - enabled: 1
+    path: Assets/_Scenes/SongSelector.unity
+    guid: 782ad5f42a059e515aadf255edd8b050
+  - enabled: 1
+    path: Assets/_Scenes/GachaMenu.unity
+    guid: 485d1ccf542297020bc0aa1fd1c7b985
   m_configObjects: {}

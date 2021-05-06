@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Plugins.UI
 {
-    public abstract class UICarousel : ScrollRect
+    public class UICarousel : ScrollRect
     {
         public GameObject elementPrefab;
         public RectTransform scrollMask;
