@@ -51,6 +51,8 @@ namespace Managers
         private static List<SerializableItem> m_ItemsList = new List<SerializableItem>();
         private static List<SerializableCharacter> m_CharactersList = new List<SerializableCharacter>();
 
+        public static int lvl, xp;
+
         public void OnEnable()
         {
             if (Instance != this) return;
@@ -102,7 +104,7 @@ namespace Managers
 
         public static void AddItem(Item item, int quantity = 1)
         {
-            var serializableItem = new SerializableItem { itemId = item.id, quantity = quantity};
+            var serializableItem = new SerializableItem { itemId = item.ID, quantity = quantity};
             
             for (var i = 0; i < m_ItemsList.Count; i++)
             {
@@ -122,7 +124,7 @@ namespace Managers
 
         public static void AddCharacter(Character character)
         {
-            var serializableCharacter = new SerializableCharacter { characterId = (ushort)character.name.GetHashCode(), lvl = character.lvl, xp = character.xp };
+            var serializableCharacter = new SerializableCharacter { characterId = (ushort)character.name.GetHashCode(), lvl = lvl, xp = xp };
 
             for (var i = 0; i < m_CharactersList.Count; i++)
             {
