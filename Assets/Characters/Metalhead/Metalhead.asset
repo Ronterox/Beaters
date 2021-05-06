@@ -28,5 +28,9 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: aaaa7a2cc3af499bb975e2e691e2e191, type: 2}
   - {fileID: 11400000, guid: 1ce0ba3e289b79c889465534fdb2f3e8, type: 2}
+  rune: {fileID: 11400000, guid: b2b4ce03143fb114b9394adf7318ad73, type: 2}
   hp: 100
-  level: 1
+  multiplier: 0
+  PlayButton: {fileID: 21300000, guid: 90e1d79c59e1c44839e373d052688b18, type: 3}
+  GatchaButton: {fileID: 21300000, guid: 86abc72299bad40a18d28f7515ca0eeb, type: 3}
+  MapCreator: {fileID: 21300000, guid: 1d39bc86c1e7a286784bdbc3224a5019, type: 3}

@@ -11,6 +11,7 @@ public class ScriptableCharacter : ScriptableObject
     public Palette colorPalette;
     public Sprite[] sprites;
     public ScriptableItem[] items;
+    public ScriptableRune rune;
     public int hp;
     public float multiplier;
 

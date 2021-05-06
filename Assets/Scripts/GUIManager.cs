@@ -8,6 +8,7 @@ using ScriptableObjects;
 public struct GUIImage
 {
     public enum ColorPosition { MainColor, SecondaryColor, complementaryColor1, complementaryColor2 }
+    public enum ButtonsOnScreen { PlayButton, GachaButton, MapCreatorButton }
     public Image image;
     public ColorPosition color;
 }
@@ -17,6 +18,9 @@ public class GUIManager : MonoBehaviour
 {
     public GUIImage[] images;
     public ScriptableCharacter[] characters;
+    public Image playButton;
+    public Image gachaLogo;
+    public Image mapCreator;
 
     private void Start()
     {
@@ -26,5 +30,9 @@ public class GUIManager : MonoBehaviour
         {
             guiImage.image.color = palette.GetColor(guiImage.color);
         }
+        playButton.sprite = character.PlayButton;
+        gachaLogo.sprite = character.GatchaButton;
+        mapCreator.sprite = character.MapCreator;
+
     }
 }
