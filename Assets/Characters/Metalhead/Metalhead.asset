@@ -7,18 +7,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e277ea999410e234c95f9661dfefdb6b, type: 3}
   m_Name: Metalhead
   m_EditorClassIdentifier: 
-  id: 1
-  name: Metalhead
+  characterName: Metalhead
   skill: []
   colorPalette:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 0.03901875, g: 1, b: 0, a: 0}
+    mainColor: {r: 0, g: 0, b: 0, a: 1}
+    secondaryColor: {r: 0.6886792, g: 0, b: 0, a: 1}
+    complementaryColor1: {r: 0, g: 0.7924528, b: 0.14836839, a: 1}
+    complementaryColor2: {r: 0.045907274, g: 0, b: 0.8018868, a: 0}
   sprites:
   - {fileID: 21300000, guid: b7e73b010fd3db7b1b0bea3fe5600cb0, type: 3}
   - {fileID: 21300000, guid: bf1eb0087be170edeb418a8530b11535, type: 3}

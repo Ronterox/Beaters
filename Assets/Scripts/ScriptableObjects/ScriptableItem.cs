@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ScriptableObjects{
 [CreateAssetMenu(fileName = "New Item", menuName = "Items/New Item")]
-public class Item : ScriptableObject
+public class ScriptableItem : ScriptableObject
 {
     public string itemName;
     public Character[] associatedCharacter;

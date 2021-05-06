@@ -479,3 +479,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuScene: MainMenu
+--- !u!1 &7979172281414720176 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7979172281564325475, guid: b7e1301158ceab3c4b068a829352de6c, type: 3}
+  m_PrefabInstance: {fileID: 7979172281414720173}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7979172281414720177 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7979172281107815214, guid: b7e1301158ceab3c4b068a829352de6c, type: 3}
+  m_PrefabInstance: {fileID: 7979172281414720173}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7979172281414720178 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7979172282114707916, guid: b7e1301158ceab3c4b068a829352de6c, type: 3}
+  m_PrefabInstance: {fileID: 7979172281414720173}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7979172281414720179 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7979172282846171974, guid: b7e1301158ceab3c4b068a829352de6c, type: 3}
+  m_PrefabInstance: {fileID: 7979172281414720173}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7979172281414720180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979172281414720176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c441b6e2e429a2ba178d8104de6338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  images:
+  - image: {fileID: 7979172281414720179}
+    color: 0
+  - image: {fileID: 7979172281414720178}
+    color: 1
+  - image: {fileID: 7979172281414720177}
+    color: 2
+  - image: {fileID: 0}
+    color: 0
+  characters:
+  - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
+  - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}

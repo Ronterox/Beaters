@@ -4,19 +4,22 @@ namespace ScriptableObjects
 {
 
 [CreateAssetMenu(fileName = "New Character", menuName = "Characters/New character")]
-public class Character : ScriptableObject
+public class ScriptableCharacter : ScriptableObject
 {
     public string characterName;
-    public Skill[] skill;
+    public ScriptableSkill[] skill;
     public Palette colorPalette;
     public Sprite[] sprites;
-    public Item[] items;
-    public float hp;
-    public int level;
+    public ScriptableItem[] items;
+    public int hp;
+    public float multiplier;
+
+    public Sprite PlayButton, GatchaButton, MapCreator;
     public ushort ID { get; private set; }
 
     private void Awake() => ID = (ushort)characterName.GetHashCode();
 }
+[System.Serializable]
 public struct Palette
         {
         public Color mainColor, secondaryColor;
