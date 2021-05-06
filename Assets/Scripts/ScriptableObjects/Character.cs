@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ScriptableObjects
@@ -8,14 +6,16 @@ namespace ScriptableObjects
 [CreateAssetMenu(fileName = "New Character", menuName = "Characters/New character")]
 public class Character : ScriptableObject
 {
-    public int id;
-    public string name;
+    public string characterName;
     public Skill[] skill;
     public Palette colorPalette;
     public Sprite[] sprites;
     public Item[] items;
     public float hp;
     public int level;
+    public ushort ID { get; private set; }
+
+    private void Awake() => ID = (ushort)characterName.GetHashCode();
 }
 public struct Palette
         {

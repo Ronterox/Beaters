@@ -1,18 +1,19 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Plugins.UI
 {
-    public abstract class UICarousel : ScrollRect
+    public class UICarousel : ScrollRect
     {
         public GameObject elementPrefab;
         public RectTransform scrollMask;
 
         [Header("Animation")]
         public float scrollSpeed;
-        //public Ease scrollEase;
+        public Ease scrollEase;
 
         public delegate void UICarouselEvent(UICarouselElement element);
 
@@ -120,10 +121,10 @@ namespace Plugins.UI
 
         protected virtual void ScrollToElement(UICarouselElement element)
         {
-            /// Where the element is inside the scroll rect
+            // Where the element is inside the scroll rect
             Vector3 elementCenterPos = GetWorldPointInWidget(m_RectTransform, GetWidgetWorldPoint(element.RectTransform));
 
-            /// Where the element should be inside the scroll rect
+            // Where the element should be inside the scroll rect
             Vector3 targetPos = GetWorldPointInWidget(m_RectTransform, GetWidgetWorldPoint(scrollMask));
 
             Vector3 difference = targetPos - elementCenterPos;
@@ -146,8 +147,7 @@ namespace Plugins.UI
                 newNormalizedPosition.y = Mathf.Clamp01(newNormalizedPosition.y);
             }
 
-            //normalizedPosition = newNormalizedPosition;
-            //DG.Tweening.DOTween.To(() => normalizedPosition, (x) => normalizedPosition = x, newNormalizedPosition, 1f / scrollSpeed).SetEase(scrollEase);
+            DOTween.To(() => normalizedPosition, x => normalizedPosition = x, newNormalizedPosition, 1f / scrollSpeed).SetEase(scrollEase);
         }
 
         private Vector3 GetWidgetWorldPoint(RectTransform target)

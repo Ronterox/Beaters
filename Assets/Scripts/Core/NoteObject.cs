@@ -1,4 +1,4 @@
-using Plugins.Audio;
+using Managers;
 using UnityEngine;
 
 namespace Core
@@ -23,22 +23,30 @@ namespace Core
             m_WasPressed = true;
 
             GameManager.Instance.HitArrow();
-            RemoveNote();
+
+            gameObject.SetActive(false);
 
             //SoundManager.Instance.PlayNonDiegeticSound(mapScroller.instrument.GetAudioClip(sound));
         }
 
-        private void RemoveNote()
+        private void OnDisable() => RemoveNoteCallbacks();
+
+        private void RemoveNoteCallbacks()
         {
             m_OverButton = false;
-            gameObject.SetActive(false);
-            m_ArrowButton.isNoteAbove = false;
-            m_ArrowButton.onButtonPress -= OnButtonPressCallback;
+            if (m_ArrowButton)
+            {
+                m_ArrowButton.isNoteAbove = false;
+                m_ArrowButton.onButtonPress -= OnButtonPressCallback;
+                m_ArrowButton = null;
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player")) return;
+
+            if (m_ArrowButton) RemoveNoteCallbacks();
 
             (m_ArrowButton = other.GetComponent<ArrowButton>()).onButtonPress += OnButtonPressCallback;
             m_ArrowButton.isNoteAbove = true;
@@ -50,7 +58,7 @@ namespace Core
             if (!other.CompareTag("Player") && !m_WasPressed) return;
 
             GameManager.Instance.MissArrow();
-            RemoveNote();
+            gameObject.SetActive(false);
         }
     }
 }
