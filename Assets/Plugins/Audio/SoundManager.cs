@@ -119,7 +119,8 @@ namespace Plugins.Audio
         /// </summary>
         /// <param name="clip">Your audio clip.</param>
         /// <param name="fadeDuration"></param>
-        public IEnumerator _PlayBackgroundMusic(AudioClip clip, float fadeDuration = 1f)
+        /// <param name="loop"></param>
+        public IEnumerator _PlayBackgroundMusic(AudioClip clip, float fadeDuration = 1f, bool loop = true)
         {
             if (m_BackgroundMusic.clip == clip)
             {
@@ -131,10 +132,8 @@ namespace Plugins.Audio
             yield return StartCoroutine(FadeMixerVolume(m_BackgroundMusic.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, 0f));
 
             m_BackgroundMusic.clip = clip;
-            // we set the loop setting to true, the music will loop forever
-            m_BackgroundMusic.loop = true;
+            m_BackgroundMusic.loop = loop;
 
-            // we start playing the background music
             m_BackgroundMusic.Play();
 
             yield return StartCoroutine(FadeMixerVolume(m_BackgroundMusic.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, MusicVolume));
@@ -177,22 +176,22 @@ namespace Plugins.Audio
         /// </summary>
         /// <param name="clip"></param>
         /// <param name="delay">optional delay</param>
-        public void PlayBackgroundMusicNoFade(AudioClip clip, float delay = 0f)
+        /// <param name="loop"></param>
+        public void PlayBackgroundMusicNoFade(AudioClip clip, float delay = 0f, bool loop = true)
         {
+            m_BackgroundMusic.Stop();
+            
             Action playSong = () =>
             {
                 if (m_BackgroundMusic.clip == clip)
                 {
-                    m_BackgroundMusic.Stop();
                     m_BackgroundMusic.Play();
                     return;
                 }
 
                 m_BackgroundMusic.clip = clip;
-                // we set the loop setting to true, the music will loop forever
-                m_BackgroundMusic.loop = true;
+                m_BackgroundMusic.loop = loop;
 
-                // we start playing the background music
                 m_BackgroundMusic.Play();
             };
             

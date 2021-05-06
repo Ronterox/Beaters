@@ -66,6 +66,7 @@
             </e>
             <e p="README.txt" t="Include" />
             <e p="Scripts" t="Include">
+              <e p="CheckForEventSystem.cs" t="Include" />
               <e p="FileBrowser.cs" t="Include" />
               <e p="FileBrowserContextMenu.cs" t="Include" />
               <e p="FileBrowserCursorHandler.cs" t="Include" />

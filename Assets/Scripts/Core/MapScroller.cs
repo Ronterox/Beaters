@@ -62,7 +62,7 @@ namespace Core
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
 
-            SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, m_SoundMap.startDelay);
+            SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, m_SoundMap.startDelay, false);
 
             CameraManager.Instance.CanDoPanning = false;
 

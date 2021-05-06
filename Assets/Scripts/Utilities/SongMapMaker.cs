@@ -1,12 +1,16 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Core;
 using DG.Tweening;
 using Managers;
 using Plugins.Tools;
+using SimpleFileBrowser;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace Utilities
@@ -123,6 +127,17 @@ namespace Utilities
         private void OnDestroy() => SaveMapsData();
 #endif
 
+        //TODO: check for soundmap creating multiple times
+        /*TODO: song not changing accordingly on map scroller, Emulation:
+         1. - create a song, 
+         2.- save, 
+         3.- enter a new name, 
+         4.- add a new song
+         5.- save
+         6.- go to old same and play
+         */
+        
+        //TODO: chek if System.IO.Path works on mobile
         private void Start()
         {
 #if !UNITY_EDITOR
@@ -274,8 +289,6 @@ namespace Utilities
             int beatsPerMinutes = GetBpm();
             if (beatsPerMinutes == 0) beatsPerMinutes = DEFAULT_BPM;
 
-            //TODO: upload a song file.
-
             var soundMap = new SoundMap
             {
                 id = map.GetHashCodeUshort(),
@@ -321,7 +334,7 @@ namespace Utilities
             }
 
             ushort hashName = mapName.GetHashCodeUshort();
-            SoundMap soundMap = soundMaps.FirstOrDefault(map => map.id == hashName);
+            SoundMap soundMap = soundMaps.First(map => map.id == hashName);
 
             if (soundMap == null)
             {
@@ -336,6 +349,8 @@ namespace Utilities
                 bpmInputField.text = soundMap.bpm + "";
                 songDelayInputField.text = soundMap.startDelay + "";
                 songNameText.text = soundMap.audioClip.name;
+                
+                mapScroller.SetSoundMap(soundMap);
 
                 SetState($"Loaded map {mapName} successfully!");
             }
@@ -384,6 +399,8 @@ namespace Utilities
 
                 soundMap.SetBpmDelay(GetBpm(), GetDelay());
 
+                soundMap.audioClip = defaultSong;
+
                 UpdateSongsList();
                 return;
             }
@@ -403,6 +420,40 @@ namespace Utilities
             songListDropdown.AddOptions(mapNames);
         }
 
-        public void AskForSoundFile() { }
+        public void AskForSoundFile()
+        {
+#if UNITY_ANDROID || UNITY_IPHONE
+            FileBrowser.Permission permission = FileBrowser.CheckPermission();
+            if (permission == FileBrowser.Permission.ShouldAsk) FileBrowser.AskPermissions = true;
+#endif
+            FileBrowser.SetFilters(false, ".mp3", ".wav");
+
+            FileBrowser.ShowLoadDialog(paths =>
+            {
+                string path = paths[0];
+
+                if (!FileBrowserHelpers.FileExists(path)) return;
+
+                string extension = Path.GetExtension(path);
+                if (extension.Equals(".wav") || extension.Equals(".mp3"))
+                {
+                    StartCoroutine(GetAudioClip($"file://{path}"));
+                }
+            }, null, FileBrowser.PickMode.Files);
+        }
+
+        private IEnumerator GetAudioClip(string fullPath)
+        {
+            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(fullPath, AudioType.MPEG);
+
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError) SetState(www.error);
+            else
+            {
+                defaultSong = DownloadHandlerAudioClip.GetContent(www);
+                songNameText.text = defaultSong.name = Path.GetFileNameWithoutExtension(fullPath);
+            }
+        }
     }
 }
