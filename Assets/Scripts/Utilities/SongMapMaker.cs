@@ -14,6 +14,7 @@ namespace Utilities
     public class SoundMap
     {
         public ushort id;
+        public string name;
         public float bpm, startDelay;
         public SerializableAudioClip audioClip;
         public Note[] notes;
@@ -88,6 +89,7 @@ namespace Utilities
         public TMP_InputField songNameInputField;
         [Space]
         public TMP_Text songNameText;
+        public TMP_Dropdown songListDropdown;
 
         [Header("Feedback Config")]
         public SpriteRenderer preview;
@@ -115,10 +117,18 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
-        //TODO: Show List of maps, OnEnable is called and OnDisable whenever you exit or entered the inspector. Don't load things on start or awake (files)
+        //TODO: Fix distance of 3d view click
+#if !UNITY_EDITOR
+        private void OnDestroy() => SaveMapsData();
+#endif
 
         private void Start()
         {
+#if !UNITY_EDITOR
+            LoadMapsData();
+#endif
+            songListDropdown.onValueChanged.AddListener(option => LoadMap(songListDropdown.options[option].text));
+
             bpmInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
             songDelayInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
             songNameInputField.onSubmit.AddListener(StartCreating);
@@ -263,6 +273,7 @@ namespace Utilities
             var soundMap = new SoundMap
             {
                 id = map.GetHashCodeUshort(),
+                name = map,
                 startDelay = GetDelay(),
                 bpm = beatsPerMinutes,
                 audioClip = defaultSong
@@ -281,10 +292,9 @@ namespace Utilities
 
         public void LoadMapsData()
         {
-            if (SaveLoadManager.SaveExists(MAPS_FILE))
-            {
-                soundMaps.AddRange(SaveLoadManager.Load<SoundMap[]>(MAPS_FILE));
-            }
+            if (!SaveLoadManager.SaveExists(MAPS_FILE)) return;
+            soundMaps.AddRange(SaveLoadManager.Load<SoundMap[]>(MAPS_FILE));
+            UpdateSongsList();
         }
 
         public void SaveMapsData() => SaveLoadManager.Save(soundMaps.ToArray(), MAPS_FILE);
@@ -356,14 +366,21 @@ namespace Utilities
                 Note[] notes = (
                     from noteObject in noteObjects
                     let position = noteObject.transform.position
-                    select new Note { id = noteObject.MakerId, x = position.x, y = position.y, z = position.z }).ToArray();
+                    select new Note
+                    {
+                        id = noteObject.MakerId,
+                        x = position.x, 
+                        y = position.y, 
+                        z = position.z
+                    }).ToArray();
 
                 soundMap.SetNotes(notes);
 
                 soundMap.SetBpmDelay(GetBpm(), GetDelay());
+                
+                UpdateSongsList();
                 return;
             }
-
             StartCreating(mapName);
         }
 
@@ -373,9 +390,13 @@ namespace Utilities
 
         public void ContinueCreating() => StartCreating(songNameInputField.text);
 
-        public void AskForSoundFile()
+        private void UpdateSongsList()
         {
-            
+            songListDropdown.ClearOptions();
+            List<string> mapNames = soundMaps.Select(soundMap => soundMap.name).ToList();
+            songListDropdown.AddOptions(mapNames);
         }
+
+        public void AskForSoundFile() { }
     }
 }

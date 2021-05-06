@@ -22,7 +22,6 @@ namespace Managers
 
         private Coroutine m_RotatingCoroutine, m_MovementCoroutine;
 
-        //TODO: Test Touch mode
         private Vector3 lastPanPosition;
         private bool m_IsPanning;
 
