@@ -24,7 +24,6 @@ namespace Managers
 
         //TODO: Test Touch mode
         private Vector3 lastPanPosition;
-
         private bool m_IsPanning;
 
 #if UNITY_ANDROID || UNITY_IPHONE
@@ -129,10 +128,12 @@ namespace Managers
                     Touch touch = Input.GetTouch(0);
                     if (touch.phase == TouchPhase.Began)
                     {
+                        if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) return;
                         lastPanPosition = touch.position;
                         panFingerId = touch.fingerId;
+                        m_IsPanning = true;
                     }
-                    else if (touch.fingerId == panFingerId && touch.phase == TouchPhase.Moved)
+                    else if (m_IsPanning && touch.fingerId == panFingerId && touch.phase == TouchPhase.Moved)
                     {
                         PanCamera(touch.position);
                     }
@@ -161,6 +162,7 @@ namespace Managers
 
                 default:
                     wasZoomingLastFrame = false;
+                    m_IsPanning = false;
                     break;
             }
         }
@@ -186,7 +188,6 @@ namespace Managers
 
         private void PanCamera(Vector3 newPanPosition)
         {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
             // Determine how much to move the camera
             Vector3 offset = mainCamera.ScreenToViewportPoint(lastPanPosition - newPanPosition);
             var move = new Vector3(offset.x * PAN_SPEED, offset.y * PAN_SPEED, 0f);
