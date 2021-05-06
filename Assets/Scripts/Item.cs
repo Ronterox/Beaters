@@ -4,8 +4,8 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public int id;
-    public string 
-
-
-    public int getId() => id;
+    public string name;
+    public Character[] associatedCharacter;
+    public int value;
+    public float probability;
 }

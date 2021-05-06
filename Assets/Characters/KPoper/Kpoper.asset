@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e277ea999410e234c95f9661dfefdb6b, type: 3}
+  m_Name: Kpoper
+  m_EditorClassIdentifier: 
+  id: 0
+  name: KPoper
+  skill:
+  - {fileID: 11400000, guid: e6c9e700ddd337c70b5be58061756b48, type: 2}
+  - {fileID: 11400000, guid: e1f23ebad1fc95b03a7abc388fea2efe, type: 2}
+  colorPalette:
+  - {r: 1, g: 0.7311321, b: 0.9553503, a: 0}
+  - {r: 0.25, g: 0.98546064, b: 1, a: 0}
+  - {r: 0.55706704, g: 1, b: 0.5518868, a: 0}
+  sprites:
+  - {fileID: 21300000, guid: 5316c682b3e4e26e78a6da7f87c2f584, type: 3}
+  - {fileID: 21300000, guid: dbcfda3e6f96bef2b933d2ba23bf3f8e, type: 3}
+  - {fileID: 21300000, guid: 58ab7346c2bc7e010879092dbcccdc5a, type: 3}
+  - {fileID: 21300000, guid: 569a7fc7c73b76257a00f140bbf3f7fc, type: 3}
+  - {fileID: 21300000, guid: 0bb120e0f55b19162bd917d90cbe5cba, type: 3}
+  items:
+  - {fileID: 11400000, guid: 1ce0ba3e289b79c889465534fdb2f3e8, type: 2}
+  - {fileID: 11400000, guid: 46bd4372404e80642a494f2f1c6e03f7, type: 2}
+  hp: 120
+  level: 1
