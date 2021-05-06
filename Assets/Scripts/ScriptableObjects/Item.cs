@@ -1,5 +1,6 @@
 using UnityEngine;
 
+namespace ScriptableObjects{
 [CreateAssetMenu(fileName = "New Item", menuName = "Items/New Item")]
 public class Item : ScriptableObject
 {
@@ -9,3 +10,6 @@ public class Item : ScriptableObject
     public int value;
     public float probability;
 }
+
+}
+
