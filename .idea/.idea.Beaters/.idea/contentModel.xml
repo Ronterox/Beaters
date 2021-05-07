@@ -65,6 +65,33 @@
             <e p="SortingLayerAttribute.cs" t="Include" />
             <e p="TagSelectorAttribute.cs" t="Include" />
           </e>
+          <e p="SimpleFileBrowser" t="Include">
+            <e p="Android" t="Include">
+              <e p="FBCallbackHelper.cs" t="Include" />
+              <e p="FBDirectoryReceiveCallbackAndroid.cs" t="Include" />
+              <e p="FBPermissionCallbackAndroid.cs" t="Include" />
+            </e>
+            <e p="README.txt" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="CheckForEventSystem.cs" t="Include" />
+              <e p="FileBrowser.cs" t="Include" />
+              <e p="FileBrowserContextMenu.cs" t="Include" />
+              <e p="FileBrowserCursorHandler.cs" t="Include" />
+              <e p="FileBrowserDeleteConfirmationPanel.cs" t="Include" />
+              <e p="FileBrowserHelpers.cs" t="Include" />
+              <e p="FileBrowserItem.cs" t="Include" />
+              <e p="FileBrowserMovement.cs" t="Include" />
+              <e p="FileBrowserQuickLink.cs" t="Include" />
+              <e p="FileBrowserRenamedItem.cs" t="Include" />
+              <e p="NonDrawingGraphic.cs" t="Include" />
+              <e p="SimpleRecycledListView" t="Include">
+                <e p="IListViewAdapter.cs" t="Include" />
+                <e p="ListItem.cs" t="Include" />
+                <e p="RecycledListView.cs" t="Include" />
+              </e>
+            </e>
+            <e p="SimpleFileBrowser.Runtime.asmdef" t="Include" />
+          </e>
           <e p="Tools" t="Include">
             <e p="Events" t="Include">
               <e p="GameEvent.cs" t="Include" />
@@ -76,7 +103,6 @@
             <e p="MMEventManager.cs" t="Include" />
             <e p="SaveLoadManager.cs" t="Include" />
             <e p="SingleInstance.cs" t="Include" />
-            <e p="SoundManager.cs" t="Include" />
             <e p="Timer.cs" t="Include" />
             <e p="TimerUI.cs" t="Include" />
             <e p="UtilityMethods.cs" t="Include" />
@@ -107,6 +133,10 @@
           <e p="Skill.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="ButtonManager.cs" t="Include" />
+          </e>
+          <e p="Utilities" t="Include">
+            <e p="HoldableButton.cs" t="Include" />
+            <e p="SongMapMaker.cs" t="Include" />
           </e>
         </e>
         <e p="TextMesh Pro" t="Include">
@@ -142,6 +172,7 @@
         </e>
       </e>
       <e p="Beaters.sln" t="IncludeFlat" />
+      <e p="SimpleFileBrowser.Runtime.csproj" t="IncludeRecursive" />
       <e p="Temp/Bin" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />

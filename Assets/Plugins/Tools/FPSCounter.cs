@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.Profiling;
+using UnityEngine.SceneManagement;
 
 namespace Plugins.Tools
 {
@@ -11,12 +13,13 @@ namespace Plugins.Tools
 
         public int fontSize = 24;
         private int m_SafeZone;
-        
+
         private float m_Fps;
-        
-        private int m_Frames;        // Frames drawn over the interval
+
+        private int m_Frames;              // Frames drawn over the interval
         private float m_AccumulatedFrames; // FPS accumulated frames over the interval
 
+        public bool seeFps, seeMemoryUsage;
 
         /// <summary>
         /// Start
@@ -46,20 +49,41 @@ namespace Plugins.Tools
         /// </summary>
         private void OnGUI()
         {
-            GUIStyle style = UnityEngine.GUI.skin.GetStyle("Label");
-            style.fontSize = fontSize;
-            style.alignment = TextAnchor.LowerLeft;
-            style.wordWrap = false;
+            var style = new GUIStyle(UnityEngine.GUI.skin.GetStyle("Label"))
+            {
+                fontSize = fontSize,
+                alignment = TextAnchor.LowerLeft,
+                wordWrap = false
+            };
 
-            GUIStyle labelStyle = UnityEngine.GUI.skin.GetStyle("Box");
-            labelStyle.alignment = TextAnchor.UpperLeft;
-            labelStyle.fontSize = fontSize;
+            var labelStyle = new GUIStyle(UnityEngine.GUI.skin.GetStyle("Box"))
+            {
+                alignment = TextAnchor.UpperLeft,
+                fontSize = fontSize
+            };
 
             float height = style.lineHeight + 16 + fontSize;
             float width = 200 - m_SafeZone + fontSize * 2.5f;
-            var frameBox = new Rect(Screen.width - ( width + screenPosOffset.x), screenPosOffset.y, width, height);
-            UnityEngine.GUI.Box(frameBox, $"FPS, Build v{Application.version}", labelStyle);
-            UnityEngine.GUI.Label(frameBox, $"{m_Fps:F2}");
+
+            if (seeFps)
+            {
+                var frameBox = new Rect(Screen.width - (width + screenPosOffset.x), screenPosOffset.y, width, height);
+                UnityEngine.GUI.Box(frameBox, $"FPS, Build v{Application.version}", labelStyle);
+                UnityEngine.GUI.Label(frameBox, $"{m_Fps:F2}", style);
+            }
+
+            if (seeMemoryUsage)
+            {
+                style.fontSize = (int)(fontSize * .5f);
+                var frameBox2 = new Rect(Screen.width - (width + screenPosOffset.x), height + 30 + screenPosOffset.y, width, height + 10);
+                UnityEngine.GUI.Box(frameBox2, "Memory", labelStyle);
+                UnityEngine.GUI.Label(frameBox2, $"TotalAllocatedMemory : {Profiler.GetTotalAllocatedMemoryLong() / 1048576}mb"
+                                                 + $"\nTotalReservedMemory : {Profiler.GetTotalReservedMemoryLong() / 1048576}mb"
+                                                 + $"\nTotalUnusedReservedMemory : {Profiler.GetTotalUnusedReservedMemoryLong() / 1048576}mb", style);
+
+                var frameBox3 = new Rect(Screen.width - 150, 30 + height * 2, 300 - m_SafeZone, height);
+                UnityEngine.GUI.Label(frameBox3, $"Room : {SceneManager.GetActiveScene().name}");
+            }
         }
     }
 }

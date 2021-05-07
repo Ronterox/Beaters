@@ -59,7 +59,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -97,9 +97,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 3790687837816191672}
-  rotationSpeed: 90
+  animationRotationSpeed: 50
   thirdDimensionRotation: {x: -50, y: 0, z: 0}
   secondDimensionRotation: {x: 0, y: 0, z: 0}
-  movementSpeed: 4
+  animationMoveSpeed: 10
   thirdDimensionPosition: {x: 0, y: -10, z: -10}
   secondDimensionPosition: {x: 0, y: 0, z: -10}

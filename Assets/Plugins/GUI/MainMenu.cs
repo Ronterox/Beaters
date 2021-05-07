@@ -63,12 +63,12 @@ namespace Plugins.GUI
         /// <summary>
         /// Plays the submit sfx
         /// </summary>
-        public void PlaySubmitSound() => SoundManager.Instance.Play("Submit");
+        //public void PlaySubmitSound() => SoundManager.Instance.PlaySound("Submit");
 
         /// <summary>
         /// Plays the selected sound
         /// </summary>
         /// <param name="sound"></param>
-        public void PlaySound(string sound) => SoundManager.Instance.Play(sound);
+        //public void PlaySound(string sound) => SoundManager.Instance.PlaySound(sound);
     }
 }

@@ -5,8 +5,9 @@ namespace Core
 {
     public class NoteObject : MonoBehaviour
     {
+        public ushort MakerId { get; set; }
+        
         [Header("Config")]
-        public MapScroller mapScroller;
         public Chord sound;
 
         private ArrowButton m_ArrowButton;
@@ -26,6 +27,7 @@ namespace Core
 
             gameObject.SetActive(false);
 
+            //TODO: Long note
             //SoundManager.Instance.PlayNonDiegeticSound(mapScroller.instrument.GetAudioClip(sound));
         }
 

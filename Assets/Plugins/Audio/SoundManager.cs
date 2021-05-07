@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Plugins.Tools;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -118,10 +119,12 @@ namespace Plugins.Audio
         /// </summary>
         /// <param name="clip">Your audio clip.</param>
         /// <param name="fadeDuration"></param>
-        public IEnumerator _PlayBackgroundMusic(AudioClip clip, float fadeDuration = 1f)
+        /// <param name="loop"></param>
+        public IEnumerator _PlayBackgroundMusic(AudioClip clip, float fadeDuration = 1f, bool loop = true)
         {
             if (m_BackgroundMusic.clip == clip)
             {
+                m_BackgroundMusic.Stop();
                 m_BackgroundMusic.Play();
                 yield break;
             }
@@ -129,10 +132,8 @@ namespace Plugins.Audio
             yield return StartCoroutine(FadeMixerVolume(m_BackgroundMusic.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, 0f));
 
             m_BackgroundMusic.clip = clip;
-            // we set the loop setting to true, the music will loop forever
-            m_BackgroundMusic.loop = true;
+            m_BackgroundMusic.loop = loop;
 
-            // we start playing the background music
             m_BackgroundMusic.Play();
 
             yield return StartCoroutine(FadeMixerVolume(m_BackgroundMusic.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, MusicVolume));
@@ -174,20 +175,27 @@ namespace Plugins.Audio
         /// Plays the background music instantly
         /// </summary>
         /// <param name="clip"></param>
-        public void PlayBackgroundMusicInstantly(AudioClip clip)
+        /// <param name="delay">optional delay</param>
+        /// <param name="loop"></param>
+        public void PlayBackgroundMusicNoFade(AudioClip clip, float delay = 0f, bool loop = true)
         {
-            if (m_BackgroundMusic.clip == clip)
-            {
-                m_BackgroundMusic.Play();
-                return;
-            }
+            m_BackgroundMusic.Stop();
             
-            m_BackgroundMusic.clip = clip;
-            // we set the loop setting to true, the music will loop forever
-            m_BackgroundMusic.loop = true;
+            Action playSong = () =>
+            {
+                if (m_BackgroundMusic.clip == clip)
+                {
+                    m_BackgroundMusic.Play();
+                    return;
+                }
 
-            // we start playing the background music
-            m_BackgroundMusic.Play();
+                m_BackgroundMusic.clip = clip;
+                m_BackgroundMusic.loop = loop;
+
+                m_BackgroundMusic.Play();
+            };
+            
+            playSong.DelayAction(delay);
         }
 
         /// <summary>

@@ -326,5 +326,31 @@ namespace Plugins.Tools
         /// </summary>
         /// <returns></returns>
         public static float ContraryValue(this float value) => value > 0 ? -value : value * -1;
+
+        /// <summary>
+        /// Remove where for list
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="condition"></param>
+        /// <typeparam name="T"></typeparam>
+        public static bool RemoveOne<T>(this List<T> list, Func<T, bool> condition)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (condition(list[i]))
+                {
+                    list.RemoveAt(i);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the hashcode as ushort
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static ushort GetHashCodeUshort(this string text) => (ushort)text.GetHashCode();
     }
 }

@@ -3,6 +3,7 @@ using DG.Tweening;
 using Managers;
 using Plugins.Tools;
 using UnityEngine;
+using Utilities;
 using SoundManager = Plugins.Audio.SoundManager;
 
 namespace Core
@@ -28,70 +29,77 @@ namespace Core
 
     public enum Chord { C, D, E, F, G, A, B }
 
-    [System.Serializable]
-    public struct SoundMap
-    {
-        public float bpm;
-        public AudioClip mapSong;
-        public Difficulty difficulty;
-    }
-
     public class MapScroller : MonoBehaviour
     {
-        public SoundMap soundMap;
+        [Plugins.Properties.ReadOnly]
+        [SerializeField] private SoundMap m_SoundMap;
+
+        public Difficulty difficulty;
         public Instrument instrument;
 
         [Header("Visual Feedback")]
         public Transform[] animateByBpm;
-        
+
         [Space]
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
 
-        private float bps;
-        private bool m_IsStarted;
-        
+        public bool IsStarted { get; private set; }
+        private float m_Bps;
+
         private bool m_WaitingForBeat;
         private WaitForSeconds m_WaitForSeconds;
 
-        private void Awake()
-        {
-            bps = soundMap.bpm / 60 * (float)soundMap.difficulty;
+        private AudioClip m_CurrentSong;
 
-            float ms = 60000 / soundMap.bpm;
-            float secs = ms * 0.001f;
-            
-            m_WaitForSeconds = new WaitForSeconds(secs);
-            m_AnimationDuration = secs * .5f;
-        }
+        private void Start() => ResetPos();
 
         public void StartMap()
         {
-            m_IsStarted = true;
-            transform.position = Vector3.zero;
+            ResetPos();
+            IsStarted = true;
 
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
 
-            SoundManager.Instance.PlayBackgroundMusicInstantly(soundMap.mapSong);
+            SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, m_SoundMap.startDelay, false);
+
+            CameraManager.Instance.CanDoPanning = false;
+
+            print("Started Map!");
         }
+
+        //TODO: See why reset position of scroller is random
+        public void ResetPos() => transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         public void ResumeMap()
         {
-            m_IsStarted = true;
+            IsStarted = true;
             SoundManager.Instance.UnPauseBackgroundMusic();
+            
+            CameraManager.Instance.CanDoPanning = false;
+
+            print("Resumed Map!");
         }
 
         public void StopMap()
         {
-            m_IsStarted = false;
+            IsStarted = false;
             SoundManager.Instance.PauseBackgroundMusic();
+
+            StopCoroutine(AnimateBeatCoroutine());
+            m_WaitingForBeat = false;
+            
+            CameraManager.Instance.CanDoPanning = true;
+
+            print("Stopped Map!");
         }
 
         private void Update()
         {
-            if (!m_IsStarted) return;
-            transform.position -= new Vector3(0f, bps * SoundManager.songDeltaTime, 0f);
+            if (!IsStarted) return;
+
+            transform.position -= new Vector3(0f, m_Bps * SoundManager.songDeltaTime, 0f);
 
             AnimateBeat();
         }
@@ -110,6 +118,20 @@ namespace Core
 
             yield return m_WaitForSeconds;
             m_WaitingForBeat = false;
+        }
+
+        public void SetSoundMap(SoundMap soundMap)
+        {
+            m_SoundMap = soundMap;
+            m_CurrentSong = m_SoundMap.audioClip;
+
+            m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
+
+            float ms = 60000 / m_SoundMap.bpm;
+            float secs = ms * 0.001f;
+
+            m_WaitForSeconds = new WaitForSeconds(secs);
+            m_AnimationDuration = secs * .5f;
         }
     }
 }
