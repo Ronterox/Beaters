@@ -3,6 +3,7 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
+      <Path>../../../.config/unity3d/cache/packages/packages.unity.com/com.unity.textmeshpro@3.0.6</Path>
       <Path>Library/PackageCache/com.unity.2d.animation@5.0.4</Path>
       <Path>Library/PackageCache/com.unity.2d.common@4.0.3</Path>
       <Path>Library/PackageCache/com.unity.2d.path@4.0.1</Path>
@@ -18,7 +19,6 @@
       <Path>Library/PackageCache/com.unity.sysroot.linux-x86_64@0.1.14-preview</Path>
       <Path>Library/PackageCache/com.unity.sysroot@0.1.19-preview</Path>
       <Path>Library/PackageCache/com.unity.test-framework@1.1.24</Path>
-      <Path>Library/PackageCache/com.unity.textmeshpro@3.0.1</Path>
       <Path>Library/PackageCache/com.unity.timeline@1.4.7</Path>
       <Path>Library/PackageCache/com.unity.toolchain.linux-x86_64@0.1.18-preview</Path>
       <Path>Packages</Path>

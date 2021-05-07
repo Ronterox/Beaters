@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Plugins.Tools;
 using UnityEngine;
 
 namespace ScriptableObjects
@@ -7,18 +8,14 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "New Rune", menuName = "Runes/New Rune")]
     public class ScriptableRune : ScriptableObject
     {
+        public enum RuneSet { Points, PercentualPoints, Passives, Actives }
 
-        public enum runeSet
-        {
-            Points, PercentualPoints, Passives, Actives
-        }
-
-        public string runeName;
+        public string runeName, effect;
         public int value;
         public float probability;
-        public ushort ID { get; private set; }
-        public string effect;
         public Sprite spriteOfTheRune;
-        public runeSet nameOfTheSet = runeSet.Points;
+        public RuneSet nameOfTheSet = RuneSet.Points;
+
+        public ushort ID => runeName.GetHashCodeUshort();
     }
 }

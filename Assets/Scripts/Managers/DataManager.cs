@@ -55,12 +55,10 @@ namespace Managers
         private static double startPlayingTime;
         private const string PLAYER_FILE = "player";
 
-        private static List<SerializableSong> m_SongsList = new List<SerializableSong>();
-        private static List<SerializableItem> m_ItemsList = new List<SerializableItem>();
-        private static List<SerializableCharacter> m_CharactersList = new List<SerializableCharacter>();
-
-        public static int lvl, xp;
-
+        private static readonly List<SerializableSong> m_SongsList = new List<SerializableSong>();
+        private static readonly List<SerializableItem> m_ItemsList = new List<SerializableItem>();
+        private static readonly List<SerializableCharacter> m_CharactersList = new List<SerializableCharacter>();
+        
         public void OnEnable()
         {
             if (Instance != this) return;
@@ -115,7 +113,7 @@ namespace Managers
         {
             var serializableItem = new SerializableItem
             {
-                itemId = item.id,
+                itemId = item.ID,
                 quantity = quantity
             };
 
@@ -138,9 +136,7 @@ namespace Managers
         {
             var serializableCharacter = new SerializableCharacter
             {
-                characterId = character.name.GetHashCodeUshort(),
-                lvl = character.lvl,
-                xp = character.xp
+                characterId = character.name.GetHashCodeUshort()
             };
 
             if (m_CharactersList.Where(chara => chara.characterId == serializableCharacter.characterId).Select(sChar => serializableCharacter).Any())

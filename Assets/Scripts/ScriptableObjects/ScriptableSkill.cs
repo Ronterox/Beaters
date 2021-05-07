@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Plugins.Properties;
 
-namespace ScriptableObjects{
-[CreateAssetMenu(fileName = "New Skill", menuName = "Skills/New skill")]
-public class ScriptableSkill : ScriptableObject
+namespace ScriptableObjects
 {
-    public enum Kind
+    [CreateAssetMenu(fileName = "New Skill", menuName = "Skills/New skill")]
+    public class ScriptableSkill : ScriptableObject
     {
-        Passive, Active
+        public enum Kind { Passive, Active }
+
+        public int id;
+        public Kind kind = Kind.Passive;
+        public bool hasDuration;
+        public string effect;
+
+        [ConditionalHide("hasDuration")]
+        public int duration;
     }
 
-    public int id;
-    public Kind kind = Kind.Passive;
-    public bool hasDuration;
-    public string effect;
-
-    [ConditionalHide("hasDuration")]
-    public int duration;
 }
-
-}
-

@@ -113,9 +113,9 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="Character.cs" t="Include" />
           <e p="Core" t="Include">
             <e p="ArrowButton.cs" t="Include" />
+            <e p="Character.cs" t="Include" />
             <e p="MapScroller.cs" t="Include" />
             <e p="NoteObject.cs" t="Include" />
           </e>
@@ -123,16 +123,23 @@
             <e p="Character.cs" t="Include" />
             <e p="Song.cs" t="Include" />
           </e>
-          <e p="Item.cs" t="Include" />
           <e p="Managers" t="Include">
             <e p="ArchievementsManager.cs" t="Include" />
             <e p="CameraManager.cs" t="Include" />
             <e p="DataManager.cs" t="Include" />
+            <e p="GUIManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
           </e>
-          <e p="Skill.cs" t="Include" />
+          <e p="ScriptableObjects" t="Include">
+            <e p="ScriptableCharacter.cs" t="Include" />
+            <e p="ScriptableItem.cs" t="Include" />
+            <e p="ScriptableRune.cs" t="Include" />
+            <e p="ScriptableSkill.cs" t="Include" />
+          </e>
           <e p="UI" t="Include">
             <e p="ButtonManager.cs" t="Include" />
+            <e p="ChangeBanner.cs" t="Include" />
+            <e p="LevelSelector.cs" t="Include" />
           </e>
           <e p="Utilities" t="Include">
             <e p="HoldableButton.cs" t="Include" />

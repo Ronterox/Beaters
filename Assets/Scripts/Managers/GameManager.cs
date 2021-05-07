@@ -2,10 +2,7 @@ using Plugins.Tools;
 
 namespace Managers
 {
-    public enum Difficulty
-    {
-        Normal = 2, Hard = 3, Hardcore = 4
-    }
+    public enum Difficulty { Normal = 2, Hard = 3, Hardcore = 4 }
 
     public class GameManager : Singleton<GameManager>
     {
