@@ -69,6 +69,7 @@ namespace Core
             print("Started Map!");
         }
 
+        //TODO: See why reset position of scroller is random
         public void ResetPos() => transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         public void ResumeMap()

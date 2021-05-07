@@ -126,17 +126,9 @@ namespace Utilities
 #if !UNITY_EDITOR
         private void OnDestroy() => SaveMapsData();
 #endif
-
-        /*TODO: song not changing accordingly on mapName scroller, Emulation:
-         1. - create a song, 
-         2.- save, 
-         3.- enter a new name, 
-         4.- add a new song
-         5.- save
-         6.- go to old same and play
-         */
-
         //TODO: chek if System.IO.Path works on mobile
+        //TODO: add delete song buttons
+        //TODO: check if save songs binary and load work
         private void Start()
         {
 #if !UNITY_EDITOR
@@ -223,24 +215,26 @@ namespace Utilities
             touchParticle.transform.position = position;
         }
 
-        public void StartCreating(string map)
+        public void StartCreating(string mapName)
         {
+            if(IsMapNameEmpty(mapName)) return;
+            
             IsCreating = true;
-            SetState($"Working on {map}");
+            SetState($"Working on {mapName}");
 
             if (m_CurrentMapGameObject)
             {
                 string currentMap = m_CurrentMapGameObject.name;
 
-                if (currentMap.Equals(map)) return;
+                if (currentMap.Equals(mapName)) return;
 
                 SaveMap(currentMap);
                 Destroy(m_CurrentMapGameObject);
 
-                CreateMapHolder(map);
+                CreateMapHolder(mapName);
             }
             else
-                CreateMapHolder(map);
+                CreateMapHolder(mapName);
         }
 
         private void SetState(string text)
@@ -328,14 +322,16 @@ namespace Utilities
             soundMaps.RemoveOne(map => map.id == hashName);
         }
 
+        private bool IsMapNameEmpty(string mapName)
+        {
+            if (!string.IsNullOrEmpty(mapName)) return false;
+            SetState("Please, write the mapName name!");
+            return true;
+        }
 
         public void LoadMap(string mapName)
         {
-            if (string.IsNullOrEmpty(mapName))
-            {
-                SetState("Please, write the mapName name!");
-                return;
-            }
+            if(IsMapNameEmpty(mapName)) return;
 
             SoundMap soundMap = GetSoundMap(mapName);
 
@@ -374,11 +370,7 @@ namespace Utilities
 
         public void SaveMap(string mapName)
         {
-            if (string.IsNullOrEmpty(mapName))
-            {
-                SetState("Please, write the mapName name!");
-                return;
-            }
+            if(IsMapNameEmpty(mapName)) return;
 
             SoundMap soundMap = GetSoundMap(mapName);
 
@@ -403,6 +395,8 @@ namespace Utilities
                 soundMap.audioClip = defaultSong;
 
                 UpdateSongsList();
+                
+                mapScroller.SetSoundMap(soundMap);
             }
             else StartCreating(mapName);
         }
@@ -459,6 +453,7 @@ namespace Utilities
             {
                 defaultSong = DownloadHandlerAudioClip.GetContent(www);
                 songNameText.text = defaultSong.name = Path.GetFileNameWithoutExtension(fullPath);
+                SaveMap();
             }
         }
     }
