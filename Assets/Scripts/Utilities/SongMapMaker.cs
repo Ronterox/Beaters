@@ -127,8 +127,7 @@ namespace Utilities
         private void OnDestroy() => SaveMapsData();
 #endif
 
-        //TODO: check for soundmap creating multiple times
-        /*TODO: song not changing accordingly on map scroller, Emulation:
+        /*TODO: song not changing accordingly on mapName scroller, Emulation:
          1. - create a song, 
          2.- save, 
          3.- enter a new name, 
@@ -136,7 +135,7 @@ namespace Utilities
          5.- save
          6.- go to old same and play
          */
-        
+
         //TODO: chek if System.IO.Path works on mobile
         private void Start()
         {
@@ -149,7 +148,7 @@ namespace Utilities
             songDelayInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
             songNameInputField.onSubmit.AddListener(StartCreating);
 
-            SetState("Not working on map");
+            SetState("Not working on mapName");
 
             foreach (MakerNote makerNote in makerNotes)
             {
@@ -266,8 +265,9 @@ namespace Utilities
 
         private void UpdateBpmDelay(string mapName)
         {
-            ushort hashName = mapName.GetHashCodeUshort();
-            foreach (SoundMap soundMap in soundMaps.Where(soundMap => soundMap.id == hashName))
+            SoundMap soundMap = GetSoundMap(mapName);
+
+            if (soundMap != null)
             {
                 soundMap.SetBpmDelay(GetBpm(), GetDelay());
                 mapScroller.SetSoundMap(soundMap);
@@ -276,37 +276,41 @@ namespace Utilities
             print("Updated bpm and Delay!");
         }
 
-        private void CreateMapHolder(string map)
+        private void CreateMapHolder(string mapName)
         {
             if (m_CurrentMapGameObject) Destroy(m_CurrentMapGameObject);
 
             m_CurrentMapGameObject = new GameObject
             {
-                name = map,
+                name = mapName,
                 transform = { parent = mapScroller.transform }
             };
 
-            int beatsPerMinutes = GetBpm();
-            if (beatsPerMinutes == 0) beatsPerMinutes = DEFAULT_BPM;
+            SoundMap soundMap = GetSoundMap(mapName);
 
-            var soundMap = new SoundMap
+            if (soundMap == null)
             {
-                id = map.GetHashCodeUshort(),
-                name = map,
-                startDelay = GetDelay(),
-                bpm = beatsPerMinutes,
-                audioClip = defaultSong
-            };
+                int beatsPerMinutes = GetBpm();
+                if (beatsPerMinutes == 0) beatsPerMinutes = DEFAULT_BPM;
 
+                soundMap = new SoundMap
+                {
+                    id = mapName.GetHashCodeUshort(),
+                    name = mapName,
+                    startDelay = GetDelay(),
+                    bpm = beatsPerMinutes,
+                    audioClip = defaultSong
+                };
+                soundMaps.Add(soundMap);
+            }
             mapScroller.SetSoundMap(soundMap);
-            soundMaps.Add(soundMap);
         }
 
         public void StopCreating()
         {
             IsCreating = false;
             CleanPreview();
-            SetState(mapScroller.IsStarted ? "Playing Map" : "Not working on map");
+            SetState(mapScroller.IsStarted ? "Playing Map" : "Not working on mapName");
         }
 
         public void LoadMapsData()
@@ -318,7 +322,7 @@ namespace Utilities
 
         public void SaveMapsData() => SaveLoadManager.Save(soundMaps.ToArray(), MAPS_FILE);
 
-        public void DeleteMap(string mapName)
+        public void DeleteSoundMap(string mapName)
         {
             ushort hashName = mapName.GetHashCodeUshort();
             soundMaps.RemoveOne(map => map.id == hashName);
@@ -329,12 +333,11 @@ namespace Utilities
         {
             if (string.IsNullOrEmpty(mapName))
             {
-                SetState("Please, write the map name!");
+                SetState("Please, write the mapName name!");
                 return;
             }
 
-            ushort hashName = mapName.GetHashCodeUshort();
-            SoundMap soundMap = soundMaps.First(map => map.id == hashName);
+            SoundMap soundMap = GetSoundMap(mapName);
 
             if (soundMap == null)
             {
@@ -349,10 +352,10 @@ namespace Utilities
                 bpmInputField.text = soundMap.bpm + "";
                 songDelayInputField.text = soundMap.startDelay + "";
                 songNameText.text = soundMap.audioClip.name;
-                
+
                 mapScroller.SetSoundMap(soundMap);
 
-                SetState($"Loaded map {mapName} successfully!");
+                SetState($"Loaded mapName {mapName} successfully!");
             }
 
             mapScroller.ResetPos();
@@ -360,28 +363,26 @@ namespace Utilities
 
         private void GenerateNote(Note note)
         {
-            foreach (MakerNote makerNote in makerNotes.Where(mNote => mNote.id == note.id))
-            {
-                var position = new Vector3 { x = note.x, y = note.y, z = note.z };
-                GameObject obj = makerNote.noteObject.gameObject;
-                Instantiate(obj,
-                            position,
-                            obj.transform.rotation,
-                            m_CurrentMapGameObject.transform)
-                    .GetComponent<NoteObject>().MakerId = m_SelectedId;
-            }
+            MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
+
+            var position = new Vector3 { x = note.x, y = note.y, z = note.z };
+            GameObject obj = makerNote.noteObject.gameObject;
+
+            Instantiate(obj, position, obj.transform.rotation, m_CurrentMapGameObject.transform)
+                .GetComponent<NoteObject>().MakerId = m_SelectedId;
         }
 
         public void SaveMap(string mapName)
         {
             if (string.IsNullOrEmpty(mapName))
             {
-                SetState("Please, write the map name!");
+                SetState("Please, write the mapName name!");
                 return;
             }
 
-            ushort hashName = mapName.GetHashCodeUshort();
-            foreach (SoundMap soundMap in soundMaps.Where(soundMap => soundMap.id == hashName))
+            SoundMap soundMap = GetSoundMap(mapName);
+
+            if (soundMap != null)
             {
                 NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
                 Note[] notes = (
@@ -402,9 +403,14 @@ namespace Utilities
                 soundMap.audioClip = defaultSong;
 
                 UpdateSongsList();
-                return;
             }
-            StartCreating(mapName);
+            else StartCreating(mapName);
+        }
+
+        private SoundMap GetSoundMap(string mapName)
+        {
+            ushort hashName = mapName.GetHashCodeUshort();
+            return soundMaps.FirstOrDefault(map => map.id == hashName);
         }
 
         public void LoadMap() => LoadMap(songNameInputField.text);
