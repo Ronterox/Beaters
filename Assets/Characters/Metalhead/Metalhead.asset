@@ -7,18 +7,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e277ea999410e234c95f9661dfefdb6b, type: 3}
   m_Name: Metalhead
   m_EditorClassIdentifier: 
-  id: 1
-  name: Metalhead
+  characterName: Metalhead
   skill: []
   colorPalette:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 0.03901875, g: 1, b: 0, a: 0}
+    mainColor: {r: 0, g: 0, b: 0, a: 1}
+    secondaryColor: {r: 0.6886792, g: 0, b: 0, a: 1}
+    complementaryColor1: {r: 0, g: 0.7924528, b: 0.14836839, a: 1}
+    complementaryColor2: {r: 0.045907274, g: 0, b: 0.8018868, a: 0}
   sprites:
   - {fileID: 21300000, guid: b7e73b010fd3db7b1b0bea3fe5600cb0, type: 3}
   - {fileID: 21300000, guid: bf1eb0087be170edeb418a8530b11535, type: 3}
@@ -28,5 +28,9 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: aaaa7a2cc3af499bb975e2e691e2e191, type: 2}
   - {fileID: 11400000, guid: 1ce0ba3e289b79c889465534fdb2f3e8, type: 2}
+  rune: {fileID: 11400000, guid: b2b4ce03143fb114b9394adf7318ad73, type: 2}
   hp: 100
-  level: 1
+  multiplier: 0
+  PlayButton: {fileID: 21300000, guid: 90e1d79c59e1c44839e373d052688b18, type: 3}
+  GatchaButton: {fileID: 21300000, guid: 86abc72299bad40a18d28f7515ca0eeb, type: 3}
+  MapCreator: {fileID: 21300000, guid: 1d39bc86c1e7a286784bdbc3224a5019, type: 3}

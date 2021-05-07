@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e277ea999410e234c95f9661dfefdb6b, type: 3}
-  m_Name: Gamer
+  m_Script: {fileID: 11500000, guid: 78502df1379b15e47978934ac52e5457, type: 3}
+  m_Name: PointsRune
   m_EditorClassIdentifier: 
-  id: 1
-  name: Gamer
-  skill: []
-  colorPalette: []
-  sprites: []
-  items: []
+  runeName: Points Rune
+  value: 10
+  probability: 50
+  effect: +3 points per obtained punctuation
+  spriteOfTheRune: {fileID: 0}
+  nameOfTheSet: 0

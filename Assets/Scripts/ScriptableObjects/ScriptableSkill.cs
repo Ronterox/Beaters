@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Plugins.Properties;
 
+namespace ScriptableObjects{
 [CreateAssetMenu(fileName = "New Skill", menuName = "Skills/New skill")]
-public class Skill : ScriptableObject
+public class ScriptableSkill : ScriptableObject
 {
     public enum Kind
     {
@@ -19,3 +20,6 @@ public class Skill : ScriptableObject
     [ConditionalHide("hasDuration")]
     public int duration;
 }
+
+}
+

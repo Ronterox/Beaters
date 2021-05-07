@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using General;
 using Plugins.Tools;
 using UnityEngine;
+using ScriptableObjects;
 
 namespace Managers
 {
@@ -102,7 +103,7 @@ namespace Managers
             m_SongsList.Add(serializableSong);
         }
 
-        public static void AddItem(Item item, int quantity = 1)
+        public static void AddItem(ScriptableItem item, int quantity = 1)
         {
             var serializableItem = new SerializableItem { itemId = item.ID, quantity = quantity};
             
@@ -122,7 +123,7 @@ namespace Managers
             m_ItemsList.Add(serializableItem);
         }
 
-        public static void AddCharacter(Character character)
+        public static void AddCharacter(ScriptableCharacter character)
         {
             var serializableCharacter = new SerializableCharacter { characterId = (ushort)character.name.GetHashCode(), lvl = lvl, xp = xp };
 
