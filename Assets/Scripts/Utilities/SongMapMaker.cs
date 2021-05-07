@@ -127,7 +127,8 @@ namespace Utilities
         private void OnDestroy() => SaveMapsData();
 #endif
         //TODO: Forward and backwards on song editor 5 secs
-        //TODO: check if save songs binary and load work
+        //TODO: Fix save songs binary and load work
+        //TODO: Create serializable on editor
         private void Start()
         {
 #if !UNITY_EDITOR

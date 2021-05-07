@@ -1,5 +1,3 @@
-using Plugins.Tools;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
