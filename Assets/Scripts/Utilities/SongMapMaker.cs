@@ -127,7 +127,6 @@ namespace Utilities
         private void OnDestroy() => SaveMapsData();
 #endif
         //TODO: chek if System.IO.Path works on mobile
-        //TODO: add delete song buttons
         //TODO: check if save songs binary and load work
         private void Start()
         {
@@ -217,8 +216,8 @@ namespace Utilities
 
         public void StartCreating(string mapName)
         {
-            if(IsMapNameEmpty(mapName)) return;
-            
+            if (IsMapNameEmpty(mapName)) return;
+
             IsCreating = true;
             SetState($"Working on {mapName}");
 
@@ -318,9 +317,13 @@ namespace Utilities
 
         public void DeleteSoundMap(string mapName)
         {
+            if (IsMapNameEmpty(mapName)) return;
             ushort hashName = mapName.GetHashCodeUshort();
             soundMaps.RemoveOne(map => map.id == hashName);
+            SetState($"{mapName} was deleted successfully!");
         }
+
+        public void DeleteSoundMap() => DeleteSoundMap(songNameText.text);
 
         private bool IsMapNameEmpty(string mapName)
         {
@@ -331,7 +334,7 @@ namespace Utilities
 
         public void LoadMap(string mapName)
         {
-            if(IsMapNameEmpty(mapName)) return;
+            if (IsMapNameEmpty(mapName)) return;
 
             SoundMap soundMap = GetSoundMap(mapName);
 
@@ -370,7 +373,7 @@ namespace Utilities
 
         public void SaveMap(string mapName)
         {
-            if(IsMapNameEmpty(mapName)) return;
+            if (IsMapNameEmpty(mapName)) return;
 
             SoundMap soundMap = GetSoundMap(mapName);
 
@@ -395,7 +398,7 @@ namespace Utilities
                 soundMap.audioClip = defaultSong;
 
                 UpdateSongsList();
-                
+
                 mapScroller.SetSoundMap(soundMap);
             }
             else StartCreating(mapName);
