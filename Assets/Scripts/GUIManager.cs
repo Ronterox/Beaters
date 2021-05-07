@@ -31,7 +31,7 @@ public class GUIManager : MonoBehaviour
             guiImage.image.color = palette.GetColor(guiImage.color);
         }
         playButton.sprite = character.PlayButton;
-        gachaLogo.sprite = character.GatchaButton;
+        gachaLogo.sprite = character.sprites[0];
         mapCreator.sprite = character.MapCreator;
 
     }
