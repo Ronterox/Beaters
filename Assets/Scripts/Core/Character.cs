@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using ScriptableObjects;
+using UnityEngine;
 
-public class Character : MonoBehaviour
+namespace Core
 {
-    public ScriptableCharacter character;
+    public class Character : MonoBehaviour
+    {
+        public ScriptableCharacter character;
 
-    public int level;
-    public int exp;
+        public int level;
+        public int exp;
 
-    public int calculateHP(int lvl){
-        return Mathf.RoundToInt(character.hp + lvl * character.multiplier);
-    }
+        public int calculateHP(int lvl){
+            return Mathf.RoundToInt(character.hp + lvl * character.multiplier);
+        }
     
+    }
 }

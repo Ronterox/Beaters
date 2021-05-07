@@ -1,7 +1,7 @@
 using Managers;
 using UnityEngine;
 
-namespace Core
+namespace Core.Arrow_Game
 {
     public class NoteObject : MonoBehaviour
     {

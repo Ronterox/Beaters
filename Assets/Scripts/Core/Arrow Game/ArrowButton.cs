@@ -3,7 +3,7 @@ using Managers;
 using Plugins.Tools;
 using UnityEngine;
 
-namespace Core
+namespace Core.Arrow_Game
 {
     public class ArrowButton : MonoBehaviour
     {

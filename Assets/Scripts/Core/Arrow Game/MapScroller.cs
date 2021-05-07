@@ -6,7 +6,7 @@ using UnityEngine;
 using Utilities;
 using SoundManager = Plugins.Audio.SoundManager;
 
-namespace Core
+namespace Core.Arrow_Game
 {
     [System.Serializable]
     public struct Instrument

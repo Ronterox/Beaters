@@ -114,10 +114,12 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="Core" t="Include">
-            <e p="ArrowButton.cs" t="Include" />
+            <e p="Arrow Game" t="Include">
+              <e p="ArrowButton.cs" t="Include" />
+              <e p="MapScroller.cs" t="Include" />
+              <e p="NoteObject.cs" t="Include" />
+            </e>
             <e p="Character.cs" t="Include" />
-            <e p="MapScroller.cs" t="Include" />
-            <e p="NoteObject.cs" t="Include" />
           </e>
           <e p="General" t="Include">
             <e p="Character.cs" t="Include" />

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Core;
+using Core.Arrow_Game;
 using DG.Tweening;
 using Managers;
 using Plugins.Tools;
@@ -140,7 +140,7 @@ namespace Utilities
             songDelayInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
             songNameInputField.onSubmit.AddListener(StartCreating);
 
-            SetState("Not working on mapName");
+            SetState("Not working on any map");
 
             foreach (MakerNote makerNote in makerNotes)
             {
