@@ -329,7 +329,7 @@ namespace Utilities
         private bool IsMapNameEmpty(string mapName)
         {
             if (!string.IsNullOrEmpty(mapName)) return false;
-            SetState("Please, write the mapName name!");
+            SetState("Please, write the map name!");
             return true;
         }
 
