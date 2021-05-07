@@ -3,6 +3,7 @@ using System.Linq;
 using General;
 using Plugins.Tools;
 using UnityEngine;
+using ScriptableObjects;
 
 namespace Managers
 {
@@ -58,6 +59,8 @@ namespace Managers
         private static List<SerializableItem> m_ItemsList = new List<SerializableItem>();
         private static List<SerializableCharacter> m_CharactersList = new List<SerializableCharacter>();
 
+        public static int lvl, xp;
+
         public void OnEnable()
         {
             if (Instance != this) return;
@@ -108,7 +111,7 @@ namespace Managers
             m_SongsList.Add(serializableSong);
         }
 
-        public static void AddItem(Item item, int quantity = 1)
+        public static void AddItem(ScriptableItem item, int quantity = 1)
         {
             var serializableItem = new SerializableItem
             {
@@ -131,7 +134,7 @@ namespace Managers
             m_ItemsList.Add(serializableItem);
         }
 
-        public static void AddCharacter(Character character)
+        public static void AddCharacter(ScriptableCharacter character)
         {
             var serializableCharacter = new SerializableCharacter
             {
