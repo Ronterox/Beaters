@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Plugins.Audio;
 using Plugins.Tools;
 using TMPro;
 using UnityEngine;
@@ -77,7 +78,7 @@ namespace Plugins.GUI
             }
             else
             {
-                SoundManager soundManager = SoundManager.Instance;
+                /*SoundManager soundManager = SoundManager.Instance;
                 settings = new Settings
                 {
                     fullScreen = fullscreenToggle.isOn,
@@ -88,6 +89,7 @@ namespace Plugins.GUI
                     uiVolume = soundManager.uiVolume
                 };
                 SaveSettings();
+                */
             }
         }
 
@@ -110,7 +112,7 @@ namespace Plugins.GUI
         /// Sets the general volume of the game
         /// </summary>
         /// <param name="volume"></param>
-        public void SetGeneralVolume(float volume) => SoundManager.Instance.SetVolume(settings.generalVolume = volume);
+        public void SetGeneralVolume(float volume) => SoundManager.Instance.SetMasterVolume(settings.generalVolume = volume);
 
         /// <summary>
         /// Sets the music volume of the game
@@ -122,13 +124,13 @@ namespace Plugins.GUI
         /// Sets the sound effects volume of the game
         /// </summary>
         /// <param name="volume"></param>
-        public void SetSFXVolume(float volume) => SoundManager.Instance.SetSfxVolume(settings.sfxVolume = volume);
+        public void SetSFXVolume(float volume) => SoundManager.Instance.SetSFXVolume(settings.sfxVolume = volume);
 
         /// <summary>
         /// Sets the ui volume of the game
         /// </summary>
         /// <param name="volume"></param>
-        public void SetUIVolume(float volume) => SoundManager.Instance.SetUIVolume(settings.uiVolume = volume);
+        public void SetUIVolume(float volume) => SoundManager.Instance.SetVoiceVolume(settings.uiVolume = volume);
 
         /// <summary>
         /// Sets the resolution available at the specific position on the array of resolutions

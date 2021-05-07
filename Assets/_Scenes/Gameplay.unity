@@ -1217,6 +1217,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2653446086755554651, guid: 815f55bf984500030af38a3a30fae8cf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.09
+      objectReference: {fileID: 0}
     - target: {fileID: 3209730867412371869, guid: 815f55bf984500030af38a3a30fae8cf, type: 3}
       propertyPath: m_Name
       value: Map Scroller
@@ -1390,10 +1394,6 @@ PrefabInstance:
     - target: {fileID: 2109568381, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 659962780778933319, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 89.33618
       objectReference: {fileID: 0}
     - target: {fileID: 659962780926713678, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
       propertyPath: m_AnchorMax.y

@@ -96,7 +96,6 @@
             <e p="MMEventManager.cs" t="Include" />
             <e p="SaveLoadManager.cs" t="Include" />
             <e p="SingleInstance.cs" t="Include" />
-            <e p="SoundManager.cs" t="Include" />
             <e p="Timer.cs" t="Include" />
             <e p="TimerUI.cs" t="Include" />
             <e p="UtilityMethods.cs" t="Include" />

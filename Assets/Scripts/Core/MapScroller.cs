@@ -45,7 +45,7 @@ namespace Core
         private float m_AnimationDuration;
 
         public bool IsStarted { get; private set; }
-        private float bps;
+        private float m_Bps;
 
         private bool m_WaitingForBeat;
         private WaitForSeconds m_WaitForSeconds;
@@ -99,7 +99,7 @@ namespace Core
         {
             if (!IsStarted) return;
 
-            transform.position -= new Vector3(0f, bps * SoundManager.songDeltaTime, 0f);
+            transform.position -= new Vector3(0f, m_Bps * SoundManager.songDeltaTime, 0f);
 
             AnimateBeat();
         }
@@ -125,7 +125,7 @@ namespace Core
             m_SoundMap = soundMap;
             m_CurrentSong = m_SoundMap.audioClip;
 
-            bps = m_SoundMap.bpm / 60 * (float)difficulty;
+            m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
 
             float ms = 60000 / m_SoundMap.bpm;
             float secs = ms * 0.001f;
