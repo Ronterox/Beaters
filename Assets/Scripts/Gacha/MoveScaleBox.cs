@@ -6,8 +6,10 @@ using DG.Tweening;
 namespace Gacha{
 public class MoveScaleBox : MonoBehaviour
 {
-    public Vector3 position, scale;
+    public Vector3 position, positionReward, scale, scaleReward;
     public int durationMove, durationScale;
+    public GameObject reward, quad;
+    
 
     void Start(){
         transform.DOMove(position, durationMove);
@@ -17,10 +19,22 @@ public class MoveScaleBox : MonoBehaviour
     void Update(){
         if(transform.position == position){
             if(Input.GetMouseButtonDown(0)){
-                gameObject.SetActive(false);
+                quad.SetActive(true);
+                ChildrenLoop();
             }
         }
     }
+
+    void ChildrenLoop()
+     {
+         int children = reward.transform.childCount;
+         for (int i = 0; i < children; ++i){
+            reward.transform.GetChild(i).DOMove(positionReward, durationMove);
+            reward.transform.GetChild(i).DOScale(scaleReward, durationMove);
+            TimelineManager.StartTimeline();
+         }
+            
+     }
 
     }
 }

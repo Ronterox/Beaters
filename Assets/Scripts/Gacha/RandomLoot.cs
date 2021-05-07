@@ -40,7 +40,7 @@ public class RandomLoot : MonoBehaviour
         {
             if (randomNumber <= table[i].probability)
             {
-                table[i].obj.SetActive(false);
+                table[i].obj.SetActive(true);
                 return;
             }
             else
