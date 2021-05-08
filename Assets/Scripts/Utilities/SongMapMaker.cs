@@ -1,5 +1,6 @@
-#define FORCE_JSON
+//#define FORCE_JSON
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -17,12 +18,16 @@ using UnityEngine.UI;
 
 namespace Utilities
 {
-    [System.Serializable]
+    [Serializable]
     public class SoundMap
     {
         public string name;
         public float bpm, startDelay;
-        public SerializableAudioClip audioClip;
+
+        [NonSerialized]
+        public AudioClip audioClip;
+        public string audioPath;
+
         public Note[] notes;
 
         //If slow save this on memory
@@ -37,65 +42,14 @@ namespace Utilities
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct Note
     {
         public ushort id;
         public float x, y, z;
     }
 
-    [System.Serializable]
-    public struct SerializableAudioClip
-    {
-#if !UNITY_EDITOR || FORCE_JSON
-        private const string SONG_FOLDER = "Songs";
-        [HideInInspector]
-        public string audioDataPath;
-#endif
-
-        public string name;
-        [System.NonSerialized]
-        public float[] audioData;
-        public int samples, channels, frecuency;
-
-        public SerializableAudioClip(AudioClip audioClip)
-        {
-            name = audioClip.name;
-            samples = audioClip.samples;
-            channels = audioClip.channels;
-            audioData = new float[samples * channels];
-            frecuency = audioClip.frequency;
-            audioDataPath = null;
-
-            audioClip.GetData(audioData, 0);
-
-            for (var i = 0; i < audioData.Length; ++i) audioData[i] = audioData[i] * 0.5f;
-        }
-
-        public static implicit operator AudioClip(SerializableAudioClip serializableAudioClip)
-        {
-            var clip = AudioClip.Create(serializableAudioClip.name, serializableAudioClip.samples, serializableAudioClip.channels, serializableAudioClip.frecuency, false);
-            clip.SetData(serializableAudioClip.audioData, 0);
-            return clip;
-        }
-
-        public static implicit operator SerializableAudioClip(AudioClip audioClip) => new SerializableAudioClip(audioClip);
-
-#if !UNITY_EDITOR || FORCE_JSON
-        public void SaveAudioDataPath()
-        {
-            var fileName = $"{name}.beat";
-            string folderPath = Application.dataPath + $"/{SONG_FOLDER}/";
-
-            audioDataPath = folderPath + fileName;
-            SaveLoadManager.SaveBinary(audioData, folderPath, fileName);
-        }
-
-        public void LoadAudioDataPath() => audioData = SaveLoadManager.LoadBinary<float[]>(audioDataPath);
-#endif
-    }
-
-    [System.Serializable]
+    [Serializable]
     public struct MakerNote
     {
         public ushort id;
@@ -107,7 +61,9 @@ namespace Utilities
 
     public class SongMapMaker : MonoBehaviour
     {
-        public AudioClip defaultSong;
+        public AudioClip audioSong;
+        public string audioClipPath;
+
         [Header("Config")]
         public TMP_Text stateText;
         public MapScroller mapScroller;
@@ -143,7 +99,7 @@ namespace Utilities
 #endif
         private const int DEFAULT_BPM = 120;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && !FORCE_JSON
         [Header("Editor Only")]
         public string songScriptablesPath;
 #endif
@@ -156,7 +112,6 @@ namespace Utilities
         //TODO: Forward and backwards on song editor 5 secs
         //TODO: Fix save songs json and load work, change path for mobile
         //TODO: Scriptable for editor
-        //TODO: Size of song is too big compared to original, just use original except for default songs;
         private void Start()
         {
             LoadMapsData();
@@ -319,7 +274,8 @@ namespace Utilities
                     name = mapName,
                     startDelay = GetDelay(),
                     bpm = beatsPerMinutes,
-                    audioClip = defaultSong
+                    audioClip = audioSong,
+                    audioPath = audioClipPath
                 };
                 soundMaps.Add(soundMap);
             }
@@ -339,7 +295,7 @@ namespace Utilities
             //TODO: Scriptable object get
 #else
             if (!SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER)) return;
-            List<SoundMap> savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToList();
+            SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToArray();
             soundMaps.AddRange(savedSoundMaps);
 #endif
             UpdateSongsList();
@@ -378,13 +334,23 @@ namespace Utilities
                 CreateMapHolder(mapName);
                 soundMap.notes?.ForEach(GenerateNote);
 
-                bpmInputField.text = soundMap.bpm + "";
-                songDelayInputField.text = soundMap.startDelay + "";
-                songNameText.text = soundMap.audioClip.name;
+                SetState("Loading map clip...");
 
-                mapScroller.SetSoundMap(soundMap);
+                GetAudioClip(soundMap.audioPath, clip =>
+                {
+                    soundMap.audioClip = clip;
 
-                SetState($"Loaded map {mapName} successfully!");
+                    audioSong = clip;
+                    audioClipPath = soundMap.audioPath;
+
+                    bpmInputField.text = soundMap.bpm + "";
+                    songDelayInputField.text = soundMap.startDelay + "";
+                    songNameText.text = soundMap.audioClip.name;
+
+                    mapScroller.SetSoundMap(soundMap);
+
+                    SetState($"Loaded map {mapName} successfully!");
+                });
             }
 
             mapScroller.ResetPos();
@@ -424,14 +390,11 @@ namespace Utilities
                     }).ToArray();
 
                 soundMap.SetNotes(notes);
-
                 soundMap.SetBpmDelay(GetBpm(), GetDelay());
 
-                soundMap.audioClip = defaultSong;
+                soundMap.audioClip = audioSong;
 
                 UpdateSongsList();
-
-                mapScroller.SetSoundMap(soundMap);
 
 #if UNITY_EDITOR && !FORCE_JSON
                 var song = ScriptableObject.CreateInstance<General.Song>();
@@ -439,9 +402,18 @@ namespace Utilities
                 song.songName = soundMap.name;
                 UnityEditor.AssetDatabase.CreateAsset(song, $"{songScriptablesPath}/{soundMap.name}.asset");
 #else
-                soundMap.audioClip.SaveAudioDataPath();
-                SaveLoadManager.SaveInGameDirectoryFolderAsJson(soundMap, $"{soundMap.name}.json", SONG_FOLDER);
+                string folderPath = Application.dataPath + $"/{SONG_FOLDER}/";
+                var fileName = $"{soundMap.name}.json";
+
+                string soundFilePath = folderPath + $"{audioSong.name}.mp3";
+                if (!File.Exists(soundFilePath)) File.Copy(audioClipPath, soundFilePath);
+
+                soundMap.audioPath = soundFilePath;
+
+                SaveLoadManager.SaveAsJsonFile(soundMap, folderPath, fileName);
 #endif
+
+                mapScroller.SetSoundMap(soundMap);
             }
             else StartCreating(mapName);
         }
@@ -462,7 +434,9 @@ namespace Utilities
         {
             songListDropdown.ClearOptions();
 
-            List<string> mapNames = soundMaps.Select(soundMap => soundMap.name).ToList();
+            var mapNames = new List<string> { "" };
+
+            soundMaps.ForEach(map => mapNames.Add(map.name));
 
             songListDropdown.AddOptions(mapNames);
         }
@@ -484,23 +458,34 @@ namespace Utilities
                 string extension = Path.GetExtension(path);
                 if (extension.Equals(".wav") || extension.Equals(".mp3"))
                 {
-                    StartCoroutine(GetAudioClip($"file://{path}"));
+                    GetAudioClip(path, clip =>
+                    {
+                        audioSong = clip;
+                        audioClipPath = path;
+
+                        songNameText.text = audioSong.name = Path.GetFileNameWithoutExtension(path);
+
+                        SaveMap();
+                    });
                 }
             }, null, FileBrowser.PickMode.Files);
         }
 
-        private IEnumerator GetAudioClip(string fullPath)
+        public void GetAudioClip(string fullPath, Action<AudioClip> action) => StartCoroutine(GetAudioClipCoroutine(fullPath, action));
+
+        private IEnumerator GetAudioClipCoroutine(string fullPath, Action<AudioClip> action)
         {
-            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(fullPath, AudioType.MPEG);
+            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip($"file://{fullPath}", AudioType.MPEG);
 
             yield return www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.ConnectionError) SetState(www.error);
             else
             {
-                defaultSong = DownloadHandlerAudioClip.GetContent(www);
-                songNameText.text = defaultSong.name = Path.GetFileNameWithoutExtension(fullPath);
-                SaveMap();
+                AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
+                clip.name = FileBrowserHelpers.GetFilename(fullPath);
+
+                action?.Invoke(clip);
             }
         }
     }

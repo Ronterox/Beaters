@@ -3,6 +3,7 @@ using DG.Tweening;
 using Managers;
 using Plugins.Tools;
 using UnityEngine;
+using UnityEngine.Networking;
 using Utilities;
 using SoundManager = Plugins.Audio.SoundManager;
 
@@ -76,7 +77,7 @@ namespace Core.Arrow_Game
         {
             IsStarted = true;
             SoundManager.Instance.UnPauseBackgroundMusic();
-            
+
             CameraManager.Instance.CanDoPanning = false;
 
             print("Resumed Map!");
@@ -89,7 +90,7 @@ namespace Core.Arrow_Game
 
             StopCoroutine(AnimateBeatCoroutine());
             m_WaitingForBeat = false;
-            
+
             CameraManager.Instance.CanDoPanning = true;
 
             print("Stopped Map!");
@@ -124,10 +125,7 @@ namespace Core.Arrow_Game
         {
             m_SoundMap = soundMap;
             
-            SerializableAudioClip audioClip = m_SoundMap.audioClip;
-            if(audioClip.audioData == null) audioClip.LoadAudioDataPath();
-            
-            m_CurrentSong = audioClip;
+            m_CurrentSong = m_SoundMap.audioClip;
 
             m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
 

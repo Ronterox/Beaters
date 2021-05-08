@@ -2,16 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Songs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Songs/docchi.beat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Songs/docchi.beat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Songs/docchidocchi.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Songs/docchidocchi.json.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AssetsSongs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Songs/.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Songs/docchi.beat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Songs/docchi.beat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Songs/docchidocchi.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Songs/docchidocchi.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Level Editor ArrowGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Level Editor ArrowGame.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +72,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/MakerNote.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/Timer.cs" />
@@ -85,7 +86,6 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowser.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/CheckForEventSystem.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/MainMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
@@ -103,9 +103,11 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics2D.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -166,6 +168,7 @@
       <workItem from="1620386637926" duration="4294000" />
       <workItem from="1620398653969" duration="3439000" />
       <workItem from="1620421229311" duration="22000" />
+      <workItem from="1620488623274" duration="9513000" />
     </task>
     <servers />
   </component>

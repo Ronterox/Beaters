@@ -41,6 +41,7 @@ namespace Plugins.Tools
         /// <param name="folderName"></param>
         /// <returns></returns>
         public static bool SaveFolderExists(string folderName = DEFAULT_FOLDER_NAME) => Directory.Exists(folderName.DetermineSavePath());
+        
         /// <summary>
         /// There is a folder for the save
         /// </summary>
@@ -139,6 +140,7 @@ namespace Plugins.Tools
         /// <param name="fileName"></param>
         public static void SaveAsJsonFile(object saveObject, string savePath, string fileName)
         {
+            if (!Directory.Exists(savePath)) Directory.CreateDirectory(savePath);
             string json = JsonUtility.ToJson(saveObject);
             File.WriteAllText(savePath + fileName, json);
         }

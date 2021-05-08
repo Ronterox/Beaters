@@ -33,6 +33,59 @@ namespace Plugins.Audio
             this.randomPitchRange = randomPitchRange;
         }
     }
+/*
+    [Serializable]
+    public struct SerializableAudioClip
+    {
+#if !UNITY_EDITOR || FORCE_JSON
+        private const string SONG_FOLDER = "Songs";
+        [HideInInspector]
+        public string audioDataPath;
+#endif
+
+        public string name;
+        [NonSerialized]
+        public float[] audioData;
+        public int samples, channels, frecuency;
+
+        public SerializableAudioClip(AudioClip audioClip)
+        {
+            name = audioClip.name;
+            samples = audioClip.samples;
+            channels = audioClip.channels;
+            audioData = new float[samples * channels];
+            frecuency = audioClip.frequency;
+#if !UNITY_EDITOR || FORCE_JSON
+            audioDataPath = null;
+#endif
+            audioClip.GetData(audioData, 0);
+
+            for (var i = 0; i < audioData.Length; ++i) audioData[i] = audioData[i] * 0.5f;
+        }
+
+        public static implicit operator AudioClip(SerializableAudioClip serializableAudioClip)
+        {
+            var clip = AudioClip.Create(serializableAudioClip.name, serializableAudioClip.samples, serializableAudioClip.channels, serializableAudioClip.frecuency, false);
+            clip.SetData(serializableAudioClip.audioData, 0);
+            return clip;
+        }
+
+        public static implicit operator SerializableAudioClip(AudioClip audioClip) => new SerializableAudioClip(audioClip);
+
+#if !UNITY_EDITOR || FORCE_JSON
+        public void SaveAudioDataPath()
+        {
+            var fileName = $"{name}.beat";
+            string folderPath = Application.dataPath + $"/{SONG_FOLDER}/";
+
+            audioDataPath = folderPath + fileName;
+            SaveLoadManager.SaveBinary(audioData, folderPath, fileName);
+        }
+
+        public void LoadAudioDataPath() => audioData = SaveLoadManager.LoadBinary<float[]>(audioDataPath);
+#endif
+    }
+    */
 
     [AddComponentMenu("Penguins Mafia/Sound Manager")]
     [RequireComponent(typeof(SoundPooler))]
@@ -65,9 +118,9 @@ namespace Plugins.Audio
         private const string SFX_VOLUME_PARAM = "SFX_Volume";
 
         private const string SOUND_OBJECT_POOL = "SoundFXPool_Item";
-        
+
         #region RYTHM_GAME
-        
+
         private float timeLastFrame;
         public static float songDeltaTime;
 
@@ -77,7 +130,7 @@ namespace Plugins.Audio
             songDeltaTime = time - timeLastFrame;
             timeLastFrame = time;
         }
-        
+
         #endregion
 
 
@@ -180,7 +233,7 @@ namespace Plugins.Audio
         public void PlayBackgroundMusicNoFade(AudioClip clip, float delay = 0f, bool loop = true)
         {
             m_BackgroundMusic.Stop();
-            
+
             Action playSong = () =>
             {
                 if (m_BackgroundMusic.clip == clip)
@@ -194,7 +247,7 @@ namespace Plugins.Audio
 
                 m_BackgroundMusic.Play();
             };
-            
+
             playSong.DelayAction(delay);
         }
 
