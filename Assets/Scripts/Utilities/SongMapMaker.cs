@@ -18,11 +18,13 @@ namespace Utilities
     [System.Serializable]
     public class SoundMap
     {
-        public ushort id;
         public string name;
         public float bpm, startDelay;
         public SerializableAudioClip audioClip;
         public Note[] notes;
+
+        //If slow save this on memory
+        public ushort ID => name.GetHashCodeUshort();
 
         public void SetNotes(Note[] newNotes) => notes = newNotes;
 
@@ -80,6 +82,8 @@ namespace Utilities
         [Space]
         public HoldableButton button;
     }
+    
+    #define FORCE_JSON
 
     public class SongMapMaker : MonoBehaviour
     {
@@ -112,28 +116,30 @@ namespace Utilities
         private GameObject m_SelectedGameObject;
         private ushort m_SelectedId;
 
-        private const string MAPS_FILE = "soundmaps";
-        private const int DEFAULT_BPM = 120;
-
         private bool m_IsHoldingNote;
 
+#if !UNITY_EDITOR || FORCE_JSON
+        private const string SONG_FOLDER = "songs";
+#endif
+        private const int DEFAULT_BPM = 120;
+
+#if UNITY_EDITOR
+        [Header("Editor Only")]
+        public string songScriptablesPath;
+#endif
         private void Awake()
         {
             m_PreviewTransform = preview.transform;
             m_MainCamera = Camera.main;
         }
 
-#if !UNITY_EDITOR
-        private void OnDestroy() => SaveMapsData();
-#endif
         //TODO: Forward and backwards on song editor 5 secs
-        //TODO: Fix save songs binary and load work
-        //TODO: Create serializable on editor
+        //TODO: Fix save songs json and load work, change path for mobile
+        //TODO: Json for players, Scriptable for editor
         private void Start()
         {
-#if !UNITY_EDITOR
             LoadMapsData();
-#endif
+
             songListDropdown.onValueChanged.AddListener(option => LoadMap(songListDropdown.options[option].text));
 
             bpmInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
@@ -289,7 +295,6 @@ namespace Utilities
 
                 soundMap = new SoundMap
                 {
-                    id = mapName.GetHashCodeUshort(),
                     name = mapName,
                     startDelay = GetDelay(),
                     bpm = beatsPerMinutes,
@@ -309,18 +314,21 @@ namespace Utilities
 
         public void LoadMapsData()
         {
-            if (!SaveLoadManager.SaveExists(MAPS_FILE)) return;
-            soundMaps.AddRange(SaveLoadManager.Load<SoundMap[]>(MAPS_FILE));
+#if UNITY_EDITOR && !FORCE_JSON
+            //TODO: Scriptable object get
+#else
+            if (!SaveLoadManager.SaveFolderExists(SONG_FOLDER)) return;
+            SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJson<SoundMap>(SONG_FOLDER).ToArray();
+            soundMaps.AddRange(savedSoundMaps);
+#endif
             UpdateSongsList();
         }
-
-        public void SaveMapsData() => SaveLoadManager.Save(soundMaps.ToArray(), MAPS_FILE);
 
         public void DeleteSoundMap(string mapName)
         {
             if (IsMapNameEmpty(mapName)) return;
             ushort hashName = mapName.GetHashCodeUshort();
-            soundMaps.RemoveOne(map => map.id == hashName);
+            soundMaps.RemoveOne(map => map.ID == hashName);
             SetState($"{mapName} was deleted successfully!");
         }
 
@@ -355,7 +363,7 @@ namespace Utilities
 
                 mapScroller.SetSoundMap(soundMap);
 
-                SetState($"Loaded mapName {mapName} successfully!");
+                SetState($"Loaded map {mapName} successfully!");
             }
 
             mapScroller.ResetPos();
@@ -380,6 +388,8 @@ namespace Utilities
 
             if (soundMap != null)
             {
+                mapScroller.ResetPos();
+
                 NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
                 Note[] notes = (
                     from noteObject in noteObjects
@@ -401,6 +411,15 @@ namespace Utilities
                 UpdateSongsList();
 
                 mapScroller.SetSoundMap(soundMap);
+
+#if UNITY_EDITOR && !FORCE_JSON
+                var song = ScriptableObject.CreateInstance<General.Song>();
+                song.soundMap = soundMap;
+                song.songName = soundMap.name;
+                UnityEditor.AssetDatabase.CreateAsset(song, $"{songScriptablesPath}/{soundMap.name}.asset");
+#else
+                SaveLoadManager.SaveInGameFolder(soundMap, $"{soundMap.name}.json", SONG_FOLDER);
+#endif
             }
             else StartCreating(mapName);
         }
@@ -408,7 +427,7 @@ namespace Utilities
         private SoundMap GetSoundMap(string mapName)
         {
             ushort hashName = mapName.GetHashCodeUshort();
-            return soundMaps.FirstOrDefault(map => map.id == hashName);
+            return soundMaps.FirstOrDefault(map => map.ID == hashName);
         }
 
         public void LoadMap() => LoadMap(songNameInputField.text);
@@ -420,7 +439,9 @@ namespace Utilities
         private void UpdateSongsList()
         {
             songListDropdown.ClearOptions();
+
             List<string> mapNames = soundMaps.Select(soundMap => soundMap.name).ToList();
+
             songListDropdown.AddOptions(mapNames);
         }
 

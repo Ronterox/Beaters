@@ -39,7 +39,7 @@ namespace Core.Arrow_Game
 
 
 #if UNITY_ANDROID || UNITY_IPHONE
-        //If you need fps improvement you can reduce this code to be only on the CameraManager
+        //If slow and you need fps improvement you can reduce this code to be only on the CameraManager
         private void Update()
         {
             if (Input.touchCount < 1) return;

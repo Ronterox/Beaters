@@ -53,7 +53,7 @@ namespace Managers
         public static PlayerData playerData = new PlayerData();
 
         private static double startPlayingTime;
-        private const string PLAYER_FILE = "player";
+        private const string PLAYER_FILE = "player.data";
 
         private static readonly List<SerializableSong> m_SongsList = new List<SerializableSong>();
         private static readonly List<SerializableItem> m_ItemsList = new List<SerializableItem>();
@@ -96,10 +96,7 @@ namespace Managers
         {
             var serializableSong = new SerializableSong
             {
-                songId = song.name.GetHashCodeUshort(),
-                isCompleted = song.isCompleted,
-                highestCombo = song.highestCombo,
-                completedDifficulties = song.completedDifficulties
+                songId = song.name.GetHashCodeUshort()
             };
 
             if (m_SongsList.Where(sSong => sSong.songId == serializableSong.songId).Select(sSong => serializableSong).Any())

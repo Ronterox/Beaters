@@ -1,4 +1,4 @@
-using Managers;
+using Plugins.Tools;
 using UnityEngine;
 using Utilities;
 
@@ -6,9 +6,9 @@ namespace General
 {
     public class Song : ScriptableObject
     {
+        public string songName;
         public SoundMap soundMap;
-        public Difficulty[] completedDifficulties;
-        public bool isCompleted;
-        public int highestCombo;
+
+        public ushort ID => songName.GetHashCodeUshort();
     }
 }
