@@ -1827,17 +1827,9 @@ PrefabInstance:
       value: Song Maker Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 6744775958672966662, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
-      propertyPath: audioSong
-      value: 
-      objectReference: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
-    - target: {fileID: 6744775958672966662, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
       propertyPath: mapScroller
       value: 
       objectReference: {fileID: 1717358494}
-    - target: {fileID: 6744775958672966662, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
-      propertyPath: audioClipPath
-      value: Assets/Audio/Songs/Zavodila (Vs Whitty Remix).mp3
-      objectReference: {fileID: 0}
     - target: {fileID: 6744775958672966662, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
       propertyPath: makerNotes.Array.data[0].noteObject
       value: 
