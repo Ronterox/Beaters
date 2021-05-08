@@ -4873,35 +4873,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSong: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
   audioClipPath: Assets/Audio/Songs/Zavodila (Vs Whitty Remix).mp3
-  stateText: {fileID: 659962780778933304}
   mapScroller: {fileID: 0}
-  makerNotes:
-  - id: 0
-    image: {fileID: 6744775958666881250}
-    noteObject: {fileID: 0}
-    button: {fileID: 5609168946337621333}
-  - id: 1
-    image: {fileID: 6744775959143187300}
-    noteObject: {fileID: 0}
-    button: {fileID: 7455342166874645224}
-  - id: 2
-    image: {fileID: 6744775959537491517}
-    noteObject: {fileID: 0}
-    button: {fileID: 1311963884030715629}
-  - id: 3
-    image: {fileID: 6744775958498176418}
-    noteObject: {fileID: 0}
-    button: {fileID: 9027573010660759153}
-  notesLayer:
-    serializedVersion: 2
-    m_Bits: 8
+  songNameInputField: {fileID: 659962782318265645}
   bpmInputField: {fileID: 6744775958160614366}
   songDelayInputField: {fileID: 6744775958743654659}
-  songNameInputField: {fileID: 659962782318265645}
-  songNameText: {fileID: 6744775957774596289}
-  songListDropdown: {fileID: 2109568382}
   preview: {fileID: 6744775958947536517}
   touchParticle: {fileID: 6744775958777896009}
+  stateText: {fileID: 659962780778933304}
+  songNameText: {fileID: 6744775957774596289}
+  songListDropdown: {fileID: 2109568382}
   soundMaps: []
   songScriptablesRelativePath: Assets/Scriptable Objects/Resources/Songs/
   audioSongsRelativePath: Assets/Audio/Songs/

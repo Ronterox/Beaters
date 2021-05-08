@@ -45,6 +45,22 @@ namespace Utilities
             bpm = newBpm;
             startDelay = delay;
         }
+
+        public void GenerateNotes(MakerNote[] makerNotes, Transform parent)
+        {
+            void GenerateNote(Note note)
+            {
+                MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
+
+                var position = new Vector3 { x = note.x, y = note.y, z = note.z };
+                GameObject obj = makerNote.noteObject.gameObject;
+
+                UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent)
+                    .GetComponent<NoteObject>().MakerId = makerNote.id;
+            }
+
+            notes.ForEach(GenerateNote);
+        }
     }
 
     [Serializable]
@@ -70,20 +86,17 @@ namespace Utilities
         public string audioClipPath;
 
         [Header("Config")]
-        public TMP_Text stateText;
         public MapScroller mapScroller;
-        [Space]
-        public MakerNote[] makerNotes;
-        public LayerMask notesLayer;
-        public TMP_InputField bpmInputField, songDelayInputField;
+        [Header("Inputs")]
         public TMP_InputField songNameInputField;
-        [Space]
-        public TMP_Text songNameText;
-        public TMP_Dropdown songListDropdown;
+        public TMP_InputField bpmInputField, songDelayInputField;
 
         [Header("Feedback Config")]
         public SpriteRenderer preview;
         public ParticleSystem touchParticle;
+        [Space]
+        public TMP_Text stateText, songNameText;
+        public TMP_Dropdown songListDropdown;
 
         [Header("My Maps")]
         public List<SoundMap> soundMaps;
@@ -132,7 +145,7 @@ namespace Utilities
 
             SetState("Not working on any map");
 
-            foreach (MakerNote makerNote in makerNotes)
+            foreach (MakerNote makerNote in mapScroller.makerNotes)
             {
                 makerNote.button.onButtonDown += () =>
                 {
@@ -175,7 +188,7 @@ namespace Utilities
             //Check to destroy a tile note
             if (Input.GetMouseButtonDown(0) && !m_IsHoldingNote)
             {
-                RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, notesLayer);
+                RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, mapScroller.notesLayer.value);
                 if (result) Destroy(result.collider.gameObject);
             }
 
@@ -341,7 +354,7 @@ namespace Utilities
             {
                 IsCreating = true;
                 CreateMapHolder(mapName);
-                soundMap.notes?.ForEach(GenerateNote);
+                soundMap.GenerateNotes(mapScroller.makerNotes, m_CurrentMapGameObject.transform);
 
                 SetState("Loading map clip...");
 
@@ -367,17 +380,6 @@ namespace Utilities
             }
 
             mapScroller.ResetPos();
-        }
-
-        private void GenerateNote(Note note)
-        {
-            MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
-
-            var position = new Vector3 { x = note.x, y = note.y, z = note.z };
-            GameObject obj = makerNote.noteObject.gameObject;
-
-            Instantiate(obj, position, obj.transform.rotation, m_CurrentMapGameObject.transform)
-                .GetComponent<NoteObject>().MakerId = m_SelectedId;
         }
 
         public void SaveMap(string mapName)
