@@ -42,6 +42,16 @@ namespace Plugins.Tools
         /// <param name="folderName"></param>
         /// <returns></returns>
         public static bool SaveFolderExists(string folderName = DEFAULT_FOLDER_NAME) => Directory.Exists(folderName.DetermineSavePath());
+        /// <summary>
+        /// There is a folder for the save
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <returns></returns>
+        public static bool SaveFolderInGameDirectoryExists(string folderName = DEFAULT_FOLDER_NAME)
+        {
+            string folderPath = Application.dataPath + BASE_FOLDER_NAME + folderName + "/";
+            return Directory.Exists(folderPath);
+        }
 
         /// <summary>
         /// Determines the save path to use when loading and saving a file based on a folder name.
@@ -155,7 +165,7 @@ namespace Plugins.Tools
         /// <param name="folderName">Folder's name.</param>
         public static void SaveInGameFolder(object saveObject, string fileName, string folderName = DEFAULT_FOLDER_NAME)
         {
-            string savePath = Application.dataPath + BASE_FOLDER_NAME + folderName + "/";
+            string savePath = Application.dataPath + $"/{folderName}/";
             SaveBinary(saveObject, savePath, fileName);
         }
 
@@ -177,7 +187,7 @@ namespace Plugins.Tools
         /// <param name="folderName">Folder's name.</param>
         public static T LoadFromGameFolder<T>(string fileName, string folderName = DEFAULT_FOLDER_NAME)
         {
-            string savePath = Application.dataPath + BASE_FOLDER_NAME + folderName + "/";
+            string savePath = Application.dataPath + $"/{folderName}/";
             return LoadBinary<T>(savePath, fileName);
         }
         /// <summary>
@@ -194,9 +204,9 @@ namespace Plugins.Tools
         /// <param name="saveObject">Save object.</param>
         /// <param name="fileName">File name.</param>
         /// <param name="folderName">Folder's name.</param>
-        public static void SaveInGameFolderAsJson(object saveObject, string fileName, string folderName = DEFAULT_FOLDER_NAME)
+        public static void SaveInGameDirectoryFolderAsJson(object saveObject, string fileName, string folderName = DEFAULT_FOLDER_NAME)
         {
-            string savePath = Application.dataPath + BASE_FOLDER_NAME + folderName + "/";
+            string savePath = Application.dataPath + $"/{folderName}/";
             SaveAsJsonFile(saveObject, savePath, fileName);
         }
 
@@ -218,7 +228,7 @@ namespace Plugins.Tools
         /// <param name="folderName">Folder's name.</param>
         public static T LoadJsonFromGameFolder<T>(string fileName, string folderName = DEFAULT_FOLDER_NAME)
         {
-            string savePath = Application.dataPath + BASE_FOLDER_NAME + folderName + "/";
+            string savePath = Application.dataPath + $"/{folderName}/";
             return LoadJsonFile<T>(savePath, fileName);
         }
         
@@ -232,9 +242,9 @@ namespace Plugins.Tools
         /// Load the specified file based on a file name into a specified folder
         /// </summary>
         /// <param name="folderName">Folder's name.</param>
-        public static IEnumerable<T> LoadMultipleJsonFromGameFolder<T>(string folderName = DEFAULT_FOLDER_NAME)
+        public static IEnumerable<T> LoadMultipleJsonFromFolderInGameDirectory<T>(string folderName = DEFAULT_FOLDER_NAME)
         {
-            string savePath = Application.dataPath + BASE_FOLDER_NAME + folderName + "/";
+            string savePath = Application.dataPath + $"/{folderName}/";
             return LoadJsonsFromFolder<T>(savePath);
         }
 
@@ -251,7 +261,7 @@ namespace Plugins.Tools
 
         public static void DeleteSaveInGameFolder(string fileName, string folderName = DEFAULT_FOLDER_NAME)
         {
-            string filePath = Application.dataPath + BASE_FOLDER_NAME + folderName + fileName;
+            string filePath = Application.dataPath + $"/{folderName}/" + fileName;
             File.Delete(filePath);
         }
 
@@ -275,13 +285,8 @@ namespace Plugins.Tools
         /// <param name="folderName"></param>
         public static void DeleteSaveFolderInGameFolder(string folderName = DEFAULT_FOLDER_NAME)
         {
-#if UNITY_EDITOR
-            string savePath = folderName.DetermineSavePath();
-            FileUtil.DeleteFileOrDirectory(savePath);
-#else
-            string savePath = Application.dataPath + BASE_FOLDER_NAME + folderName;
+            string savePath = Application.dataPath + $"/{folderName}/";
             Directory.Delete(savePath, true);
-#endif
         }
     }
 }

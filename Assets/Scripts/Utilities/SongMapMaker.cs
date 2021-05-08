@@ -1,3 +1,5 @@
+#define FORCE_JSON
+
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -82,8 +84,6 @@ namespace Utilities
         [Space]
         public HoldableButton button;
     }
-    
-    #define FORCE_JSON
 
     public class SongMapMaker : MonoBehaviour
     {
@@ -317,8 +317,8 @@ namespace Utilities
 #if UNITY_EDITOR && !FORCE_JSON
             //TODO: Scriptable object get
 #else
-            if (!SaveLoadManager.SaveFolderExists(SONG_FOLDER)) return;
-            SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJson<SoundMap>(SONG_FOLDER).ToArray();
+            if (!SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER)) return;
+            SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToArray();
             soundMaps.AddRange(savedSoundMaps);
 #endif
             UpdateSongsList();
