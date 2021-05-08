@@ -3,7 +3,6 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -49,7 +48,7 @@ namespace Plugins.Tools
         /// <returns></returns>
         public static bool SaveFolderInGameDirectoryExists(string folderName = DEFAULT_FOLDER_NAME)
         {
-            string folderPath = Application.dataPath + BASE_FOLDER_NAME + folderName + "/";
+            string folderPath = Application.dataPath + $"/{folderName}/";
             return Directory.Exists(folderPath);
         }
 
@@ -74,7 +73,7 @@ namespace Plugins.Tools
         /// <param name="saveObject"></param>
         /// <param name="savePath"></param>
         /// <param name="fileName"></param>
-        private static void SaveBinary(object saveObject, string savePath, string fileName)
+        public static void SaveBinary(object saveObject, string savePath, string fileName)
         {
             // if the directory doesn't already exist, we create it
             if (!Directory.Exists(savePath)) Directory.CreateDirectory(savePath);
@@ -92,20 +91,27 @@ namespace Plugins.Tools
         /// <param name="fileName"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private static T LoadBinary<T>(string savePath, string fileName)
+        public static T LoadBinary<T>(string savePath, string fileName)
         {
             string saveFileName = savePath + fileName;
 
-            if (!Directory.Exists(savePath) || !File.Exists(saveFileName)) throw new SavedGameNotFoundException(saveFileName);
+            if (!Directory.Exists(savePath)) throw new SavedGameNotFoundException(saveFileName);
+
+            return LoadBinary<T>(saveFileName);
+        }
+
+        public static T LoadBinary<T>(string fullFilePath)
+        {
+            if (!File.Exists(fullFilePath)) throw new SavedGameNotFoundException(fullFilePath);
             T returnObject;
             try
             {
                 var formatter = new BinaryFormatter();
-                FileStream saveFile = File.Open(saveFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                FileStream saveFile = File.Open(fullFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
                 returnObject = (T)formatter.Deserialize(saveFile);
                 saveFile.Close();
             }
-            catch (Exception exception) { throw new Exception($"Error: {exception.Message}. \nWhile deserializing {saveFileName}"); }
+            catch (Exception exception) { throw new Exception($"Error: {exception.Message}. \nWhile deserializing {fullFilePath}"); }
 
             return returnObject;
         }
@@ -117,11 +123,12 @@ namespace Plugins.Tools
         /// <param name="fileName"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private static T LoadJsonFile<T>(string savePath, string fileName)
+        public static T LoadJsonFile<T>(string savePath, string fileName)
         {
             string saveFileName = savePath + fileName;
             if (!Directory.Exists(savePath) || !File.Exists(saveFileName)) throw new SavedGameNotFoundException(saveFileName);
-            return JsonUtility.FromJson<T>(saveFileName);
+            string json = File.ReadAllText(saveFileName);
+            return JsonUtility.FromJson<T>(json);
         }
 
         /// <summary>
@@ -130,7 +137,7 @@ namespace Plugins.Tools
         /// <param name="saveObject"></param>
         /// <param name="savePath"></param>
         /// <param name="fileName"></param>
-        private static void SaveAsJsonFile(object saveObject, string savePath, string fileName)
+        public static void SaveAsJsonFile(object saveObject, string savePath, string fileName)
         {
             string json = JsonUtility.ToJson(saveObject);
             File.WriteAllText(savePath + fileName, json);
@@ -142,11 +149,27 @@ namespace Plugins.Tools
         /// <param name="saveFolderPath"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private static IEnumerable<T> LoadJsonsFromFolder<T>(string saveFolderPath)
+        public static IEnumerable<T> LoadJsonsFromFolder<T>(string saveFolderPath)
         {
             if (!Directory.Exists(saveFolderPath)) throw new SavedGameNotFoundException(saveFolderPath);
             string[] filePaths = Directory.GetFiles(saveFolderPath);
-            return filePaths.Select(JsonUtility.FromJson<T>).Where(json => json != null);
+
+            var list = new List<T>();
+
+            foreach (string filePath in filePaths)
+            {
+                if (!Path.GetExtension(filePath).Equals(".json")) continue;
+                try
+                {
+                    string json = File.ReadAllText(filePath);
+                    list.Add(JsonUtility.FromJson<T>(json));
+                }
+                catch
+                {
+                    Debug.LogError("(SaveLoadManager) Error while parsing json: " + filePath);
+                }
+            }
+            return list;
         }
 
         /// <summary>
@@ -190,6 +213,7 @@ namespace Plugins.Tools
             string savePath = Application.dataPath + $"/{folderName}/";
             return LoadBinary<T>(savePath, fileName);
         }
+
         /// <summary>
         /// Save the specified saveObject, fileName and folderName into a file on disk.
         /// </summary>
@@ -231,7 +255,7 @@ namespace Plugins.Tools
             string savePath = Application.dataPath + $"/{folderName}/";
             return LoadJsonFile<T>(savePath, fileName);
         }
-        
+
         /// <summary>
         /// Load the specified file based on a file name into a specified folder
         /// </summary>

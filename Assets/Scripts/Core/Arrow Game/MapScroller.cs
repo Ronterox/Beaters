@@ -123,7 +123,11 @@ namespace Core.Arrow_Game
         public void SetSoundMap(SoundMap soundMap)
         {
             m_SoundMap = soundMap;
-            m_CurrentSong = m_SoundMap.audioClip;
+            
+            SerializableAudioClip audioClip = m_SoundMap.audioClip;
+            if(audioClip.audioData == null) audioClip.LoadAudioDataPath();
+            
+            m_CurrentSong = audioClip;
 
             m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
 

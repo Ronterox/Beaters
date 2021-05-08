@@ -47,8 +47,14 @@ namespace Utilities
     [System.Serializable]
     public struct SerializableAudioClip
     {
-        public string name;
+#if !UNITY_EDITOR || FORCE_JSON
+        private const string SONG_FOLDER = "Songs";
         [HideInInspector]
+        public string audioDataPath;
+#endif
+
+        public string name;
+        [System.NonSerialized]
         public float[] audioData;
         public int samples, channels, frecuency;
 
@@ -59,6 +65,7 @@ namespace Utilities
             channels = audioClip.channels;
             audioData = new float[samples * channels];
             frecuency = audioClip.frequency;
+            audioDataPath = null;
 
             audioClip.GetData(audioData, 0);
 
@@ -73,6 +80,19 @@ namespace Utilities
         }
 
         public static implicit operator SerializableAudioClip(AudioClip audioClip) => new SerializableAudioClip(audioClip);
+
+#if !UNITY_EDITOR || FORCE_JSON
+        public void SaveAudioDataPath()
+        {
+            var fileName = $"{name}.beat";
+            string folderPath = Application.dataPath + $"/{SONG_FOLDER}/";
+
+            audioDataPath = folderPath + fileName;
+            SaveLoadManager.SaveBinary(audioData, folderPath, fileName);
+        }
+
+        public void LoadAudioDataPath() => audioData = SaveLoadManager.LoadBinary<float[]>(audioDataPath);
+#endif
     }
 
     [System.Serializable]
@@ -119,7 +139,7 @@ namespace Utilities
         private bool m_IsHoldingNote;
 
 #if !UNITY_EDITOR || FORCE_JSON
-        private const string SONG_FOLDER = "songs";
+        private const string SONG_FOLDER = "Songs";
 #endif
         private const int DEFAULT_BPM = 120;
 
@@ -135,7 +155,8 @@ namespace Utilities
 
         //TODO: Forward and backwards on song editor 5 secs
         //TODO: Fix save songs json and load work, change path for mobile
-        //TODO: Json for players, Scriptable for editor
+        //TODO: Scriptable for editor
+        //TODO: Size of song is too big compared to original, just use original except for default songs;
         private void Start()
         {
             LoadMapsData();
@@ -318,7 +339,7 @@ namespace Utilities
             //TODO: Scriptable object get
 #else
             if (!SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER)) return;
-            SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToArray();
+            List<SoundMap> savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToList();
             soundMaps.AddRange(savedSoundMaps);
 #endif
             UpdateSongsList();
@@ -418,7 +439,8 @@ namespace Utilities
                 song.songName = soundMap.name;
                 UnityEditor.AssetDatabase.CreateAsset(song, $"{songScriptablesPath}/{soundMap.name}.asset");
 #else
-                SaveLoadManager.SaveInGameFolder(soundMap, $"{soundMap.name}.json", SONG_FOLDER);
+                soundMap.audioClip.SaveAudioDataPath();
+                SaveLoadManager.SaveInGameDirectoryFolderAsJson(soundMap, $"{soundMap.name}.json", SONG_FOLDER);
 #endif
             }
             else StartCreating(mapName);
