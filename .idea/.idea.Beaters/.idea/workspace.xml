@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Interface/Kpoper/Itim/KPopFont.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Interface/Kpoper/Itim/KPopFont.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Core Falling Arrows/Map Scroller.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Core Falling Arrows/Map Scroller.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/MenuUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/MenuUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Kpoper.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Kpoper.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay Arrows.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +81,6 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/MenuButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GUIManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableItem.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
@@ -110,6 +101,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -171,7 +163,7 @@
       <workItem from="1620398653969" duration="3439000" />
       <workItem from="1620421229311" duration="22000" />
       <workItem from="1620488623274" duration="20207000" />
-      <workItem from="1620559303114" duration="1727000" />
+      <workItem from="1620559303114" duration="2745000" />
     </task>
     <servers />
   </component>
