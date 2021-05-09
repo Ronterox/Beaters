@@ -23,7 +23,7 @@ namespace Core.Arrow_Game
         {
             m_WasPressed = true;
 
-            GameManager.Instance.HitArrow();
+            GameManager.HitArrow();
 
             gameObject.SetActive(false);
 
@@ -59,7 +59,7 @@ namespace Core.Arrow_Game
         {
             if (!other.CompareTag("Player") && !m_WasPressed) return;
 
-            GameManager.Instance.MissArrow();
+            GameManager.MissArrow();
             gameObject.SetActive(false);
         }
     }

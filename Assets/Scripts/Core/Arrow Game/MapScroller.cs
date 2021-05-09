@@ -61,7 +61,11 @@ namespace Core.Arrow_Game
             ResetPos();
             if (isGameplay)
             {
+                SetSoundMap(GameManager.GetSoundMap());
+                
+                if (m_SoundMap == null) return;
                 m_SoundMap.GenerateNotes(makerNotes, transform);
+                
                 StartMap();
             }
         }

@@ -1,4 +1,5 @@
 using General;
+using Managers;
 using Plugins.UI;
 using TMPro;
 using UnityEngine.UI;
@@ -18,12 +19,17 @@ namespace UI
             {
                 case SoundMap soundMap:
                     songName.text = soundMap.name;
+                    onClick.AddListener(() => GameManager.PutSoundMap(soundMap));
                     break;
                 case Song song:
                     songImage.sprite = song.songImage;
                     songName.text = song.soundMap.name;
+                    onClick.AddListener(() => GameManager.PutSoundMap(song.soundMap));
                     break;
             }
+            
+            onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
+            
             return this;
         }
     }

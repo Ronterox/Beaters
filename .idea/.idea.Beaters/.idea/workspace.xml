@@ -2,12 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/StateEventCaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UI/Editor/UICarouselEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/UI/Editor/UICarouselEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UI/Editor/UICarouselElementEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/UI/Editor/UICarouselElementEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/GachaMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/GachaMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/Settings.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/Settings.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,31 +43,31 @@
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Selectable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B1B1E86F-281A-470D-B217-C578E6BC1908/8e/a593bf6a/Camera.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B1B1E86F-281A-470D-B217-C578E6BC1908/85/2901575b/Transform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3E204661-03FC-4B9C-8A19-6E0AC83D3B12/41/6d29f023/EditorGUILayout.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/StateEventCaller.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FA4A2844-41E0-45C2-BE39-EB3E8D043F6C/f2/50950835/Touch.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Button.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/3b/6bc2bfb5/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/80/83f2669e/Array.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/StateEventCaller.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/aa/ec41b3e4/Random.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/UI/UICarousel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Editor/UI/ButtonEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0DD6140D-3DF9-428E-82A2-80BCEC0DCE7B/7a/343304b8/Physics2D.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Plugins/UI/Editor/UICarouselElementEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/15/95600dd5/String.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/63/1651a5a1/BinaryFormatter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/18/d4584d77/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/EventSystem/UIBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/45A7E2C2-1932-477F-B79A-B37AC0B8886A/b3/6f39b072/AudioClip.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Plugins/UI/Editor/UICarouselElementEditor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/24/7c396e85/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/AE0803DD-8675-4EE6-A1D5-F69F76EC8FEF/33/233c432d/GUIContent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/CheckForEventSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowser.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" root0="FORCE_HIGHLIGHTING" />
@@ -70,7 +75,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/Timer.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/NoteObject.cs" />
@@ -93,7 +97,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arros Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics2D.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
@@ -101,9 +104,7 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableMapMakerNotes.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" />
@@ -112,15 +113,19 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarrousel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/Song.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/Editor/SongCarouselEditor.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/UICarouselElement.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/Editor/UICarouselElementEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/Editor/UICarouselEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/UICarousel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/StateEventCaller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />

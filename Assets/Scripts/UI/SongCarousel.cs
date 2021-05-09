@@ -29,7 +29,7 @@ namespace UI
 
         public void CreateElements(object[] parameters)
         {
-            for (var i = 0; i < parameters.Length; i++) CreateElement(i, i == 0).Setup(parameters[i]).onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
+            for (var i = 0; i < parameters.Length; i++) CreateElement(i, i == 0).Setup(parameters[i]);
         }
     }
 }
