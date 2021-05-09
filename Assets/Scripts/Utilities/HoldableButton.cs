@@ -1,4 +1,3 @@
-using Core;
 using Core.Arrow_Game;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

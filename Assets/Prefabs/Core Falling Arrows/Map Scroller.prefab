@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31bbf7bf012067a2954b5d620a32319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGameplay: 0
+  isGameplay: 1
   m_SoundMap:
     name: 
     bpm: 0
