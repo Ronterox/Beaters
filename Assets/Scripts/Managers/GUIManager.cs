@@ -5,18 +5,14 @@ using UnityEngine.UI;
 namespace Managers
 {
     //TODO: Change the script to only allow owned characters to be chosen
-
     [System.Serializable]
     public struct GUIImage
     {
         public enum PaletteColor { MainColor, SecondaryColor, complementaryColor1, complementaryColor2 }
 
-        public enum ButtonsOnScreen { PlayButton, GachaButton, MapCreatorButton }
-
         public Image image;
         public PaletteColor paletteColor;
     }
-
 
     public class GUIManager : MonoBehaviour
     {

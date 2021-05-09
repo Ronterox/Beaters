@@ -1,9 +1,15 @@
+//#define FORCE_JSON
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Core.Arrow_Game;
 using DG.Tweening;
+#if UNITY_EDITOR && !FORCE_JSON
+using General;
+#endif
 using Managers;
 using Plugins.Tools;
 using SimpleFileBrowser;
@@ -15,14 +21,22 @@ using UnityEngine.UI;
 
 namespace Utilities
 {
-    [System.Serializable]
+    [Serializable]
     public class SoundMap
     {
-        public ushort id;
         public string name;
         public float bpm, startDelay;
-        public SerializableAudioClip audioClip;
+
+#if !UNITY_EDITOR || FORCE_JSON
+        [NonSerialized]
+#endif
+        public AudioClip audioClip;
+        public string audioPath;
+
         public Note[] notes;
+
+        //If slow save this on memory
+        public ushort ID => name.GetHashCodeUshort();
 
         public void SetNotes(Note[] newNotes) => notes = newNotes;
 
@@ -31,47 +45,32 @@ namespace Utilities
             bpm = newBpm;
             startDelay = delay;
         }
+
+        public void GenerateNotes(MakerNote[] makerNotes, Transform parent)
+        {
+            void GenerateNote(Note note)
+            {
+                MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
+
+                var position = new Vector3 { x = note.x, y = note.y, z = note.z };
+                GameObject obj = makerNote.noteObject.gameObject;
+
+                UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent)
+                    .GetComponent<NoteObject>().MakerId = makerNote.id;
+            }
+
+            notes.ForEach(GenerateNote);
+        }
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct Note
     {
         public ushort id;
         public float x, y, z;
     }
 
-    [System.Serializable]
-    public struct SerializableAudioClip
-    {
-        public string name;
-        [HideInInspector]
-        public float[] audioData;
-        public int samples, channels, frecuency;
-
-        public SerializableAudioClip(AudioClip audioClip)
-        {
-            name = audioClip.name;
-            samples = audioClip.samples;
-            channels = audioClip.channels;
-            audioData = new float[samples * channels];
-            frecuency = audioClip.frequency;
-
-            audioClip.GetData(audioData, 0);
-
-            for (var i = 0; i < audioData.Length; ++i) audioData[i] = audioData[i] * 0.5f;
-        }
-
-        public static implicit operator AudioClip(SerializableAudioClip serializableAudioClip)
-        {
-            var clip = AudioClip.Create(serializableAudioClip.name, serializableAudioClip.samples, serializableAudioClip.channels, serializableAudioClip.frecuency, false);
-            clip.SetData(serializableAudioClip.audioData, 0);
-            return clip;
-        }
-
-        public static implicit operator SerializableAudioClip(AudioClip audioClip) => new SerializableAudioClip(audioClip);
-    }
-
-    [System.Serializable]
+    [Serializable]
     public struct MakerNote
     {
         public ushort id;
@@ -83,22 +82,21 @@ namespace Utilities
 
     public class SongMapMaker : MonoBehaviour
     {
-        public AudioClip defaultSong;
+        public AudioClip audioSong;
+        public string audioClipPath;
+
         [Header("Config")]
-        public TMP_Text stateText;
         public MapScroller mapScroller;
-        [Space]
-        public MakerNote[] makerNotes;
-        public LayerMask notesLayer;
-        public TMP_InputField bpmInputField, songDelayInputField;
+        [Header("Inputs")]
         public TMP_InputField songNameInputField;
-        [Space]
-        public TMP_Text songNameText;
-        public TMP_Dropdown songListDropdown;
+        public TMP_InputField bpmInputField, songDelayInputField;
 
         [Header("Feedback Config")]
         public SpriteRenderer preview;
         public ParticleSystem touchParticle;
+        [Space]
+        public TMP_Text stateText, songNameText;
+        public TMP_Dropdown songListDropdown;
 
         [Header("My Maps")]
         public List<SoundMap> soundMaps;
@@ -112,28 +110,33 @@ namespace Utilities
         private GameObject m_SelectedGameObject;
         private ushort m_SelectedId;
 
-        private const string MAPS_FILE = "soundmaps";
-        private const int DEFAULT_BPM = 120;
-
         private bool m_IsHoldingNote;
 
+#if !UNITY_EDITOR || FORCE_JSON
+        private const string SONG_FOLDER = "Songs";
+#endif
+        private const int DEFAULT_BPM = 120;
+
+#if UNITY_EDITOR && !FORCE_JSON
+        [Header("Editor Only")]
+        public string songScriptablesRelativePath;
+        public string audioSongsRelativePath;
+#endif
         private void Awake()
         {
             m_PreviewTransform = preview.transform;
             m_MainCamera = Camera.main;
         }
 
-#if !UNITY_EDITOR
-        private void OnDestroy() => SaveMapsData();
-#endif
         //TODO: Forward and backwards on song editor 5 secs
-        //TODO: Fix save songs binary and load work
-        //TODO: Create serializable on editor
+        //TODO: Fix save songs json and load work, change path for mobile
         private void Start()
         {
-#if !UNITY_EDITOR
-            LoadMapsData();
+#if UNITY_EDITOR && !FORCE_JSON
+            audioSongsRelativePath = audioSongsRelativePath.Replace("Assets", Application.dataPath);
 #endif
+            LoadMapsData();
+
             songListDropdown.onValueChanged.AddListener(option => LoadMap(songListDropdown.options[option].text));
 
             bpmInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
@@ -142,7 +145,7 @@ namespace Utilities
 
             SetState("Not working on any map");
 
-            foreach (MakerNote makerNote in makerNotes)
+            foreach (MakerNote makerNote in mapScroller.makerNotes)
             {
                 makerNote.button.onButtonDown += () =>
                 {
@@ -185,7 +188,7 @@ namespace Utilities
             //Check to destroy a tile note
             if (Input.GetMouseButtonDown(0) && !m_IsHoldingNote)
             {
-                RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, notesLayer);
+                RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, mapScroller.notesLayer.value);
                 if (result) Destroy(result.collider.gameObject);
             }
 
@@ -289,11 +292,11 @@ namespace Utilities
 
                 soundMap = new SoundMap
                 {
-                    id = mapName.GetHashCodeUshort(),
                     name = mapName,
                     startDelay = GetDelay(),
                     bpm = beatsPerMinutes,
-                    audioClip = defaultSong
+                    audioClip = audioSong,
+                    audioPath = audioClipPath
                 };
                 soundMaps.Add(soundMap);
             }
@@ -309,18 +312,22 @@ namespace Utilities
 
         public void LoadMapsData()
         {
-            if (!SaveLoadManager.SaveExists(MAPS_FILE)) return;
-            soundMaps.AddRange(SaveLoadManager.Load<SoundMap[]>(MAPS_FILE));
+#if UNITY_EDITOR && !FORCE_JSON
+            IEnumerable<SoundMap> songsScriptables = Resources.LoadAll<Song>("Songs").Select(song => song.soundMap);
+            soundMaps.AddRange(songsScriptables);
+#else
+            if (!SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER)) return;
+            SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToArray();
+            soundMaps.AddRange(savedSoundMaps);
+#endif
             UpdateSongsList();
         }
-
-        public void SaveMapsData() => SaveLoadManager.Save(soundMaps.ToArray(), MAPS_FILE);
 
         public void DeleteSoundMap(string mapName)
         {
             if (IsMapNameEmpty(mapName)) return;
             ushort hashName = mapName.GetHashCodeUshort();
-            soundMaps.RemoveOne(map => map.id == hashName);
+            soundMaps.RemoveOne(map => map.ID == hashName);
             SetState($"{mapName} was deleted successfully!");
         }
 
@@ -347,29 +354,32 @@ namespace Utilities
             {
                 IsCreating = true;
                 CreateMapHolder(mapName);
-                soundMap.notes?.ForEach(GenerateNote);
+                soundMap.GenerateNotes(mapScroller.makerNotes, m_CurrentMapGameObject.transform);
 
-                bpmInputField.text = soundMap.bpm + "";
-                songDelayInputField.text = soundMap.startDelay + "";
-                songNameText.text = soundMap.audioClip.name;
+                SetState("Loading map clip...");
 
-                mapScroller.SetSoundMap(soundMap);
+                void UpdateMakerAndMapScroller(AudioClip clip)
+                {
+                    soundMap.audioClip = clip;
 
-                SetState($"Loaded mapName {mapName} successfully!");
+                    audioSong = clip;
+
+                    audioClipPath = soundMap.audioPath;
+
+                    bpmInputField.text = soundMap.bpm + "";
+                    songDelayInputField.text = soundMap.startDelay + "";
+                    songNameText.text = soundMap.audioClip.name;
+
+                    mapScroller.SetSoundMap(soundMap);
+
+                    SetState($"Loaded map {mapName} successfully!");
+                }
+
+                if (!soundMap.audioClip) GetAudioClip(soundMap.audioPath, UpdateMakerAndMapScroller);
+                else UpdateMakerAndMapScroller(soundMap.audioClip);
             }
 
             mapScroller.ResetPos();
-        }
-
-        private void GenerateNote(Note note)
-        {
-            MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
-
-            var position = new Vector3 { x = note.x, y = note.y, z = note.z };
-            GameObject obj = makerNote.noteObject.gameObject;
-
-            Instantiate(obj, position, obj.transform.rotation, m_CurrentMapGameObject.transform)
-                .GetComponent<NoteObject>().MakerId = m_SelectedId;
         }
 
         public void SaveMap(string mapName)
@@ -380,6 +390,8 @@ namespace Utilities
 
             if (soundMap != null)
             {
+                mapScroller.ResetPos();
+
                 NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
                 Note[] notes = (
                     from noteObject in noteObjects
@@ -393,12 +405,36 @@ namespace Utilities
                     }).ToArray();
 
                 soundMap.SetNotes(notes);
-
                 soundMap.SetBpmDelay(GetBpm(), GetDelay());
 
-                soundMap.audioClip = defaultSong;
-
                 UpdateSongsList();
+
+#if UNITY_EDITOR && !FORCE_JSON
+                string soundFilePath = audioSongsRelativePath + audioSong.name + Path.GetExtension(audioClipPath);
+                if (!File.Exists(soundFilePath)) File.Copy(audioClipPath ?? string.Empty, soundFilePath);
+
+                GetAudioClip(soundFilePath, clip =>
+                {
+                    soundMap.audioPath = soundFilePath;
+
+                    soundMap.audioClip = clip;
+
+                    var song = ScriptableObject.CreateInstance<Song>();
+                    song.soundMap = soundMap;
+
+                    UnityEditor.AssetDatabase.CreateAsset(song, $"{songScriptablesRelativePath}/{soundMap.name}.asset");
+                });
+#else
+                string folderPath = Application.dataPath + $"/{SONG_FOLDER}/";
+
+                string soundFilePath = folderPath + audioSong.name;
+                if (!File.Exists(soundFilePath)) File.Copy(audioClipPath, soundFilePath);
+
+                soundMap.audioClip = audioSong;
+                soundMap.audioPath = soundFilePath;
+
+                SaveLoadManager.SaveAsJsonFile(soundMap, folderPath, $"{soundMap.name}.json");
+#endif
 
                 mapScroller.SetSoundMap(soundMap);
             }
@@ -408,7 +444,7 @@ namespace Utilities
         private SoundMap GetSoundMap(string mapName)
         {
             ushort hashName = mapName.GetHashCodeUshort();
-            return soundMaps.FirstOrDefault(map => map.id == hashName);
+            return soundMaps.FirstOrDefault(map => map.ID == hashName);
         }
 
         public void LoadMap() => LoadMap(songNameInputField.text);
@@ -420,7 +456,11 @@ namespace Utilities
         private void UpdateSongsList()
         {
             songListDropdown.ClearOptions();
-            List<string> mapNames = soundMaps.Select(soundMap => soundMap.name).ToList();
+
+            var mapNames = new List<string> { "" };
+
+            soundMaps.ForEach(map => mapNames.Add(map.name));
+
             songListDropdown.AddOptions(mapNames);
         }
 
@@ -441,23 +481,38 @@ namespace Utilities
                 string extension = Path.GetExtension(path);
                 if (extension.Equals(".wav") || extension.Equals(".mp3"))
                 {
-                    StartCoroutine(GetAudioClip($"file://{path}"));
+                    GetAudioClip(path, clip =>
+                    {
+                        audioSong = clip;
+                        audioClipPath = path;
+
+                        songNameText.text = audioSong.name = Path.GetFileNameWithoutExtension(path);
+
+                        SaveMap();
+                    });
                 }
             }, null, FileBrowser.PickMode.Files);
         }
 
-        private IEnumerator GetAudioClip(string fullPath)
+        public void GetAudioClip(string fullPath, Action<AudioClip> action) => StartCoroutine(GetAudioClipCoroutine(fullPath, action));
+
+        private IEnumerator GetAudioClipCoroutine(string fullPath, Action<AudioClip> action)
         {
-            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(fullPath, AudioType.MPEG);
+            using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip($"file://{fullPath}", AudioType.MPEG);
 
             yield return www.SendWebRequest();
 
-            if (www.result == UnityWebRequest.Result.ConnectionError) SetState(www.error);
+            if (www.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.LogError($"Error {www.error} at {fullPath}");
+                SetState(www.error);
+            }
             else
             {
-                defaultSong = DownloadHandlerAudioClip.GetContent(www);
-                songNameText.text = defaultSong.name = Path.GetFileNameWithoutExtension(fullPath);
-                SaveMap();
+                AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
+                clip.name = Path.GetFileName(fullPath);
+
+                action?.Invoke(clip);
             }
         }
     }

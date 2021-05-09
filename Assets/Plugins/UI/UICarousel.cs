@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 namespace Plugins.UI
 {
+    /// <summary>
+    /// You are supposed to make your own class which will inherit from this, and then use the CreateElement method to instantitate your type of UICarrouselElement
+    /// Don't forget to also inherit the custom editor
+    /// </summary>
     public class UICarousel : ScrollRect
     {
         public GameObject elementPrefab;

@@ -12,7 +12,6 @@ namespace Core.Arrow_Game
     public struct Instrument
     {
         public AudioClip c, d, e, f, g, a, b;
-
         public AudioClip GetAudioClip(Chord chord) =>
             chord switch
             {
@@ -31,11 +30,16 @@ namespace Core.Arrow_Game
 
     public class MapScroller : MonoBehaviour
     {
+        public bool isGameplay;
+        
         [Plugins.Properties.ReadOnly]
         [SerializeField] private SoundMap m_SoundMap;
 
         public Difficulty difficulty;
         public Instrument instrument;
+        [Space]
+        public MakerNote[] makerNotes;
+        public LayerMask notesLayer;
 
         [Header("Visual Feedback")]
         public Transform[] animateByBpm;
@@ -52,7 +56,15 @@ namespace Core.Arrow_Game
 
         private AudioClip m_CurrentSong;
 
-        private void Start() => ResetPos();
+        private void Start()
+        {
+            ResetPos();
+            if (isGameplay)
+            {
+                m_SoundMap.GenerateNotes(makerNotes, transform);
+                StartMap();
+            }
+        }
 
         public void StartMap()
         {
@@ -76,7 +88,7 @@ namespace Core.Arrow_Game
         {
             IsStarted = true;
             SoundManager.Instance.UnPauseBackgroundMusic();
-            
+
             CameraManager.Instance.CanDoPanning = false;
 
             print("Resumed Map!");
@@ -89,7 +101,7 @@ namespace Core.Arrow_Game
 
             StopCoroutine(AnimateBeatCoroutine());
             m_WaitingForBeat = false;
-            
+
             CameraManager.Instance.CanDoPanning = true;
 
             print("Stopped Map!");
@@ -123,6 +135,7 @@ namespace Core.Arrow_Game
         public void SetSoundMap(SoundMap soundMap)
         {
             m_SoundMap = soundMap;
+            
             m_CurrentSong = m_SoundMap.audioClip;
 
             m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
