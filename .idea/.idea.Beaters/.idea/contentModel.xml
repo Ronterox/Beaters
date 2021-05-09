@@ -151,6 +151,7 @@
           <e p="Utilities" t="Include">
             <e p="HoldableButton.cs" t="Include" />
             <e p="SongMapMaker.cs" t="Include" />
+            <e p="StateEventCaller.cs" t="Include" />
           </e>
         </e>
         <e p="Sprites" t="Include">

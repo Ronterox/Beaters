@@ -1,6 +1,10 @@
+using System.Linq;
 using General;
+using Managers;
+using Plugins.Tools;
 using Plugins.UI;
 using UnityEngine.EventSystems;
+using Utilities;
 
 namespace UI
 {
@@ -8,14 +12,24 @@ namespace UI
     {
         public Song[] songs;
 
-        protected override void Start() => SetupElements();
-
         public void SetupElements()
         {
-            for (var i = 0; i < songs.Length; i++) CreateElement(i, i == 0).Setup(songs[i]);
-            
-            EventSystem eventSystem = EventSystem.current;
-            if(eventSystem && SelectedElement) EventSystem.current.SetSelectedGameObject(SelectedElement.gameObject);
+            const string SONG_FOLDER = "Songs";
+
+            CreateElements(songs);
+
+            if (!SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER))
+            {
+                SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToArray();
+                CreateElements(savedSoundMaps);
+            }
+
+            EventSystem.current.SetSelectedGameObject(SelectedElement.gameObject);
+        }
+
+        public void CreateElements(object[] parameters)
+        {
+            for (var i = 0; i < parameters.Length; i++) CreateElement(i, i == 0).Setup(parameters[i]).onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
         }
     }
 }

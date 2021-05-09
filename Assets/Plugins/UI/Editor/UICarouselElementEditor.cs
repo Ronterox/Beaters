@@ -23,10 +23,7 @@ namespace Plugins.UI.Editor
 
         public override void OnInspectorGUI()
         {
-            var header = new GUIStyle(EditorStyles.boldLabel)
-            {
-                fontSize = 14
-            };
+            var header = new GUIStyle(EditorStyles.boldLabel) { fontSize = 14 };
 
             GUILayout.Space(5);
             GUILayout.Label("Button Behaviour", header);
@@ -37,16 +34,6 @@ namespace Plugins.UI.Editor
             EditorGUILayout.PropertyField(m_DeselectAnim, new GUIContent("Deselect Animation"));
 
             serializedObject.ApplyModifiedProperties();
-        }
-
-        protected override void OnDisable()
-        {
-            var element = target as UICarouselElement;
-
-            if (element)
-                Undo.RecordObject(element, "UICarouselElement changed");
-
-            base.OnDisable();
         }
     } 
 }

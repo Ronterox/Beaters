@@ -11,8 +11,8 @@ namespace Plugins.UI.Editor
     [CustomEditor(typeof(UICarousel)), CanEditMultipleObjects]
     public class UICarouselEditor : ScrollRectEditor
     {
-        private SerializedProperty m_ElementPrefab;
-        private SerializedProperty m_ScrollMask;
+        private SerializedProperty m_ElementPrefab, m_ScrollMask;
+        private bool m_SaveRuntime;
 
         protected override void OnEnable()
         {
@@ -35,7 +35,10 @@ namespace Plugins.UI.Editor
             GUILayout.Label("Carousel", header);
             EditorGUILayout.PropertyField(m_ElementPrefab, new GUIContent("Element Prefab"));
             EditorGUILayout.PropertyField(m_ScrollMask, new GUIContent("Scroll Mask"));
-
+            
+            GUILayout.Space(5);
+            m_SaveRuntime = EditorGUILayout.Toggle("Save changes on runtime", m_SaveRuntime);
+            
             GUILayout.Space(5);
             GUILayout.Label("Animation", EditorStyles.boldLabel);
             if (carousel is { })
@@ -51,10 +54,12 @@ namespace Plugins.UI.Editor
 
         protected override void OnDisable()
         {
-            var carousel = target as UICarousel;
-
-            if (carousel)
+            if (m_SaveRuntime)
+            {
+                var carousel = target as UICarousel;
+                Debug.Log("CHANGED SAVED! of Carousel");
                 Undo.RecordObject(carousel, "UICarousel changed");
+            }
 
             base.OnDisable();
         }
