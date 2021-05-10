@@ -6,11 +6,14 @@ public class osuController : MonoBehaviour
 {
     private float m_timer;
     public float timeLimit;
+    public GameObject ruben;
+
     void Update()
     {
         m_timer += 0.1f;
         if (m_timer > timeLimit)
         {
+            ruben.GetComponent<CircleSpawner>().GenerateCircle();
             Destroy(gameObject);
         }
         if (Input.GetMouseButtonDown(0))
@@ -23,11 +26,16 @@ public class osuController : MonoBehaviour
             {
                 if(m_timer < timeLimit / 2)
                 {
-                    Debug.Log("Mal");
+                    Debug.Log("Miss");
+                    ruben.GetComponent<CircleSpawner>().GenerateCircle();
+                    Destroy(gameObject);
                 }
+
                 if (m_timer >= timeLimit / 2)
                 {
-                    Debug.Log("Bien");
+                    Debug.Log("Great");
+                    ruben.GetComponent<CircleSpawner>().GenerateCircle();
+                    Destroy(gameObject);
                 }             
             }
         }

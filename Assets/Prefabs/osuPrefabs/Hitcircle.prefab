@@ -111,8 +111,8 @@ GameObject:
   - component: {fileID: 7445910156082634340}
   - component: {fileID: 7445910156082634338}
   m_Layer: 0
-  m_Name: hitcircle 2
-  m_TagString: Untagged
+  m_Name: Hitcircle
+  m_TagString: Restart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeLimit: 120
+  ruben: {fileID: 4996690052939502177, guid: 004e5e9131e123141b01f8c4392b6a4d, type: 3}
 --- !u!1 &8604122931563437465
 GameObject:
   m_ObjectHideFlags: 0
