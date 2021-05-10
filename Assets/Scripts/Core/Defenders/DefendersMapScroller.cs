@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Plugins.Audio;
 
-namespace Core.Defenders{
+namespace Core.Defenders
+{
     public class DefendersMapScroller : MonoBehaviour
     {
-        private float bps;
+        public float bps;
         private bool m_IsStarted = false;
         public Direction direction;
-        public SoundMap soundMap;
-        public int bpm;
 
         private void Start() {
             m_IsStarted = true;
@@ -37,12 +36,15 @@ namespace Core.Defenders{
                     break;
             }
         }
-        private void Awake()
+        public void StartMap(float bps)
         {
-            bps = bpm / 60 * (float)soundMap.difficulty;
+            m_IsStarted = true;
+            this.bps = bps;
         }
-        public void SetSoundmap(SoundMap soundMap){
-            
+
+        public void StopMap()
+        {
+            m_IsStarted = false;
         }
     }
 }
