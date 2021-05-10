@@ -1,20 +1,20 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Plugins.Tools
 {
     [System.Serializable]
     public struct TimerEvents
     {
-        public UnityEvent onTimerStart;
-        public UnityEvent onTimerStop;
-        public UnityEvent onTimerEnd;
+        public delegate void TimerEvent();
+        
+        public TimerEvent onTimerStart, onTimerStop, onTimerEnd;
     }
 
     public enum TimerType { Progressive, Regressive }
 
     public readonly struct TimerOptions
     {
+        
         public readonly TimerType timerType;
         public readonly float time;
         public readonly bool resetOnEnd;
@@ -96,20 +96,6 @@ namespace Plugins.Tools
             type = options.timerType;
             timerTime = options.time;
             resetOnEnd = options.resetOnEnd;
-        }
-
-        public void AddListeners(UnityAction onTimerStart, UnityAction onTimerEnd = null, UnityAction onTimerStop = null)
-        {
-            if (onTimerStart != null) events.onTimerStart.AddListener(onTimerStart);
-            if (onTimerEnd != null) events.onTimerEnd.AddListener(onTimerEnd);
-            if (onTimerStop != null) events.onTimerStop.AddListener(onTimerStop);
-        }
-
-        public void RemoveListeners(UnityAction onTimerStart, UnityAction onTimerEnd = null, UnityAction onTimerStop = null)
-        {
-            if (onTimerStart != null) events.onTimerStart.RemoveListener(onTimerStart);
-            if (onTimerEnd != null) events.onTimerEnd.RemoveListener(onTimerEnd);
-            if (onTimerStop != null) events.onTimerStop.RemoveListener(onTimerStop);
         }
 
         public static Timer CreateTimerInstance(GameObject caller)

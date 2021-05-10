@@ -1,6 +1,5 @@
 using Core.Arrow_Game;
 using General;
-using Plugins.GUI;
 using Plugins.Tools;
 using TMPro;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace Managers
         public Canvas gameCanvas;
         public GameObject endGamePanel;
         [Space]
-        public SelectableButton pauseSelectableButton;
+        public Button pauseButton;
 
         [Header("About Song")]
         public Slider songTimeBar;
@@ -26,46 +25,81 @@ namespace Managers
         [Header("Combo and Score feedback")]
         public TMP_Text comboText;
         public TMP_Text scoreText;
-        public Slider comboBar, scoreBar;
+        public Slider scoreBar;
 
         [Header("Skill feedback")]
-        public SelectableButton skillSelectableButton;
+        public Button skillButton;
         public Slider skillBarSlider;
 
-        private Timer songTimer;
+        private Timer m_SongTimer;
+        private int m_Combo, m_Score, m_StarsCount;
+        private bool m_Started;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            m_SongTimer = Timer.CreateTimerInstance(gameObject);
+        }
+
         private void Start()
         {
-            songTimer = Timer.CreateTimerInstance(gameObject);
+            scoreBar.minValue = 0;
+            songTimeBar.minValue = 0;
+            skillBarSlider.minValue = 0;
+
+            starsCounter.text = "0";
+            comboText.text = "x0";
+            scoreText.text = "0";
+
             StartMap();
+        }
+
+        private void Update()
+        {
+            if (!m_Started) return;
+            songTimeBar.value = m_SongTimer.CurrentTime;
         }
 
         public void StartMap()
         {
+            m_Started = true;
             SoundMap soundMap = GameManager.GetSoundMap();
 
-            songTimer.SetTimer(new TimerOptions(soundMap.audioClip.length, TimerType.Progressive, false));
-            songTimer.events.onTimerStop.AddListener(StopMap);
-            songTimer.StartTimer();
+            SetTimer(soundMap.audioClip.length);
+            m_SongTimer.StartTimer();
 
             mapScroller.SetSoundMap(soundMap);
             mapScroller.StartMap();
         }
 
+        private void SetTimer(float time)
+        {
+            m_SongTimer.SetTimer(new TimerOptions(time, TimerType.Progressive, false));
+            m_SongTimer.events.onTimerStop += StopMap;
+
+            songTimeBar.maxValue = time;
+            scoreBar.maxValue = time; //TODO: set correct max value for m_Score bar and skillbar
+            skillBarSlider.maxValue = time;
+        }
+
         public void PauseMap()
         {
-            songTimer.PauseTimer();
+            m_Started = false;
+            m_SongTimer.PauseTimer();
             mapScroller.StopMap();
         }
 
         public void ResumeMap()
         {
-            songTimer.UnpauseTimer();
+            m_Started = true;
+            m_SongTimer.UnpauseTimer();
             mapScroller.ResumeMap();
         }
 
         public void StopMap()
         {
-            songTimer.events.onTimerStop.RemoveListener(StopMap);
+            m_Started = false;
+            m_SongTimer.events.onTimerStop -= StopMap;
             ShowEndGameplayPanel(gameCanvas);
         }
 
@@ -76,11 +110,31 @@ namespace Managers
             //Get panel stars or whatever
         }
 
-        public static void MissArrow() => DataManager.playerData.tapsDone++;
+        public static void MissArrow()
+        {
+            DataManager.playerData.tapsDone++;
+            m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
+        }
 
         public static void HitArrow()
         {
+            const int ARROW_HIT_VALUE = 1;
+            
             DataManager.playerData.tapsDone++;
+
+            int points = ARROW_HIT_VALUE * ++m_Instance.m_Combo;
+            
+            m_Instance.scoreText.text = $"{m_Instance.m_Score += points}";
+            m_Instance.comboText.text = $"x{m_Instance.m_Combo}";
+
+            Slider bar = m_Instance.scoreBar;
+            bar.value += points;
+
+            if (bar.value >= bar.maxValue)
+            {
+                bar.value = 0;
+                m_Instance.starsCounter.text = $"{++m_Instance.m_StarsCount}";
+            }
 
             Song song = GameManager.Instance.Song;
 

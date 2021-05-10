@@ -2,17 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Managers/Gameplay Manager.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Managers/Gameplay Manager.prefab.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/GUI/Timer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/GUI/Timer.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/PlaceHolder.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/PlaceHolder.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,6 +61,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/63/1651a5a1/BinaryFormatter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/18/d4584d77/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/EventSystem/UIBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/25/81ad2a91/UnityAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/45A7E2C2-1932-477F-B79A-B37AC0B8886A/b3/6f39b072/AudioClip.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/24/7c396e85/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
@@ -104,7 +102,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableMapMakerNotes.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarrouselElement.cs" />
@@ -122,11 +119,12 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />

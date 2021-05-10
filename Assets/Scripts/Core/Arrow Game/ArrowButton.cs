@@ -30,12 +30,11 @@ namespace Core.Arrow_Game
         }
 
         private void Start() => m_DefaultScale = transform.localScale;
-
-        private void OnEnable() => onButtonPress += CheckButton;
-
-        private void OnDisable() => onButtonPress -= CheckButton;
-
-        public void PressButton() => onButtonPress?.Invoke();
+        public void PressButton()
+        {
+            CheckButton();
+            onButtonPress?.Invoke();
+        }
 
 
 #if UNITY_ANDROID || UNITY_IPHONE
@@ -58,7 +57,7 @@ namespace Core.Arrow_Game
 
                 if (touchPos.Approximates(transform.position, TOUCH_MAX_DISTANCE))
                 {
-                    if (touch.phase == TouchPhase.Began) onButtonPress?.Invoke();
+                    if (touch.phase == TouchPhase.Began) PressButton();
                 }
             }
         }
