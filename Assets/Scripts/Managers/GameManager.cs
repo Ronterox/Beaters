@@ -1,3 +1,4 @@
+using General;
 using Plugins.Tools;
 using UnityEngine;
 using Utilities;
@@ -10,6 +11,7 @@ namespace Managers
     {
         public GameObject endGamePanel;
         private SoundMap m_SoundMap;
+        private Song m_Song;
 
         public void ShowEndGameplayPanel(Canvas parentCanvas)
         {
@@ -23,11 +25,19 @@ namespace Managers
         public static void HitArrow()
         {
             DataManager.playerData.tapsDone++;
-            //Check for probability of gain money/prize
+            
+            Song song = m_Instance.m_Song;
+            
+            if (song)
+            {
+                //Check for probability of gain money/prize    
+            }
         }
 
-        public static void PutSoundMap(SoundMap soundMap) => Instance.m_SoundMap = soundMap;
+        public static void PutSoundMap(SoundMap soundMap) => m_Instance.m_SoundMap = soundMap;
 
-        public static SoundMap GetSoundMap() => Instance.m_SoundMap;
+        public static void PutSoundMap(Song song) => m_Instance.m_Song = song;
+
+        public static SoundMap GetSoundMap() => m_Instance.m_SoundMap ?? m_Instance.m_Song.soundMap;
     }
 }

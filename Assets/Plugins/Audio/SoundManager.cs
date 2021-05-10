@@ -104,9 +104,7 @@ namespace Plugins.Audio
 
         public float VoiceVolume => GetVolume(VOICE_VOLUME_PARAM);
         public float SFXVolume => GetVolume(SFX_VOLUME_PARAM);
-
-        public float BackgroundMusicLength => m_BackgroundMusic.clip.length;
-
+        
         /// Support variables
         private AudioSource m_BackgroundMusic;
         private SoundPooler m_SoundsPool;

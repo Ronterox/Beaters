@@ -24,7 +24,7 @@ namespace UI
                 case Song song:
                     songImage.sprite = song.songImage;
                     songName.text = song.soundMap.name;
-                    onClick.AddListener(() => GameManager.PutSoundMap(song.soundMap));
+                    onClick.AddListener(() => GameManager.PutSoundMap(song));
                     break;
             }
             

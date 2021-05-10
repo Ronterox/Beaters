@@ -85,7 +85,7 @@ namespace Core.Arrow_Game
 
             CameraManager.Instance.CanDoPanning = false;
 
-            if (isGameplay) m_SongEndTime = Time.time + SoundManager.Instance.BackgroundMusicLength;
+            if (isGameplay) m_SongEndTime = Time.time + m_SoundMap.audioClip.length;
 
             print("Started Map!");
         }
