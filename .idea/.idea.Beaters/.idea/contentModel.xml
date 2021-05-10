@@ -119,6 +119,12 @@
               <e p="NoteObject.cs" t="Include" />
             </e>
             <e p="Character.cs" t="Include" />
+            <e p="Defenders" t="Include">
+              <e p="DefendersMapScroller.cs" t="Include" />
+              <e p="DefendersMapScrollerGeneral.cs" t="Include" />
+              <e p="DefendersNote.cs" t="Include" />
+              <e p="TrailChanger.cs" t="Include" />
+            </e>
           </e>
           <e p="General" t="Include">
             <e p="Character.cs" t="Include" />

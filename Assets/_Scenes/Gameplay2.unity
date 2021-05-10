@@ -1009,14 +1009,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83cfa1fb3922018bb978fe314a4618e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defedenderMapScrollerUp: {fileID: 3209730866402322432}
-  defedenderMapScrollerRight: {fileID: 2003963224}
-  defedenderMapScrollerLeft: {fileID: 975511642}
-  defedenderMapScrollerDown: {fileID: 1267243335}
+  scrollerUp: {fileID: 3209730866402322432}
+  scrollerRight: {fileID: 2003963224}
+  scrollerLeft: {fileID: 975511642}
+  scrollerDown: {fileID: 1267243335}
+  difficulty: 2
   soundMap:
+    name: 
     bpm: 120
-    mapSong: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
-    difficulty: 2
+    startDelay: 0
+    audioClip: {fileID: 0}
+    audioPath: 
+    notes: []
 --- !u!1 &1160387568
 GameObject:
   m_ObjectHideFlags: 0
