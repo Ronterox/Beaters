@@ -36,10 +36,11 @@ namespace Plugins.Tools
         protected float m_Timer;
 
         public bool resetOnEnd;
-
         [Space]
         public TimerEvents events;
+
         public bool IsTimerStarted { get; private set; }
+        public float CurrentTime => m_Timer;
 
         protected virtual void Update()
         {
@@ -66,6 +67,10 @@ namespace Plugins.Tools
             if (resetOnEnd) ResetTimer();
             else StopTimer();
         }
+
+        public void PauseTimer() => IsTimerStarted = false;
+
+        public void UnpauseTimer() => IsTimerStarted = true;
 
         public void ResetTimer()
         {
@@ -106,11 +111,8 @@ namespace Plugins.Tools
             if (onTimerEnd != null) events.onTimerEnd.RemoveListener(onTimerEnd);
             if (onTimerStop != null) events.onTimerStop.RemoveListener(onTimerStop);
         }
-    }
 
-    public static class TimerExtensions
-    {
-        public static Timer CreateTimerInstance(this GameObject caller)
+        public static Timer CreateTimerInstance(GameObject caller)
         {
             var timerGameObject = new GameObject { name = $"Timer_{caller.name}" };
             timerGameObject.transform.SetParent(caller.transform);

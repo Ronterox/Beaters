@@ -68,7 +68,7 @@ namespace Core.Arrow_Game
 
         private void CheckButton()
         {
-            if (!isNoteAbove) GameManager.MissArrow();
+            if (!isNoteAbove) GameplayManager.MissArrow();
             //Arrow animation with tween
             transform.DOScale(targetScale, animationDuration).OnComplete(() => transform.DOScale(m_DefaultScale, animationDuration));
         }

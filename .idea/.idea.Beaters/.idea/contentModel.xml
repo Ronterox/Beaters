@@ -36,7 +36,6 @@
             <e p="PauseMenu.cs" t="Include" />
             <e p="SelectableButton.cs" t="Include" />
             <e p="SettingsMenu.cs" t="Include" />
-            <e p="Timer.cs" t="Include" />
           </e>
           <e p="Properties" t="Include">
             <e p="ConditionalHideAttribute.cs" t="Include" />
@@ -129,6 +128,7 @@
             <e p="DataManager.cs" t="Include" />
             <e p="GUIManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
+            <e p="GameplayManager.cs" t="Include" />
             <e p="LevelLoadManager.cs" t="Include" />
           </e>
           <e p="ScriptableObjects" t="Include">

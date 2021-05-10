@@ -31,9 +31,6 @@ namespace Core.Arrow_Game
 
     public class MapScroller : MonoBehaviour
     {
-        public bool isGameplay;
-        public Canvas gameCanvas;
-
         [ReadOnly, SerializeField]
         private SoundMap m_SoundMap;
 
@@ -57,21 +54,7 @@ namespace Core.Arrow_Game
 
         private AudioClip m_CurrentSong;
 
-        private float m_SongEndTime;
-
-        private void Start()
-        {
-            ResetPos();
-            if (isGameplay)
-            {
-                SetSoundMap(GameManager.GetSoundMap());
-
-                if (m_SoundMap == null) return;
-                m_SoundMap.GenerateNotes(makerNotes, transform);
-
-                StartMap();
-            }
-        }
+        private void Start() => ResetPos();
 
         public void StartMap()
         {
@@ -84,8 +67,6 @@ namespace Core.Arrow_Game
             SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, m_SoundMap.startDelay, false);
 
             CameraManager.Instance.CanDoPanning = false;
-
-            if (isGameplay) m_SongEndTime = Time.time + m_SoundMap.audioClip.length;
 
             print("Started Map!");
         }
@@ -113,8 +94,6 @@ namespace Core.Arrow_Game
 
             CameraManager.Instance.CanDoPanning = true;
 
-            if (isGameplay) GameManager.Instance.ShowEndGameplayPanel(gameCanvas);
-
             print("Stopped Map!");
         }
 
@@ -125,8 +104,6 @@ namespace Core.Arrow_Game
             transform.position -= new Vector3(0f, m_Bps * SoundManager.songDeltaTime, 0f);
 
             AnimateBeat();
-
-            if (isGameplay && Time.time >= m_SongEndTime) StopMap();
         }
 
         private void AnimateBeat()
@@ -145,7 +122,7 @@ namespace Core.Arrow_Game
             m_WaitingForBeat = false;
         }
 
-        public void SetSoundMap(SoundMap soundMap)
+        public void SetSoundMap(SoundMap soundMap, bool generateMap = false)
         {
             m_SoundMap = soundMap;
 
@@ -158,6 +135,10 @@ namespace Core.Arrow_Game
 
             m_WaitForSeconds = new WaitForSeconds(secs);
             m_AnimationDuration = secs * .5f;
+
+            if (!generateMap) return;
+            ResetPos();
+            m_SoundMap?.GenerateNotes(makerNotes, transform);
         }
     }
 }
