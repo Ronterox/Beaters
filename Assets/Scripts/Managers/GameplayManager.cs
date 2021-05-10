@@ -32,7 +32,7 @@ namespace Managers
         public Slider skillBarSlider;
 
         private Timer m_SongTimer;
-        private int m_Combo, m_Score, m_StarsCount;
+        private int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_Started;
 
         protected override void Awake()
@@ -101,6 +101,7 @@ namespace Managers
             m_Started = false;
             m_SongTimer.events.onTimerStop -= StopMap;
             ShowEndGameplayPanel(gameCanvas);
+            print(m_Taps);
         }
 
         public void ShowEndGameplayPanel(Canvas parentCanvas)
@@ -110,17 +111,19 @@ namespace Managers
             //Get panel stars or whatever
         }
 
-        public static void MissArrow()
+        public static void MissArrow() => m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
+
+        public static void MissArrowTap()
         {
-            DataManager.playerData.tapsDone++;
-            m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
+            m_Instance.m_Taps++;
+            MissArrow();
         }
 
         public static void HitArrow()
         {
             const int ARROW_HIT_VALUE = 1;
             
-            DataManager.playerData.tapsDone++;
+            m_Instance.m_Taps++;
 
             int points = ARROW_HIT_VALUE * ++m_Instance.m_Combo;
             

@@ -1,3 +1,4 @@
+using System;
 using Managers;
 using UnityEngine;
 
@@ -35,6 +36,8 @@ namespace Core.Arrow_Game
             //SoundManager.Instance.PlayNonDiegeticSound(mapScroller.instrument.GetAudioClip(sound));
         }
 
+        private void OnEnable() => m_WasPressed = false;
+
         private void OnDisable() => RemoveNoteCallbacks();
 
         private void RemoveNoteCallbacks()
@@ -65,7 +68,7 @@ namespace Core.Arrow_Game
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (!other.CompareTag("Player") && !m_WasPressed) return;
+            if (!other.CompareTag("Player") || m_WasPressed) return;
 
             GameplayManager.MissArrow();
             gameObject.SetActive(false);
