@@ -20,7 +20,11 @@ namespace Managers
 
         public static void MissArrow() => DataManager.playerData.tapsDone++;
 
-        public static void HitArrow() => DataManager.playerData.tapsDone++;
+        public static void HitArrow()
+        {
+            DataManager.playerData.tapsDone++;
+            //Check for probability of gain money/prize
+        }
 
         public static void PutSoundMap(SoundMap soundMap) => Instance.m_SoundMap = soundMap;
 

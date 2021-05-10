@@ -94,7 +94,6 @@
               <e p="MMEventManager.cs" t="Include" />
             </e>
             <e p="FPSCounter.cs" t="Include" />
-            <e p="LevelGenerator.cs" t="Include" />
             <e p="MMEventManager.cs" t="Include" />
             <e p="SaveLoadManager.cs" t="Include" />
             <e p="SingleInstance.cs" t="Include" />
@@ -144,7 +143,6 @@
             <e p="Editor" t="Include">
               <e p="SongCarouselEditor.cs" t="Include" />
             </e>
-            <e p="LevelSelector.cs" t="Include" />
             <e p="SongCarousel.cs" t="Include" />
             <e p="SongCarouselElement.cs" t="Include" />
           </e>

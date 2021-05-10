@@ -45,7 +45,6 @@ namespace Core.Arrow_Game
 
         [Header("Visual Feedback")]
         public Transform[] animateByBpm;
-
         [Space]
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
