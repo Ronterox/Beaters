@@ -1,4 +1,5 @@
 using Plugins.Tools;
+using UnityEngine;
 using Utilities;
 
 namespace Managers
@@ -7,7 +8,15 @@ namespace Managers
 
     public class GameManager : PersistentSingleton<GameManager>
     {
+        public GameObject endGamePanel;
         private SoundMap m_SoundMap;
+
+        public void ShowEndGameplayPanel(Canvas parentCanvas)
+        {
+            Instantiate(endGamePanel, parentCanvas.transform);
+            //Give prizes
+            //Get panel stars or whatever
+        }
 
         public static void MissArrow() => DataManager.playerData.tapsDone++;
 

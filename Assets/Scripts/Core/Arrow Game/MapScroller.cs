@@ -5,6 +5,7 @@ using Plugins.Tools;
 using UnityEngine;
 using Utilities;
 using SoundManager = Plugins.Audio.SoundManager;
+using ReadOnly = Plugins.Properties.ReadOnlyAttribute;
 
 namespace Core.Arrow_Game
 {
@@ -31,9 +32,10 @@ namespace Core.Arrow_Game
     public class MapScroller : MonoBehaviour
     {
         public bool isGameplay;
-        
-        [Plugins.Properties.ReadOnly]
-        [SerializeField] private SoundMap m_SoundMap;
+        public Canvas gameCanvas;
+
+        [ReadOnly, SerializeField]
+        private SoundMap m_SoundMap;
 
         public Difficulty difficulty;
         public Instrument instrument;
@@ -56,16 +58,18 @@ namespace Core.Arrow_Game
 
         private AudioClip m_CurrentSong;
 
+        private float m_SongEndTime;
+
         private void Start()
         {
             ResetPos();
             if (isGameplay)
             {
                 SetSoundMap(GameManager.GetSoundMap());
-                
+
                 if (m_SoundMap == null) return;
                 m_SoundMap.GenerateNotes(makerNotes, transform);
-                
+
                 StartMap();
             }
         }
@@ -81,6 +85,8 @@ namespace Core.Arrow_Game
             SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, m_SoundMap.startDelay, false);
 
             CameraManager.Instance.CanDoPanning = false;
+
+            if (isGameplay) m_SongEndTime = Time.time + SoundManager.Instance.BackgroundMusicLength;
 
             print("Started Map!");
         }
@@ -103,10 +109,12 @@ namespace Core.Arrow_Game
             IsStarted = false;
             SoundManager.Instance.PauseBackgroundMusic();
 
-            StopCoroutine(AnimateBeatCoroutine());
+            StopCoroutine(AnimateBeatCoroutine()); 
             m_WaitingForBeat = false;
 
             CameraManager.Instance.CanDoPanning = true;
+
+            if (isGameplay) GameManager.Instance.ShowEndGameplayPanel(gameCanvas);
 
             print("Stopped Map!");
         }
@@ -118,6 +126,8 @@ namespace Core.Arrow_Game
             transform.position -= new Vector3(0f, m_Bps * SoundManager.songDeltaTime, 0f);
 
             AnimateBeat();
+
+            if (isGameplay && Time.time >= m_SongEndTime) StopMap();
         }
 
         private void AnimateBeat()
@@ -139,7 +149,7 @@ namespace Core.Arrow_Game
         public void SetSoundMap(SoundMap soundMap)
         {
             m_SoundMap = soundMap;
-            
+
             m_CurrentSong = m_SoundMap.audioClip;
 
             m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
