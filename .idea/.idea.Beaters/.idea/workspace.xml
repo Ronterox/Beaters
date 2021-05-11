@@ -2,59 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/Rotation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Defenders.unity" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Defenders.unity.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/FogMat.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/FogMat.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/SnowMat.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/SnowMat.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/SnowMat2.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/SnowMat2.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Prefabs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Prefabs/SnowBackground.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Prefabs/SnowBackground.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/FogTexture.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/FogTexture.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/SnowTexture.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/SnowTexture.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/SnowTexture2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/SnowTexture2.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/scenario.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/scenario.jpg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/whiteScreen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/whiteScreen.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatform.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatform.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/DistortionEffect/Rotation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/DistortionEffect/Rotation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/DistortionEffect/Shader.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/DistortionEffect/Shader.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Color.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Color.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Lights.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Lights.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Material.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Material.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Normal.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Normal.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Particles.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Particles.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Texture.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Texture.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/Platform.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/Platform.fbx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SavedData.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/MusicBox.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/MusicBox.fbx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gacha.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gacha.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay2.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay2.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/Rotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/Rotation.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
