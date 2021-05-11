@@ -5,8 +5,11 @@ using UnityEngine.Playables;
 
 namespace Gacha
 {
-    public class MoveScaleBox : MonoBehaviour
+    public class GachaBox : MonoBehaviour
     {
+        public Transform boxTransform;
+        public RandomLoot randomLoot;
+        [Space]
         public PlayableDirector timeline;
         public CanvasGroup canvasGroup;
 
@@ -22,19 +25,24 @@ namespace Gacha
 
         private void Start()
         {
-            transform.DOMove(position, moveScaleDuration).OnComplete(() => m_CanClick = true);
-            transform.DOScale(scale, moveScaleDuration * 2);
+            boxTransform.DOMove(position, moveScaleDuration).OnComplete(() => m_CanClick = true);
+            boxTransform.DOScale(scale, moveScaleDuration * 2);
         }
 
         private void Update()
         {
             if (!m_CanClick) return;
 
-            if (Input.GetMouseButtonDown(0)) AnimateBox();
+            if (Input.GetMouseButtonDown(0))
+            {
+                randomLoot.RandomItem();
+                AnimateBox();
+            }
         }
 
         private void AnimateBox()
         {
+
             reward.ForEachChild(child =>
             {
                 Transform childTransform = child.transform;

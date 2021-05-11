@@ -16,8 +16,6 @@ namespace Gacha
 
         private float m_Total, m_RandomNumber;
 
-        private void Start() => RandomItem();
-
         public void RandomItem()
         {
             table.Shuffle();
