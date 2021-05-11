@@ -1,4 +1,5 @@
 using Managers;
+using Plugins.Properties;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,9 @@ namespace UI
 
     public class GachaManager : MonoBehaviour
     {
+        [Scene]
+        public string gachaScene;
+        
         [Header("Banner Settings")]
         public Banner banner;
         [Space]
@@ -34,24 +38,22 @@ namespace UI
             const int requiredTickets = 1, requiredCoins = 100;
             const string coinName = "Coins", ticketName = "Tickets";
 
-            void UpdateTicketText() => ticketText.text = GetRequiredItemString(ticketName, m_Data.tickets, requiredTickets);
-            void UpdateMoneyText() => moneyText.text = GetRequiredItemString(coinName, m_Data.money, requiredCoins);
+            ticketText.text = GetRequiredItemString(ticketName, m_Data.tickets, requiredTickets);
+            moneyText.text = GetRequiredItemString(coinName, m_Data.money, requiredCoins);
             
-            UpdateTicketText();
-            UpdateMoneyText();
 
             ticketButton.onClick.AddListener(() =>
             {
-                //if (m_Data.tickets < requiredTickets) return;
+                if (m_Data.tickets < requiredTickets) return;
                 m_Data.tickets -= requiredTickets;
-                UpdateTicketText();
+                LevelLoadManager.LoadSceneWithTransition(gachaScene, .5f);
             });
 
             moneyButton.onClick.AddListener(() =>
             {
-                //if (m_Data.money < requiredCoins) return;
+                if (m_Data.money < requiredCoins) return;
                 m_Data.money -= requiredCoins;
-                UpdateMoneyText();
+                LevelLoadManager.LoadSceneWithTransition(gachaScene, .5f);
             });
 
             SetBanner();

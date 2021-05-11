@@ -50,7 +50,6 @@
               <e p="InformationDrawer.cs" t="Include" />
               <e p="ReadOnlyAttributeDrawer.cs" t="Include" />
               <e p="SceneAttributeDrawer.cs" t="Include" />
-              <e p="SceneDrawer.cs" t="Include" />
               <e p="SingleUnityLayerDrawer.cs" t="Include" />
               <e p="SortingLayerPropertyDrawer.cs" t="Include" />
               <e p="TagSelectorPropertyDrawer.cs" t="Include" />

@@ -2606,6 +2606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e71baca3ca55d2caea3e3d5004e956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gachaScene: Gacha Reward
   banner: 1
   imageToChange: {fileID: 7979172281809107009}
   textToChange: {fileID: 7979172281630506975}
