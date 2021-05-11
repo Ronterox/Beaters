@@ -1,53 +1,44 @@
-using System.Security.AccessControl;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Plugins.Tools;
+using UnityEngine;
 
-[System.Serializable]
-public struct LootOption
+namespace Gacha
 {
-    public GameObject obj;
-    public float probability;
-}
-
-public class RandomLoot : MonoBehaviour
-{
-    public LootOption[] table;
-
-    public float total;
-    public float randomNumber;
-    
-    private void Start()
+    [System.Serializable]
+    public struct LootOption
     {
-        RandomItem();
+        public GameObject obj;
+        public float probability;
     }
 
-    public void RandomItem()
+    public class RandomLoot : MonoBehaviour
     {
-        table.Shuffle();
+        public LootOption[] table;
 
-        foreach(var item in table)
+        private float m_Total, m_RandomNumber;
+
+        private void Start() => RandomItem();
+
+        public void RandomItem()
         {
-            total += item.probability;
-        }
+            table.Shuffle();
 
-        System.Random rng = new System.Random(UnityEngine.Random.Range(0, (int)total));
-        randomNumber = rng.Next((int)total);
+            foreach (LootOption item in table)
+            {
+                m_Total += item.probability;
+            }
 
-        for (int i = 0; i < table.Length; i++)
-        {
-            if (randomNumber <= table[i].probability)
+            var rng = new System.Random(Random.Range(0, (int)m_Total));
+            m_RandomNumber = rng.Next((int)m_Total);
+
+            for (var i = 0; i < table.Length; i++)
             {
-                table[i].obj.SetActive(true);
-                return;
+                if (m_RandomNumber <= table[i].probability)
+                {
+                    table[i].obj.SetActive(true);
+                    return;
+                }
+                m_RandomNumber -= table[i].probability;
             }
-            else
-            {
-                randomNumber -= table[i].probability;
-            }
-            
         }
     }
 }

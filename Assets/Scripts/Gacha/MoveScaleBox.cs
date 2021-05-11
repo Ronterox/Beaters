@@ -1,57 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
+using Plugins.Tools;
+using UnityEngine.Playables;
 
-namespace Gacha{
-public class MoveScaleBox : MonoBehaviour
+namespace Gacha
 {
-    public Vector3 position, positionReward, scale, scaleReward;
-    public float durationMove, durationScale;
-    public float speedFade;
-    public GameObject reward;
-    public Canvas canvas;
-    private CanvasGroup m_canvasGroup;
+    public class MoveScaleBox : MonoBehaviour
+    {
+        public PlayableDirector timeline;
+        public CanvasGroup canvasGroup;
 
+        [Header("Reward Config")]
+        public GameObject reward;
+        public Vector3 position, positionReward, scale, scaleReward;
 
-        void Start(){
-        m_canvasGroup = canvas.GetComponent<CanvasGroup>();
-        transform.DOMove(position, durationMove);
-        transform.DOScale(scale, durationScale);
-    }
+        [Header("Animation Config")]
+        public float fadeDuration;
+        public float moveScaleDuration;
 
-    void Update(){
-        if(transform.position == position){
-            if(Input.GetMouseButtonDown(0)){
-                ChildrenLoop();
-            }
-        }
-    }
+        private bool m_CanClick;
 
-    void ChildrenLoop()
-     {
-         StartCoroutine(FadeOut());
-         int children = reward.transform.childCount;
-         for (int i = 0; i < children; ++i){
-            reward.transform.GetChild(i).DOMove(positionReward, durationMove);
-            reward.transform.GetChild(i).DOScale(scaleReward, durationMove);
-            TimelineManager.StartTimeline();
-         }
-            
-     }
-
-      
-
-        IEnumerator FadeOut()
+        private void Start()
         {
-            m_canvasGroup.alpha = 1;
-            while (m_canvasGroup.alpha <= 1)
-            {
-                m_canvasGroup.alpha -= Time.deltaTime * speedFade;
-                yield return null;
-            }
+            transform.DOMove(position, moveScaleDuration).OnComplete(() => m_CanClick = true);
+            transform.DOScale(scale, moveScaleDuration * 2);
         }
 
+        private void Update()
+        {
+            if (!m_CanClick) return;
+
+            if (Input.GetMouseButtonDown(0)) AnimateBox();
+        }
+
+        private void AnimateBox()
+        {
+            reward.ForEachChild(child =>
+            {
+                Transform childTransform = child.transform;
+
+                childTransform.transform.DOMove(positionReward, moveScaleDuration);
+                childTransform.transform.DOScale(scaleReward, moveScaleDuration);
+            });
+            
+            canvasGroup.alpha = 1;
+            canvasGroup.DOFade(0f, fadeDuration).OnComplete(timeline.Play);
+        }
     }
 }

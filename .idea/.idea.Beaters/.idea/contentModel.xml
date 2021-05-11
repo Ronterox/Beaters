@@ -133,7 +133,6 @@
             <e p="GlowRotate.cs" t="Include" />
             <e p="MoveScaleBox.cs" t="Include" />
             <e p="RandomLoot.cs" t="Include" />
-            <e p="TimelineManager.cs" t="Include" />
           </e>
           <e p="General" t="Include">
             <e p="Character.cs" t="Include" />
