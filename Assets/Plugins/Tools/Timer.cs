@@ -1,20 +1,20 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Plugins.Tools
 {
     [System.Serializable]
     public struct TimerEvents
     {
-        public UnityEvent onTimerStart;
-        public UnityEvent onTimerStop;
-        public UnityEvent onTimerEnd;
+        public delegate void TimerEvent();
+        
+        public TimerEvent onTimerStart, onTimerStop, onTimerEnd;
     }
 
     public enum TimerType { Progressive, Regressive }
 
     public readonly struct TimerOptions
     {
+        
         public readonly TimerType timerType;
         public readonly float time;
         public readonly bool resetOnEnd;
@@ -36,10 +36,11 @@ namespace Plugins.Tools
         protected float m_Timer;
 
         public bool resetOnEnd;
-
         [Space]
         public TimerEvents events;
+
         public bool IsTimerStarted { get; private set; }
+        public float CurrentTime => m_Timer;
 
         protected virtual void Update()
         {
@@ -67,6 +68,10 @@ namespace Plugins.Tools
             else StopTimer();
         }
 
+        public void PauseTimer() => IsTimerStarted = false;
+
+        public void UnpauseTimer() => IsTimerStarted = true;
+
         public void ResetTimer()
         {
             if (type == TimerType.Progressive) m_Timer = 0;
@@ -93,24 +98,7 @@ namespace Plugins.Tools
             resetOnEnd = options.resetOnEnd;
         }
 
-        public void AddListeners(UnityAction onTimerStart, UnityAction onTimerEnd = null, UnityAction onTimerStop = null)
-        {
-            if (onTimerStart != null) events.onTimerStart.AddListener(onTimerStart);
-            if (onTimerEnd != null) events.onTimerEnd.AddListener(onTimerEnd);
-            if (onTimerStop != null) events.onTimerStop.AddListener(onTimerStop);
-        }
-
-        public void RemoveListeners(UnityAction onTimerStart, UnityAction onTimerEnd = null, UnityAction onTimerStop = null)
-        {
-            if (onTimerStart != null) events.onTimerStart.RemoveListener(onTimerStart);
-            if (onTimerEnd != null) events.onTimerEnd.RemoveListener(onTimerEnd);
-            if (onTimerStop != null) events.onTimerStop.RemoveListener(onTimerStop);
-        }
-    }
-
-    public static class TimerExtensions
-    {
-        public static Timer CreateTimerInstance(this GameObject caller)
+        public static Timer CreateTimerInstance(GameObject caller)
         {
             var timerGameObject = new GameObject { name = $"Timer_{caller.name}" };
             timerGameObject.transform.SetParent(caller.transform);

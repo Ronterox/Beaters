@@ -5,6 +5,7 @@ using Plugins.Tools;
 using UnityEngine;
 using Utilities;
 using SoundManager = Plugins.Audio.SoundManager;
+using ReadOnly = Plugins.Properties.ReadOnlyAttribute;
 
 namespace Core.Arrow_Game
 {
@@ -30,10 +31,8 @@ namespace Core.Arrow_Game
 
     public class MapScroller : MonoBehaviour
     {
-        public bool isGameplay;
-        
-        [Plugins.Properties.ReadOnly]
-        [SerializeField] private SoundMap m_SoundMap;
+        [ReadOnly, SerializeField]
+        private SoundMap m_SoundMap;
 
         public Difficulty difficulty;
         public Instrument instrument;
@@ -43,7 +42,6 @@ namespace Core.Arrow_Game
 
         [Header("Visual Feedback")]
         public Transform[] animateByBpm;
-
         [Space]
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
@@ -56,15 +54,7 @@ namespace Core.Arrow_Game
 
         private AudioClip m_CurrentSong;
 
-        private void Start()
-        {
-            ResetPos();
-            if (isGameplay)
-            {
-                m_SoundMap.GenerateNotes(makerNotes, transform);
-                StartMap();
-            }
-        }
+        private void Start() => ResetPos();
 
         public void StartMap()
         {
@@ -99,7 +89,7 @@ namespace Core.Arrow_Game
             IsStarted = false;
             SoundManager.Instance.PauseBackgroundMusic();
 
-            StopCoroutine(AnimateBeatCoroutine());
+            StopCoroutine(AnimateBeatCoroutine()); 
             m_WaitingForBeat = false;
 
             CameraManager.Instance.CanDoPanning = true;
@@ -132,10 +122,10 @@ namespace Core.Arrow_Game
             m_WaitingForBeat = false;
         }
 
-        public void SetSoundMap(SoundMap soundMap)
+        public void SetSoundMap(SoundMap soundMap, bool generateMap = false)
         {
             m_SoundMap = soundMap;
-            
+
             m_CurrentSong = m_SoundMap.audioClip;
 
             m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
@@ -145,6 +135,10 @@ namespace Core.Arrow_Game
 
             m_WaitForSeconds = new WaitForSeconds(secs);
             m_AnimationDuration = secs * .5f;
+
+            if (!generateMap) return;
+            ResetPos();
+            m_SoundMap?.GenerateNotes(makerNotes, transform);
         }
     }
 }

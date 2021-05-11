@@ -56,7 +56,6 @@ namespace Plugins.Tools
                 //If a Singleton already exists and you find
                 //another reference in scene, destroy it!
                 if (this == m_Instance) return;
-                Debug.Log($"There was another {m_Instance.name} script on the scene, so it was destroyed!");
                 Destroy(gameObject);
             }
         }

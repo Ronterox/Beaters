@@ -36,7 +36,6 @@
             <e p="PauseMenu.cs" t="Include" />
             <e p="SelectableButton.cs" t="Include" />
             <e p="SettingsMenu.cs" t="Include" />
-            <e p="Timer.cs" t="Include" />
           </e>
           <e p="Properties" t="Include">
             <e p="ConditionalHideAttribute.cs" t="Include" />
@@ -94,7 +93,6 @@
               <e p="MMEventManager.cs" t="Include" />
             </e>
             <e p="FPSCounter.cs" t="Include" />
-            <e p="LevelGenerator.cs" t="Include" />
             <e p="MMEventManager.cs" t="Include" />
             <e p="SaveLoadManager.cs" t="Include" />
             <e p="SingleInstance.cs" t="Include" />
@@ -136,6 +134,7 @@
             <e p="DataManager.cs" t="Include" />
             <e p="GUIManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
+            <e p="GameplayManager.cs" t="Include" />
             <e p="LevelLoadManager.cs" t="Include" />
           </e>
           <e p="ScriptableObjects" t="Include">
@@ -150,7 +149,6 @@
             <e p="Editor" t="Include">
               <e p="SongCarouselEditor.cs" t="Include" />
             </e>
-            <e p="LevelSelector.cs" t="Include" />
             <e p="SongCarousel.cs" t="Include" />
             <e p="SongCarouselElement.cs" t="Include" />
           </e>

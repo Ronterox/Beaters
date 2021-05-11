@@ -1,13 +1,20 @@
+using General;
 using Plugins.Tools;
+using Utilities;
 
 namespace Managers
 {
     public enum Difficulty { Normal = 2, Hard = 3, Hardcore = 4 }
 
-    public class GameManager : Singleton<GameManager>
+    public class GameManager : PersistentSingleton<GameManager>
     {
-        public void MissArrow() => DataManager.playerData.tapsDone++;
+        private SoundMap m_SoundMap;
+        public Song Song { get; private set; }
 
-        public void HitArrow() => DataManager.playerData.tapsDone++;
+        public static void PutSoundMap(SoundMap soundMap) => m_Instance.m_SoundMap = soundMap;
+
+        public static void PutSoundMap(Song song) => m_Instance.Song = song;
+
+        public static SoundMap GetSoundMap() => m_Instance.m_SoundMap ?? m_Instance.Song.soundMap;
     }
 }

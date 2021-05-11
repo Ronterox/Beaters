@@ -30,12 +30,11 @@ namespace Core.Arrow_Game
         }
 
         private void Start() => m_DefaultScale = transform.localScale;
-
-        private void OnEnable() => onButtonPress += CheckButton;
-
-        private void OnDisable() => onButtonPress -= CheckButton;
-
-        public void PressButton() => onButtonPress?.Invoke();
+        public void PressButton()
+        {
+            CheckButton();
+            onButtonPress?.Invoke();
+        }
 
 
 #if UNITY_ANDROID || UNITY_IPHONE
@@ -58,7 +57,7 @@ namespace Core.Arrow_Game
 
                 if (touchPos.Approximates(transform.position, TOUCH_MAX_DISTANCE))
                 {
-                    if (touch.phase == TouchPhase.Began) onButtonPress?.Invoke();
+                    if (touch.phase == TouchPhase.Began) PressButton();
                 }
             }
         }
@@ -68,7 +67,7 @@ namespace Core.Arrow_Game
 
         private void CheckButton()
         {
-            if (!isNoteAbove) GameManager.Instance.MissArrow();
+            if (!isNoteAbove) GameplayManager.MissArrowTap();
             //Arrow animation with tween
             transform.DOScale(targetScale, animationDuration).OnComplete(() => transform.DOScale(m_DefaultScale, animationDuration));
         }

@@ -3,13 +3,14 @@ using Plugins.Properties;
 using Plugins.Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace UI
 {
     [System.Serializable]
     public struct MenuButton
     {
-        public SelectableButton selectableButton;
+        public Button selectableButton;
         [Scene]
         public string scene;
     }
@@ -18,7 +19,7 @@ namespace UI
     {
         public MenuButton[] menuButtons;
 
-        private void Start() => menuButtons.ForEach(button => button.selectableButton.SetActions(() => LoadScene(button.scene)));
+        private void Start() => menuButtons.ForEach(button => button.selectableButton.onClick.AddListener(() => LoadScene(button.scene)));
 
         public void LoadScene(string sceneName) => SceneManager.LoadScene(sceneName);
 
