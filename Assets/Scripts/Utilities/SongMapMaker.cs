@@ -25,7 +25,7 @@ namespace Utilities
     public class SoundMap
     {
         public string name;
-        public float bpm, startDelay;
+        public float bpm;
 
 #if !UNITY_EDITOR || FORCE_JSON
         [NonSerialized]
@@ -40,14 +40,14 @@ namespace Utilities
 
         public void SetNotes(Note[] newNotes) => notes = newNotes;
 
-        public void SetBpmDelay(int newBpm, float delay)
-        {
-            bpm = newBpm;
-            startDelay = delay;
-        }
-
         public void GenerateNotes(MakerNote[] makerNotes, Transform parent)
         {
+            int length = makerNotes.Length;
+            var rng = new System.Random(length);
+            int comboCounter = 0, currentCombo = 0;
+
+            const int probability = 10, minComboLength = 5, maxComboLength = 8;
+
             void GenerateNote(Note note)
             {
                 MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
@@ -55,8 +55,19 @@ namespace Utilities
                 var position = new Vector3 { x = note.x, y = note.y, z = note.z };
                 GameObject obj = makerNote.noteObject.gameObject;
 
-                UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent)
-                    .GetComponent<NoteObject>().MakerId = makerNote.id;
+                var noteObject = UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent).GetComponent<NoteObject>();
+                noteObject.MakerId = makerNote.id;
+
+                if (currentCombo != 0)
+                {
+                    noteObject.SetCombo(currentCombo);
+                    if (++comboCounter >= currentCombo) currentCombo = 0;
+                }
+                else if (rng.Next(length) <= probability)
+                {
+                    noteObject.SetCombo(rng.Next(minComboLength, maxComboLength));
+                    comboCounter = 1;
+                }
             }
 
             notes.ForEach(GenerateNote);
@@ -89,7 +100,7 @@ namespace Utilities
         public MapScroller mapScroller;
         [Header("Inputs")]
         public TMP_InputField songNameInputField;
-        public TMP_InputField bpmInputField, songDelayInputField;
+        public TMP_InputField bpmInputField;
 
         [Header("Feedback Config")]
         public SpriteRenderer preview;
@@ -139,8 +150,7 @@ namespace Utilities
 
             songListDropdown.onValueChanged.AddListener(option => LoadMap(songListDropdown.options[option].text));
 
-            bpmInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
-            songDelayInputField.onSubmit.AddListener(txt => UpdateBpmDelay(songNameInputField.text));
+            bpmInputField.onSubmit.AddListener(txt => UpdateBpm(songNameInputField.text));
             songNameInputField.onSubmit.AddListener(StartCreating);
 
             SetState("Not working on any map");
@@ -254,23 +264,17 @@ namespace Utilities
             return bpm;
         }
 
-        private float GetDelay()
-        {
-            float.TryParse(songDelayInputField.text, out float delay);
-            return delay;
-        }
-
-        private void UpdateBpmDelay(string mapName)
+        private void UpdateBpm(string mapName)
         {
             SoundMap soundMap = GetSoundMap(mapName);
 
             if (soundMap != null)
             {
-                soundMap.SetBpmDelay(GetBpm(), GetDelay());
+                soundMap.bpm = GetBpm();
                 mapScroller.SetSoundMap(soundMap);
             }
 
-            print("Updated bpm and Delay!");
+            print("Updated bpm!");
         }
 
         private void CreateMapHolder(string mapName)
@@ -293,7 +297,6 @@ namespace Utilities
                 soundMap = new SoundMap
                 {
                     name = mapName,
-                    startDelay = GetDelay(),
                     bpm = beatsPerMinutes,
                     audioClip = audioSong,
                     audioPath = audioClipPath
@@ -367,7 +370,6 @@ namespace Utilities
                     audioClipPath = soundMap.audioPath;
 
                     bpmInputField.text = soundMap.bpm + "";
-                    songDelayInputField.text = soundMap.startDelay + "";
                     songNameText.text = soundMap.audioClip.name;
 
                     mapScroller.SetSoundMap(soundMap);
@@ -405,7 +407,7 @@ namespace Utilities
                     }).ToArray();
 
                 soundMap.SetNotes(notes);
-                soundMap.SetBpmDelay(GetBpm(), GetDelay());
+                soundMap.bpm = GetBpm();
 
                 UpdateSongsList();
 

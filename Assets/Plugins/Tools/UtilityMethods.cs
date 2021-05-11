@@ -352,5 +352,19 @@ namespace Plugins.Tools
         /// <param name="text"></param>
         /// <returns></returns>
         public static ushort GetHashCodeUshort(this string text) => (ushort)text.GetHashCode();
+
+        /// <summary>
+        /// Factorial of a number
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static int Factorial(this int number) => number <= 1? 1 : number * Factorial(number - 1 );
+        
+        /// <summary>
+        /// Factorial of a number with sum
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static int FactorialSum(this int number) => number <= 1? 1 : number + Factorial(number - 1 );
     }
 }

@@ -53,6 +53,7 @@ namespace Core.Arrow_Game
         private WaitForSeconds m_WaitForSeconds;
 
         private AudioClip m_CurrentSong;
+        public int MapNotesQuantity => m_SoundMap.notes.Length;
 
         private void Start() => ResetPos();
 
@@ -64,7 +65,7 @@ namespace Core.Arrow_Game
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
 
-            SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, m_SoundMap.startDelay, false);
+            SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, 0, false);
 
             CameraManager.Instance.CanDoPanning = false;
 
