@@ -396,9 +396,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.54442537, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 15.5, y: 0}
+  m_SizeDelta: {x: 31, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &310757202
 MonoBehaviour:
@@ -424,8 +424,8 @@ MonoBehaviour:
 
     0/100'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cbbf8b5bba3c6aa369c8785749a1e6a3, type: 2}
-  m_sharedMaterial: {fileID: 640480547296133789, guid: cbbf8b5bba3c6aa369c8785749a1e6a3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -605,9 +605,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.54442537, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 15.5, y: 0}
+  m_SizeDelta: {x: 31, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &624471502
 MonoBehaviour:
@@ -633,8 +633,8 @@ MonoBehaviour:
 
     0 / 1'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cbbf8b5bba3c6aa369c8785749a1e6a3, type: 2}
-  m_sharedMaterial: {fileID: 640480547296133789, guid: cbbf8b5bba3c6aa369c8785749a1e6a3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1170,7 +1170,7 @@ GameObject:
   - component: {fileID: 1181979593}
   - component: {fileID: 1181979592}
   m_Layer: 5
-  m_Name: Coins
+  m_Name: Coins Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2169,7 +2169,7 @@ GameObject:
   - component: {fileID: 1987395459}
   - component: {fileID: 1987395458}
   m_Layer: 5
-  m_Name: Tickets
+  m_Name: Tickets Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2606,10 +2606,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e71baca3ca55d2caea3e3d5004e956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterBannerSprite: {fileID: 21300000, guid: 1d39bc86c1e7a286784bdbc3224a5019, type: 3}
-  runeBannerSprite: {fileID: 21300000, guid: 4e8b28ac0e86a86f3b4b33b8bf9a35cc, type: 3}
+  banner: 1
   imageToChange: {fileID: 7979172281809107009}
   textToChange: {fileID: 7979172281630506975}
+  characterBannerSprite: {fileID: 21300000, guid: 1d39bc86c1e7a286784bdbc3224a5019, type: 3}
+  runeBannerSprite: {fileID: 21300000, guid: 4e8b28ac0e86a86f3b4b33b8bf9a35cc, type: 3}
+  ticketText: {fileID: 624471502}
+  moneyText: {fileID: 310757202}
+  ticketButton: {fileID: 1987395458}
+  moneyButton: {fileID: 1181979592}
 --- !u!224 &7979172281630506968
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2677,8 +2682,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: CHARACTER SUMMON
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cbbf8b5bba3c6aa369c8785749a1e6a3, type: 2}
-  m_sharedMaterial: {fileID: 640480547296133789, guid: cbbf8b5bba3c6aa369c8785749a1e6a3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2702,7 +2707,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.65
+  m_fontSize: 60
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

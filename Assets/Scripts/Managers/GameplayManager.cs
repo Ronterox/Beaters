@@ -40,16 +40,25 @@ namespace Managers
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_Started;
 
-        private int m_ComboPrizeCounter, m_HighestCombo;
+        private int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
+
+        private PlayerData m_Data;
+        private GameManager m_GameManager;
+
+        private float m_StartTime;
 
         protected override void Awake()
         {
             base.Awake();
             m_SongTimer = Timer.CreateTimerInstance(gameObject);
+            m_StartTime = Time.realtimeSinceStartup;
         }
 
         private void Start()
         {
+            m_Data = DataManager.Instance.playerData;
+            m_GameManager = GameManager.Instance;
+            
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
             ResetValues();
@@ -66,12 +75,14 @@ namespace Managers
         
         private void ResetValues()
         {
-            m_Combo = m_Score = m_StarsCount = m_Taps  = m_ComboPrizeCounter = m_HighestCombo = 0;
+            m_Combo = m_Score = m_StarsCount = m_Taps  = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
             
             starsCounter.text = "0";
             comboText.text = "x0";
             scoreText.text = "0";
         }
+
+        private void OnDestroy() => m_Data.timePlayedInGame += Time.realtimeSinceStartup - m_StartTime;
 
         public void StartGame()
         {
@@ -138,12 +149,12 @@ namespace Managers
         public void ShowEndGameplayPanel(Canvas parentCanvas)
         {
             const float moneyMultiplier = 25 * 0.01f;
-            float accuracy = mapScroller.MapNotesQuantity * 100f / m_Instance.m_Taps;
+            float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
             
             var accuracyGain = (int)Mathf.Round(accuracy * moneyMultiplier);
             var comboGain = (int)Mathf.Round(m_HighestCombo * moneyMultiplier);
 
-            DataManager.playerData.money += accuracyGain + comboGain;
+            m_Data.money += accuracyGain + comboGain;
 
             Instantiate(endGamePanel, parentCanvas.transform);
             //Give prizes
@@ -169,6 +180,7 @@ namespace Managers
             const int ARROW_HIT_VALUE = 1;
 
             m_Instance.m_Taps++;
+            m_Instance.m_NotesHit++;
 
             int points = ARROW_HIT_VALUE * ++m_Instance.m_Combo;
 
@@ -186,13 +198,13 @@ namespace Managers
 
             if (isCombo && ++m_Instance.m_ComboPrizeCounter >= comboLength)
             {
-                Song song = GameManager.Instance.Song;
+                Song song = m_Instance.m_GameManager.Song;
 
                 const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
                 if (song)
                 {
-                    DataManager.playerData.money += Random.Range(minMoneyGain, maxMoneyGain);
+                    m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
                 }
             }
             else

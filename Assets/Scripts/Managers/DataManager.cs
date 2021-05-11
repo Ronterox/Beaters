@@ -10,8 +10,8 @@ namespace Managers
     [System.Serializable]
     public class PlayerData
     {
-        public int tapsDone, money;
-        public double timePlayed;
+        public int tapsDone, money, tickets;
+        public double timePlayed, timePlayedInGame;
         public SerializableItem[] unlockedItems;
         public SerializableSong[] completedSongs, unlockedSongs;
         public SerializableCharacter[] unlockedCharacters;
@@ -50,20 +50,17 @@ namespace Managers
     
     public class DataManager : PersistentSingleton<DataManager>
     {
-        public static PlayerData playerData = new PlayerData();
-
-        private double startPlayingTime;
         private const string PLAYER_FILE = "player.data";
-
+        
+        public PlayerData playerData;
+        [Space]
         private readonly List<SerializableSong> m_SongsList = new List<SerializableSong>();
         private readonly List<SerializableItem> m_ItemsList = new List<SerializableItem>();
         private readonly List<SerializableCharacter> m_CharactersList = new List<SerializableCharacter>();
         
-        public void OnEnable()
+        private void Start()
         {
             if (m_Instance != this) return;
-
-            startPlayingTime = Time.time;
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }
 
@@ -74,7 +71,7 @@ namespace Managers
 
         private static void SavePlayerData()
         {
-            playerData.timePlayed += Time.time - m_Instance.startPlayingTime;
+            m_Instance.playerData.timePlayed += Time.realtimeSinceStartupAsDouble;
 
             var completedSongs = new List<SerializableSong>();
             m_Instance.m_SongsList.ForEach(song =>
@@ -82,14 +79,14 @@ namespace Managers
                 if (song.isCompleted) completedSongs.Add(song);
             });
 
-            playerData.unlockedItems = m_Instance.m_ItemsList.ToArray();
+            m_Instance.playerData.unlockedItems = m_Instance.m_ItemsList.ToArray();
 
-            playerData.completedSongs = completedSongs.ToArray();
-            playerData.unlockedSongs = m_Instance.m_SongsList.ToArray();
+            m_Instance.playerData.completedSongs = completedSongs.ToArray();
+            m_Instance.playerData.unlockedSongs = m_Instance.m_SongsList.ToArray();
 
-            playerData.unlockedCharacters = m_Instance.m_CharactersList.ToArray();
+            m_Instance.playerData.unlockedCharacters = m_Instance.m_CharactersList.ToArray();
 
-            SaveLoadManager.Save(playerData, PLAYER_FILE);
+            SaveLoadManager.Save(m_Instance.playerData, PLAYER_FILE);
         }
 
         public static void AddSong(Song song)

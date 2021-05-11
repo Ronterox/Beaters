@@ -19,7 +19,7 @@ namespace Plugins.Properties
         public InformationAttribute(string message, InformationType type, bool messageAfterProperty)
         {
             this.message = message;
-            this.type = type switch { InformationType.Error => UnityEditor.MessageType.Error, InformationType.Info => UnityEditor.MessageType.Info, InformationType.Warning => UnityEditor.MessageType.Warning, InformationType.None => UnityEditor.MessageType.None, _ => this.type };
+            this.type = type switch { InformationType.Error => MessageType.Error, InformationType.Info => MessageType.Info, InformationType.Warning => MessageType.Warning, InformationType.None => MessageType.None, _ => this.type };
             this.messageAfterProperty = messageAfterProperty;
         }
 #else
