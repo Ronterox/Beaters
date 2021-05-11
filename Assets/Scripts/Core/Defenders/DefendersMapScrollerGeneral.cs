@@ -14,6 +14,7 @@ namespace Core.Defenders
         private void Start()
         {
             float bps = soundMap.bpm / 60 * (float)difficulty;
+
             scrollerUp.StartMap(bps);
             scrollerDown.StartMap(bps);
             scrollerRight.StartMap(bps);

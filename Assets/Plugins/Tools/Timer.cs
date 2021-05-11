@@ -2,19 +2,11 @@ using UnityEngine;
 
 namespace Plugins.Tools
 {
-    [System.Serializable]
-    public struct TimerEvents
-    {
-        public delegate void TimerEvent();
-        
-        public TimerEvent onTimerStart, onTimerStop, onTimerEnd;
-    }
-
     public enum TimerType { Progressive, Regressive }
 
     public readonly struct TimerOptions
     {
-        
+
         public readonly TimerType timerType;
         public readonly float time;
         public readonly bool resetOnEnd;
@@ -36,8 +28,9 @@ namespace Plugins.Tools
         protected float m_Timer;
 
         public bool resetOnEnd;
-        [Space]
-        public TimerEvents events;
+        public delegate void TimerEvent();
+
+        public TimerEvent onTimerStart, onTimerStop, onTimerEnd;
 
         public bool IsTimerStarted { get; private set; }
         public float CurrentTime => m_Timer;
@@ -63,7 +56,7 @@ namespace Plugins.Tools
 
         private void CallEvents()
         {
-            events.onTimerEnd?.Invoke();
+            onTimerEnd?.Invoke();
             if (resetOnEnd) ResetTimer();
             else StopTimer();
         }
@@ -82,13 +75,13 @@ namespace Plugins.Tools
         {
             ResetTimer();
             IsTimerStarted = true;
-            events.onTimerStart?.Invoke();
+            onTimerStart?.Invoke();
         }
 
         public void StopTimer()
         {
             IsTimerStarted = false;
-            events.onTimerStop?.Invoke();
+            onTimerStop?.Invoke();
         }
 
         public void SetTimer(TimerOptions options)

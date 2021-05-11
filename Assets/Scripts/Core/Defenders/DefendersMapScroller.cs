@@ -6,20 +6,19 @@ namespace Core.Defenders
     public class DefendersMapScroller : MonoBehaviour
     {
         public float bps;
-        private bool m_IsStarted = false;
+        private bool m_IsStarted;
         public Direction direction;
 
-        private void Start() {
-            m_IsStarted = true;
-        }
         private void Update()
+        {
+            if (!m_IsStarted) return;
+            DirectionMovement();
+        }
+
+        private void DirectionMovement()
+        {
+            switch (direction)
             {
-                if (!m_IsStarted) return;
-                DirectionMovement();
-            }
-            
-        private void DirectionMovement(){
-            switch(direction){
                 case Direction.left:
                     transform.position -= new Vector3(bps * SoundManager.songDeltaTime, 0f, 0f);
                     break;
@@ -34,15 +33,12 @@ namespace Core.Defenders
                     break;
             }
         }
-        public void StartMap(float bps)
+        public void StartMap(float beatPerSec)
         {
             m_IsStarted = true;
-            this.bps = bps;
+            bps = beatPerSec;
         }
 
-        public void StopMap()
-        {
-            m_IsStarted = false;
-        }
+        public void StopMap() => m_IsStarted = false;
     }
 }

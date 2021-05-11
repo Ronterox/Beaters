@@ -75,7 +75,7 @@ namespace Managers
         private void SetTimer(float time)
         {
             m_SongTimer.SetTimer(new TimerOptions(time, TimerType.Progressive, false));
-            m_SongTimer.events.onTimerStop += StopMap;
+            m_SongTimer.onTimerStop += StopMap;
 
             songTimeBar.maxValue = time;
             scoreBar.maxValue = time; //TODO: set correct max value for m_Score bar and skillbar
@@ -99,7 +99,7 @@ namespace Managers
         public void StopMap()
         {
             m_Started = false;
-            m_SongTimer.events.onTimerStop -= StopMap;
+            m_SongTimer.onTimerStop -= StopMap;
             ShowEndGameplayPanel(gameCanvas);
             print(m_Taps);
         }

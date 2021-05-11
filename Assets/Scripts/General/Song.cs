@@ -1,4 +1,3 @@
-using ScriptableObjects;
 using UnityEngine;
 using Utilities;
 
@@ -9,8 +8,6 @@ namespace General
     {
         public Sprite songImage;
         public SoundMap soundMap;
-
-        public ScriptableItem gachaItems;
         
         public ushort ID => soundMap.ID;
     }
