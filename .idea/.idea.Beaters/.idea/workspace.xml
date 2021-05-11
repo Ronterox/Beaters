@@ -2,24 +2,59 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Zavodila.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Zavodila.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/Rotation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Defenders.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Defenders.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Docchi.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Docchi.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/TrailChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/TrailChanger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Itim/KPopFont.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Itim/KPopFont.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/FogMat.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/FogMat.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/SnowMat.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/SnowMat.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/SnowMat2.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Materials/SnowMat2.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Prefabs/SnowBackground.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Prefabs/SnowBackground.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/FogTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/FogTexture.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/SnowTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/SnowTexture.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/SnowTexture2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/Textures/SnowTexture2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/scenario.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/scenario.jpg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/whiteScreen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Backgrounds/whiteScreen.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatform.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatform.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/DistortionEffect/Rotation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/DistortionEffect/Rotation.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/DistortionEffect/Shader.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/DistortionEffect/Shader.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Color.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Color.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Lights.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Lights.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Material.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Material.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Particles.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Particles.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Texture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/GachaPlatformEffects/PlatformEffects/Texture.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/Platform.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GachaPlatform/Platform.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SavedData.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/MusicBox.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/MusicBox.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gacha.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gacha.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay2.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay2.unity.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +105,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/63/1651a5a1/BinaryFormatter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/18/d4584d77/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/EventSystem/UIBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/Rotation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/45A7E2C2-1932-477F-B79A-B37AC0B8886A/b3/6f39b072/AudioClip.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/24/7c396e85/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/AE0803DD-8675-4EE6-A1D5-F69F76EC8FEF/33/233c432d/GUIContent.cs" root0="SKIP_HIGHLIGHTING" />
@@ -81,7 +117,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Plugins/AnotherFileBrowser/FileBrowser.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/File Management/FileBrowserUpdate.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/File Management/FileBrowser.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/MainMenuManager.cs" />
@@ -132,6 +167,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Rotation.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
