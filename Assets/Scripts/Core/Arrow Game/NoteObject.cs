@@ -1,3 +1,4 @@
+using System;
 using Managers;
 using UnityEngine;
 
@@ -9,10 +10,23 @@ namespace Core.Arrow_Game
 
         [Header("Config")]
         public Chord sound;
+        public int comboLength;
+        public bool isCombo;
+
+        private SpriteRenderer m_SpriteRenderer;
 
         private ArrowButton m_ArrowButton;
 
         private bool m_WasPressed;
+
+        private void Awake() => m_SpriteRenderer = GetComponent<SpriteRenderer>();
+
+        public void SetCombo(int length)
+        {
+            isCombo = true;
+            comboLength = length;
+            m_SpriteRenderer.color = Color.yellow;
+        }
 
 #if !UNITY_IPHONE && !UNITY_ANDROID
         private bool m_OverButton;
@@ -27,10 +41,10 @@ namespace Core.Arrow_Game
         {
             m_WasPressed = true;
 
-            GameplayManager.HitArrow();
+            GameplayManager.HitArrow(isCombo, comboLength);
 
             gameObject.SetActive(false);
-
+            
             //TODO: Long note
             //SoundManager.Instance.PlayNonDiegeticSound(mapScroller.instrument.GetAudioClip(sound));
         }

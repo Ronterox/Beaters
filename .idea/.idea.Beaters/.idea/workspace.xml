@@ -2,15 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Zavodila.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Zavodila.asset.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SavedData/SaveManager/player.data.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Docchi.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Docchi.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScroller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScrollerGeneral.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScrollerGeneral.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/Song.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/Song.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/TrailChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/TrailChanger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Itim/KPopFont.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Itim/KPopFont.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,9 +81,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Plugins/GUI/Timer.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/NoteObject.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/FileBrowserUpdate.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/AnotherFileBrowser/FileBrowser.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/File Management/FileBrowserUpdate.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/File Management/FileBrowser.cs" />
@@ -92,14 +98,11 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableItem.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arros Game/MapScroller.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics2D.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableMapMakerNotes.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" />
@@ -120,9 +123,15 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScrollerGeneral.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/Song.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/TrailChanger.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />

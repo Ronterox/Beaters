@@ -10,7 +10,7 @@ namespace Managers
     [System.Serializable]
     public class PlayerData
     {
-        public int tapsDone;
+        public int tapsDone, money;
         public double timePlayed;
         public SerializableItem[] unlockedItems;
         public SerializableSong[] completedSongs, unlockedSongs;
@@ -52,42 +52,42 @@ namespace Managers
     {
         public static PlayerData playerData = new PlayerData();
 
-        private static double startPlayingTime;
+        private double startPlayingTime;
         private const string PLAYER_FILE = "player.data";
 
-        private static readonly List<SerializableSong> m_SongsList = new List<SerializableSong>();
-        private static readonly List<SerializableItem> m_ItemsList = new List<SerializableItem>();
-        private static readonly List<SerializableCharacter> m_CharactersList = new List<SerializableCharacter>();
+        private readonly List<SerializableSong> m_SongsList = new List<SerializableSong>();
+        private readonly List<SerializableItem> m_ItemsList = new List<SerializableItem>();
+        private readonly List<SerializableCharacter> m_CharactersList = new List<SerializableCharacter>();
         
         public void OnEnable()
         {
-            if (Instance != this) return;
+            if (m_Instance != this) return;
 
             startPlayingTime = Time.time;
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
-            if (Instance == this) SavePlayerData();
+            if (m_Instance == this) SavePlayerData();
         }
 
         private static void SavePlayerData()
         {
-            playerData.timePlayed += Time.time - startPlayingTime;
+            playerData.timePlayed += Time.time - m_Instance.startPlayingTime;
 
             var completedSongs = new List<SerializableSong>();
-            m_SongsList.ForEach(song =>
+            m_Instance.m_SongsList.ForEach(song =>
             {
                 if (song.isCompleted) completedSongs.Add(song);
             });
 
-            playerData.unlockedItems = m_ItemsList.ToArray();
+            playerData.unlockedItems = m_Instance.m_ItemsList.ToArray();
 
             playerData.completedSongs = completedSongs.ToArray();
-            playerData.unlockedSongs = m_SongsList.ToArray();
+            playerData.unlockedSongs = m_Instance.m_SongsList.ToArray();
 
-            playerData.unlockedCharacters = m_CharactersList.ToArray();
+            playerData.unlockedCharacters = m_Instance.m_CharactersList.ToArray();
 
             SaveLoadManager.Save(playerData, PLAYER_FILE);
         }
@@ -99,11 +99,11 @@ namespace Managers
                 songId = song.name.GetHashCodeUshort()
             };
 
-            if (m_SongsList.Where(sSong => sSong.songId == serializableSong.songId).Select(sSong => serializableSong).Any())
+            if (m_Instance.m_SongsList.Where(sSong => sSong.songId == serializableSong.songId).Select(sSong => serializableSong).Any())
             {
                 return;
             }
-            m_SongsList.Add(serializableSong);
+            m_Instance.m_SongsList.Add(serializableSong);
         }
 
         public static void AddItem(ScriptableItem item, int quantity = 1)
@@ -114,19 +114,19 @@ namespace Managers
                 quantity = quantity
             };
 
-            foreach (SerializableItem sItem in m_ItemsList.Where(sItem => sItem.itemId == serializableItem.itemId))
+            foreach (SerializableItem sItem in m_Instance.m_ItemsList.Where(sItem => sItem.itemId == serializableItem.itemId))
             {
                 serializableItem.quantity += sItem.quantity;
 
                 if (serializableItem.quantity <= 0)
                 {
-                    m_ItemsList.Remove(sItem);
+                    m_Instance.m_ItemsList.Remove(sItem);
                 }
                 else sItem.SetItem(serializableItem);
 
                 return;
             }
-            m_ItemsList.Add(serializableItem);
+            m_Instance.m_ItemsList.Add(serializableItem);
         }
 
         public static void AddCharacter(ScriptableCharacter character)
@@ -136,11 +136,11 @@ namespace Managers
                 characterId = character.name.GetHashCodeUshort()
             };
 
-            if (m_CharactersList.Where(chara => chara.characterId == serializableCharacter.characterId).Select(sChar => serializableCharacter).Any())
+            if (m_Instance.m_CharactersList.Where(chara => chara.characterId == serializableCharacter.characterId).Select(sChar => serializableCharacter).Any())
             {
                 return;
             }
-            m_CharactersList.Add(serializableCharacter);
+            m_Instance.m_CharactersList.Add(serializableCharacter);
         }
     }
 }

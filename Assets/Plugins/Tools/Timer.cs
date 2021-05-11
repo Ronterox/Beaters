@@ -28,6 +28,7 @@ namespace Plugins.Tools
         protected float m_Timer;
 
         public bool resetOnEnd;
+        public float startTime;
         public delegate void TimerEvent();
 
         public TimerEvent onTimerStart, onTimerStop, onTimerEnd;
@@ -65,11 +66,7 @@ namespace Plugins.Tools
 
         public void UnpauseTimer() => IsTimerStarted = true;
 
-        public void ResetTimer()
-        {
-            if (type == TimerType.Progressive) m_Timer = 0;
-            else m_Timer = timerTime;
-        }
+        public void ResetTimer() => m_Timer = type == TimerType.Progressive ? startTime : timerTime;
 
         public void StartTimer()
         {
