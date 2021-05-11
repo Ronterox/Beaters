@@ -1,6 +1,7 @@
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Managers
 {
@@ -18,7 +19,9 @@ namespace Managers
     {
         public GUIImage[] images;
         public ScriptableCharacter[] characters;
-        public Image playButton, gachaLogo, mapCreator;
+        public Image playButton, gachaLogo, mapCreator, exitGame;
+        public Image backgroundImage;
+        public TMP_Text[] textsOfTheUI;
 
         private void Start() => SetCharacterGUI(characters[Random.Range(0, characters.Length)]);
 
@@ -31,6 +34,12 @@ namespace Managers
             playButton.sprite = character.playButton;
             gachaLogo.sprite = character.gachaButton;
             mapCreator.sprite = character.mapCreator;
+            backgroundImage.sprite = character.backgroundImage;
+
+            foreach (TMP_Text text in textsOfTheUI)
+            {
+                text.font = character.font;
+            }
         }
     }
 }
