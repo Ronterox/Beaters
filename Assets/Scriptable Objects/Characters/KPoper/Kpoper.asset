@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Kpoper
   m_EditorClassIdentifier: 
   characterName: KPoper
+  backgroundImage: {fileID: 21300000, guid: e31e9ecf0498199c19a2c08d215e8d63, type: 3}
   skill:
   - {fileID: 11400000, guid: e6c9e700ddd337c70b5be58061756b48, type: 2}
   - {fileID: 11400000, guid: e1f23ebad1fc95b03a7abc388fea2efe, type: 2}
@@ -33,6 +34,7 @@ MonoBehaviour:
   rune: {fileID: 11400000, guid: b2b4ce03143fb114b9394adf7318ad73, type: 2}
   hp: 120
   multiplier: 0
-  playButton: {fileID: 0}
+  font: {fileID: 11400000, guid: cbbf8b5bba3c6aa369c8785749a1e6a3, type: 2}
+  playButton: {fileID: 21300000, guid: fa681ac3b56262e6eb51809b4851a574, type: 3}
   gachaButton: {fileID: 21300000, guid: 5316c682b3e4e26e78a6da7f87c2f584, type: 3}
-  mapCreator: {fileID: 0}
+  mapCreator: {fileID: 21300000, guid: 1475b954eac4420a89b2454a992f5ad3, type: 3}
