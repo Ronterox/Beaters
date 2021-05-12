@@ -104,7 +104,7 @@ namespace Plugins.Audio
 
         public float VoiceVolume => GetVolume(VOICE_VOLUME_PARAM);
         public float SFXVolume => GetVolume(SFX_VOLUME_PARAM);
-        
+
         /// Support variables
         private AudioSource m_BackgroundMusic;
         private SoundPooler m_SoundsPool;
@@ -177,7 +177,7 @@ namespace Plugins.Audio
         {
             if (m_BackgroundMusic.clip == clip)
             {
-                m_BackgroundMusic.Stop();
+                StopBackgroundMusic();
                 m_BackgroundMusic.Play();
                 yield break;
             }
@@ -232,7 +232,7 @@ namespace Plugins.Audio
         /// <param name="loop"></param>
         public void PlayBackgroundMusicNoFade(AudioClip clip, float delay = 0f, bool loop = true)
         {
-            m_BackgroundMusic.Stop();
+            StopBackgroundMusic();
 
             Action playSong = () =>
             {
@@ -282,12 +282,16 @@ namespace Plugins.Audio
         /// <summary>
         /// Stop a background music
         /// </summary>
-        public void StopBackgroundMusic() => m_BackgroundMusic.Stop();
+        public void StopBackgroundMusic()
+        {
+            timeLastFrame = 0;
+            m_BackgroundMusic.Stop();
+        }
 
         /// <summary>
-        /// Stop a background music
+        /// Play a background music
         /// </summary>
-        public void ResumeBackgroundMusic() => m_BackgroundMusic.Play();
+        public void PlayBackgroundMusic() => m_BackgroundMusic.Play();
 
         /// <summary>
         /// Pause background music

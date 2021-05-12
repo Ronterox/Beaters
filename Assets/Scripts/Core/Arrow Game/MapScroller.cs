@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using Managers;
@@ -9,7 +10,7 @@ using ReadOnly = Plugins.Properties.ReadOnlyAttribute;
 
 namespace Core.Arrow_Game
 {
-    [System.Serializable]
+    [Serializable]
     public struct Instrument
     {
         public AudioClip c, d, e, f, g, a, b;
@@ -31,6 +32,8 @@ namespace Core.Arrow_Game
 
     public class MapScroller : MonoBehaviour
     {
+        public bool generateCombos = true;
+
         [ReadOnly, SerializeField]
         private SoundMap m_SoundMap;
 
@@ -46,6 +49,9 @@ namespace Core.Arrow_Game
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
 
+        [Header("Song State Feedback")]
+        public TimerUI startTimer;
+
         public bool IsStarted { get; private set; }
         private float m_Bps;
 
@@ -55,25 +61,45 @@ namespace Core.Arrow_Game
         private AudioClip m_CurrentSong;
         public int MapNotesQuantity => m_SoundMap.notes.Length;
 
-        private void Start() => ResetPos();
+        private void Start()
+        {
+            ResetPos();
+
+            startTimer.onTimerStop += () =>
+            {
+                startTimer.timerText.text = "Go!";
+                Action deactivate = () => startTimer.gameObject.SetActive(false);
+                deactivate.DelayAction(1f);
+            };
+        }
 
         public void StartMap()
         {
             ResetPos();
             IsStarted = true;
-
-            gameObject.SetActiveChildren(false);
-            gameObject.SetActiveChildren();
-
-            SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, 0, false);
-
+            
+            gameObject.ForEachChild(child => child.SetActiveChildren(false));
+            gameObject.ForEachChild(child => child.SetActiveChildren());
+            
             CameraManager.Instance.CanDoPanning = false;
+
+            //Start Timer Setting
+            startTimer.timerText.text = "Ready?";
+            startTimer.gameObject.SetActive(true);
+
+            Action activateTimer = () =>
+            {
+                startTimer.StartTimer();
+                SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, 0, false);
+            };
+            
+            activateTimer.DelayAction(1f);
+            //__________________
 
             print("Started Map!");
         }
 
-        //TODO: See why reset position of scroller is random
-        public void ResetPos() => transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        public void ResetPos() => transform.position = Vector3.zero;
 
         public void ResumeMap()
         {
@@ -90,7 +116,7 @@ namespace Core.Arrow_Game
             IsStarted = false;
             SoundManager.Instance.PauseBackgroundMusic();
 
-            StopCoroutine(AnimateBeatCoroutine()); 
+            StopCoroutine(AnimateBeatCoroutine());
             m_WaitingForBeat = false;
 
             CameraManager.Instance.CanDoPanning = true;
@@ -131,6 +157,13 @@ namespace Core.Arrow_Game
 
             m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
 
+            float songLength = m_SoundMap.audioClip.length;
+
+            const float numberOfCellsPerSongSecond = 4f, dimensionDifference = 8f;
+
+            CameraManager.boundsY2d.maximum = songLength * numberOfCellsPerSongSecond;
+            CameraManager.boundsY3d.maximum = songLength * numberOfCellsPerSongSecond - dimensionDifference;
+
             float ms = 60000 / m_SoundMap.bpm;
             float secs = ms * 0.001f;
 
@@ -139,7 +172,7 @@ namespace Core.Arrow_Game
 
             if (!generateMap) return;
             ResetPos();
-            m_SoundMap?.GenerateNotes(makerNotes, transform);
+            m_SoundMap?.GenerateNotes(makerNotes, transform, generateCombos);
         }
     }
 }

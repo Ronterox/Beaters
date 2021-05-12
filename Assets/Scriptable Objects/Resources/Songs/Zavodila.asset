@@ -16,23 +16,7 @@ MonoBehaviour:
   soundMap:
     name: Zavodila
     bpm: 120
-    startDelay: 0
     audioClip: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
-    audioPath: /home/rontero/Documents/Unity Projects/Beaters/Assets/Audio/Songs/docchi.mp3.mp3
-    notes:
-    - id: 0
-      x: -3
-      y: -1
-      z: 0
-    - id: 1
-      x: -1
-      y: 2
-      z: 0
-    - id: 3
-      x: 1
-      y: 3
-      z: 0
-    - id: 2
-      x: 3
-      y: 4
-      z: 0
+    audioPath: /home/rontero/Documents/Unity Projects/Beaters/Assets/Audio/Songs/Zavodila
+      (Vs Whitty Remix).mp3
+    notes: []

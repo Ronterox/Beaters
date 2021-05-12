@@ -1,4 +1,3 @@
-using System;
 using Core.Arrow_Game;
 using General;
 using Plugins.Tools;
@@ -33,71 +32,69 @@ namespace Managers
         public Button skillButton;
         public Slider skillBarSlider;
 
-        [Header("Start Feedback")]
-        public TimerUI startTimer;
+        [Header("Song State")]
+        public Timer songTimer;
 
-        private Timer m_SongTimer;
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
-        private bool m_Started;
+        private bool m_Started, m_Ended;
 
-        private int m_ComboPrizeCounter, m_HighestCombo;
+        private int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
+
+        private PlayerData m_Data;
+        private GameManager m_GameManager;
+
+        private float m_StartTime;
 
         protected override void Awake()
         {
             base.Awake();
-            m_SongTimer = Timer.CreateTimerInstance(gameObject);
+            m_StartTime = Time.realtimeSinceStartup;
         }
 
         private void Start()
         {
+            m_Data = DataManager.Instance.playerData;
+            m_GameManager = GameManager.Instance;
+
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
             ResetValues();
 
-            startTimer.onTimerStop += () =>
-            {
-                startTimer.timerText.text = "Go!";
-                Action deactivate = () => startTimer.gameObject.SetActive(false);
-                deactivate.DelayAction(1f);
-            };
-
             StartGame();
         }
-        
+
         private void ResetValues()
         {
-            m_Combo = m_Score = m_StarsCount = m_Taps  = m_ComboPrizeCounter = m_HighestCombo = 0;
-            
+            m_Combo = m_Score = m_StarsCount = m_Taps = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
+
             starsCounter.text = "0";
             comboText.text = "x0";
             scoreText.text = "0";
         }
 
-        public void StartGame()
+        private void OnDestroy()
         {
-            startTimer.timerText.text = "Ready?";
-            startTimer.gameObject.SetActive(true);
-
-            Action activateTimer = () => startTimer.StartTimer();
-            activateTimer.DelayAction(1f);
-
-            StartMap();
+            m_Data.timePlayedInGame += Time.realtimeSinceStartup - m_StartTime;
+            if (!m_Ended) m_Data.tapsDone += m_Taps;
         }
+
+        public void StartGame() => StartMap();
 
         private void Update()
         {
             if (!m_Started) return;
-            songTimeBar.value = m_SongTimer.CurrentTime;
+            songTimeBar.value = songTimer.CurrentTime;
         }
 
         public void StartMap()
         {
+            m_Ended = false;
             m_Started = true;
 
             SoundMap soundMap = GameManager.GetSoundMap();
 
             SetSongValues(soundMap.audioClip.length, soundMap.notes.Length);
-            m_SongTimer.StartTimer();
+            songTimer.StartTimer();
 
             mapScroller.SetSoundMap(soundMap, true);
             mapScroller.StartMap();
@@ -105,8 +102,8 @@ namespace Managers
 
         private void SetSongValues(float time, int notes)
         {
-            m_SongTimer.SetTimer(new TimerOptions(time, TimerType.Progressive, false));
-            m_SongTimer.onTimerStop += StopMap;
+            songTimer.SetTimer(new TimerOptions(time, TimerType.Progressive, false));
+            songTimer.onTimerStop += StopMap;
 
             songTimeBar.maxValue = time;
             scoreBar.maxValue = notes < 1 ? 0 : Mathf.Round(notes.FactorialSum() / 7f);
@@ -116,34 +113,37 @@ namespace Managers
         public void PauseMap()
         {
             m_Started = false;
-            m_SongTimer.PauseTimer();
+            songTimer.PauseTimer();
             mapScroller.StopMap();
         }
 
         public void ResumeMap()
         {
             m_Started = true;
-            m_SongTimer.UnpauseTimer();
+            songTimer.UnpauseTimer();
             mapScroller.ResumeMap();
         }
 
         public void StopMap()
         {
+            m_Ended = true;
+
             m_Started = false;
-            m_SongTimer.onTimerStop -= StopMap;
+            songTimer.onTimerStop -= StopMap;
+
             ShowEndGameplayPanel(gameCanvas);
-            print(m_Taps);
         }
 
         public void ShowEndGameplayPanel(Canvas parentCanvas)
         {
             const float moneyMultiplier = 25 * 0.01f;
-            float accuracy = mapScroller.MapNotesQuantity * 100f / m_Instance.m_Taps;
-            
+            float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
+
             var accuracyGain = (int)Mathf.Round(accuracy * moneyMultiplier);
             var comboGain = (int)Mathf.Round(m_HighestCombo * moneyMultiplier);
 
-            DataManager.playerData.money += accuracyGain + comboGain;
+            m_Data.money += accuracyGain + comboGain;
+            m_Data.tapsDone += m_Taps;
 
             Instantiate(endGamePanel, parentCanvas.transform);
             //Give prizes
@@ -152,23 +152,30 @@ namespace Managers
 
         public static void MissArrow()
         {
+            if (!m_Instance) return;
+
             int combo = m_Instance.m_Combo;
             if (combo > m_Instance.m_HighestCombo) m_Instance.m_HighestCombo = combo;
-            
+
             m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
         }
 
         public static void MissArrowTap()
         {
+            if (!m_Instance) return;
+
             m_Instance.m_Taps++;
             MissArrow();
         }
 
         public static void HitArrow(bool isCombo = false, int comboLength = 0)
         {
+            if (!m_Instance) return;
+
             const int ARROW_HIT_VALUE = 1;
 
             m_Instance.m_Taps++;
+            m_Instance.m_NotesHit++;
 
             int points = ARROW_HIT_VALUE * ++m_Instance.m_Combo;
 
@@ -186,13 +193,13 @@ namespace Managers
 
             if (isCombo && ++m_Instance.m_ComboPrizeCounter >= comboLength)
             {
-                Song song = GameManager.Instance.Song;
+                Song song = m_Instance.m_GameManager.Song;
 
                 const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
                 if (song)
                 {
-                    DataManager.playerData.money += Random.Range(minMoneyGain, maxMoneyGain);
+                    m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
                 }
             }
             else

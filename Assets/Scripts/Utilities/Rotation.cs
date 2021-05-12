@@ -7,7 +7,16 @@ namespace Utilities
     {
         public Vector3 rotateAxis = new Vector3(1, 5, 10);
         public float speed;
+#if UNITY_EDITOR
+        public bool alwaysRotate;
+#endif
 
-        private void Update() => transform.Rotate(rotateAxis * (speed * Time.deltaTime));
+        private void Update()
+        {
+#if UNITY_EDITOR
+            if(!Application.isPlaying && !alwaysRotate) return;
+#endif
+            transform.Rotate(rotateAxis * (speed * Time.deltaTime));
+        }
     }
 }

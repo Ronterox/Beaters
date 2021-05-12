@@ -20,11 +20,17 @@ namespace Core.Defenders
         public Trail upTrail, downTrail, leftTrail, rightTrail;
         public Direction trailDirection;
 
-        private void Start() => ChangeTrail(trailDirection);
+        private PlayerData m_Data;
+
+        private void Start()
+        {
+            m_Data = DataManager.Instance.playerData;
+            ChangeTrail(trailDirection);
+        }
 
         public void ChangeDirection(bool isRight)
         {
-            DataManager.playerData.tapsDone++;
+            m_Data.tapsDone++;
             switch (trailDirection)
             {
                 case Direction.up:

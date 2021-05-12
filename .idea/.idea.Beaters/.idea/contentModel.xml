@@ -50,7 +50,6 @@
               <e p="InformationDrawer.cs" t="Include" />
               <e p="ReadOnlyAttributeDrawer.cs" t="Include" />
               <e p="SceneAttributeDrawer.cs" t="Include" />
-              <e p="SceneDrawer.cs" t="Include" />
               <e p="SingleUnityLayerDrawer.cs" t="Include" />
               <e p="SortingLayerPropertyDrawer.cs" t="Include" />
               <e p="TagSelectorPropertyDrawer.cs" t="Include" />
@@ -130,10 +129,8 @@
             </e>
           </e>
           <e p="Gacha" t="Include">
+            <e p="GachaBox.cs" t="Include" />
             <e p="GlowRotate.cs" t="Include" />
-            <e p="MoveScaleBox.cs" t="Include" />
-            <e p="RandomLoot.cs" t="Include" />
-            <e p="TimelineManager.cs" t="Include" />
           </e>
           <e p="General" t="Include">
             <e p="Character.cs" t="Include" />
@@ -156,10 +153,10 @@
           </e>
           <e p="UI" t="Include">
             <e p="ButtonManager.cs" t="Include" />
-            <e p="ChangeBanner.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="SongCarouselEditor.cs" t="Include" />
             </e>
+            <e p="GachaManager.cs" t="Include" />
             <e p="SongCarousel.cs" t="Include" />
             <e p="SongCarouselElement.cs" t="Include" />
           </e>

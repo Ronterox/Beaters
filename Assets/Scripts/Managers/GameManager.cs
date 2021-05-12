@@ -1,5 +1,7 @@
 using General;
 using Plugins.Tools;
+using ScriptableObjects;
+using UnityEngine;
 using Utilities;
 
 namespace Managers
@@ -9,12 +11,33 @@ namespace Managers
     public class GameManager : PersistentSingleton<GameManager>
     {
         private SoundMap m_SoundMap;
+        private ScriptableObject m_Prize;
+
         public Song Song { get; private set; }
 
-        public static void PutSoundMap(SoundMap soundMap) => m_Instance.m_SoundMap = soundMap;
+        public static void PutSoundMap(SoundMap soundMap) => Instance.m_SoundMap = soundMap;
 
-        public static void PutSoundMap(Song song) => m_Instance.Song = song;
+        public static void PutSoundMap(Song song) => Instance.Song = song;
 
-        public static SoundMap GetSoundMap() => m_Instance.m_SoundMap ?? m_Instance.Song.soundMap;
+        public static SoundMap GetSoundMap() => Instance.m_SoundMap ?? Instance.Song.soundMap;
+
+        public static void PutPrize(ScriptableObject scriptableObject)
+        {
+            Instance.m_Prize = scriptableObject;
+            switch (scriptableObject)
+            {
+                case ScriptableCharacter character:
+                    DataManager.AddCharacter(character);
+                    break;
+                case ScriptableItem item:
+                    DataManager.AddItem(item);
+                    break;
+                case ScriptableRune rune:
+                    DataManager.AddRune(rune);
+                    break;
+            }
+        }
+
+        public static ScriptableObject GetPrize() => Instance.m_Prize;
     }
 }

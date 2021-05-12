@@ -10,11 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d4af4a9a66e3aa47b383af7673e75b9, type: 3}
-  m_Name: BubbleTea
+  m_Name: Beer
   m_EditorClassIdentifier: 
-  id: 1
-  name: BubbleTea
-  associatedCharacter:
-  - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
-  value: 20
-  probability: 10
+  itemName: Beer
+  itemSprite: {fileID: 0}

@@ -43,7 +43,7 @@ namespace Plugins.Tools
         /// <param name="active">Whether to activate or deactivate its children</param>
         public static void SetActiveChildren(this GameObject parent, bool active = true)
         {
-            foreach (Transform child in parent.GetComponentsInChildren<Transform>(active)) child.gameObject.SetActive(active);
+            foreach (Transform child in parent.transform) child.gameObject.SetActive(active);
         }
 
 #if UNITY_EDITOR
@@ -114,12 +114,21 @@ namespace Plugins.Tools
         public static void ChangeValueLimited(this ref float value, float increment, float byLimit) => value = (value + increment) % byLimit;
 
         /// <summary>
-        /// Changes the value by a limited amount
+        /// Changes the value by a limited amount, if it surpasses keeps going from 0
         /// </summary>
         /// <param name="value"></param>
         /// <param name="increment">Positive or negative value to be incremented or decremented with</param>
         /// <param name="byLimit">the max amount to be limited to</param>
         public static void ChangeValueLimited(this ref int value, int increment, int byLimit) => value = (value + increment) % byLimit;
+
+
+        /// <summary>
+        /// Changes the value by a limited between 0 and maximum values, if it surpasses any iterates between the 2 values respectively
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="increment">Positive or negative value to be incremented or decremented with</param>
+        /// <param name="maximum">limit of maximum value</param>
+        public static void ChangeValueLoop(this ref int value, int increment, int maximum) => value = Mathf.RoundToInt(Mathf.Repeat(value + increment, maximum));
 
         /// <summary>
         /// Coroutine standard cycle function to be reused
@@ -358,13 +367,23 @@ namespace Plugins.Tools
         /// </summary>
         /// <param name="number"></param>
         /// <returns></returns>
-        public static int Factorial(this int number) => number <= 1? 1 : number * Factorial(number - 1 );
-        
+        public static int Factorial(this int number) => number <= 1 ? 1 : number * Factorial(number - 1);
+
         /// <summary>
         /// Factorial of a number with sum
         /// </summary>
         /// <param name="number"></param>
         /// <returns></returns>
-        public static int FactorialSum(this int number) => number <= 1? 1 : number + Factorial(number - 1 );
+        public static int FactorialSum(this int number) => number <= 1 ? 1 : number + Factorial(number - 1);
+
+        /// <summary>
+        /// Iterates through the gameObject children
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="action"></param>
+        public static void ForEachChild(this GameObject parent, Action<GameObject> action)
+        {
+            foreach (Transform child in parent.transform) action(child.gameObject);
+        }
     }
 }

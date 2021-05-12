@@ -232,5 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967068eba54698569bda6fe46389a0aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionDuration: 0.5
   arrowGameplayScene: Gameplay Arrows
   transitionPanel: {fileID: 6607651528312588466}

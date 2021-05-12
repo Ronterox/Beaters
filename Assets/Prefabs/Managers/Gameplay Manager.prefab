@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3826572633401589597}
   - component: {fileID: 3826572633401589594}
+  - component: {fileID: 6925172793618570845}
   m_Layer: 0
   m_Name: Gameplay Manager
   m_TagString: Untagged
@@ -46,12 +47,29 @@ MonoBehaviour:
   mapScroller: {fileID: 0}
   gameCanvas: {fileID: 0}
   endGamePanel: {fileID: 2670365767423413362, guid: 9dd7d2d323782507d976d4068a27f35e, type: 3}
-  pauseSelectableButton: {fileID: 0}
+  pauseButton: {fileID: 0}
   songTimeBar: {fileID: 0}
   starsCounter: {fileID: 0}
   comboText: {fileID: 0}
   scoreText: {fileID: 0}
-  comboBar: {fileID: 0}
   scoreBar: {fileID: 0}
-  skillSelectableButton: {fileID: 0}
+  skillButton: {fileID: 0}
   skillBarSlider: {fileID: 0}
+  startTimer: {fileID: 0}
+  songTimer: {fileID: 0}
+--- !u!114 &6925172793618570845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826572633401589595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479c1b16341d356b0a096bd8a4c776c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  timerTime: 0
+  resetOnEnd: 0
+  startTime: 0
