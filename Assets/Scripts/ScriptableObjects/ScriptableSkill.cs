@@ -8,13 +8,25 @@ namespace ScriptableObjects
     {
         public enum Kind { Passive, Active }
 
-        public int id;
         public Kind kind = Kind.Passive;
+        [TextArea]
+        public string effectDescription;
         public bool hasDuration;
-        public string effect;
+
+        public int rechargeQuantity;
 
         [ConditionalHide("hasDuration")]
         public int duration;
-    }
 
+        public virtual void UseSkill()
+        {
+            switch (kind)
+            {
+                case Kind.Active:
+                    break;
+                case Kind.Passive:
+                    break;
+            }
+        }
+    }
 }

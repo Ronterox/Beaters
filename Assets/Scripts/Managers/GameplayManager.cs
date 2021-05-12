@@ -1,6 +1,7 @@
 using Core.Arrow_Game;
 using General;
 using Plugins.Tools;
+using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,13 +59,15 @@ namespace Managers
 
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
-            //skillBarSlider.maxValue = GameManager.GetPlayerCharacter().powerMana;
-            
+            ScriptableSkill playerSkill = GameManager.GetCharacter().skill;
+
+            skillBarSlider.maxValue = playerSkill.rechargeQuantity;
+
             skillButton.onClick.AddListener(() =>
             {
                 if (skillBarSlider.value >= skillBarSlider.maxValue)
                 {
-                    //Use power
+                    playerSkill.UseSkill();
                     skillBarSlider.value = 0;
                 }
             });
@@ -188,6 +191,7 @@ namespace Managers
 
             m_Instance.m_Taps++;
             m_Instance.m_NotesHit++;
+            m_Instance.skillBarSlider.value++;
 
             int points = ARROW_HIT_VALUE * ++m_Instance.m_Combo;
 
@@ -208,6 +212,8 @@ namespace Managers
                 Song song = m_Instance.m_GameManager.Song;
 
                 const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
+
+                m_Instance.skillBarSlider.value += maxMoneyGain + minMoneyGain;
 
                 if (song)
                 {

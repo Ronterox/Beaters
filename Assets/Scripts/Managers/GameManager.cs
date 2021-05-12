@@ -24,6 +24,8 @@ namespace Managers
 
         public static void PutCharacter(ScriptableCharacter scriptableCharacter) => Instance.m_Character = scriptableCharacter;
 
+        public static ScriptableCharacter GetCharacter() => Instance.m_Character;
+
         public static void PutPrize(ScriptableObject scriptableObject)
         {
             Instance.m_Prize = scriptableObject;

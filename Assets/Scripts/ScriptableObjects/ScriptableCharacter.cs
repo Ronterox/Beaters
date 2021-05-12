@@ -9,8 +9,8 @@ namespace ScriptableObjects
     {
         public string characterName;
         [TextArea] public string description;
-        
-        public ScriptableSkill[] skill;
+
+        public ScriptableSkill skill;
         public Palette colorPalette;
         public Sprite[] sprites;
         public int hp;
