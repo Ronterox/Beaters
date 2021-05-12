@@ -51,7 +51,6 @@ MonoBehaviour:
   m_SoundMap:
     name: 
     bpm: 0
-    startDelay: 0
     audioClip: {fileID: 0}
     audioPath: 
     notes: []

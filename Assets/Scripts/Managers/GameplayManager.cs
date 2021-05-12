@@ -38,7 +38,7 @@ namespace Managers
 
         private Timer m_SongTimer;
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
-        private bool m_Started;
+        private bool m_Started, m_Ended;
 
         private int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
 
@@ -58,7 +58,7 @@ namespace Managers
         {
             m_Data = DataManager.Instance.playerData;
             m_GameManager = GameManager.Instance;
-            
+
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
             ResetValues();
@@ -72,17 +72,21 @@ namespace Managers
 
             StartGame();
         }
-        
+
         private void ResetValues()
         {
-            m_Combo = m_Score = m_StarsCount = m_Taps  = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
-            
+            m_Combo = m_Score = m_StarsCount = m_Taps = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
+
             starsCounter.text = "0";
             comboText.text = "x0";
             scoreText.text = "0";
         }
 
-        private void OnDestroy() => m_Data.timePlayedInGame += Time.realtimeSinceStartup - m_StartTime;
+        private void OnDestroy()
+        {
+            m_Data.timePlayedInGame += Time.realtimeSinceStartup - m_StartTime;
+            if (!m_Ended) m_Data.tapsDone += m_Taps;
+        }
 
         public void StartGame()
         {
@@ -103,6 +107,7 @@ namespace Managers
 
         public void StartMap()
         {
+            m_Ended = false;
             m_Started = true;
 
             SoundMap soundMap = GameManager.GetSoundMap();
@@ -140,21 +145,25 @@ namespace Managers
 
         public void StopMap()
         {
+            m_Ended = true;
+            
             m_Started = false;
             m_SongTimer.onTimerStop -= StopMap;
+            
             ShowEndGameplayPanel(gameCanvas);
-            print(m_Taps);
         }
 
         public void ShowEndGameplayPanel(Canvas parentCanvas)
         {
             const float moneyMultiplier = 25 * 0.01f;
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
-            
+
             var accuracyGain = (int)Mathf.Round(accuracy * moneyMultiplier);
             var comboGain = (int)Mathf.Round(m_HighestCombo * moneyMultiplier);
 
             m_Data.money += accuracyGain + comboGain;
+            m_Data.tapsDone += m_Taps;
+
 
             Instantiate(endGamePanel, parentCanvas.transform);
             //Give prizes
@@ -163,20 +172,26 @@ namespace Managers
 
         public static void MissArrow()
         {
+            if (!m_Instance) return;
+
             int combo = m_Instance.m_Combo;
             if (combo > m_Instance.m_HighestCombo) m_Instance.m_HighestCombo = combo;
-            
+
             m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
         }
 
         public static void MissArrowTap()
         {
+            if (!m_Instance) return;
+
             m_Instance.m_Taps++;
             MissArrow();
         }
 
         public static void HitArrow(bool isCombo = false, int comboLength = 0)
         {
+            if (!m_Instance) return;
+
             const int ARROW_HIT_VALUE = 1;
 
             m_Instance.m_Taps++;

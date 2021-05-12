@@ -40,37 +40,55 @@ namespace Utilities
 
         public void SetNotes(Note[] newNotes) => notes = newNotes;
 
-        public void GenerateNotes(MakerNote[] makerNotes, Transform parent)
+        public void GenerateNotes(MakerNote[] makerNotes, Transform parent, bool generateCombo = true)
         {
-            int length = makerNotes.Length;
-            var rng = new System.Random(length);
-            int comboCounter = 0, currentCombo = 0;
-
-            const int probability = 10, minComboLength = 5, maxComboLength = 8;
-
-            void GenerateNote(Note note)
+            if (generateCombo)
             {
-                MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
+                int length = makerNotes.Length;
+                var rng = new System.Random(length);
+                int comboCounter = 0, currentCombo = 0;
 
-                var position = new Vector3 { x = note.x, y = note.y, z = note.z };
-                GameObject obj = makerNote.noteObject.gameObject;
-
-                var noteObject = UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent).GetComponent<NoteObject>();
-                noteObject.MakerId = makerNote.id;
-
-                if (currentCombo != 0)
+                const int probability = 10, minComboLength = 5, maxComboLength = 8;
+                
+                void GenerateNote(Note note)
                 {
-                    noteObject.SetCombo(currentCombo);
-                    if (++comboCounter >= currentCombo) currentCombo = 0;
+                    MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
+
+                    var position = new Vector3 { x = note.x, y = note.y, z = note.z };
+                    GameObject obj = makerNote.noteObject.gameObject;
+
+                    var noteObject = UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent).GetComponent<NoteObject>();
+                    noteObject.MakerId = makerNote.id;
+
+                    if (currentCombo != 0)
+                    {
+                        noteObject.SetCombo(currentCombo);
+                        if (++comboCounter >= currentCombo) currentCombo = 0;
+                    }
+                    else if (rng.Next(length) <= probability)
+                    {
+                        noteObject.SetCombo(rng.Next(minComboLength, maxComboLength));
+                        comboCounter = 1;
+                    }
                 }
-                else if (rng.Next(length) <= probability)
-                {
-                    noteObject.SetCombo(rng.Next(minComboLength, maxComboLength));
-                    comboCounter = 1;
-                }
+                
+                notes?.ForEach(GenerateNote);
             }
+            else
+            {
+                void GenerateNote(Note note)
+                {
+                    MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
 
-            notes.ForEach(GenerateNote);
+                    var position = new Vector3 { x = note.x, y = note.y, z = note.z };
+                    GameObject obj = makerNote.noteObject.gameObject;
+
+                    var noteObject = UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent).GetComponent<NoteObject>();
+                    noteObject.MakerId = makerNote.id;
+                }
+                
+                notes?.ForEach(GenerateNote);
+            }
         }
     }
 
@@ -371,6 +389,7 @@ namespace Utilities
 
                     bpmInputField.text = soundMap.bpm + "";
                     songNameText.text = soundMap.audioClip.name;
+                    songNameInputField.text = soundMap.name;
 
                     mapScroller.SetSoundMap(soundMap);
 
@@ -412,7 +431,7 @@ namespace Utilities
                 UpdateSongsList();
 
 #if UNITY_EDITOR && !FORCE_JSON
-                string soundFilePath = audioSongsRelativePath + audioSong.name + Path.GetExtension(audioClipPath);
+                string soundFilePath = audioSongsRelativePath + audioSong.name;
                 if (!File.Exists(soundFilePath)) File.Copy(audioClipPath ?? string.Empty, soundFilePath);
 
                 GetAudioClip(soundFilePath, clip =>

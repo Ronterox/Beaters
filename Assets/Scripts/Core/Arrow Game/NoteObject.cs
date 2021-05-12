@@ -10,7 +10,7 @@ namespace Core.Arrow_Game
         [Header("Config")]
         public Chord sound;
         public int comboLength;
-        public bool isCombo;
+        public bool isCombo, isGameplay;
 
         private SpriteRenderer m_SpriteRenderer;
 

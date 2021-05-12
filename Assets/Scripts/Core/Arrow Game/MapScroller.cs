@@ -31,6 +31,8 @@ namespace Core.Arrow_Game
 
     public class MapScroller : MonoBehaviour
     {
+        public bool generateCombos = true;
+
         [ReadOnly, SerializeField]
         private SoundMap m_SoundMap;
 
@@ -72,8 +74,7 @@ namespace Core.Arrow_Game
             print("Started Map!");
         }
 
-        //TODO: See why reset position of scroller is random
-        public void ResetPos() => transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        public void ResetPos() => transform.position = Vector3.zero;
 
         public void ResumeMap()
         {
@@ -90,7 +91,7 @@ namespace Core.Arrow_Game
             IsStarted = false;
             SoundManager.Instance.PauseBackgroundMusic();
 
-            StopCoroutine(AnimateBeatCoroutine()); 
+            StopCoroutine(AnimateBeatCoroutine());
             m_WaitingForBeat = false;
 
             CameraManager.Instance.CanDoPanning = true;
@@ -103,7 +104,7 @@ namespace Core.Arrow_Game
             if (!IsStarted) return;
 
             transform.position -= new Vector3(0f, m_Bps * SoundManager.songDeltaTime, 0f);
-
+            
             AnimateBeat();
         }
 
@@ -139,7 +140,7 @@ namespace Core.Arrow_Game
 
             if (!generateMap) return;
             ResetPos();
-            m_SoundMap?.GenerateNotes(makerNotes, transform);
+            m_SoundMap?.GenerateNotes(makerNotes, transform, generateCombos);
         }
     }
 }
