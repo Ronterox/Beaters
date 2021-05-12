@@ -50,7 +50,7 @@ namespace Managers
         protected override void Awake()
         {
             base.Awake();
-            m_SongTimer = Timer.CreateTimerInstance(gameObject);
+            m_SongTimer = Timer.CreateTimerInstance(gameObject); //TODO: do not instantiate this on awake it takes time and costly
             m_StartTime = Time.realtimeSinceStartup;
         }
 

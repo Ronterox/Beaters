@@ -66,6 +66,8 @@ namespace Core.Arrow_Game
 
             gameObject.SetActiveChildren(false);
             gameObject.SetActiveChildren();
+            
+            gameObject.ForEachChild(child => child.SetActiveChildren());
 
             SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, 0, false);
 
@@ -131,6 +133,13 @@ namespace Core.Arrow_Game
             m_CurrentSong = m_SoundMap.audioClip;
 
             m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
+
+            float songLength = m_SoundMap.audioClip.length;
+
+            const float numberOfCellsPerSongSecond = 4f, dimensionDifference = 8f;
+            
+            CameraManager.boundsY2d.maximum = songLength * numberOfCellsPerSongSecond;
+            CameraManager.boundsY3d.maximum = songLength * numberOfCellsPerSongSecond - dimensionDifference;
 
             float ms = 60000 / m_SoundMap.bpm;
             float secs = ms * 0.001f;

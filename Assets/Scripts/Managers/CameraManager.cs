@@ -52,6 +52,7 @@ namespace Managers
         private const float PAN_SPEED = 20f;
 
         //first value is minim second is maxim
+        //For each second 4, cells
         public static CameraLimits boundsY2d = new CameraLimits { minimum = -5f, maximum = 18f },
                                    boundsY3d = new CameraLimits { minimum = -10f, maximum = 10f };
 

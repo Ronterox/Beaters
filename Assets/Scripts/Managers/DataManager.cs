@@ -13,7 +13,7 @@ namespace Managers
         public int tapsDone, money, tickets;
         public double timePlayed, timePlayedInGame;
         public SerializableItem[] unlockedItems;
-        public SerializableSong[] completedSongs, unlockedSongs;
+        public SerializableSong[] unlockedSongs;
         public SerializableCharacter[] unlockedCharacters;
     }
 
@@ -73,15 +73,8 @@ namespace Managers
         {
             m_Instance.playerData.timePlayed += Time.realtimeSinceStartupAsDouble;
 
-            var completedSongs = new List<SerializableSong>();
-            m_Instance.m_SongsList.ForEach(song =>
-            {
-                if (song.isCompleted) completedSongs.Add(song);
-            });
-
             m_Instance.playerData.unlockedItems = m_Instance.m_ItemsList.ToArray();
 
-            m_Instance.playerData.completedSongs = completedSongs.ToArray();
             m_Instance.playerData.unlockedSongs = m_Instance.m_SongsList.ToArray();
 
             m_Instance.playerData.unlockedCharacters = m_Instance.m_CharactersList.ToArray();
