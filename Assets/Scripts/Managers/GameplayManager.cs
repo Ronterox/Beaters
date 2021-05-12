@@ -58,6 +58,17 @@ namespace Managers
 
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
+            //skillBarSlider.maxValue = GameManager.GetPlayerCharacter().powerMana;
+            
+            skillButton.onClick.AddListener(() =>
+            {
+                if (skillBarSlider.value >= skillBarSlider.maxValue)
+                {
+                    //Use power
+                    skillBarSlider.value = 0;
+                }
+            });
+
             ResetValues();
 
             StartGame();
@@ -66,6 +77,7 @@ namespace Managers
         private void ResetValues()
         {
             m_Combo = m_Score = m_StarsCount = m_Taps = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
+            scoreBar.value = songTimeBar.value = skillBarSlider.value = 0;
 
             starsCounter.text = "0";
             comboText.text = "x0";

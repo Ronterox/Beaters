@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/General/CharacterSelector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Kpoper.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Kpoper.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Character.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Character.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/Character.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/Character.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +41,7 @@
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Editor/UI/ScrollRectEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/Character.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/ScrollRect.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/CharacterSelector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B1B1E86F-281A-470D-B217-C578E6BC1908/f5/fbdd488e/ReadOnlyAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Selectable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B1B1E86F-281A-470D-B217-C578E6BC1908/8e/a593bf6a/Camera.cs" root0="SKIP_HIGHLIGHTING" />
@@ -70,8 +84,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arros Game/MapScroller.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics2D.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableSkill.cs" />
@@ -111,16 +123,18 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Turbulence.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableItem.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/RandomLoot.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/CharacterSelector.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -184,7 +198,7 @@
       <workItem from="1620488623274" duration="20207000" />
       <workItem from="1620559303114" duration="16697000" />
       <workItem from="1620644635239" duration="12181000" />
-      <workItem from="1620823763307" duration="20582000" />
+      <workItem from="1620823763307" duration="23377000" />
     </task>
     <servers />
   </component>
