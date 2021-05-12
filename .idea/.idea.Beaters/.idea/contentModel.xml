@@ -131,7 +131,6 @@
           <e p="Gacha" t="Include">
             <e p="GachaBox.cs" t="Include" />
             <e p="GlowRotate.cs" t="Include" />
-            <e p="RandomLoot.cs" t="Include" />
           </e>
           <e p="General" t="Include">
             <e p="Character.cs" t="Include" />

@@ -1,26 +1,41 @@
 using Managers;
 using Plugins.Properties;
+using Plugins.Tools;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public enum Banner { Runes, Characters, Items }
+    public enum BannerType { Runes, Characters, Items }
+
+    [System.Serializable]
+    public struct Banner
+    {
+        public BannerType type;
+        public LootOption[] lootTable;
+    }
+
+    [System.Serializable]
+    public struct LootOption
+    {
+        public ScriptableObject loot;
+        public float probability;
+    }
 
     public class GachaManager : MonoBehaviour
     {
         [Scene]
         public string gachaScene;
-        
+
         [Header("Banner Settings")]
-        public Banner banner;
+        public Banner[] banners;
         [Space]
         public Image imageToChange;
         public TMP_Text textToChange;
         [Space]
         public Sprite characterBannerSprite;
-        public Sprite runeBannerSprite;
+        public Sprite runeBannerSprite, itemBannerSprite;
 
         [Header("Gacha Settings")]
         public TMP_Text ticketText;
@@ -30,6 +45,8 @@ namespace UI
         public Button moneyButton;
 
         private PlayerData m_Data;
+        private float m_Total, m_RandomNumber;
+        private int m_BannerIndex;
 
         private void Start()
         {
@@ -40,46 +57,86 @@ namespace UI
 
             ticketText.text = GetRequiredItemString(ticketName, m_Data.tickets, requiredTickets);
             moneyText.text = GetRequiredItemString(coinName, m_Data.money, requiredCoins);
-            
 
             ticketButton.onClick.AddListener(() =>
             {
-                if (m_Data.tickets < requiredTickets) return;
+                if (m_Data.tickets < requiredTickets)
+                {
+                    Debug.Log("Not enough tickets!".ToColorString("red"));
+                    return;
+                }
                 m_Data.tickets -= requiredTickets;
-                LevelLoadManager.LoadSceneWithTransition(gachaScene, .5f);
+                GetPrizeAndSummon();
             });
 
             moneyButton.onClick.AddListener(() =>
             {
-                if (m_Data.money < requiredCoins) return;
+                if (m_Data.money < requiredCoins)
+                {
+                    Debug.Log("Not enough money!".ToColorString("red"));
+                    return;
+                }
                 m_Data.money -= requiredCoins;
-                LevelLoadManager.LoadSceneWithTransition(gachaScene, .5f);
+                GetPrizeAndSummon();
             });
 
             SetBanner();
         }
 
+        private void GetPrizeAndSummon()
+        {
+            GameManager.PutPrize(RandomItem());
+            LevelLoadManager.LoadSceneWithTransition(gachaScene, .5f);
+        }
+
+        public ScriptableObject RandomItem()
+        {
+            LootOption[] table = banners[m_BannerIndex].lootTable;
+            table.Shuffle();
+
+            foreach (LootOption item in table) m_Total += item.probability;
+
+            var totalProbabilityWeight = (int)m_Total;
+
+            var rng = new System.Random(Random.Range(0, totalProbabilityWeight));
+            m_RandomNumber = rng.Next(totalProbabilityWeight);
+
+            for (var i = 0; i < table.Length; i++)
+            {
+                float probability = table[i].probability;
+
+                if (m_RandomNumber <= probability) return table[i].loot;
+
+                m_RandomNumber -= probability;
+            }
+
+            return null;
+        }
+
         private string GetRequiredItemString(string itemName, int quantity, int requiredQuantity) => $"{itemName}\n{quantity}/{requiredQuantity}";
 
-        public void ChangeBannerUI()
+        public void TravelBanners(int index)
         {
-            banner = banner == Banner.Characters ? Banner.Runes : Banner.Characters;
+            m_BannerIndex.ChangeValueLoop(index, banners.Length);
             SetBanner();
         }
 
         public void SetBanner()
         {
-            switch (banner)
+            switch (banners[m_BannerIndex].type)
             {
-                case Banner.Runes:
-                    textToChange.text = "Rune Banner";
+                case BannerType.Runes:
+                    textToChange.text = "Runes Banner";
                     imageToChange.sprite = runeBannerSprite;
                     break;
-                case Banner.Characters:
-                    textToChange.text = "Character Banner";
+                case BannerType.Characters:
+                    textToChange.text = "Characters Banner";
                     imageToChange.sprite = characterBannerSprite;
                     break;
-                case Banner.Items: break;
+                case BannerType.Items:
+                    textToChange.text = "Items Banner";
+                    imageToChange.sprite = itemBannerSprite;
+                    break;
             }
         }
 

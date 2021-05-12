@@ -1,4 +1,3 @@
-using Core;
 using Plugins.Tools;
 using UnityEngine;
 
@@ -8,9 +7,7 @@ namespace ScriptableObjects
     public class ScriptableItem : ScriptableObject
     {
         public string itemName;
-        public Character[] associatedCharacter;
-        public int value;
-        public float probability;
+        public Sprite itemSprite;
         public ushort ID => itemName.GetHashCodeUshort();
     }
 }

@@ -114,12 +114,21 @@ namespace Plugins.Tools
         public static void ChangeValueLimited(this ref float value, float increment, float byLimit) => value = (value + increment) % byLimit;
 
         /// <summary>
-        /// Changes the value by a limited amount
+        /// Changes the value by a limited amount, if it surpasses keeps going from 0
         /// </summary>
         /// <param name="value"></param>
         /// <param name="increment">Positive or negative value to be incremented or decremented with</param>
         /// <param name="byLimit">the max amount to be limited to</param>
         public static void ChangeValueLimited(this ref int value, int increment, int byLimit) => value = (value + increment) % byLimit;
+
+
+        /// <summary>
+        /// Changes the value by a limited between 0 and maximum values, if it surpasses any iterates between the 2 values respectively
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="increment">Positive or negative value to be incremented or decremented with</param>
+        /// <param name="maximum">limit of maximum value</param>
+        public static void ChangeValueLoop(this ref int value, int increment, int maximum) => value = Mathf.RoundToInt(Mathf.Repeat(value + increment, maximum));
 
         /// <summary>
         /// Coroutine standard cycle function to be reused

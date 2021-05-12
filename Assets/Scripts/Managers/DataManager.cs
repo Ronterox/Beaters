@@ -12,13 +12,16 @@ namespace Managers
     {
         public int tapsDone, money, tickets;
         public double timePlayed, timePlayedInGame;
-        public SerializableItem[] unlockedItems;
+        [Header("Inventory and Progress")]
+        public SerializableItem[] currentItems;
+        public SerializableRune[] unlockedRunes;
+        [Space]
         public SerializableSong[] unlockedSongs;
         public SerializableCharacter[] unlockedCharacters;
     }
 
     [System.Serializable]
-    public class SerializableItem
+    public struct SerializableItem
     {
         public ushort itemId;
         public int quantity;
@@ -31,7 +34,14 @@ namespace Managers
     }
 
     [System.Serializable]
-    public class SerializableSong
+    public struct SerializableRune
+    {
+        public ushort runeId;
+        public int quantity;
+    }
+
+    [System.Serializable]
+    public struct SerializableSong
     {
         public ushort songId;
 
@@ -42,22 +52,23 @@ namespace Managers
     }
 
     [System.Serializable]
-    public class SerializableCharacter
+    public struct SerializableCharacter
     {
         public ushort characterId;
         public int lvl, xp;
     }
-    
+
     public class DataManager : PersistentSingleton<DataManager>
     {
         private const string PLAYER_FILE = "player.data";
-        
+
         public PlayerData playerData;
         [Space]
         private readonly List<SerializableSong> m_SongsList = new List<SerializableSong>();
         private readonly List<SerializableItem> m_ItemsList = new List<SerializableItem>();
         private readonly List<SerializableCharacter> m_CharactersList = new List<SerializableCharacter>();
-        
+        private readonly List<SerializableRune> m_RunesList = new List<SerializableRune>();
+
         private void Start()
         {
             if (m_Instance != this) return;
@@ -73,27 +84,24 @@ namespace Managers
         {
             m_Instance.playerData.timePlayed += Time.realtimeSinceStartupAsDouble;
 
-            m_Instance.playerData.unlockedItems = m_Instance.m_ItemsList.ToArray();
+            m_Instance.playerData.currentItems = m_Instance.m_ItemsList.ToArray();
 
             m_Instance.playerData.unlockedSongs = m_Instance.m_SongsList.ToArray();
 
             m_Instance.playerData.unlockedCharacters = m_Instance.m_CharactersList.ToArray();
+
+            m_Instance.playerData.unlockedRunes = m_Instance.m_RunesList.ToArray();
 
             SaveLoadManager.Save(m_Instance.playerData, PLAYER_FILE);
         }
 
         public static void AddSong(Song song)
         {
-            var serializableSong = new SerializableSong
-            {
-                songId = song.name.GetHashCodeUshort()
-            };
+            ushort id = song.ID;
 
-            if (m_Instance.m_SongsList.Where(sSong => sSong.songId == serializableSong.songId).Select(sSong => serializableSong).Any())
-            {
-                return;
-            }
-            m_Instance.m_SongsList.Add(serializableSong);
+            if (m_Instance.m_SongsList.Any(sSong => sSong.songId == id)) return;
+
+            m_Instance.m_SongsList.Add(new SerializableSong { songId = id });
         }
 
         public static void AddItem(ScriptableItem item, int quantity = 1)
@@ -121,16 +129,20 @@ namespace Managers
 
         public static void AddCharacter(ScriptableCharacter character)
         {
-            var serializableCharacter = new SerializableCharacter
-            {
-                characterId = character.name.GetHashCodeUshort()
-            };
+            ushort id = character.ID;
 
-            if (m_Instance.m_CharactersList.Where(chara => chara.characterId == serializableCharacter.characterId).Select(sChar => serializableCharacter).Any())
-            {
-                return;
-            }
-            m_Instance.m_CharactersList.Add(serializableCharacter);
+            if (m_Instance.m_CharactersList.Any(chara => chara.characterId == id)) return;
+
+            m_Instance.m_CharactersList.Add(new SerializableCharacter { characterId = character.ID });
+        }
+
+        public static void AddRune(ScriptableRune rune)
+        {
+            ushort id = rune.ID;
+
+            if (m_Instance.m_RunesList.Any(r => r.runeId == id)) return;
+
+            m_Instance.m_RunesList.Add(new SerializableRune { runeId = rune.ID });
         }
     }
 }
