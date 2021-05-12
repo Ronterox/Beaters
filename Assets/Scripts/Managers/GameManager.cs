@@ -12,6 +12,7 @@ namespace Managers
     {
         private SoundMap m_SoundMap;
         private ScriptableObject m_Prize;
+        private ScriptableCharacter m_Character;
 
         public Song Song { get; private set; }
 
@@ -20,6 +21,8 @@ namespace Managers
         public static void PutSoundMap(Song song) => Instance.Song = song;
 
         public static SoundMap GetSoundMap() => Instance.m_SoundMap ?? Instance.Song.soundMap;
+
+        public static void PutCharacter(ScriptableCharacter scriptableCharacter) => Instance.m_Character = scriptableCharacter;
 
         public static void PutPrize(ScriptableObject scriptableObject)
         {

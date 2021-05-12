@@ -144,5 +144,16 @@ namespace Managers
 
             m_Instance.m_RunesList.Add(new SerializableRune { runeId = rune.ID });
         }
+
+        public static List<ushort> GetCharactersIds()
+        {
+            List<SerializableCharacter> serializableCharacters = m_Instance.m_CharactersList;
+
+            var characters = new List<ushort>(serializableCharacters.Count);
+
+            for (var i = 0; i < characters.Count; i++) characters[i] = serializableCharacters[i].characterId;
+
+            return characters;
+        }
     }
 }
