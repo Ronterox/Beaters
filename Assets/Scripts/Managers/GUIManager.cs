@@ -14,7 +14,6 @@ namespace Managers
         public Image image;
         public PaletteColor paletteColor;
     }
-
     public class GUIManager : MonoBehaviour
     {
         public GUIImage[] images;
@@ -31,9 +30,9 @@ namespace Managers
 
             foreach (GUIImage guiImage in images) guiImage.image.color = palette.GetColor(guiImage.paletteColor);
 
-            playButton.sprite = character.playButton;
-            gachaLogo.sprite = character.gachaButton;
-            mapCreator.sprite = character.mapCreator;
+            if(playButton) playButton.sprite = character.playButton;
+            if(gachaLogo) gachaLogo.sprite = character.gachaButton;
+            if(mapCreator) mapCreator.sprite = character.mapCreator;
             backgroundImage.sprite = character.backgroundImage;
 
             foreach (TMP_Text text in textsOfTheUI)
