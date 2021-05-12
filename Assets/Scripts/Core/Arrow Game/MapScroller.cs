@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using Managers;
@@ -9,7 +10,7 @@ using ReadOnly = Plugins.Properties.ReadOnlyAttribute;
 
 namespace Core.Arrow_Game
 {
-    [System.Serializable]
+    [Serializable]
     public struct Instrument
     {
         public AudioClip c, d, e, f, g, a, b;
@@ -48,6 +49,9 @@ namespace Core.Arrow_Game
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
 
+        [Header("Song State Feedback")]
+        public TimerUI startTimer;
+
         public bool IsStarted { get; private set; }
         private float m_Bps;
 
@@ -57,21 +61,40 @@ namespace Core.Arrow_Game
         private AudioClip m_CurrentSong;
         public int MapNotesQuantity => m_SoundMap.notes.Length;
 
-        private void Start() => ResetPos();
+        private void Start()
+        {
+            ResetPos();
+
+            startTimer.onTimerStop += () =>
+            {
+                startTimer.timerText.text = "Go!";
+                Action deactivate = () => startTimer.gameObject.SetActive(false);
+                deactivate.DelayAction(1f);
+            };
+        }
 
         public void StartMap()
         {
             ResetPos();
             IsStarted = true;
-
-            gameObject.SetActiveChildren(false);
-            gameObject.SetActiveChildren();
             
+            gameObject.ForEachChild(child => child.SetActiveChildren(false));
             gameObject.ForEachChild(child => child.SetActiveChildren());
-
-            SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, 0, false);
-
+            
             CameraManager.Instance.CanDoPanning = false;
+
+            //Start Timer Setting
+            startTimer.timerText.text = "Ready?";
+            startTimer.gameObject.SetActive(true);
+
+            Action activateTimer = () =>
+            {
+                startTimer.StartTimer();
+                SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, 0, false);
+            };
+            
+            activateTimer.DelayAction(1f);
+            //__________________
 
             print("Started Map!");
         }
@@ -106,7 +129,7 @@ namespace Core.Arrow_Game
             if (!IsStarted) return;
 
             transform.position -= new Vector3(0f, m_Bps * SoundManager.songDeltaTime, 0f);
-            
+
             AnimateBeat();
         }
 
@@ -137,7 +160,7 @@ namespace Core.Arrow_Game
             float songLength = m_SoundMap.audioClip.length;
 
             const float numberOfCellsPerSongSecond = 4f, dimensionDifference = 8f;
-            
+
             CameraManager.boundsY2d.maximum = songLength * numberOfCellsPerSongSecond;
             CameraManager.boundsY3d.maximum = songLength * numberOfCellsPerSongSecond - dimensionDifference;
 

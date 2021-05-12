@@ -1,4 +1,3 @@
-using System;
 using Core.Arrow_Game;
 using General;
 using Plugins.Tools;
@@ -33,10 +32,9 @@ namespace Managers
         public Button skillButton;
         public Slider skillBarSlider;
 
-        [Header("Start Feedback")]
-        public TimerUI startTimer;
+        [Header("Song State")]
+        public Timer songTimer;
 
-        private Timer m_SongTimer;
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_Started, m_Ended;
 
@@ -50,7 +48,6 @@ namespace Managers
         protected override void Awake()
         {
             base.Awake();
-            m_SongTimer = Timer.CreateTimerInstance(gameObject); //TODO: do not instantiate this on awake it takes time and costly
             m_StartTime = Time.realtimeSinceStartup;
         }
 
@@ -62,13 +59,6 @@ namespace Managers
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
             ResetValues();
-
-            startTimer.onTimerStop += () =>
-            {
-                startTimer.timerText.text = "Go!";
-                Action deactivate = () => startTimer.gameObject.SetActive(false);
-                deactivate.DelayAction(1f);
-            };
 
             StartGame();
         }
@@ -88,21 +78,12 @@ namespace Managers
             if (!m_Ended) m_Data.tapsDone += m_Taps;
         }
 
-        public void StartGame()
-        {
-            startTimer.timerText.text = "Ready?";
-            startTimer.gameObject.SetActive(true);
-
-            Action activateTimer = () => startTimer.StartTimer();
-            activateTimer.DelayAction(1f);
-
-            StartMap();
-        }
+        public void StartGame() => StartMap();
 
         private void Update()
         {
             if (!m_Started) return;
-            songTimeBar.value = m_SongTimer.CurrentTime;
+            songTimeBar.value = songTimer.CurrentTime;
         }
 
         public void StartMap()
@@ -113,7 +94,7 @@ namespace Managers
             SoundMap soundMap = GameManager.GetSoundMap();
 
             SetSongValues(soundMap.audioClip.length, soundMap.notes.Length);
-            m_SongTimer.StartTimer();
+            songTimer.StartTimer();
 
             mapScroller.SetSoundMap(soundMap, true);
             mapScroller.StartMap();
@@ -121,8 +102,8 @@ namespace Managers
 
         private void SetSongValues(float time, int notes)
         {
-            m_SongTimer.SetTimer(new TimerOptions(time, TimerType.Progressive, false));
-            m_SongTimer.onTimerStop += StopMap;
+            songTimer.SetTimer(new TimerOptions(time, TimerType.Progressive, false));
+            songTimer.onTimerStop += StopMap;
 
             songTimeBar.maxValue = time;
             scoreBar.maxValue = notes < 1 ? 0 : Mathf.Round(notes.FactorialSum() / 7f);
@@ -132,24 +113,24 @@ namespace Managers
         public void PauseMap()
         {
             m_Started = false;
-            m_SongTimer.PauseTimer();
+            songTimer.PauseTimer();
             mapScroller.StopMap();
         }
 
         public void ResumeMap()
         {
             m_Started = true;
-            m_SongTimer.UnpauseTimer();
+            songTimer.UnpauseTimer();
             mapScroller.ResumeMap();
         }
 
         public void StopMap()
         {
             m_Ended = true;
-            
+
             m_Started = false;
-            m_SongTimer.onTimerStop -= StopMap;
-            
+            songTimer.onTimerStop -= StopMap;
+
             ShowEndGameplayPanel(gameCanvas);
         }
 
@@ -163,7 +144,6 @@ namespace Managers
 
             m_Data.money += accuracyGain + comboGain;
             m_Data.tapsDone += m_Taps;
-
 
             Instantiate(endGamePanel, parentCanvas.transform);
             //Give prizes
