@@ -8,6 +8,8 @@ namespace ScriptableObjects
     public class ScriptableCharacter : ScriptableObject
     {
         public string characterName;
+        public string description;
+        
         public ScriptableSkill[] skill;
         public Palette colorPalette;
         public Sprite[] sprites;
