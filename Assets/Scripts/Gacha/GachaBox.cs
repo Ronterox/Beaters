@@ -18,8 +18,7 @@ namespace Gacha
         public CanvasGroup canvasGroup;
 
         [Header("Reward Config")]
-        public GameObject characterGameObject;
-        public GameObject itemGameObject, runeGameObject;
+        public SpriteRenderer rewardSpriteRenderer;
         public Vector3 position, positionReward, scale, scaleReward;
 
         [Header("Animation Config")]
@@ -52,7 +51,10 @@ namespace Gacha
         {
             m_CanClick = false;
 
-            Transform reward = GetRewardObject();
+            SetRewardObject();
+
+            Transform reward = rewardSpriteRenderer.transform;
+
             reward.DOMove(positionReward, moveScaleDuration);
             reward.DOScale(scaleReward, moveScaleDuration);
 
@@ -60,12 +62,12 @@ namespace Gacha
             canvasGroup.DOFade(0f, fadeDuration).OnComplete(timeline.Play);
         }
 
-        private Transform GetRewardObject() => GameManager.GetPrize() switch
+        private void SetRewardObject() => rewardSpriteRenderer.sprite = GameManager.GetPrize() switch
         {
-            ScriptableCharacter _ => characterGameObject.transform,
-            ScriptableItem _ => itemGameObject.transform,
-            ScriptableRune _ => runeGameObject.transform,
-            _ => transform
+            ScriptableCharacter character => character.sprites[0],
+            ScriptableItem item => item.itemSprite,
+            ScriptableRune rune => rune.runeSprite,
+            _ => rewardSpriteRenderer.sprite
         };
     }
 }

@@ -11,7 +11,7 @@ namespace ScriptableObjects
         public string runeName, effect;
         public int value;
         public float probability;
-        public Sprite spriteOfTheRune;
+        public Sprite runeSprite;
         public RuneSet nameOfTheSet = RuneSet.Points;
 
         public ushort ID => runeName.GetHashCodeUshort();

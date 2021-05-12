@@ -2,80 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Kpoper.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Kpoper.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/ElectroBeast.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/ElectroBeast/Items.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/ElectroBeast/Skills.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Gamer.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Gamer/Items.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Gamer/Skills.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Items.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Items/BubbleTea.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/BubbleTea.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Items/BubbleTea.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/BubbleTea.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Items/GlowStick.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/GlowStick.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Items/GlowStick.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/GlowStick.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Kpoper.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Kpoper.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Skills.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Skills/KPoperActive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperActive.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Skills/KPoperActive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperActive.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Skills/KPoperPassive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperPassive.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Skills/KPoperPassive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperPassive.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder2.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder3.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder4.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder5.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/KPoper/Sprites/Placeholder5.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Kpoper/Placeholder5.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Items.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Items/Beer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/Beer.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Items/Beer.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/Beer.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Items/GuitarPick.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/GuitarPick.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Items/GuitarPick.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/GuitarPick.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Metalhead.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Metalhead.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Skills.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Skills/MetalheadActive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/MetalheadActive.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Skills/MetalheadActive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/MetalheadActive.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Skills/MetalheadPassive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/MetalheadPassive.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Skills/MetalheadPassive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/MetalheadPassive.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/2.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/3.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/4.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/5.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead/Sprites/5.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Characters/Metalhead/5.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Rapper.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Rapper/Items.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Rapper/Skills.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/Beer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/Beer.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/BubbleTea.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/BubbleTea.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/GlowStick.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/GlowStick.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/GuitarPick.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Items/GuitarPick.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gacha/RandomLoot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gacha/RandomLoot.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableRune.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableRune.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gacha Reward.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gacha Reward.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/GachaMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/GachaMenu.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +77,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arros Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics2D.cs" />
@@ -189,11 +122,12 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableItem.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/RandomLoot.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableRune.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -257,7 +191,7 @@
       <workItem from="1620488623274" duration="20207000" />
       <workItem from="1620559303114" duration="16697000" />
       <workItem from="1620644635239" duration="12181000" />
-      <workItem from="1620823763307" duration="18691000" />
+      <workItem from="1620823763307" duration="19977000" />
     </task>
     <servers />
   </component>
