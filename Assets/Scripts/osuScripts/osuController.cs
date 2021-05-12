@@ -17,6 +17,7 @@ public class osuController : MonoBehaviour
         m_timer += 0.1f;
         if (m_timer > timeLimit)
         {
+            Instantiate(bad, m_Bposition, Quaternion.identity);
             spawner.GetComponent<CircleSpawner>().GenerateCircle();
             Destroy(gameObject);
         }

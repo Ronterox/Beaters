@@ -8,6 +8,12 @@ using UnityEngine.EventSystems;
 
 public class SliderControl : MonoBehaviour
 {
+    public GameObject great;
+    public GameObject bad;
+    
+    private Vector3 m_Gposition = new Vector3(-8f,-1.5f,0f);
+    private Vector3 m_Bposition = new Vector3(8f,-1.5f,0f);
+
     private bool pointerDown;
     private float pointerDownTimer;
 
@@ -40,12 +46,10 @@ public class SliderControl : MonoBehaviour
             pointerDownTimer += Time.deltaTime;
             if(pointerDownTimer >= durationMove)
             {
-                if(onLongClick != null)
-                {
-                    onLongClick.Invoke();
-                }
+                Instantiate(great, m_Gposition, Quaternion.identity);
                 Reset();
             }
+
         }
     }
 
@@ -56,6 +60,7 @@ public class SliderControl : MonoBehaviour
     }
 
      private IEnumerator Movement(){
+      yield return new WaitForSeconds(durationMove);
       foreach (Transform t in waypoints)
       {
           transform.DOMove(t.position, durationMove);

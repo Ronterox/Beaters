@@ -13,8 +13,8 @@ public class CircleSpawner : MonoBehaviour
     public Vector3 GeneratedPosition()
     {
         int x, y;
-        x = Random.Range(-6, 6);
-        y = Random.Range(-4, 4);
+        x = Random.Range(-5, 5);
+        y = Random.Range(-3, 3);
         return new Vector3(x, y, 0);
     }
 

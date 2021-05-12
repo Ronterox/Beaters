@@ -317,5 +317,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   great: {fileID: 7272596645402769300, guid: ca3a24c22de415c94a993a79f237b808, type: 3}
   bad: {fileID: 2219314413010250021, guid: 222456bcbe43d2ad7b02fb2afbaa0c55, type: 3}
-  timeLimit: 120
+  timeLimit: 25
   spawner: {fileID: 4996690052939502177, guid: 004e5e9131e123141b01f8c4392b6a4d, type: 3}
