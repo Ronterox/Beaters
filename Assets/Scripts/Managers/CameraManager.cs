@@ -5,6 +5,19 @@ using UnityEngine.EventSystems;
 
 namespace Managers
 {
+    public struct CameraLimits
+    {
+        public float minimum, maximum;
+        public CameraLimits(float minimum, float maximum)
+        {
+            this.minimum = minimum;
+            this.maximum = maximum;
+        }
+
+        public void SetMinimum(float minim) => minimum = minim;
+
+        public void SetMaximum(float maxim) => maximum = maxim;
+    }
     public class CameraManager : Singleton<CameraManager>
     {
         public Camera mainCamera;
@@ -38,12 +51,14 @@ namespace Managers
 #endif
         private const float PAN_SPEED = 20f;
 
-        private static readonly float[] BOUNDS_X = { -5f, 5f };
-        private static readonly float[] BOUNDS_Y_2D = { -5f, 18f };
-        private static readonly float[] BOUNDS_Y_3D = { -10f, 10f };
+        //first value is minim second is maxim
+        public static CameraLimits boundsY2d = new CameraLimits { minimum = -5f, maximum = 18f },
+                                   boundsY3d = new CameraLimits { minimum = -10f, maximum = 10f };
 
-        private static readonly float[] ZOOM_BOUNDS_2D = { 2.5f, 10f };
-        private static readonly float[] ZOOM_BOUNDS_3D = { 10f, 85f };
+        private static readonly CameraLimits BOUNDS_X = new CameraLimits { minimum = -5f, maximum = 5f };
+
+        private static readonly CameraLimits ZOOM_BOUNDS_2D = new CameraLimits { minimum = 2.5f, maximum = 10f },
+                                             ZOOM_BOUNDS_3D = new CameraLimits { minimum = 10f, maximum = 85f };
 
         protected override void Awake()
         {
@@ -204,8 +219,10 @@ namespace Managers
             // Ensure the camera remains within bounds.
             Vector3 position = movedTransform.position;
 
-            position.x = Mathf.Clamp(position.x, BOUNDS_X[0], BOUNDS_X[1]);
-            position.y = In2D ? Mathf.Clamp(position.y, BOUNDS_Y_2D[0], BOUNDS_Y_2D[1]) : Mathf.Clamp(position.y, BOUNDS_Y_3D[0], BOUNDS_Y_3D[1]);
+            position.x = Mathf.Clamp(position.x, BOUNDS_X.minimum, BOUNDS_X.maximum);
+            position.y = In2D ?
+                Mathf.Clamp(position.y, boundsY2d.minimum, boundsY2d.maximum) :
+                Mathf.Clamp(position.y, boundsY3d.minimum, boundsY3d.maximum);
 
             transform.position = position;
 
@@ -217,8 +234,8 @@ namespace Managers
         {
             if (offset == 0) return;
 
-            if (In2D) mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - offset * speed, ZOOM_BOUNDS_2D[0], ZOOM_BOUNDS_2D[1]);
-            else mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView - offset * speed, ZOOM_BOUNDS_3D[0], ZOOM_BOUNDS_3D[1]);
+            if (In2D) mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - offset * speed, ZOOM_BOUNDS_2D.minimum, ZOOM_BOUNDS_2D.maximum);
+            else mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView - offset * speed, ZOOM_BOUNDS_3D.minimum, ZOOM_BOUNDS_3D.maximum);
         }
     }
 }

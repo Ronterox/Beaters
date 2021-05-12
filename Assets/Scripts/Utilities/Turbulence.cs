@@ -5,6 +5,7 @@ namespace Utilities
     [ExecuteInEditMode]
     public class Turbulence : MonoBehaviour
     {
+#if !UNITY_ANDROID && !UNITY_IPHONE || UNITY_EDITOR
         public float TurbulenceStrength = 1;
         public Vector3 Frequency = new Vector3(1, 1, 1);
         public Vector3 OffsetSpeed = new Vector3(0.5f, 0.5f, 0.5f);
@@ -39,7 +40,7 @@ namespace Utilities
             else
 #endif
                 deltaTime = Time.deltaTime;
-            
+
             currentOffset += OffsetSpeed * deltaTime;
 
             for (var i = 0; i < numParticlesAlive; i++)
@@ -59,10 +60,11 @@ namespace Utilities
                 };
 
                 turbulenceVector *= TurbulenceStrength;
-                
+
                 particleArray[i].position += turbulenceVector;
             }
             particleSys.SetParticles(particleArray, numParticlesAlive);
         }
+#endif
     }
 }

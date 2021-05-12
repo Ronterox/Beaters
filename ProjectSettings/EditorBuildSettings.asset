@@ -5,28 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/MainMenu.unity
     guid: fd19a6e94e216b978b5cd49acd1e558b
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/UI/Settings.unity
     guid: 432c53c17719187c994e4d8f6cf81b8a
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/UI/SongSelector.unity
     guid: 782ad5f42a059e515aadf255edd8b050
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/UI/GachaMenu.unity
     guid: 485d1ccf542297020bc0aa1fd1c7b985
   - enabled: 1
     path: Assets/_Scenes/Gacha Reward.unity
     guid: ceff5524fb7eea070adf500aa8a809e2
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Gameplay/Gameplay Arrows.unity
     guid: 4a7b6fd85a26a289a9d47cfb5ef4cb58
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Gameplay/Gameplay Defenders.unity
     guid: e91ee3227f6a2c6019e9dd8112c0dfeb
   m_configObjects: {}

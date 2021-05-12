@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Core Falling Arrows/Map Scroller.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Core Falling Arrows/Map Scroller.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Zavodila.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Resources/Songs/Zavodila.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Gacha/GachaPlatform.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Gacha/GachaPlatform.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/Turbulence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/Turbulence.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gacha Reward.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gacha Reward.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +38,7 @@
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Selectable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B1B1E86F-281A-470D-B217-C578E6BC1908/8e/a593bf6a/Camera.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/c3/237882a8/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B1B1E86F-281A-470D-B217-C578E6BC1908/85/2901575b/Transform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3E204661-03FC-4B9C-8A19-6E0AC83D3B12/41/6d29f023/EditorGUILayout.cs" root0="SKIP_HIGHLIGHTING" />
@@ -77,7 +75,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Plugins/GUI/MenuButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableItem.cs" />
@@ -110,7 +107,6 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ChangeBanner.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Turbulence.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/TrailChanger.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Properties/InformationAttribute.cs" />
@@ -128,6 +124,8 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Turbulence.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -191,6 +189,7 @@
       <workItem from="1620488623274" duration="20207000" />
       <workItem from="1620559303114" duration="16697000" />
       <workItem from="1620644635239" duration="12181000" />
+      <workItem from="1620823763307" duration="5379000" />
     </task>
     <servers />
   </component>
