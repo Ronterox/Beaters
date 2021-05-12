@@ -20,7 +20,7 @@ public class osuController : MonoBehaviour
             spawner.GetComponent<CircleSpawner>().GenerateCircle();
             Destroy(gameObject);
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
