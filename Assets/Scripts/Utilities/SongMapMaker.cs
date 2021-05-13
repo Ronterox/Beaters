@@ -189,34 +189,6 @@ namespace Utilities
             }
         }
 
-        public void FastForward(int seconds)
-        {
-            mapScroller.transform.position -= new Vector3(0f, mapScroller.Bps * seconds, 0f);
-
-            float time = SoundManager.Instance.backgroundAudioSource.time + seconds;
-            SoundManager.Instance.backgroundAudioSource.time = Mathf.Min(audioSong.length - 1f, time);
-
-            ActivateNoteToRelativePosition();
-        }
-
-        private void ActivateNoteToRelativePosition()
-        {
-            const float notesPositionY = -6f;
-            m_CurrentMapGameObject.ForEachChildTransform(child => child.gameObject.SetActive(child.position.y > notesPositionY));
-        }
-
-        public void FastBackwards(int seconds)
-        {
-            mapScroller.transform.position += new Vector3(0f, mapScroller.Bps * seconds, 0f);
-
-            if (mapScroller.transform.position.y > 0) mapScroller.transform.position = Vector3.zero;
-
-            float time = SoundManager.Instance.backgroundAudioSource.time - seconds;
-            SoundManager.Instance.backgroundAudioSource.time = Mathf.Max(0, time);
-
-            ActivateNoteToRelativePosition();
-        }
-
         private void CleanPreview()
         {
             preview.sprite = null;
@@ -274,7 +246,6 @@ namespace Utilities
             touchParticle.transform.position = position;
         }
 
-        //TODO: why has to press 2 times to set song
         public void StartCreating(string mapName)
         {
             if (IsMapNameEmpty(mapName)) return;
