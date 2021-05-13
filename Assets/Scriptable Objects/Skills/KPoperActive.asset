@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KPoperActive
   m_EditorClassIdentifier: 
   kind: 1
-  effectDescription: 
+  effectDescription: 2 seconds inmunity
   hasDuration: 1
   rechargeQuantity: 50
   duration: 2

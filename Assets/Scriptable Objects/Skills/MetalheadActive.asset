@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7a70b254007ae41b034159925d59a0, type: 3}
   m_Name: MetalheadActive
   m_EditorClassIdentifier: 
-  id: 2
   kind: 1
+  effectDescription: 5 secs x2 score
   hasDuration: 1
-  effect: 2x punctutation
+  rechargeQuantity: 0
   duration: 5
