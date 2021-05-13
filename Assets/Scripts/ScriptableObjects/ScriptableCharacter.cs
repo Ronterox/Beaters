@@ -19,7 +19,7 @@ namespace ScriptableObjects
         public float multiplier;
         public TMP_FontAsset font;
 
-        public Sprite playButton, gachaButton, mapCreator;
+        public Sprite playButton, gachaButton, mapCreator, emptyStar, fullStar;
         public ushort ID => characterName.GetHashCodeUshort();
     }
 
