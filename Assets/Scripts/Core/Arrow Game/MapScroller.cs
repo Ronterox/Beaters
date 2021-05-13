@@ -76,10 +76,9 @@ namespace Core.Arrow_Game
         public void StartMap()
         {
             ResetPos();
+            ResetChildren();
+            
             IsStarted = true;
-
-            gameObject.ForEachChild(child => child.SetActiveChildren(false));
-            gameObject.ForEachChild(child => child.SetActiveChildren());
 
             CameraManager.Instance.CanDoPanning = false;
 
@@ -89,7 +88,7 @@ namespace Core.Arrow_Game
 
             Action activateTimer = () =>
             {
-                startTimer.StartTimer();
+                startTimer.StartTimer(2);
                 SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, 0, false);
             };
 
@@ -99,10 +98,17 @@ namespace Core.Arrow_Game
             print("Started Map!");
         }
 
+        private void ResetChildren()
+        {
+            gameObject.ForEachChild(child => child.SetActiveChildren(false));
+            gameObject.ForEachChild(child => child.SetActiveChildren());
+        }
+
         public void ResetMap()
         {
             StopMap();
             ResetPos();
+            ResetChildren();
         }
 
         public void FastForward(int seconds)

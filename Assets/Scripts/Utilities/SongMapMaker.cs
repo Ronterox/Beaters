@@ -11,7 +11,6 @@ using DG.Tweening;
 using General;
 #endif
 using Managers;
-using Plugins.Audio;
 using Plugins.Tools;
 using SimpleFileBrowser;
 using TMPro;
@@ -359,7 +358,7 @@ namespace Utilities
                 soundMaps.Remove(soundMap);
 
                 SetState($"{mapName} was deleted successfully!");
-                
+
                 UpdateSongsList();
             }
             else
@@ -391,7 +390,7 @@ namespace Utilities
             {
                 IsCreating = true;
                 CreateMapHolder(mapName);
-                soundMap.GenerateNotes(mapScroller.makerNotes, m_CurrentMapGameObject.transform);
+                soundMap.GenerateNotes(mapScroller.makerNotes, m_CurrentMapGameObject.transform, false);
 
                 SetState("Loading map clip...");
 
@@ -429,7 +428,7 @@ namespace Utilities
             {
                 mapScroller.ResetPos();
 
-                NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
+                NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>(true);
                 Note[] notes = (
                     from noteObject in noteObjects
                     let position = noteObject.transform.position
@@ -449,6 +448,7 @@ namespace Utilities
 #if UNITY_EDITOR && !FORCE_JSON
                 string soundFilePath = audioSongsRelativePath + audioSong.name;
 
+                if (!Path.HasExtension(soundFilePath)) soundFilePath += ".mp3";
                 if (!File.Exists(soundFilePath)) File.Copy(audioClipPath ?? string.Empty, soundFilePath);
 
                 GetAudioClip(soundFilePath, clip =>
@@ -464,8 +464,9 @@ namespace Utilities
                 });
 #else
                 string folderPath = Application.dataPath + $"/{SONG_FOLDER}/";
-
                 string soundFilePath = folderPath + audioSong.name;
+
+                if (!Path.HasExtension(soundFilePath)) soundFilePath += ".mp3";
                 if (!File.Exists(soundFilePath)) File.Copy(audioClipPath, soundFilePath);
 
                 soundMap.audioClip = audioSong;

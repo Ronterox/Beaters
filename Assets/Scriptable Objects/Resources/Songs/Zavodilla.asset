@@ -10,14 +10,58 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
-  m_Name: Zavodila
+  m_Name: Zavodilla
   m_EditorClassIdentifier: 
-  songImage: {fileID: 0}
+  songImage: {fileID: 21300000, guid: b7e73b010fd3db7b1b0bea3fe5600cb0, type: 3}
   soundMap:
-    name: Zavodila
-    bpm: 125
-    audioClip: {fileID: 0}
+    name: Zavodilla
+    bpm: 130
+    audioClip: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
     audioPath: /home/rontero/Documents/Unity Projects/Beaters/Assets/Audio/Songs/Zavodila
       (Vs Whitty Remix).mp3
-    notes: []
+    notes:
+    - id: 1
+      x: -1
+      y: 21.434608
+      z: 0
+    - id: 1
+      x: -1
+      y: 23.821272
+      z: 0
+    - id: 3
+      x: 1
+      y: 24.821272
+      z: 0
+    - id: 2
+      x: 3
+      y: 25.821272
+      z: 0
+    - id: 2
+      x: 3
+      y: 27.821272
+      z: 0
+    - id: 1
+      x: -1
+      y: 29.821272
+      z: 0
+    - id: 3
+      x: 1
+      y: 31.821272
+      z: 0
+    - id: 0
+      x: -3
+      y: 32.821274
+      z: 0
+    - id: 1
+      x: -1
+      y: 34.821274
+      z: 0
+    - id: 2
+      x: 3
+      y: 35.821274
+      z: 0
+    - id: 3
+      x: 1
+      y: 37.821274
+      z: 0
   requiredItems: {fileID: 0}
