@@ -1,6 +1,7 @@
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Managers
 {
@@ -13,12 +14,13 @@ namespace Managers
         public Image image;
         public PaletteColor paletteColor;
     }
-
     public class GUIManager : MonoBehaviour
     {
         public GUIImage[] images;
         public ScriptableCharacter[] characters;
-        public Image playButton, gachaLogo, mapCreator;
+        public Image playButton, gachaLogo, mapCreator, exitGame;
+        public Image backgroundImage;
+        public TMP_Text[] textsOfTheUI;
 
         private void Start() => SetCharacterGUI(characters[Random.Range(0, characters.Length)]);
 
@@ -28,9 +30,15 @@ namespace Managers
 
             foreach (GUIImage guiImage in images) guiImage.image.color = palette.GetColor(guiImage.paletteColor);
 
-            playButton.sprite = character.playButton;
-            gachaLogo.sprite = character.gachaButton;
-            mapCreator.sprite = character.mapCreator;
+            if(playButton) playButton.sprite = character.playButton;
+            if(gachaLogo) gachaLogo.sprite = character.gachaButton;
+            if(mapCreator) mapCreator.sprite = character.mapCreator;
+            backgroundImage.sprite = character.backgroundImage;
+
+            foreach (TMP_Text text in textsOfTheUI)
+            {
+                text.font = character.font;
+            }
         }
     }
 }

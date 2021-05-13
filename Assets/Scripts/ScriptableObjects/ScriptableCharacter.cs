@@ -1,6 +1,7 @@
 using Managers;
 using Plugins.Tools;
 using UnityEngine;
+using TMPro;
 
 namespace ScriptableObjects
 {
@@ -10,11 +11,13 @@ namespace ScriptableObjects
         public string characterName;
         [TextArea] public string description;
         
+        public Sprite backgroundImage;
         public ScriptableSkill[] skill;
         public Palette colorPalette;
         public Sprite[] sprites;
         public int hp;
         public float multiplier;
+        public TMP_FontAsset font;
 
         public Sprite playButton, gachaButton, mapCreator;
         public ushort ID => characterName.GetHashCodeUshort();

@@ -667,6 +667,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 074fe9701f8a2e4e08ac56fbfef6f350, type: 3}
+--- !u!114 &1356380499 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3096899118115572311, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+  m_PrefabInstance: {fileID: 1918723522}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1383695842 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3096899118813754970, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+  m_PrefabInstance: {fileID: 1918723522}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1444490277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -724,6 +746,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77d6cd8a7ad5f57e59cf00fba309ca7a, type: 3}
+--- !u!114 &1493283950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3096899119924158639, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+  m_PrefabInstance: {fileID: 1918723522}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1561479839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -973,6 +1006,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7979172281016031435}
     m_Modifications:
+    - target: {fileID: 560147875063068990, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+      propertyPath: m_ReverseArrangement
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 694423933131950986, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1520,6 +1557,7 @@ GameObject:
   - component: {fileID: 7979172281588127257}
   - component: {fileID: 7979172281588127238}
   - component: {fileID: 7979172281588127240}
+  - component: {fileID: 7979172281588127241}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -1566,6 +1604,33 @@ MonoBehaviour:
   onDestroy:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7979172281588127241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979172281588127239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c441b6e2e429a2ba178d8104de6338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  images:
+  - image: {fileID: 1493283950}
+    paletteColor: 0
+  - image: {fileID: 1356380499}
+    paletteColor: 0
+  characters:
+  - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
+  - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
+  playButton: {fileID: 0}
+  gachaLogo: {fileID: 0}
+  mapCreator: {fileID: 0}
+  exitGame: {fileID: 1356380499}
+  backgroundImage: {fileID: 7979172281016031434}
+  textsOfTheUI:
+  - {fileID: 1383695842}
 --- !u!223 &7979172281588127256
 Canvas:
   m_ObjectHideFlags: 0
