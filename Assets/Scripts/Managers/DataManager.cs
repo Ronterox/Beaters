@@ -155,5 +155,27 @@ namespace Managers
 
             return characters;
         }
+        
+        public static List<ushort> GetRunesIds()
+        {
+            List<SerializableRune> serializableRunes = m_Instance.m_RunesList;
+
+            var runes = new List<ushort>(serializableRunes.Count);
+
+            for (var i = 0; i < runes.Count; i++) runes[i] = serializableRunes[i].runeId;
+
+            return runes;
+        }
+        
+        public static List<ushort> GetSongsIds()
+        {
+            List<SerializableSong> serializableSongs = m_Instance.m_SongsList;
+
+            var songs = new List<ushort>(serializableSongs.Count);
+
+            for (var i = 0; i < songs.Count; i++) songs[i] = serializableSongs[i].songId;
+
+            return songs;
+        }
     }
 }

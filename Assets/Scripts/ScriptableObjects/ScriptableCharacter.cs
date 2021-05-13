@@ -1,11 +1,11 @@
+using General;
 using Managers;
-using Plugins.Tools;
 using UnityEngine;
 
 namespace ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New Character", menuName = "Characters/New character")]
-    public class ScriptableCharacter : ScriptableObject
+    public class ScriptableCharacter : IdentifiedScriptable
     {
         public string characterName;
         [TextArea] public string description;
@@ -17,7 +17,6 @@ namespace ScriptableObjects
         public float multiplier;
 
         public Sprite playButton, gachaButton, mapCreator;
-        public ushort ID => characterName.GetHashCodeUshort();
     }
 
     [System.Serializable]
