@@ -30,6 +30,7 @@ namespace UI
                     songImage.sprite = song.songImage;
                     songName.text = song.soundMap.name;
 
+                    //TODO: Show item requeriment to unlock song
                     if (parameters[1] is bool isUnlock && isUnlock)
                     {
                         onClick.AddListener(() =>

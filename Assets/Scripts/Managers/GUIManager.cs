@@ -1,10 +1,11 @@
+using System.Linq;
+using Plugins.Tools;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Managers
 {
-    //TODO: Change the script to only allow owned characters to be chosen
     [System.Serializable]
     public struct GUIImage
     {
@@ -20,7 +21,17 @@ namespace Managers
         public ScriptableCharacter[] characters;
         public Image playButton, gachaLogo, mapCreator;
 
-        private void Start() => SetCharacterGUI(characters[Random.Range(0, characters.Length)]);
+        private void Start() => SetCharacterGUI(GetCharacter());
+
+        private ScriptableCharacter GetCharacter()
+        {
+            ScriptableCharacter character = GameManager.GetCharacter();
+            if (character) return character;
+
+            ushort randomCharacter = DataManager.GetCharactersIds().GetRandom();
+
+            return characters.FirstOrDefault(c => c.ID == randomCharacter);
+        }
 
         private void SetCharacterGUI(ScriptableCharacter character)
         {

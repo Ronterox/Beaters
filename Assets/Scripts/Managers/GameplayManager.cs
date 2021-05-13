@@ -122,7 +122,6 @@ namespace Managers
 
             songTimeBar.maxValue = time;
             scoreBar.maxValue = notes < 1 ? 0 : Mathf.Round(notes.FactorialSum() / 7f);
-            skillBarSlider.maxValue = time; //TODO: set max value by character skill
         }
 
         public void PauseMap()
