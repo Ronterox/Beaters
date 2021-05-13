@@ -385,5 +385,15 @@ namespace Plugins.Tools
         {
             foreach (Transform child in parent.transform) action(child.gameObject);
         }
+        
+        /// <summary>
+        /// Iterates through the transform children
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="action"></param>
+        public static void ForEachChildTransform(this GameObject parent, Action<Transform> action)
+        {
+            foreach (Transform child in parent.transform) action(child);
+        }
     }
 }

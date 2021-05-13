@@ -11,6 +11,7 @@ using DG.Tweening;
 using General;
 #endif
 using Managers;
+using Plugins.Audio;
 using Plugins.Tools;
 using SimpleFileBrowser;
 using TMPro;
@@ -49,7 +50,7 @@ namespace Utilities
                 int comboCounter = 0, currentCombo = 0;
 
                 const int probability = 10, minComboLength = 5, maxComboLength = 8;
-                
+
                 void GenerateNote(Note note)
                 {
                     MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
@@ -71,7 +72,7 @@ namespace Utilities
                         comboCounter = 1;
                     }
                 }
-                
+
                 notes?.ForEach(GenerateNote);
             }
             else
@@ -86,7 +87,7 @@ namespace Utilities
                     var noteObject = UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent).GetComponent<NoteObject>();
                     noteObject.MakerId = makerNote.id;
                 }
-                
+
                 notes?.ForEach(GenerateNote);
             }
         }
@@ -157,7 +158,6 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
-        //TODO: Forward and backwards on song editor 5 secs
         //TODO: Fix save songs json and load work, change path for mobile
         private void Start()
         {
@@ -187,6 +187,34 @@ namespace Utilities
                     }
                 };
             }
+        }
+
+        public void FastForward(int seconds)
+        {
+            mapScroller.transform.position -= new Vector3(0f, 4 * seconds, 0f);
+
+            float time = SoundManager.Instance.backgroundAudioSource.time + seconds;
+            SoundManager.Instance.backgroundAudioSource.time = Mathf.Min(audioSong.length - 1f, time);
+            
+            ActivateNoteToRelativePosition();
+        }
+
+        private void ActivateNoteToRelativePosition()
+        {
+            const float notesPositionY = -6f;
+            m_CurrentMapGameObject.ForEachChildTransform(child => child.gameObject.SetActive(child.position.y > notesPositionY));
+        }
+
+        public void FastBackwards(int seconds)
+        {
+            mapScroller.transform.position += new Vector3(0f, 4 * seconds, 0f);
+
+            if (mapScroller.transform.position.y > 0) mapScroller.transform.position = Vector3.zero;
+
+            float time = SoundManager.Instance.backgroundAudioSource.time - seconds;
+            SoundManager.Instance.backgroundAudioSource.time = Mathf.Max(0, time);
+            
+            ActivateNoteToRelativePosition();
         }
 
         private void CleanPreview()

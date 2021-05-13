@@ -106,7 +106,7 @@ namespace Plugins.Audio
         public float SFXVolume => GetVolume(SFX_VOLUME_PARAM);
 
         /// Support variables
-        private AudioSource m_BackgroundMusic;
+        public AudioSource backgroundAudioSource;
         private SoundPooler m_SoundsPool;
         private SoundPooler m_CurrentInGamePooler;
 
@@ -126,7 +126,7 @@ namespace Plugins.Audio
 
         private void LateUpdate()
         {
-            float time = m_BackgroundMusic.time;
+            float time = backgroundAudioSource.time;
             songDeltaTime = time - timeLastFrame;
             timeLastFrame = time;
         }
@@ -141,7 +141,7 @@ namespace Plugins.Audio
         {
             base.Awake();
 
-            m_BackgroundMusic = gameObject.GetComponentSafely<AudioSource>();
+            backgroundAudioSource = gameObject.GetComponentSafely<AudioSource>();
             m_SoundsPool = GetComponent<SoundPooler>();
         }
 
@@ -175,21 +175,21 @@ namespace Plugins.Audio
         /// <param name="loop"></param>
         public IEnumerator _PlayBackgroundMusic(AudioClip clip, float fadeDuration = 1f, bool loop = true)
         {
-            if (m_BackgroundMusic.clip == clip)
+            if (backgroundAudioSource.clip == clip)
             {
                 StopBackgroundMusic();
-                m_BackgroundMusic.Play();
+                backgroundAudioSource.Play();
                 yield break;
             }
 
-            yield return StartCoroutine(FadeMixerVolume(m_BackgroundMusic.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, 0f));
+            yield return StartCoroutine(FadeMixerVolume(backgroundAudioSource.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, 0f));
 
-            m_BackgroundMusic.clip = clip;
-            m_BackgroundMusic.loop = loop;
+            backgroundAudioSource.clip = clip;
+            backgroundAudioSource.loop = loop;
 
-            m_BackgroundMusic.Play();
+            backgroundAudioSource.Play();
 
-            yield return StartCoroutine(FadeMixerVolume(m_BackgroundMusic.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, MusicVolume));
+            yield return StartCoroutine(FadeMixerVolume(backgroundAudioSource.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, MusicVolume));
         }
 
         /// <summary>
@@ -236,16 +236,16 @@ namespace Plugins.Audio
 
             Action playSong = () =>
             {
-                if (m_BackgroundMusic.clip == clip)
+                if (backgroundAudioSource.clip == clip)
                 {
-                    m_BackgroundMusic.Play();
+                    backgroundAudioSource.Play();
                     return;
                 }
 
-                m_BackgroundMusic.clip = clip;
-                m_BackgroundMusic.loop = loop;
+                backgroundAudioSource.clip = clip;
+                backgroundAudioSource.loop = loop;
 
-                m_BackgroundMusic.Play();
+                backgroundAudioSource.Play();
             };
 
             playSong.DelayAction(delay);
@@ -285,23 +285,24 @@ namespace Plugins.Audio
         public void StopBackgroundMusic()
         {
             timeLastFrame = 0;
-            m_BackgroundMusic.Stop();
+            backgroundAudioSource.Stop();
+            print(backgroundAudioSource.time);
         }
 
         /// <summary>
         /// Play a background music
         /// </summary>
-        public void PlayBackgroundMusic() => m_BackgroundMusic.Play();
+        public void PlayBackgroundMusic() => backgroundAudioSource.Play();
 
         /// <summary>
         /// Pause background music
         /// </summary>
-        public void PauseBackgroundMusic() => m_BackgroundMusic.Pause();
+        public void PauseBackgroundMusic() => backgroundAudioSource.Pause();
 
         /// <summary>
         /// Resume background music
         /// </summary>
-        public void UnPauseBackgroundMusic() => m_BackgroundMusic.UnPause();
+        public void UnPauseBackgroundMusic() => backgroundAudioSource.UnPause();
 
         /// <summary>
         /// Plays a sound
