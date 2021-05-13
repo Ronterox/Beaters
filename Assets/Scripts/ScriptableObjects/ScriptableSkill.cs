@@ -23,8 +23,10 @@ namespace ScriptableObjects
             switch (kind)
             {
                 case Kind.Active:
+                    //TODO: functional skill for kpoper and metalhead
                     break;
                 case Kind.Passive:
+                    
                     break;
             }
         }

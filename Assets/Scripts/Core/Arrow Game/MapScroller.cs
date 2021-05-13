@@ -53,7 +53,7 @@ namespace Core.Arrow_Game
         public TimerUI startTimer;
 
         public bool IsStarted { get; private set; }
-        private float m_Bps;
+        public float Bps { get; private set; }
 
         private bool m_WaitingForBeat;
         private WaitForSeconds m_WaitForSeconds;
@@ -128,7 +128,7 @@ namespace Core.Arrow_Game
         {
             if (!IsStarted) return;
 
-            transform.position -= new Vector3(0f, m_Bps * SoundManager.songDeltaTime, 0f);
+            transform.position -= new Vector3(0f, Bps * SoundManager.songDeltaTime, 0f);
 
             AnimateBeat();
         }
@@ -155,7 +155,7 @@ namespace Core.Arrow_Game
 
             m_CurrentSong = m_SoundMap.audioClip;
 
-            m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
+            Bps = m_SoundMap.bpm / 60 * (float)difficulty;
 
             float songLength = m_SoundMap.audioClip.length;
 

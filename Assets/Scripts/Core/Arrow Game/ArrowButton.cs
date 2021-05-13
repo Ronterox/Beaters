@@ -1,6 +1,8 @@
 using DG.Tweening;
 using Managers;
+#if UNITY_ANDROID || UNITY_IPHONE
 using Plugins.Tools;
+#endif
 using UnityEngine;
 
 namespace Core.Arrow_Game
@@ -30,6 +32,7 @@ namespace Core.Arrow_Game
         }
 
         private void Start() => m_DefaultScale = transform.localScale;
+
         public void PressButton()
         {
             CheckButton();
@@ -62,7 +65,7 @@ namespace Core.Arrow_Game
             }
         }
 #else
-        private void OnMouseDown() => onButtonPress?.Invoke();
+        private void OnMouseDown() => PressButton();
 #endif
 
         private void CheckButton()

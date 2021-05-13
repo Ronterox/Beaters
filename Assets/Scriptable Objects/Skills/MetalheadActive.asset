@@ -15,5 +15,5 @@ MonoBehaviour:
   kind: 1
   effectDescription: 5 secs x2 score
   hasDuration: 1
-  rechargeQuantity: 0
+  rechargeQuantity: 100
   duration: 5

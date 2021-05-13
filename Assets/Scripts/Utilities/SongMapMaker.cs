@@ -191,11 +191,11 @@ namespace Utilities
 
         public void FastForward(int seconds)
         {
-            mapScroller.transform.position -= new Vector3(0f, 4 * seconds, 0f);
+            mapScroller.transform.position -= new Vector3(0f, mapScroller.Bps * seconds, 0f);
 
             float time = SoundManager.Instance.backgroundAudioSource.time + seconds;
             SoundManager.Instance.backgroundAudioSource.time = Mathf.Min(audioSong.length - 1f, time);
-            
+
             ActivateNoteToRelativePosition();
         }
 
@@ -207,13 +207,13 @@ namespace Utilities
 
         public void FastBackwards(int seconds)
         {
-            mapScroller.transform.position += new Vector3(0f, 4 * seconds, 0f);
+            mapScroller.transform.position += new Vector3(0f, mapScroller.Bps * seconds, 0f);
 
             if (mapScroller.transform.position.y > 0) mapScroller.transform.position = Vector3.zero;
 
             float time = SoundManager.Instance.backgroundAudioSource.time - seconds;
             SoundManager.Instance.backgroundAudioSource.time = Mathf.Max(0, time);
-            
+
             ActivateNoteToRelativePosition();
         }
 
@@ -274,6 +274,7 @@ namespace Utilities
             touchParticle.transform.position = position;
         }
 
+        //TODO: why has to press 2 times to set song
         public void StartCreating(string mapName)
         {
             if (IsMapNameEmpty(mapName)) return;
@@ -287,7 +288,6 @@ namespace Utilities
 
                 if (currentMap.Equals(mapName)) return;
 
-                SaveMap(currentMap);
                 Destroy(m_CurrentMapGameObject);
 
                 CreateMapHolder(mapName);
@@ -375,9 +375,26 @@ namespace Utilities
         public void DeleteSoundMap(string mapName)
         {
             if (IsMapNameEmpty(mapName)) return;
+
             ushort hashName = mapName.GetHashCodeUshort();
-            soundMaps.RemoveOne(map => map.ID == hashName);
-            SetState($"{mapName} was deleted successfully!");
+            SoundMap soundMap = soundMaps.Find(map => map.ID == hashName);
+
+            //TODO: also delete file scriptable or json in each case
+            if (soundMap != null)
+            {
+                string audioPath = soundMap.audioPath;
+                if (File.Exists(audioPath)) File.Delete(audioPath);
+
+                soundMaps.Remove(soundMap);
+
+                SetState($"{mapName} was deleted successfully!");
+                
+                UpdateSongsList();
+            }
+            else
+            {
+                SetState($"{mapName} was not found!");
+            }
         }
 
         public void DeleteSoundMap() => DeleteSoundMap(songNameText.text);
@@ -460,6 +477,7 @@ namespace Utilities
 
 #if UNITY_EDITOR && !FORCE_JSON
                 string soundFilePath = audioSongsRelativePath + audioSong.name;
+
                 if (!File.Exists(soundFilePath)) File.Copy(audioClipPath ?? string.Empty, soundFilePath);
 
                 GetAudioClip(soundFilePath, clip =>
@@ -484,7 +502,6 @@ namespace Utilities
 
                 SaveLoadManager.SaveAsJsonFile(soundMap, folderPath, $"{soundMap.name}.json");
 #endif
-
                 mapScroller.SetSoundMap(soundMap);
             }
             else StartCreating(mapName);
@@ -535,7 +552,7 @@ namespace Utilities
                         audioSong = clip;
                         audioClipPath = path;
 
-                        songNameText.text = audioSong.name = Path.GetFileNameWithoutExtension(path);
+                        songNameText.text = Path.GetFileNameWithoutExtension(path);
 
                         SaveMap();
                     });
