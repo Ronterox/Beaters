@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7a70b254007ae41b034159925d59a0, type: 3}
   m_Name: KPoperActive
   m_EditorClassIdentifier: 
-  id: 1
-  kind: 0
+  kind: 1
+  effectDescription: 
   hasDuration: 1
-  effect: Inmunity
+  rechargeQuantity: 50
   duration: 2

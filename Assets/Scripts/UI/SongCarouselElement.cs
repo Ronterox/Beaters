@@ -39,7 +39,11 @@ namespace UI
                             LevelLoadManager.LoadArrowGameplayScene();
                         });
                     }
-                    else songImage.color = Color.gray;
+                    else
+                    {
+                        Color defaultColor = songImage.color;
+                        songImage.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, .5f);
+                    }
 
                     break;
             }

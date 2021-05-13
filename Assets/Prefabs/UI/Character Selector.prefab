@@ -159,8 +159,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 199043729359012102}
-        m_TargetAssemblyTypeName: General.CharacterSelector, Assembly-CSharp
-        m_MethodName: TravelCharacters
+        m_TargetAssemblyTypeName: General.ScriptableSelector`1[[ScriptableObjects.ScriptableCharacter,
+          Assembly-CSharp
+        m_MethodName: TravelObjects
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -897,8 +898,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 199043729359012102}
-        m_TargetAssemblyTypeName: General.CharacterSelector, Assembly-CSharp
-        m_MethodName: TravelCharacters
+        m_TargetAssemblyTypeName: General.ScriptableSelector`1[[ScriptableObjects.ScriptableCharacter,
+          Assembly-CSharp
+        m_MethodName: TravelObjects
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1207,9 +1209,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 199043729359012102}
-        m_TargetAssemblyTypeName: General.CharacterSelector, Assembly-CSharp
-        m_MethodName: TravelCharacters
+      - m_Target: {fileID: 3826981873533408227}
+        m_TargetAssemblyTypeName: General.ScriptableSelector`1[[ScriptableObjects.ScriptableRune,
+          Assembly-CSharp
+        m_MethodName: TravelObjects
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

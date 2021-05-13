@@ -21,7 +21,12 @@ namespace Managers
         public ScriptableCharacter[] characters;
         public Image playButton, gachaLogo, mapCreator;
 
-        private void Start() => SetCharacterGUI(GetCharacter());
+        private void Start()
+        {
+            if (DataManager.Instance.CharacterCount < 1) return;
+
+            SetCharacterGUI(GetCharacter());
+        }
 
         private ScriptableCharacter GetCharacter()
         {
@@ -30,7 +35,7 @@ namespace Managers
 
             ushort randomCharacter = DataManager.GetCharactersIds().GetRandom();
 
-            return characters.FirstOrDefault(c => c.ID == randomCharacter);
+            return characters.First(c => c.ID == randomCharacter);
         }
 
         private void SetCharacterGUI(ScriptableCharacter character)

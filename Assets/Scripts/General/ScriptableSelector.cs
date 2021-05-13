@@ -22,12 +22,18 @@ namespace General
                 if (objIds.Contains(obj.ID)) m_PlayerObjects.Add(obj);
             });
 
-            SetObject();
+            CheckAndSetObject();
         }
 
         public void TravelObjects(int index)
         {
             m_Index.ChangeValueLoop(index, m_PlayerObjects.Count);
+            CheckAndSetObject();
+        }
+
+        private void CheckAndSetObject()
+        {
+            if(m_PlayerObjects.Count < 1) return;
             SetObject();
         }
 
