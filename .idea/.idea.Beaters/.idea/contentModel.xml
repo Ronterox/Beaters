@@ -145,6 +145,14 @@
             <e p="GameplayManager.cs" t="Include" />
             <e p="LevelLoadManager.cs" t="Include" />
           </e>
+          <e p="Osu" t="Include">
+            <e p="CircleSpawner.cs" t="Include" />
+            <e p="CurvedLinePoint.cs" t="Include" />
+            <e p="GreatBadMove.cs" t="Include" />
+            <e p="OsuController.cs" t="Include" />
+            <e p="ScaleApproachCircle.cs" t="Include" />
+            <e p="SliderControl.cs" t="Include" />
+          </e>
           <e p="ScriptableObjects" t="Include">
             <e p="ScriptableCharacter.cs" t="Include" />
             <e p="ScriptableItem.cs" t="Include" />
@@ -172,6 +180,20 @@
           <e p="Distortion Shader.shader" t="Include" />
           <e p="TrailShader.shader" t="Include" />
           <e p="TrailShader2.shader" t="Include" />
+        </e>
+        <e p="Sprites" t="Include">
+          <e p="Interface" t="Include">
+            <e p="Gamer" t="Include">
+              <e p="Press_Start_2P" t="Include">
+                <e p="OFL.txt" t="Include" />
+              </e>
+            </e>
+            <e p="Metalhead" t="Include">
+              <e p="Creepster" t="Include">
+                <e p="OFL.txt" t="Include" />
+              </e>
+            </e>
+          </e>
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
