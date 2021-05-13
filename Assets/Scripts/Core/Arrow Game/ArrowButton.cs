@@ -19,6 +19,8 @@ namespace Core.Arrow_Game
         [Plugins.Properties.ReadOnly]
         public bool isNoteAbove;
 
+        public bool canBeClick = true;
+
 #if UNITY_ANDROID || UNITY_IPHONE
         private const int TOUCH_MAX_DISTANCE = 2;
 #endif
@@ -44,7 +46,7 @@ namespace Core.Arrow_Game
         //If slow and you need fps improvement you can reduce this code to be only on the CameraManager
         private void Update()
         {
-            if (Input.touchCount < 1) return;
+            if (!canBeClick || Input.touchCount < 1) return;
 
             foreach (Touch touch in Input.touches)
             {
@@ -65,7 +67,11 @@ namespace Core.Arrow_Game
             }
         }
 #else
-        private void OnMouseDown() => PressButton();
+        private void OnMouseDown()
+        {
+            if (!canBeClick) return;
+            PressButton();
+        }
 #endif
 
         private void CheckButton()

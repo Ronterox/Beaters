@@ -77,7 +77,7 @@ namespace Core.Arrow_Game
         {
             ResetPos();
             ResetChildren();
-            
+
             IsStarted = true;
 
             CameraManager.Instance.CanDoPanning = false;
@@ -89,7 +89,7 @@ namespace Core.Arrow_Game
             Action activateTimer = () =>
             {
                 startTimer.StartTimer(2);
-                SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, 0, false);
+                SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, false);
             };
 
             activateTimer.DelayAction(1f);

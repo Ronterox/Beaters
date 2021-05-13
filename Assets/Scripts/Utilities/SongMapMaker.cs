@@ -116,6 +116,8 @@ namespace Utilities
 
         [Header("Config")]
         public MapScroller mapScroller;
+        public ArrowButton[] playerButtons;
+
         [Header("Inputs")]
         public TMP_InputField songNameInputField;
         public TMP_InputField bpmInputField;
@@ -186,6 +188,8 @@ namespace Utilities
                     }
                 };
             }
+            
+            EnableButtons(false);
         }
 
         private void CleanPreview()
@@ -193,6 +197,8 @@ namespace Utilities
             preview.sprite = null;
             m_SelectedGameObject = null;
         }
+
+        private void EnableButtons(bool enable) => playerButtons.ForEach(button => button.canBeClick = enable);
 
         private void Update()
         {
@@ -224,7 +230,8 @@ namespace Utilities
             //Check for holding note and dropping
             if (!m_IsHoldingNote || !Input.GetMouseButtonUp(0)) return;
 
-            if (EventSystem.current.IsPointerOverGameObject() || Physics2D.CircleCast(mousePosition, .4f, Vector2.zero)) return;
+            if (EventSystem.current.IsPointerOverGameObject() || Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, mapScroller.notesLayer.value))
+                return;
 
             if (m_SelectedGameObject && m_CurrentMapGameObject)
             {
@@ -264,6 +271,8 @@ namespace Utilities
             }
             else
                 CreateMapHolder(mapName);
+            
+            EnableButtons(false);
         }
 
         private void SetState(string text)
@@ -327,6 +336,7 @@ namespace Utilities
             IsCreating = false;
             CleanPreview();
             SetState(mapScroller.IsStarted ? "Playing Map" : "Not working on mapName");
+            EnableButtons(true);
         }
 
         public void LoadMapsData()
