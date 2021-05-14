@@ -149,11 +149,11 @@ MonoBehaviour:
   characters:
   - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
   - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
+  backgroundImage: {fileID: 423129603}
   playButton: {fileID: 1376621055}
   gachaLogo: {fileID: 1967449828}
   mapCreator: {fileID: 779501458}
   exitGame: {fileID: 70327833}
-  backgroundImage: {fileID: 423129603}
   textsOfTheUI:
   - {fileID: 160156412}
   - {fileID: 83473789}
@@ -1550,7 +1550,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fa681ac3b56262e6eb51809b4851a574, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 64abc645a62680cf9b971a126a8323f5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1913,7 +1913,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 86abc72299bad40a18d28f7515ca0eeb, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

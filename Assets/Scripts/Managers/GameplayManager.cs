@@ -178,6 +178,8 @@ namespace Managers
         /// <param name="notes"></param>
         private void SetSongValues(float time, int notes)
         {
+            time = Mathf.Ceil(time) + 1f; //We add extra length to assure ending
+            
             songTimer.SetTimer(new TimerOptions(time, TimerType.Progressive, false));
             songTimer.onTimerStop += StopMap;
 
