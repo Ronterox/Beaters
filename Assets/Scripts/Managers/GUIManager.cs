@@ -57,7 +57,7 @@ namespace Managers
             SetSprite(backgroundImage, character.backgroundImage);
             SetSprite(exitGame, character.exitButton);
 
-            buttonsToChange.ForEach(button => button.sprite = character.buttonLayout);
+            buttonsToChange?.ForEach(button => button.sprite = character.buttonLayout);
             textsOfTheUI.ForEach(text => text.font = character.font);
         }
 

@@ -23,7 +23,8 @@ namespace Managers
             if (!canvasGroup) return;
 
             canvasGroup.alpha = Mathf.Abs(target - 1f);
-            Instance.transitionPanel.DOFade(target, duration).OnComplete(() =>
+            
+            m_Instance.transitionPanel.DOFade(target, duration).OnComplete(() =>
             {
                 canvasGroup.gameObject.SetActive(canvasGroup.alpha != 0);
                 onEnd?.Invoke();

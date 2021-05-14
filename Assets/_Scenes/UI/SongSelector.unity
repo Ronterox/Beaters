@@ -197,7 +197,7 @@ MonoBehaviour:
   scrollEase: 1
   songs:
   - {fileID: 11400000, guid: 28936ee0352193041acb5672697a0cb7, type: 2}
-  - {fileID: 11400000, guid: 5f8b35bea7b34baaabac79370c64b7d2, type: 2}
+  - {fileID: 11400000, guid: c55d69a3df050cb94ae1f9770e9aa08d, type: 2}
 --- !u!1 &80505898
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 80505899}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

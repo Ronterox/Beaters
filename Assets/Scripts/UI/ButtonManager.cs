@@ -1,3 +1,4 @@
+using Managers;
 using Plugins.Properties;
 using Plugins.Tools;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace UI
 
         private void Start() => menuButtons.ForEach(button => button.button.onClick.AddListener(() => LoadScene(button.scene)));
 
-        public void LoadScene(string sceneName) => SceneManager.LoadScene(sceneName);
+        public void LoadScene(string sceneName) => LevelLoadManager.LoadSceneWithTransition(sceneName, .5f);
 
         public void ReloadScene() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 

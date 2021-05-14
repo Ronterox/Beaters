@@ -884,6 +884,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &476340147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4543695422673645787, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+  m_PrefabInstance: {fileID: 3096899119470550244}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &476340149
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476340147}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &779501456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1200,7 @@ GameObject:
   - component: {fileID: 1058471119}
   - component: {fileID: 25}
   - component: {fileID: 1058471123}
+  - component: {fileID: 1058471124}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -1292,6 +1310,22 @@ MonoBehaviour:
     scene: Level Editor ArrowGame
   - button: {fileID: 3849721585298760674}
     scene: Settings
+--- !u!114 &1058471124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058471118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20038cba2dedfebb5b80d0ed57a7e130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroups:
+  - {fileID: 476340149}
+  - {fileID: 1086043732}
+  - {fileID: 1836214869}
 --- !u!1 &1086043730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,6 +1336,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1086043731}
   - component: {fileID: 3862029644205039548}
+  - component: {fileID: 1086043732}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -1330,6 +1365,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1086043732
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086043730}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1113045175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1826,6 +1873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1836214868}
   - component: {fileID: 3269861126704427533}
+  - component: {fileID: 1836214869}
   m_Layer: 5
   m_Name: MapCreator
   m_TagString: Untagged
@@ -1854,6 +1902,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1836214869
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836214867}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1967449826
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,7 +2274,7 @@ PrefabInstance:
     - target: {fileID: 6030510154323256982, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1058471123}
     - target: {fileID: 6030510154323256982, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
