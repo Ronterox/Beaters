@@ -23,8 +23,8 @@ namespace ScriptableObjects
         public Sprite[] sprites;
         [Space]
         public TMP_FontAsset font;
-        public Sprite playButton, gachaButton, mapCreator, exitButton;
-        public Sprite emptyStar, fullStar;
+        public Sprite playButton, gachaButton, mapCreator, emptyStar, fullStar, buttonLayout;
+        public bool usePrimaryColorInButtons;
     }
 
     [System.Serializable]
@@ -47,7 +47,6 @@ namespace ScriptableObjects
                 GUIImage.PaletteColor.complementaryColor2 => complementaryColor2,
                 _ => Color.red
             };
-
     }
 
 }

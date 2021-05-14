@@ -159,6 +159,12 @@ MonoBehaviour:
   - {fileID: 83473789}
   - {fileID: 1204340882}
   - {fileID: 882079756}
+  buttonsToChange:
+  - {fileID: 1810778603}
+  - {fileID: 1581845345}
+  - {fileID: 307036547}
+  - {fileID: 1024441419}
+  - {fileID: 1446643608}
 --- !u!114 &70327833 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3096899118936755587, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}

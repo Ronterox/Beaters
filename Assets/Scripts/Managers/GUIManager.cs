@@ -22,6 +22,7 @@ namespace Managers
         public Image playButton, gachaLogo, mapCreator, exitGame;
         public Image backgroundImage;
         public TMP_Text[] textsOfTheUI;
+        public Image[] buttonsToChange;
 
         private void Start()
         {
@@ -44,7 +45,8 @@ namespace Managers
         {
             Palette palette = character.colorPalette;
 
-            images.ForEach(image => image.image.color = palette.GetColor(image.paletteColor));
+            if(character.usePrimaryColorInButtons) foreach (GUIImage guiImage in images) guiImage.image.color = palette.GetColor(guiImage.paletteColor);
+            else foreach (GUIImage guiImage in images) guiImage.image.color = Color.white;
 
             SetSprite(playButton, character.playButton);
             SetSprite(gachaLogo, character.gachaButton);
@@ -52,6 +54,9 @@ namespace Managers
             SetSprite(backgroundImage, character.backgroundImage);
             SetSprite(exitGame, character.exitButton);
 
+            foreach(Image button in buttonsToChange){
+                button.sprite = character.buttonLayout;
+            }
             textsOfTheUI.ForEach(text => text.font = character.font);
         }
 
