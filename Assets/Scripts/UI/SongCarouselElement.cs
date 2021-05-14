@@ -2,6 +2,7 @@ using General;
 using Managers;
 using Plugins.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
 
@@ -19,17 +20,34 @@ namespace UI
             {
                 case SoundMap soundMap:
                     songName.text = soundMap.name;
-                    onClick.AddListener(() => GameManager.PutSoundMap(soundMap));
+                    onClick.AddListener(() =>
+                    {
+                        GameManager.PutSoundMap(soundMap);
+                        LevelLoadManager.LoadArrowGameplayScene();
+                    });
                     break;
                 case Song song:
                     songImage.sprite = song.songImage;
                     songName.text = song.soundMap.name;
-                    onClick.AddListener(() => GameManager.PutSoundMap(song));
+
+                    //TODO: Show item requirement to unlock song
+                    if (parameters[1] is bool isUnlock && isUnlock)
+                    {
+                        onClick.AddListener(() =>
+                        {
+                            GameManager.PutSoundMap(song);
+                            LevelLoadManager.LoadArrowGameplayScene();
+                        });
+                    }
+                    else
+                    {
+                        Color defaultColor = songImage.color;
+                        songImage.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, .5f);
+                    }
+
                     break;
             }
-            
-            onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
-            
+
             return this;
         }
     }

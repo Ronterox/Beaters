@@ -50,6 +50,12 @@ namespace UI
 
         private void Start()
         {
+            if (DataManager.Instance.CharacterCount < 1)
+            {
+                GetPrizeAndSummon();
+                return;
+            }
+            
             m_Data = DataManager.Instance.playerData;
 
             const int requiredTickets = 1, requiredCoins = 100;

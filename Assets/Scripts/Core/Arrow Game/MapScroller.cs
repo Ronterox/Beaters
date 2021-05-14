@@ -53,7 +53,7 @@ namespace Core.Arrow_Game
         public TimerUI startTimer;
 
         public bool IsStarted { get; private set; }
-        private float m_Bps;
+        private float m_bps;
 
         private bool m_WaitingForBeat;
         private WaitForSeconds m_WaitForSeconds;
@@ -76,11 +76,10 @@ namespace Core.Arrow_Game
         public void StartMap()
         {
             ResetPos();
+            ResetChildren();
+
             IsStarted = true;
-            
-            gameObject.ForEachChild(child => child.SetActiveChildren(false));
-            gameObject.ForEachChild(child => child.SetActiveChildren());
-            
+
             CameraManager.Instance.CanDoPanning = false;
 
             //Start Timer Setting
@@ -89,14 +88,59 @@ namespace Core.Arrow_Game
 
             Action activateTimer = () =>
             {
-                startTimer.StartTimer();
-                SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, 0, false);
+                startTimer.StartTimer(2);
+                SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, false);
             };
-            
+
             activateTimer.DelayAction(1f);
             //__________________
 
             print("Started Map!");
+        }
+
+        private void ResetChildren()
+        {
+            gameObject.ForEachChild(child => child.SetActiveChildren(false));
+            gameObject.ForEachChild(child => child.SetActiveChildren());
+        }
+
+        public void ResetMap()
+        {
+            StopMap();
+            ResetPos();
+            ResetChildren();
+        }
+
+        public void FastForward(int seconds)
+        {
+            transform.position -= new Vector3(0f, m_bps * seconds, 0f);
+
+            float time = SoundManager.Instance.backgroundAudioSource.time + seconds;
+            SoundManager.Instance.backgroundAudioSource.time = Mathf.Min(m_CurrentSong.length - 1f, time);
+
+            ActivateNoteToRelativePosition();
+        }
+
+        private void ActivateNoteToRelativePosition()
+        {
+            const float notesPositionY = -6f;
+            gameObject.ForEachChild(child =>
+            {
+                child.SetActive(child.transform.position.y > notesPositionY);
+                child.ForEachChild(c => c.SetActive(c.transform.position.y > notesPositionY));
+            });
+        }
+
+        public void FastBackwards(int seconds)
+        {
+            transform.position += new Vector3(0f, m_bps * seconds, 0f);
+
+            if (transform.position.y > 0) transform.position = Vector3.zero;
+
+            float time = SoundManager.Instance.backgroundAudioSource.time - seconds;
+            SoundManager.Instance.backgroundAudioSource.time = Mathf.Max(0, time);
+
+            ActivateNoteToRelativePosition();
         }
 
         public void ResetPos() => transform.position = Vector3.zero;
@@ -128,7 +172,7 @@ namespace Core.Arrow_Game
         {
             if (!IsStarted) return;
 
-            transform.position -= new Vector3(0f, m_Bps * SoundManager.songDeltaTime, 0f);
+            transform.position -= new Vector3(0f, m_bps * SoundManager.songDeltaTime, 0f);
 
             AnimateBeat();
         }
@@ -155,7 +199,7 @@ namespace Core.Arrow_Game
 
             m_CurrentSong = m_SoundMap.audioClip;
 
-            m_Bps = m_SoundMap.bpm / 60 * (float)difficulty;
+            m_bps = m_SoundMap.bpm / 60 * (float)difficulty;
 
             float songLength = m_SoundMap.audioClip.length;
 

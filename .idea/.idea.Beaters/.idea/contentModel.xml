@@ -133,7 +133,10 @@
           </e>
           <e p="General" t="Include">
             <e p="Character.cs" t="Include" />
-            <e p="CharacterSelector.cs" t="Include" />
+            <e p="CharacterScriptableSelector.cs" t="Include" />
+            <e p="IdentifiedScriptable.cs" t="Include" />
+            <e p="RuneScriptableSelector.cs" t="Include" />
+            <e p="ScriptableSelector.cs" t="Include" />
             <e p="Song.cs" t="Include" />
           </e>
           <e p="Managers" t="Include">
@@ -158,6 +161,10 @@
             <e p="ScriptableItem.cs" t="Include" />
             <e p="ScriptableRune.cs" t="Include" />
             <e p="ScriptableSkill.cs" t="Include" />
+          </e>
+          <e p="Skills" t="Include">
+            <e p="InmunitySkill.cs" t="Include" />
+            <e p="MultiplierSkill.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
             <e p="ButtonManager.cs" t="Include" />

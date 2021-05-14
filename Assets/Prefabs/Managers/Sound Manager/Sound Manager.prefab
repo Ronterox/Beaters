@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7548434342201279567
 Transform:
@@ -65,6 +65,7 @@ MonoBehaviour:
   inGameAudioMixer: {fileID: 0}
   uiAudioMixer: {fileID: 2855714549165702601, guid: f5cefdaaa4aec614989248d316f3fcc2, type: 2}
   inGamePoolerPrefab: {fileID: 0}
+  backgroundAudioSource: {fileID: 0}
 --- !u!82 &750487892365314622
 AudioSource:
   m_ObjectHideFlags: 0

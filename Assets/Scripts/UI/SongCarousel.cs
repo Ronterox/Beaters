@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using General;
+using Managers;
 using Plugins.Tools;
 using Plugins.UI;
 using UnityEngine.EventSystems;
@@ -26,9 +28,15 @@ namespace UI
             EventSystem.current.SetSelectedGameObject(SelectedElement.gameObject);
         }
 
-        public void CreateElements(object[] parameters)
+        public void CreateElements(SoundMap[] parameters)
         {
             for (var i = 0; i < parameters.Length; i++) CreateElement(i, i == 0).Setup(parameters[i]);
+        }
+        
+        public void CreateElements(Song[] parameters)
+        {
+            List<ushort> songIds = DataManager.GetRunesIds();
+            for (var i = 0; i < parameters.Length; i++) CreateElement(i, i == 0).Setup(parameters[i], songIds.Contains(parameters[i].ID));
         }
     }
 }

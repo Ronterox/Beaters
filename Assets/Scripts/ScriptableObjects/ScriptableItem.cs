@@ -1,13 +1,12 @@
-using Plugins.Tools;
+using General;
 using UnityEngine;
 
 namespace ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New Item", menuName = "Items/New Item")]
-    public class ScriptableItem : ScriptableObject
+    public class ScriptableItem : IdentifiedScriptable
     {
         public string itemName;
         public Sprite itemSprite;
-        public ushort ID => itemName.GetHashCodeUshort();
     }
 }

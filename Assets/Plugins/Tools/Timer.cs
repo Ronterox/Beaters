@@ -29,12 +29,19 @@ namespace Plugins.Tools
 
         public bool resetOnEnd;
         public float startTime;
+        private float m_TimeMultiplier = 1f;
+
         public delegate void TimerEvent();
 
         public TimerEvent onTimerStart, onTimerStop, onTimerEnd;
 
         public bool IsTimerStarted { get; private set; }
         public float CurrentTime => m_Timer;
+
+        private void Start()
+        {
+            if (m_TimeMultiplier <= 0) m_TimeMultiplier = 1;
+        }
 
         protected virtual void Update()
         {
@@ -45,13 +52,13 @@ namespace Plugins.Tools
 
         private void UpdateTimerProgressive()
         {
-            if (m_Timer < timerTime) m_Timer += Time.deltaTime;
+            if (m_Timer < timerTime) m_Timer += Time.deltaTime * m_TimeMultiplier;
             else CallEvents();
         }
 
         private void UpdateTimerRegressive()
         {
-            if (m_Timer > 0) m_Timer -= Time.deltaTime;
+            if (m_Timer > 0) m_Timer -= Time.deltaTime * m_TimeMultiplier;
             else CallEvents();
         }
 
@@ -68,11 +75,12 @@ namespace Plugins.Tools
 
         public void ResetTimer() => m_Timer = type == TimerType.Progressive ? startTime : timerTime;
 
-        public void StartTimer()
+        public void StartTimer(float multiplier = 1f)
         {
             ResetTimer();
             IsTimerStarted = true;
             onTimerStart?.Invoke();
+            m_TimeMultiplier = multiplier;
         }
 
         public void StopTimer()
