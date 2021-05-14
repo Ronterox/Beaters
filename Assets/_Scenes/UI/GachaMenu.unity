@@ -2468,7 +2468,6 @@ GameObject:
   - component: {fileID: 7979172281049003473}
   - component: {fileID: 7979172281049003479}
   - component: {fileID: 7979172281049003472}
-  - component: {fileID: 7979172281049003475}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -2476,23 +2475,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &7979172281049003475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7979172281049003474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fc1d1da2e97e08d9acccdf4208c765b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuButtons:
-  - button: {fileID: 1345582636}
-    scene: Settings
-  - button: {fileID: 1345582635}
-    scene: MainMenu
 --- !u!222 &7979172281049003479
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2717,6 +2699,7 @@ GameObject:
   - component: {fileID: 7979172281555303196}
   - component: {fileID: 7979172281555303198}
   - component: {fileID: 7979172281555303199}
+  - component: {fileID: 7979172281555303200}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -2817,6 +2800,23 @@ MonoBehaviour:
   - {fileID: 310757202}
   - {fileID: 624471502}
   - {fileID: 7979172281630506975}
+--- !u!114 &7979172281555303200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979172281555303197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc1d1da2e97e08d9acccdf4208c765b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuButtons:
+  - button: {fileID: 1345582636}
+    scene: Settings
+  - button: {fileID: 1345582635}
+    scene: MainMenu
 --- !u!224 &7979172281630506968
 RectTransform:
   m_ObjectHideFlags: 0

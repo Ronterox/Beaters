@@ -735,7 +735,6 @@ GameObject:
   - component: {fileID: 423129602}
   - component: {fileID: 423129604}
   - component: {fileID: 423129603}
-  - component: {fileID: 423129605}
   - component: {fileID: 423129606}
   m_Layer: 5
   m_Name: MainMenu
@@ -803,27 +802,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423129601}
   m_CullTransparentMesh: 1
---- !u!114 &423129605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423129601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fc1d1da2e97e08d9acccdf4208c765b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuButtons:
-  - button: {fileID: 3538890165475891961}
-    scene: SongSelector
-  - button: {fileID: 8447126383553650148}
-    scene: GachaMenu
-  - button: {fileID: 5724254575178323554}
-    scene: Level Editor ArrowGame
-  - button: {fileID: 3849721585298760674}
-    scene: Settings
 --- !u!95 &423129606
 Animator:
   serializedVersion: 3
@@ -1141,6 +1119,7 @@ GameObject:
   - component: {fileID: 1058471120}
   - component: {fileID: 1058471119}
   - component: {fileID: 25}
+  - component: {fileID: 1058471123}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -1229,6 +1208,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1058471123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058471118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc1d1da2e97e08d9acccdf4208c765b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuButtons:
+  - button: {fileID: 3538890165475891961}
+    scene: SongSelector
+  - button: {fileID: 8447126383553650148}
+    scene: GachaMenu
+  - button: {fileID: 5724254575178323554}
+    scene: Level Editor ArrowGame
+  - button: {fileID: 3849721585298760674}
+    scene: Settings
 --- !u!1 &1086043730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,7 +2151,7 @@ PrefabInstance:
     - target: {fileID: 6030510154323256982, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 423129605}
+      objectReference: {fileID: 0}
     - target: {fileID: 6030510154323256982, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
