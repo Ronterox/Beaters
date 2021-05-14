@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Managers
 {
     [AddComponentMenu("Penguins Mafia/Managers/Achievement Manager")]
-    public class ArchievementsManager : Singleton<ArchievementsManager>
+    public class ArchievementsManager : PersistentSingleton<ArchievementsManager>
     {
         [System.Serializable]
         public class Achievement
