@@ -1,0 +1,698 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
+  m_Name: TTFAF
+  m_EditorClassIdentifier: 
+  songImage: {fileID: 21300000, guid: b7e73b010fd3db7b1b0bea3fe5600cb0, type: 3}
+  soundMap:
+    name: TTFAF
+    mapCreator: 
+    bpm: 120
+    genre: 1
+    audioClip: {fileID: 8300000, guid: 8493b3c175fc00309a2bfa94517b9941, type: 3}
+    audioPath: /dades/dades/Rebecca/ProjecteFinal/Beaters/beaters/Assets/Audio/Songs/Through
+      The Fire And Flames (1).mp3
+    notes:
+    - id: 1
+      x: -1
+      y: -2
+      z: 0
+    - id: 0
+      x: -3
+      y: -1
+      z: 0
+    - id: 0
+      x: -3
+      y: 1
+      z: 0
+    - id: 2
+      x: 3
+      y: 0
+      z: 0
+    - id: 3
+      x: 1
+      y: -1
+      z: 0
+    - id: 1
+      x: -1
+      y: 1
+      z: 0
+    - id: 3
+      x: 1
+      y: 2
+      z: 0
+    - id: 2
+      x: 3
+      y: 3
+      z: 0
+    - id: 0
+      x: -3
+      y: 3
+      z: 0
+    - id: 1
+      x: -1
+      y: 4
+      z: 0
+    - id: 3
+      x: 1
+      y: 6
+      z: 0
+    - id: 2
+      x: 3
+      y: 5
+      z: 0
+    - id: 2
+      x: 3
+      y: 7
+      z: 0
+    - id: 3
+      x: 1
+      y: 8
+      z: 0
+    - id: 1
+      x: -1
+      y: 9
+      z: 0
+    - id: 3
+      x: 1
+      y: 10
+      z: 0
+    - id: 2
+      x: 3
+      y: 11
+      z: 0
+    - id: 1
+      x: -1
+      y: 12
+      z: 0
+    - id: 3
+      x: 1
+      y: 13
+      z: 0
+    - id: 2
+      x: 3
+      y: 14
+      z: 0
+    - id: 3
+      x: 1
+      y: 15
+      z: 0
+    - id: 3
+      x: 1
+      y: 16
+      z: 0
+    - id: 2
+      x: 3
+      y: 17
+      z: 0
+    - id: 2
+      x: 3
+      y: 19
+      z: 0
+    - id: 3
+      x: 1
+      y: 20
+      z: 0
+    - id: 2
+      x: 3
+      y: 21
+      z: 0
+    - id: 3
+      x: 1
+      y: 22
+      z: 0
+    - id: 1
+      x: -1
+      y: 23
+      z: 0
+    - id: 3
+      x: 1
+      y: 24
+      z: 0
+    - id: 2
+      x: 3
+      y: 25
+      z: 0
+    - id: 1
+      x: -1
+      y: 26
+      z: 0
+    - id: 3
+      x: 1
+      y: 27
+      z: 0
+    - id: 2
+      x: 3
+      y: 28
+      z: 0
+    - id: 3
+      x: 1
+      y: 29
+      z: 0
+    - id: 2
+      x: 3
+      y: 30
+      z: 0
+    - id: 3
+      x: 1
+      y: 31
+      z: 0
+    - id: 2
+      x: 3
+      y: 32
+      z: 0
+    - id: 1
+      x: -1
+      y: 33
+      z: 0
+    - id: 2
+      x: 3
+      y: 34
+      z: 0
+    - id: 3
+      x: 1
+      y: 35
+      z: 0
+    - id: 2
+      x: 3
+      y: 36
+      z: 0
+    - id: 3
+      x: 1
+      y: 37
+      z: 0
+    - id: 1
+      x: -1
+      y: 38
+      z: 0
+    - id: 3
+      x: 1
+      y: 39
+      z: 0
+    - id: 1
+      x: -1
+      y: 41
+      z: 0
+    - id: 3
+      x: 1
+      y: 42
+      z: 0
+    - id: 2
+      x: 3
+      y: 43
+      z: 0
+    - id: 2
+      x: 3
+      y: 44
+      z: 0
+    - id: 3
+      x: 1
+      y: 45
+      z: 0
+    - id: 2
+      x: 3
+      y: 46
+      z: 0
+    - id: 3
+      x: 1
+      y: 47
+      z: 0
+    - id: 3
+      x: 1
+      y: 48
+      z: 0
+    - id: 0
+      x: -3
+      y: 7
+      z: 0
+    - id: 0
+      x: -3
+      y: 9
+      z: 0
+    - id: 0
+      x: -3
+      y: 11
+      z: 0
+    - id: 0
+      x: -3
+      y: 13
+      z: 0
+    - id: 1
+      x: -1
+      y: 18
+      z: 0
+    - id: 0
+      x: -3
+      y: 15
+      z: 0
+    - id: 0
+      x: -3
+      y: 17
+      z: 0
+    - id: 0
+      x: -3
+      y: 19
+      z: 0
+    - id: 0
+      x: -3
+      y: 21
+      z: 0
+    - id: 0
+      x: -3
+      y: 23
+      z: 0
+    - id: 0
+      x: -3
+      y: 25
+      z: 0
+    - id: 0
+      x: -3
+      y: 27
+      z: 0
+    - id: 0
+      x: -3
+      y: 29
+      z: 0
+    - id: 0
+      x: -3
+      y: 31
+      z: 0
+    - id: 0
+      x: -3
+      y: 33
+      z: 0
+    - id: 0
+      x: -3
+      y: 35
+      z: 0
+    - id: 0
+      x: -3
+      y: 37
+      z: 0
+    - id: 0
+      x: -3
+      y: 39
+      z: 0
+    - id: 0
+      x: -3
+      y: 41
+      z: 0
+    - id: 0
+      x: -3
+      y: 43
+      z: 0
+    - id: 0
+      x: -3
+      y: 45
+      z: 0
+    - id: 0
+      x: -3
+      y: 47
+      z: 0
+    - id: 0
+      x: -3
+      y: 49
+      z: 0
+    - id: 1
+      x: -1
+      y: 49
+      z: 0
+    - id: 0
+      x: -3
+      y: 5
+      z: 0
+    - id: 3
+      x: 1
+      y: 50
+      z: 0
+    - id: 2
+      x: 3
+      y: 51
+      z: 0
+    - id: 3
+      x: 1
+      y: 53
+      z: 0
+    - id: 1
+      x: -1
+      y: 52
+      z: 0
+    - id: 2
+      x: 3
+      y: 54
+      z: 0
+    - id: 3
+      x: 1
+      y: 55
+      z: 0
+    - id: 2
+      x: 3
+      y: 56
+      z: 0
+    - id: 1
+      x: -1
+      y: 58
+      z: 0
+    - id: 3
+      x: 1
+      y: 57
+      z: 0
+    - id: 3
+      x: 1
+      y: 59
+      z: 0
+    - id: 2
+      x: 3
+      y: 60
+      z: 0
+    - id: 1
+      x: -1
+      y: 61
+      z: 0
+    - id: 3
+      x: 1
+      y: 62
+      z: 0
+    - id: 2
+      x: 3
+      y: 63
+      z: 0
+    - id: 3
+      x: 1
+      y: 64
+      z: 0
+    - id: 2
+      x: 3
+      y: 65
+      z: 0
+    - id: 3
+      x: 1
+      y: 66
+      z: 0
+    - id: 2
+      x: 3
+      y: 67
+      z: 0
+    - id: 1
+      x: -1
+      y: 68
+      z: 0
+    - id: 3
+      x: 1
+      y: 69
+      z: 0
+    - id: 2
+      x: 3
+      y: 70
+      z: 0
+    - id: 1
+      x: -1
+      y: 71
+      z: 0
+    - id: 3
+      x: 1
+      y: 72
+      z: 0
+    - id: 2
+      x: 3
+      y: 73
+      z: 0
+    - id: 3
+      x: 1
+      y: 74
+      z: 0
+    - id: 2
+      x: 3
+      y: 75
+      z: 0
+    - id: 3
+      x: 1
+      y: 76
+      z: 0
+    - id: 2
+      x: 3
+      y: 77
+      z: 0
+    - id: 1
+      x: -1
+      y: 78
+      z: 0
+    - id: 3
+      x: 1
+      y: 79
+      z: 0
+    - id: 2
+      x: 3
+      y: 80
+      z: 0
+    - id: 1
+      x: -1
+      y: 81
+      z: 0
+    - id: 3
+      x: 1
+      y: 82
+      z: 0
+    - id: 2
+      x: 3
+      y: 83
+      z: 0
+    - id: 3
+      x: 1
+      y: 84
+      z: 0
+    - id: 2
+      x: 3
+      y: 85
+      z: 0
+    - id: 3
+      x: 1
+      y: 86
+      z: 0
+    - id: 2
+      x: 3
+      y: 87
+      z: 0
+    - id: 1
+      x: -1
+      y: 88
+      z: 0
+    - id: 3
+      x: 1
+      y: 89
+      z: 0
+    - id: 2
+      x: 3
+      y: 90
+      z: 0
+    - id: 3
+      x: 1
+      y: 91
+      z: 0
+    - id: 2
+      x: 3
+      y: 92
+      z: 0
+    - id: 3
+      x: 1
+      y: 93
+      z: 0
+    - id: 2
+      x: 3
+      y: 94
+      z: 0
+    - id: 0
+      x: -3
+      y: 51
+      z: 0
+    - id: 0
+      x: -3
+      y: 53
+      z: 0
+    - id: 0
+      x: -3
+      y: 55
+      z: 0
+    - id: 0
+      x: -3
+      y: 57
+      z: 0
+    - id: 0
+      x: -3
+      y: 59
+      z: 0
+    - id: 0
+      x: -3
+      y: 61
+      z: 0
+    - id: 0
+      x: -3
+      y: 63
+      z: 0
+    - id: 0
+      x: -3
+      y: 65
+      z: 0
+    - id: 0
+      x: -3
+      y: 67
+      z: 0
+    - id: 0
+      x: -3
+      y: 69
+      z: 0
+    - id: 0
+      x: -3
+      y: 71
+      z: 0
+    - id: 0
+      x: -3
+      y: 73
+      z: 0
+    - id: 0
+      x: -3
+      y: 75
+      z: 0
+    - id: 0
+      x: -3
+      y: 77
+      z: 0
+    - id: 0
+      x: -3
+      y: 79
+      z: 0
+    - id: 0
+      x: -3
+      y: 81
+      z: 0
+    - id: 0
+      x: -3
+      y: 83
+      z: 0
+    - id: 0
+      x: -3
+      y: 85
+      z: 0
+    - id: 0
+      x: -3
+      y: 87
+      z: 0
+    - id: 0
+      x: -3
+      y: 89
+      z: 0
+    - id: 0
+      x: -3
+      y: 91
+      z: 0
+    - id: 0
+      x: -3
+      y: 93
+      z: 0
+    - id: 0
+      x: -3
+      y: 95
+      z: 0
+    - id: 1
+      x: -1
+      y: 95
+      z: 0
+    - id: 3
+      x: 1
+      y: 96
+      z: 0
+    - id: 2
+      x: 3
+      y: 97
+      z: 0
+    - id: 1
+      x: -1
+      y: 98
+      z: 0
+    - id: 3
+      x: 1
+      y: 99
+      z: 0
+    - id: 1
+      x: -1
+      y: 101
+      z: 0
+    - id: 2
+      x: 3
+      y: 100
+      z: 0
+    - id: 3
+      x: 1
+      y: 102
+      z: 0
+    - id: 2
+      x: 3
+      y: 103
+      z: 0
+    - id: 0
+      x: -3
+      y: 97
+      z: 0
+    - id: 0
+      x: -3
+      y: 99
+      z: 0
+    - id: 0
+      x: -3
+      y: 101
+      z: 0
+    - id: 0
+      x: -3
+      y: 103
+      z: 0
+    - id: 3
+      x: 1
+      y: 104
+      z: 0
+    - id: 2
+      x: 3
+      y: 105
+      z: 0
+    - id: 0
+      x: -3
+      y: 105
+      z: 0
+    - id: 2
+      x: 3
+      y: 107
+      z: 0
+    - id: 3
+      x: 1
+      y: 108
+      z: 0
+    - id: 1
+      x: -1
+      y: 109
+      z: 0
+    - id: 0
+      x: -3
+      y: 110
+      z: 0
+    - id: 1
+      x: -1
+      y: 111
+      z: 0
+    - id: 3
+      x: 1
+      y: 112
+      z: 0
+    - id: 2
+      x: 3
+      y: 113
+      z: 0
+  requiredItem1: {fileID: 0}
+  requiredItem2: {fileID: 0}
