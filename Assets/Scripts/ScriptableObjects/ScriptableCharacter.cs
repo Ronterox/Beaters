@@ -10,7 +10,7 @@ namespace ScriptableObjects
         public string characterName;
         [TextArea] public string description;
 
-        public ScriptableSkill skill;
+        public ScriptableSkill activeSkill, passiveSkill;
         public Palette colorPalette;
         public Sprite[] sprites;
         public int hp;
@@ -25,6 +25,11 @@ namespace ScriptableObjects
         public Color mainColor, secondaryColor;
         public Color complementaryColor1, complementaryColor2;
 
+        /// <summary>
+        /// Obtains a the color version of the palette color enum selected
+        /// </summary>
+        /// <param name="paletteColor">color member of the palette</param>
+        /// <returns></returns>
         public Color GetColor(GUIImage.PaletteColor paletteColor) =>
             paletteColor switch
             {

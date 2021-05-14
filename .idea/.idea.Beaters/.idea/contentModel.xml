@@ -154,6 +154,10 @@
             <e p="ScriptableRune.cs" t="Include" />
             <e p="ScriptableSkill.cs" t="Include" />
           </e>
+          <e p="Skills" t="Include">
+            <e p="InmunitySkill.cs" t="Include" />
+            <e p="MultiplierSkill.cs" t="Include" />
+          </e>
           <e p="UI" t="Include">
             <e p="ButtonManager.cs" t="Include" />
             <e p="Editor" t="Include">

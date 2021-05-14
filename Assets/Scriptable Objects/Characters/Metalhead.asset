@@ -15,7 +15,8 @@ MonoBehaviour:
   characterName: Metalhead
   description: Just wanna rock all day everyday, loves guitar solos with sick licks
     at atleast 200bpm
-  skill: {fileID: 0}
+  activeSkill: {fileID: 11400000, guid: 948f0281195ff69a784e10e80db1ac19, type: 2}
+  passiveSkill: {fileID: 11400000, guid: a855efc5c9558b17e97eeb5d91754496, type: 2}
   colorPalette:
     mainColor: {r: 0, g: 0, b: 0, a: 1}
     secondaryColor: {r: 0.6886792, g: 0, b: 0, a: 1}
