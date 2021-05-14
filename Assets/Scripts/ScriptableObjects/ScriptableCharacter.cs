@@ -10,18 +10,20 @@ namespace ScriptableObjects
     {
         public string characterName;
         [TextArea] public string description;
-        
 
+        [Header("Stats")]
+        public int hp;
+        public float multiplier;
         public ScriptableSkill activeSkill, passiveSkill;
+
+        [Header("Visuals")]
         public Sprite backgroundImage;
         public Palette colorPalette;
         public Sprite[] sprites;
-        public int hp;
-        public float multiplier;
+        [Space]
         public TMP_FontAsset font;
-
-        public Sprite playButton, gachaButton, mapCreator, emptyStar, fullStar;
-        public ushort ID => characterName.GetHashCodeUshort();
+        public Sprite playButton, gachaButton, mapCreator, exitButton;
+        public Sprite emptyStar, fullStar;
     }
 
     [System.Serializable]

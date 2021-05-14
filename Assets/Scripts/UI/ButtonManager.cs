@@ -9,7 +9,7 @@ namespace UI
     [System.Serializable]
     public struct MenuButton
     {
-        public Button selectableButton;
+        public Button button;
         [Scene]
         public string scene;
     }
@@ -18,7 +18,7 @@ namespace UI
     {
         public MenuButton[] menuButtons;
 
-        private void Start() => menuButtons.ForEach(button => button.selectableButton.onClick.AddListener(() => LoadScene(button.scene)));
+        private void Start() => menuButtons.ForEach(button => button.button.onClick.AddListener(() => LoadScene(button.scene)));
 
         public void LoadScene(string sceneName) => SceneManager.LoadScene(sceneName);
 

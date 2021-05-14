@@ -44,17 +44,20 @@ namespace Managers
         {
             Palette palette = character.colorPalette;
 
-            foreach (GUIImage guiImage in images) guiImage.image.color = palette.GetColor(guiImage.paletteColor);
+            images.ForEach(image => image.image.color = palette.GetColor(image.paletteColor));
 
-            if(playButton) playButton.sprite = character.playButton;
-            if(gachaLogo) gachaLogo.sprite = character.gachaButton;
-            if(mapCreator) mapCreator.sprite = character.mapCreator;
-            backgroundImage.sprite = character.backgroundImage;
+            SetSprite(playButton, character.playButton);
+            SetSprite(gachaLogo, character.gachaButton);
+            SetSprite(mapCreator, character.mapCreator);
+            SetSprite(backgroundImage, character.backgroundImage);
+            SetSprite(exitGame, character.exitButton);
 
-            foreach (TMP_Text text in textsOfTheUI)
-            {
-                text.font = character.font;
-            }
+            textsOfTheUI.ForEach(text => text.font = character.font);
+        }
+
+        private void SetSprite(Image image, Sprite sprite)
+        {
+            if (sprite && image) image.sprite = sprite;
         }
     }
 }

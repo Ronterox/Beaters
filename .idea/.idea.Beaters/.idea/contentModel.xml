@@ -145,6 +145,7 @@
             <e p="DataManager.cs" t="Include" />
             <e p="GUIManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
+            <e p="GameOverScript.cs" t="Include" />
             <e p="GameplayManager.cs" t="Include" />
             <e p="LevelLoadManager.cs" t="Include" />
           </e>
