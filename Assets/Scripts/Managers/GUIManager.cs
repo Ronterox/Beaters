@@ -18,9 +18,12 @@ namespace Managers
     public class GUIManager : MonoBehaviour
     {
         public GUIImage[] images;
+        [Space]
         public ScriptableCharacter[] characters;
-        public Image playButton, gachaLogo, mapCreator, exitGame;
+        [Space]
         public Image backgroundImage;
+        public Image playButton, gachaLogo, mapCreator, exitGame;
+        [Space]
         public TMP_Text[] textsOfTheUI;
         public Image[] buttonsToChange;
 
@@ -45,8 +48,8 @@ namespace Managers
         {
             Palette palette = character.colorPalette;
 
-            if(character.usePrimaryColorInButtons) foreach (GUIImage guiImage in images) guiImage.image.color = palette.GetColor(guiImage.paletteColor);
-            else foreach (GUIImage guiImage in images) guiImage.image.color = Color.white;
+            if (character.usePrimaryColorInButtons) images.ForEach(image => image.image.color = palette.GetColor(image.paletteColor));
+            else images.ForEach(image => image.image.color = Color.white);
 
             SetSprite(playButton, character.playButton);
             SetSprite(gachaLogo, character.gachaButton);
@@ -54,9 +57,7 @@ namespace Managers
             SetSprite(backgroundImage, character.backgroundImage);
             SetSprite(exitGame, character.exitButton);
 
-            foreach(Image button in buttonsToChange){
-                button.sprite = character.buttonLayout;
-            }
+            buttonsToChange.ForEach(button => button.sprite = character.buttonLayout);
             textsOfTheUI.ForEach(text => text.font = character.font);
         }
 

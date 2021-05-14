@@ -9,11 +9,6 @@
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Fonts" t="Include">
-          <e p="Kpop" t="Include">
-            <e p="OFL.txt" t="Include" />
-          </e>
-        </e>
         <e p="Plugins" t="Include">
           <e p="Audio" t="Include">
             <e p="ObjectPool.cs" t="Include" />
@@ -171,6 +166,8 @@
               <e p="SongCarouselEditor.cs" t="Include" />
             </e>
             <e p="GachaManager.cs" t="Include" />
+            <e p="LockedSongScreen.cs" t="Include" />
+            <e p="RecordScreen.cs" t="Include" />
             <e p="SongCarousel.cs" t="Include" />
             <e p="SongCarouselElement.cs" t="Include" />
           </e>
@@ -191,6 +188,11 @@
           <e p="Interface" t="Include">
             <e p="Gamer" t="Include">
               <e p="Press_Start_2P" t="Include">
+                <e p="OFL.txt" t="Include" />
+              </e>
+            </e>
+            <e p="Kpoper" t="Include">
+              <e p="Kpop" t="Include">
                 <e p="OFL.txt" t="Include" />
               </e>
             </e>
