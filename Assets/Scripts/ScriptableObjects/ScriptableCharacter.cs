@@ -19,8 +19,9 @@ namespace ScriptableObjects
         public float multiplier;
         public TMP_FontAsset font;
 
-        public Sprite playButton, gachaButton, mapCreator, emptyStar, fullStar;
+        public Sprite playButton, gachaButton, mapCreator, emptyStar, fullStar, buttonLayout;
         public ushort ID => characterName.GetHashCodeUshort();
+        public bool usePrimaryColorInButtons;
     }
 
     [System.Serializable]
@@ -38,7 +39,6 @@ namespace ScriptableObjects
                 GUIImage.PaletteColor.complementaryColor2 => complementaryColor2,
                 _ => Color.red
             };
-
     }
 
 }

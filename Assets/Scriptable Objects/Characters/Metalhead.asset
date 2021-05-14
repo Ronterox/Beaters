@@ -15,10 +15,11 @@ MonoBehaviour:
   characterName: Metalhead
   description: Just wanna rock all day everyday, loves guitar solos with at least
     200bpm
+  backgroundImage: {fileID: 21300000, guid: 54a427f8496dab7d79f20c136919b459, type: 3}
   skill: []
   colorPalette:
     mainColor: {r: 0, g: 0, b: 0, a: 1}
-    secondaryColor: {r: 0.6886792, g: 0, b: 0, a: 1}
+    secondaryColor: {r: 0.41960785, g: 0, b: 0, a: 1}
     complementaryColor1: {r: 0, g: 0.7924528, b: 0.14836839, a: 1}
     complementaryColor2: {r: 0.045907274, g: 0, b: 0.8018868, a: 0}
   sprites:
@@ -29,6 +30,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f6ae56a8cd9ce7c4d9414f7c14498a5b, type: 3}
   hp: 100
   multiplier: 0
-  playButton: {fileID: 0}
-  gachaButton: {fileID: 0}
-  mapCreator: {fileID: 0}
+  font: {fileID: 11400000, guid: be7bf88e9ff9289ad8c6671950e2c2ae, type: 2}
+  playButton: {fileID: 21300000, guid: a9dc130401b134b1b8ee5672f8336856, type: 3}
+  gachaButton: {fileID: 21300000, guid: 6f648409c0a29f19a8a323d46d4bd72c, type: 3}
+  mapCreator: {fileID: 21300000, guid: 1475b954eac4420a89b2454a992f5ad3, type: 3}
+  emptyStar: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  fullStar: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  buttonLayout: {fileID: 21300000, guid: 7fa8b60a517dd3fe39ffe58b855279df, type: 3}

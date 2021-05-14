@@ -19,8 +19,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e6c9e700ddd337c70b5be58061756b48, type: 2}
   - {fileID: 11400000, guid: e1f23ebad1fc95b03a7abc388fea2efe, type: 2}
   colorPalette:
-    mainColor: {r: 1, g: 0.6462264, b: 0.923475, a: 1}
-    secondaryColor: {r: 0.67870766, g: 1, b: 0.5235849, a: 1}
+    mainColor: {r: 0.9245283, g: 0.745728, b: 0.8847949, a: 1}
+    secondaryColor: {r: 1, g: 0.3160377, b: 0.9506963, a: 1}
     complementaryColor1: {r: 0.5990566, g: 1, b: 0.9565443, a: 1}
     complementaryColor2: {r: 1, g: 0.514151, b: 0.514151, a: 0}
   sprites:
@@ -31,7 +31,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0bb120e0f55b19162bd917d90cbe5cba, type: 3}
   hp: 120
   multiplier: 0
-  font: {fileID: 0}
-  playButton: {fileID: 0}
-  gachaButton: {fileID: 21300000, guid: 5316c682b3e4e26e78a6da7f87c2f584, type: 3}
-  mapCreator: {fileID: 0}
+  font: {fileID: 11400000, guid: 6922b08e7a3f9a23396a9d564e4b03d2, type: 2}
+  playButton: {fileID: 21300000, guid: 64abc645a62680cf9b971a126a8323f5, type: 3}
+  gachaButton: {fileID: 21300000, guid: 21d6d41a672b539478924cd1361623b7, type: 3}
+  mapCreator: {fileID: 21300000, guid: 1475b954eac4420a89b2454a992f5ad3, type: 3}
+  emptyStar: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  fullStar: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  buttonLayout: {fileID: 21300000, guid: 5d4802dd4b8a94e7ebdc8356540ff66e, type: 3}
