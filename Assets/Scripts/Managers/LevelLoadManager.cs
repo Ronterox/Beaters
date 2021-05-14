@@ -11,7 +11,7 @@ namespace Managers
     {
         public float transitionDuration;
         [Scene]
-        public string arrowGameplayScene;
+        public string arrowGameplayScene, mainMenuScene;
         public CanvasGroup transitionPanel;
 
         private void Start() => OpenTransition(transitionDuration);
@@ -37,5 +37,7 @@ namespace Managers
         public static void LoadSceneWithTransition(string scene, float duration) => CloseTransition(duration, () => SceneManager.LoadScene(scene));
 
         public static void LoadArrowGameplayScene() => LoadSceneWithTransition(m_Instance.arrowGameplayScene, m_Instance.transitionDuration);
+
+        public static void LoadMainMenu() => LoadSceneWithTransition(m_Instance.mainMenuScene, m_Instance.transitionDuration);
     }
 }

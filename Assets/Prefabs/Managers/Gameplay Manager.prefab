@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapScroller: {fileID: 0}
   gameCanvas: {fileID: 0}
-  endGamePanel: {fileID: 2670365767423413362, guid: 9dd7d2d323782507d976d4068a27f35e, type: 3}
+  endGamePanel: {fileID: 4994941090046625560, guid: e7b70cb13ff7cc2118996196e5c8ca2a, type: 3}
   pauseButton: {fileID: 0}
   songTimeBar: {fileID: 0}
   starsCounter: {fileID: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
   scoreBar: {fileID: 0}
   skillButton: {fileID: 0}
   skillBarSlider: {fileID: 0}
-  songTimer: {fileID: 0}
+  songTimer: {fileID: 6925172793618570845}
 --- !u!114 &6925172793618570845
 MonoBehaviour:
   m_ObjectHideFlags: 0

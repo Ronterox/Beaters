@@ -234,4 +234,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionDuration: 0.5
   arrowGameplayScene: Gameplay Arrows
+  mainMenuScene: MainMenu
   transitionPanel: {fileID: 6607651528312588466}
