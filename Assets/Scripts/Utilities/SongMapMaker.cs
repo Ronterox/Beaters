@@ -24,8 +24,9 @@ namespace Utilities
     [Serializable]
     public class SoundMap
     {
-        public string name;
+        public string name, mapCreator;
         public float bpm;
+        public Genre genre = Genre.Custom;
 
 #if !UNITY_EDITOR || FORCE_JSON
         [NonSerialized]
@@ -40,6 +41,12 @@ namespace Utilities
 
         public void SetNotes(Note[] newNotes) => notes = newNotes;
 
+        /// <summary>
+        /// Generates the map notes inside the set parent, based on the passed maker notes
+        /// </summary>
+        /// <param name="makerNotes"></param>
+        /// <param name="parent"></param>
+        /// <param name="generateCombo">optional parameter to see if you want to generate combo notes</param>
         public void GenerateNotes(MakerNote[] makerNotes, Transform parent, bool generateCombo = true)
         {
             //Check of generation of procedural combos, guitar hero style
@@ -49,7 +56,7 @@ namespace Utilities
                 var rng = new System.Random(length);
                 int comboCounter = 0, currentCombo = 0;
 
-                const int probability = 10, minComboLength = 5, maxComboLength = 8;
+                const int probability = 5, minComboLength = 5, maxComboLength = 8;
 
                 void GenerateNote(Note note)
                 {
@@ -63,7 +70,6 @@ namespace Utilities
                     noteObject.MakerId = makerNote.id;
 
                     //Check if need to continue a combo or if it generates one
-                    //TODO: probably add a cooldown for adding another combo
                     if (currentCombo != 0)
                     {
                         noteObject.SetCombo(currentCombo);

@@ -60,6 +60,7 @@ namespace Core.Arrow_Game
 
         private AudioClip m_CurrentSong;
         public int MapNotesQuantity => m_SoundMap.notes.Length;
+        public SoundMap SoundMap => m_SoundMap;
 
         private void Start()
         {

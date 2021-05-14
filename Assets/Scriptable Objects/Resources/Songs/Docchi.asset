@@ -15,7 +15,9 @@ MonoBehaviour:
   songImage: {fileID: 21300000, guid: 58ab7346c2bc7e010879092dbcccdc5a, type: 3}
   soundMap:
     name: Docchi
+    mapCreator: 
     bpm: 120
+    genre: 4
     audioClip: {fileID: 8300000, guid: 011db536459ded6db9194196d09d0304, type: 3}
     audioPath: /home/rontero/Documents/Unity Projects/Beaters/Assets/Audio/Songs/docchi.mp3
     notes:

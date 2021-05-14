@@ -10,6 +10,7 @@ namespace ScriptableObjects
     {
         public string characterName;
         [TextArea] public string description;
+        public Genre characterGenre;
 
         [Header("Stats")]
         public int hp;

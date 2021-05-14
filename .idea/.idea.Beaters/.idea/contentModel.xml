@@ -36,8 +36,6 @@
             <e p="readme.txt" t="Include" />
           </e>
           <e p="GUI" t="Include">
-            <e p="MainMenu.cs" t="Include" />
-            <e p="MenuButton.cs" t="Include" />
             <e p="PauseMenu.cs" t="Include" />
             <e p="SelectableButton.cs" t="Include" />
             <e p="SettingsMenu.cs" t="Include" />
@@ -145,7 +143,7 @@
             <e p="DataManager.cs" t="Include" />
             <e p="GUIManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
-            <e p="GameOverScript.cs" t="Include" />
+            <e p="GameOverPanel.cs" t="Include" />
             <e p="GameplayManager.cs" t="Include" />
             <e p="LevelLoadManager.cs" t="Include" />
           </e>

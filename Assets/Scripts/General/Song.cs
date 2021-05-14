@@ -10,7 +10,7 @@ namespace General
         public Sprite songImage;
         public SoundMap soundMap;
         [Space]
-        public ScriptableItem requiredItems;
+        public ScriptableItem requiredItem1, requiredItem2;
         
         public ushort ID => soundMap.ID;
     }

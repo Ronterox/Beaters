@@ -15,7 +15,9 @@ MonoBehaviour:
   songImage: {fileID: 21300000, guid: b7e73b010fd3db7b1b0bea3fe5600cb0, type: 3}
   soundMap:
     name: Zavodilla
+    mapCreator: 
     bpm: 130
+    genre: 2
     audioClip: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
     audioPath: /home/rontero/Documents/Unity Projects/Beaters/Assets/Audio/Songs/Zavodila
       (Vs Whitty Remix).mp3

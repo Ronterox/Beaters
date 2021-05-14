@@ -31,7 +31,7 @@ namespace UI
                     songName.text = song.soundMap.name;
 
                     //TODO: Show item requirement to unlock song
-                    if (parameters[1] is bool isUnlock && isUnlock)
+                    //if (parameters[1] is bool isUnlock && isUnlock)
                     {
                         onClick.AddListener(() =>
                         {
@@ -39,10 +39,10 @@ namespace UI
                             LevelLoadManager.LoadArrowGameplayScene();
                         });
                     }
-                    else
+                    //else
                     {
-                        Color defaultColor = songImage.color;
-                        songImage.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, .5f);
+                        //Color defaultColor = songImage.color;
+                        //songImage.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, .5f);
                     }
 
                     break;

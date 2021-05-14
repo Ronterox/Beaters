@@ -18,7 +18,8 @@ namespace Managers
         public Canvas gameCanvas;
         public GameObject endGamePanel;
         [Space]
-        public Button pauseButton; //TODO: be able to pause game
+        public Button pauseButton;
+        public GameObject pauseMenu;
 
         [Header("About Song")]
         public Slider songTimeBar;
@@ -37,7 +38,7 @@ namespace Managers
         public Timer songTimer;
 
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
-        private bool m_Started, m_Ended;
+        private bool m_Started, m_Ended, m_IsPaused;
 
         private int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
 
@@ -48,12 +49,13 @@ namespace Managers
         //POWERS RELATED VARIABLES
         public bool CanMiss { get; set; } = true;
 
-        private float m_Multiplier;
+        private float m_Multiplier = 1f;
         public float Multiplier
         {
             get => m_Multiplier;
             set => m_Multiplier = value <= 0 ? 1f : value;
         }
+        //------------------------
 
         protected override void Awake()
         {
@@ -62,7 +64,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Sets the gameplay values
         /// </summary>
         private void Start()
         {
@@ -71,6 +73,31 @@ namespace Managers
 
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
+            SetPauseButton();
+
+            SetCharacterSkills();
+
+            ResetValues();
+
+            StartMap();
+        }
+
+        /// <summary>
+        /// Sets the Pause Button Click Listener
+        /// </summary>
+        private void SetPauseButton() =>
+            pauseButton.onClick.AddListener(() =>
+            {
+                m_IsPaused = !m_IsPaused;
+                if (m_IsPaused) PauseMap();
+                else ResumeMap();
+            });
+
+        /// <summary>
+        /// Activates the passive and sets the active skill
+        /// </summary>
+        private void SetCharacterSkills()
+        {
             ScriptableCharacter character = GameManager.GetCharacter();
 
             //Use passive from the start
@@ -89,20 +116,16 @@ namespace Managers
                     skillBarSlider.value = 0;
                 }
             });
-
-            ResetValues();
-
-            StartMap();
         }
 
-        //TODO: comment all methods, pls
-
         /// <summary>
-        /// 
+        /// Resets all the values to 0, for a replay
         /// </summary>
         private void ResetValues()
         {
             //Reset slider and private values to 0
+            m_Ended = false;
+
             m_Combo = m_Score = m_StarsCount = m_Taps = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
             scoreBar.value = songTimeBar.value = skillBarSlider.value = 0;
 
@@ -112,7 +135,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Saves the time played on the scene and the taps done, if not ended
         /// </summary>
         private void OnDestroy()
         {
@@ -123,7 +146,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Updates the song time ui
         /// </summary>
         private void Update()
         {
@@ -132,7 +155,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Starts the whole gameplay
         /// </summary>
         public void StartMap()
         {
@@ -149,7 +172,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Sets the initial songs values for the ui
         /// </summary>
         /// <param name="time"></param>
         /// <param name="notes"></param>
@@ -163,27 +186,30 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Pauses gameplay and song timer but not time
         /// </summary>
         public void PauseMap()
         {
             m_Started = false;
             songTimer.PauseTimer();
             mapScroller.StopMap();
+            pauseMenu.SetActive(true);
         }
 
         /// <summary>
-        /// 
+        /// Resumes gameplay and song timer
         /// </summary>
         public void ResumeMap()
         {
             m_Started = true;
             songTimer.UnpauseTimer();
             mapScroller.ResumeMap();
+            pauseMenu.SetActive(false);
+            m_IsPaused = false;
         }
 
         /// <summary>
-        /// 
+        /// Ends the gameplay, and shows the end screen
         /// </summary>
         public void StopMap()
         {
@@ -196,7 +222,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Shows the end gameplay panel
         /// </summary>
         /// <param name="parentCanvas"></param>
         public void ShowEndGameplayPanel(Canvas parentCanvas)
@@ -210,13 +236,32 @@ namespace Managers
             m_Data.money += accuracyGain + comboGain;
             m_Data.tapsDone += m_Taps;
 
-            Instantiate(endGamePanel, parentCanvas.transform);
+            ScriptableCharacter character = GameManager.GetCharacter();
+            SoundMap soundMap = mapScroller.SoundMap;
+
+            var gameOverPanel = Instantiate(endGamePanel, parentCanvas.transform).GetComponent<GameOverPanel>();
+            //Set end panel values
+            gameOverPanel.SetSongName(soundMap.name);
+            gameOverPanel.SetCharacterVisuals(character);
+            gameOverPanel.SetCharacterBonus(character.characterGenre, soundMap.genre);
+            
+            gameOverPanel.SetScore(m_Score);
+            gameOverPanel.SetStars(m_StarsCount, character);
+            gameOverPanel.SetAccuracy(soundMap.notes.Length, m_NotesHit, accuracy);
+            
+            gameOverPanel.SetMapMaker(soundMap.mapCreator);
+            gameOverPanel.SetGroupName(soundMap.genre);
+            gameOverPanel.SetHighestCombo(m_HighestCombo);
+                
+            gameOverPanel.SetNewHighScoreText(0, m_Score);
+            
+            gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
             //Give prizes
             //Get panel stars or whatever
         }
 
         /// <summary>
-        /// 
+        /// Logic for missing an arrow without tapping
         /// </summary>
         public static void MissArrow()
         {
@@ -232,7 +277,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Logic for missing an arrow by tapping
         /// </summary>
         public static void MissArrowTap()
         {
@@ -243,7 +288,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Logic for hitting an arrow correctly
         /// </summary>
         /// <param name="isCombo"></param>
         /// <param name="comboLength"></param>
