@@ -313,12 +313,12 @@ namespace Managers
 
             Slider bar = m_Instance.scoreBar;
 
-            bar.value = (bar.value + points) % bar.maxValue;
+            float newScoreValue = bar.value + points;
+            bar.value = newScoreValue % bar.maxValue;
 
             //Increment the start count if went upper the score limit
-            if (bar.value >= bar.maxValue)
+            if (newScoreValue >= bar.maxValue)
             {
-                bar.value = 0;
                 m_Instance.starsCounter.text = $"{++m_Instance.m_StarsCount}";
             }
 

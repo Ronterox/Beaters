@@ -1781,6 +1781,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 581222541}
     - target: {fileID: 4292082070910409577, guid: 815f55bf984500030af38a3a30fae8cf, type: 3}
+      propertyPath: generateCombos
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4292082070910409577, guid: 815f55bf984500030af38a3a30fae8cf, type: 3}
       propertyPath: animateByBpm.Array.data[0]
       value: 
       objectReference: {fileID: 8141537395920022455}

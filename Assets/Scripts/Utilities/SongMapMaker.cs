@@ -49,6 +49,7 @@ namespace Utilities
         /// <param name="generateCombo">optional parameter to see if you want to generate combo notes</param>
         public void GenerateNotes(MakerNote[] makerNotes, Transform parent, bool generateCombo = true)
         {
+            //TODO: fix generation of procedural combo
             //Check of generation of procedural combos, guitar hero style
             if (generateCombo)
             {

@@ -2848,7 +2848,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
   - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
   backgroundImage: {fileID: 7979172281049003472}
-  playButton: {fileID: 1288823162}
+  playButtons:
+  - {fileID: 1288823162}
+  - {fileID: 1124500023}
   gachaLogo: {fileID: 7979172281809107009}
   mapCreator: {fileID: 0}
   exitGame: {fileID: 0}

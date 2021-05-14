@@ -1746,6 +1746,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &199043730516417275 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 199043730740961849, guid: 54e018ea8e502dac5befa768109ad9fc, type: 3}
+  m_PrefabInstance: {fileID: 199043730516417272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7979172281016031432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1922,7 +1933,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
   - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
   backgroundImage: {fileID: 7979172281016031434}
-  playButton: {fileID: 199043730516417274}
+  playButtons:
+  - {fileID: 199043730516417274}
+  - {fileID: 199043730516417275}
   gachaLogo: {fileID: 0}
   mapCreator: {fileID: 0}
   exitGame: {fileID: 1356380499}
