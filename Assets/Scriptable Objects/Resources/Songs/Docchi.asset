@@ -27,14 +27,107 @@ MonoBehaviour:
       z: 0
     - id: 1
       x: -1
-      y: 2
+      y: 0.30394578
       z: 0
     - id: 3
       x: 1
-      y: 3
+      y: 1.3039458
+      z: 0
+    - id: 1
+      x: -1
+      y: 5
+      z: 0
+    - id: 3
+      x: 1
+      y: 6
       z: 0
     - id: 2
       x: 3
-      y: 4
+      y: 8
       z: 0
-  requiredItems: {fileID: 0}
+    - id: 0
+      x: -3
+      y: 7
+      z: 0
+    - id: 1
+      x: -1
+      y: 10
+      z: 0
+    - id: 3
+      x: 1
+      y: 11
+      z: 0
+    - id: 2
+      x: 3
+      y: 13
+      z: 0
+    - id: 0
+      x: -3
+      y: 12
+      z: 0
+    - id: 1
+      x: -1
+      y: 15
+      z: 0
+    - id: 3
+      x: 1
+      y: 16
+      z: 0
+    - id: 2
+      x: 3
+      y: 3
+      z: 0
+    - id: 1
+      x: -1
+      y: 18
+      z: 0
+    - id: 0
+      x: -3
+      y: 22
+      z: 0
+    - id: 3
+      x: 1
+      y: 19
+      z: 0
+    - id: 0
+      x: -3
+      y: 23
+      z: 0
+    - id: 1
+      x: -1
+      y: 25
+      z: 0
+    - id: 1
+      x: -1
+      y: 26
+      z: 0
+    - id: 3
+      x: 1
+      y: 28
+      z: 0
+    - id: 3
+      x: 1
+      y: 29
+      z: 0
+    - id: 2
+      x: 3
+      y: 31
+      z: 0
+    - id: 2
+      x: 3
+      y: 32
+      z: 0
+    - id: 0
+      x: -3
+      y: 34
+      z: 0
+    - id: 1
+      x: -1
+      y: 36
+      z: 0
+    - id: 3
+      x: 1
+      y: 38
+      z: 0
+  requiredItem1: {fileID: 0}
+  requiredItem2: {fileID: 0}

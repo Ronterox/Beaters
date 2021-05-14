@@ -31,6 +31,7 @@ namespace Managers
 
         public void SetStars(int starsNumber, ScriptableCharacter character)
         {
+            starsNumber = Mathf.Min(stars.Length, starsNumber);
             int i;
 
             for (i = 0; i < starsNumber; i++) stars[i].sprite = character.fullStar;
