@@ -13,6 +13,9 @@ namespace UI
     {
         public Song[] songs;
 
+        public SongRecordScreen songRecordScreen;
+        public LockedSongScreen lockedSongScreen;
+
         public void SetupElements()
         {
             const string SONG_FOLDER = "Songs";
@@ -28,15 +31,22 @@ namespace UI
             EventSystem.current.SetSelectedGameObject(SelectedElement.gameObject);
         }
 
+        protected override void ScrollToElement(UICarouselElement element) { }
+
         public void CreateElements(SoundMap[] parameters)
         {
             for (var i = 0; i < parameters.Length; i++) CreateElement(i, i == 0).Setup(parameters[i]);
         }
-        
+
         public void CreateElements(Song[] parameters)
         {
-            List<ushort> songIds = DataManager.GetRunesIds();
-            for (var i = 0; i < parameters.Length; i++) CreateElement(i, i == 0).Setup(parameters[i], songIds.Contains(parameters[i].ID));
+            List<ushort> songIds = DataManager.GetSongsIds();
+            for (var i = 0; i < parameters.Length; i++)
+            {
+                Song song = parameters[i];
+                bool isUnlock = songIds.Contains(song.ID);
+                CreateElement(i, i == 0).Setup(song, isUnlock, songRecordScreen, isUnlock ? null : lockedSongScreen);
+            }
         }
     }
 }

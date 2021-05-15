@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GuitarPick
   m_EditorClassIdentifier: 
   itemName: GuitarPick
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 2ce7cf5986f0d664a917ced0c3be17bd, type: 3}

@@ -15,7 +15,7 @@ MonoBehaviour:
   songImage: {fileID: 21300000, guid: 58ab7346c2bc7e010879092dbcccdc5a, type: 3}
   soundMap:
     name: Docchi
-    mapCreator: 
+    mapCreator: Ricardo
     bpm: 120
     genre: 4
     audioClip: {fileID: 8300000, guid: 011db536459ded6db9194196d09d0304, type: 3}
@@ -129,5 +129,7 @@ MonoBehaviour:
       x: 1
       y: 38
       z: 0
-  requiredItem1: {fileID: 0}
-  requiredItem2: {fileID: 0}
+  requiredItem1: {fileID: 11400000, guid: 46bd4372404e80642a494f2f1c6e03f7, type: 2}
+  requiredItem2: {fileID: 11400000, guid: 1ce0ba3e289b79c889465534fdb2f3e8, type: 2}
+  requiredQuantityItem1: 1
+  requiredQuantityItem2: 1

@@ -168,9 +168,9 @@
             </e>
             <e p="GachaManager.cs" t="Include" />
             <e p="LockedSongScreen.cs" t="Include" />
-            <e p="RecordScreen.cs" t="Include" />
             <e p="SongCarousel.cs" t="Include" />
             <e p="SongCarouselElement.cs" t="Include" />
+            <e p="SongRecordScreen.cs" t="Include" />
           </e>
           <e p="Utilities" t="Include">
             <e p="HoldableButton.cs" t="Include" />
