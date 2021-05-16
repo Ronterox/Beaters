@@ -64,6 +64,8 @@ namespace Core.Arrow_Game
 
         private void Start()
         {
+            SoundManager.Instance.StopBackgroundMusic();
+            
             ResetPos();
 
             startTimer.onTimerStop += () =>

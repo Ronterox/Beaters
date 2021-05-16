@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Managers;
 using ScriptableObjects;
 
-namespace General
+namespace Utilities
 {
     public class RuneScriptableSelector : ScriptableSelector<ScriptableRune>
     {

@@ -23,9 +23,7 @@ namespace UI
         private bool m_CanUnlock;
 
         private void Start() => unlockButton.onClick.AddListener(UnlockSong);
-
-        private void OnDisable() => SoundManager.Instance.StopBackgroundMusic();
-
+        
         private void UnlockSong()
         {
             if (DataManager.ContainsSong(m_Song.ID)) return;

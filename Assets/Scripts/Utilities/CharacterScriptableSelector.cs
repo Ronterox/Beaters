@@ -3,7 +3,7 @@ using Managers;
 using ScriptableObjects;
 using TMPro;
 
-namespace General
+namespace Utilities
 {
     public class CharacterScriptableSelector : ScriptableSelector<ScriptableCharacter>
     {

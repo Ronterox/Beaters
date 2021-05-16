@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using General;
 using Plugins.Tools;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace General
+namespace Utilities
 {
     public abstract class ScriptableSelector<T> : MonoBehaviour where T : IdentifiedScriptable
     {
