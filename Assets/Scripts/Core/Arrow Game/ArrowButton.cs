@@ -21,6 +21,8 @@ namespace Core.Arrow_Game
 
         public bool canBeClick = true;
 
+        private Tween m_ClickAnimation;
+
 #if UNITY_ANDROID || UNITY_IPHONE
         private const int TOUCH_MAX_DISTANCE = 2;
 #endif
@@ -33,7 +35,13 @@ namespace Core.Arrow_Game
             if (!mainCamera) mainCamera = Camera.main;
         }
 
-        private void Start() => m_DefaultScale = transform.localScale;
+        private void Start()
+        {
+            m_DefaultScale = transform.localScale;
+            SetAnimation();
+        }
+
+        private void SetAnimation() => m_ClickAnimation = transform.DOScale(targetScale, animationDuration).OnComplete(() => transform.DOScale(m_DefaultScale, animationDuration)).SetAutoKill(false);
 
         public void PressButton()
         {
@@ -78,7 +86,8 @@ namespace Core.Arrow_Game
         {
             if (!isNoteAbove) GameplayManager.MissArrowTap();
             //Arrow animation with tween
-            transform.DOScale(targetScale, animationDuration).OnComplete(() => transform.DOScale(m_DefaultScale, animationDuration));
+            m_ClickAnimation.Restart();
+            m_ClickAnimation.Play();
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Managers
         public MapScroller mapScroller;
 
         [Header("Config")]
+        public Character currentCharacter;
+        [Space]
         public Canvas gameCanvas;
         public GameObject endGamePanel;
         [Space]
@@ -26,9 +28,8 @@ namespace Managers
         public TMP_Text starsCounter;
 
         [Header("Combo and Score feedback")]
-        public TMP_Text comboText;
-        public TMP_Text scoreText;
         public Slider scoreBar;
+        public TMP_Text comboText, scoreText;
 
         [Header("Skill feedback")]
         public Button skillButton;
@@ -75,7 +76,7 @@ namespace Managers
 
             SetPauseButton();
 
-            SetCharacterSkills();
+            SetGameplayCharacter();
 
             ResetValues();
 
@@ -96,23 +97,18 @@ namespace Managers
         /// <summary>
         /// Activates the passive and sets the active skill
         /// </summary>
-        private void SetCharacterSkills()
+        private void SetGameplayCharacter()
         {
-            ScriptableCharacter character = GameManager.GetCharacter();
+            currentCharacter.SetCharacter(GameManager.GetCharacter());
 
-            //Use passive from the start
-            character.passiveSkill.UseSkill();
-
-            ScriptableSkill playerSkill = character.activeSkill;
-
-            skillBarSlider.maxValue = playerSkill.rechargeQuantity;
+            skillBarSlider.maxValue = currentCharacter.character.activeSkill.rechargeQuantity;
 
             skillButton.onClick.AddListener(() =>
             {
                 if (skillBarSlider.value >= skillBarSlider.maxValue)
                 {
                     //Use active only when available
-                    playerSkill.UseSkill();
+                    currentCharacter.UsePower();
                     skillBarSlider.value = 0;
                 }
             });
@@ -179,7 +175,7 @@ namespace Managers
         private void SetSongValues(float time, int notes)
         {
             time = Mathf.Ceil(time) + 1f; //We add extra length to assure ending
-            
+
             songTimer.SetTimer(new TimerOptions(time, TimerType.Progressive, false));
             songTimer.onTimerStop += StopMap;
 
@@ -246,17 +242,17 @@ namespace Managers
             gameOverPanel.SetSongName(soundMap.name);
             gameOverPanel.SetCharacterVisuals(character);
             gameOverPanel.SetCharacterBonus(character.characterGenre, soundMap.genre);
-            
+
             gameOverPanel.SetScore(m_Score);
             gameOverPanel.SetStars(m_StarsCount, character);
             gameOverPanel.SetAccuracy(soundMap.notes.Length, m_NotesHit, accuracy);
-            
+
             gameOverPanel.SetMapMaker(soundMap.mapCreator);
             gameOverPanel.SetGroupName(soundMap.genre);
             gameOverPanel.SetHighestCombo(m_HighestCombo);
-                
+
             gameOverPanel.SetNewHighScoreText(0, m_Score);
-            
+
             gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
             //Give prizes
             //Get panel stars or whatever
@@ -276,6 +272,11 @@ namespace Managers
 
             //Reset combo to 0
             m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
+
+            const int minimumDamage = 3;
+            
+            Character character = m_Instance.currentCharacter;
+            if (character.CanTakeDamage) character.TakeDamage(minimumDamage * (int)m_Instance.mapScroller.difficulty);
         }
 
         /// <summary>

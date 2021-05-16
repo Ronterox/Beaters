@@ -1728,6 +1728,10 @@ PrefabInstance:
       propertyPath: skillBarSlider
       value: 
       objectReference: {fileID: 749083826}
+    - target: {fileID: 3826572633401589594, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
+      propertyPath: currentCharacter
+      value: 
+      objectReference: {fileID: 8857276459189565684}
     - target: {fileID: 3826572633401589595, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
       propertyPath: m_Name
       value: Gameplay Manager
@@ -2303,5 +2307,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8857276459189565684 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5612968885711697273, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+  m_PrefabInstance: {fileID: 8857276459189565682}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba75d1a44fb2fc69ab542a9895107d4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

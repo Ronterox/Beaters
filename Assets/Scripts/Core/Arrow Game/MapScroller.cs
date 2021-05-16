@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Managers;
 using Plugins.Tools;
 using UnityEngine;
@@ -45,6 +48,7 @@ namespace Core.Arrow_Game
 
         [Header("Visual Feedback")]
         public Transform[] animateByBpm;
+        private List<Tween> m_BeatAnimationTweens;
         [Space]
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
@@ -66,6 +70,13 @@ namespace Core.Arrow_Game
         {
             SoundManager.Instance.StopBackgroundMusic();
             
+            m_BeatAnimationTweens = new List<Tween>();
+            animateByBpm.ForEach(tform =>
+            {
+                Tween anim = tform.DOScale(targetScale, m_AnimationDuration).OnComplete(() => tform.DOScale(defaultScale, m_AnimationDuration)).SetAutoKill(false);
+                m_BeatAnimationTweens.Add(anim);
+            });
+
             ResetPos();
 
             startTimer.onTimerStop += () =>
@@ -124,16 +135,6 @@ namespace Core.Arrow_Game
             ActivateNoteToRelativePosition();
         }
 
-        private void ActivateNoteToRelativePosition()
-        {
-            const float notesPositionY = -6f;
-            gameObject.ForEachChild(child =>
-            {
-                child.SetActive(child.transform.position.y > notesPositionY);
-                child.ForEachChild(c => c.SetActive(c.transform.position.y > notesPositionY));
-            });
-        }
-
         public void FastBackwards(int seconds)
         {
             transform.position += new Vector3(0f, m_bps * seconds, 0f);
@@ -144,6 +145,16 @@ namespace Core.Arrow_Game
             SoundManager.Instance.backgroundAudioSource.time = Mathf.Max(0, time);
 
             ActivateNoteToRelativePosition();
+        }
+        
+        private void ActivateNoteToRelativePosition()
+        {
+            const float notesPositionY = -6f;
+            gameObject.ForEachChild(child =>
+            {
+                child.SetActive(child.transform.position.y > notesPositionY);
+                child.ForEachChild(c => c.SetActive(c.transform.position.y > notesPositionY));
+            });
         }
 
         public void ResetPos() => transform.position = Vector3.zero;
@@ -190,7 +201,13 @@ namespace Core.Arrow_Game
         {
             m_WaitingForBeat = true;
 
-            animateByBpm.ForEach(t => t.DOScale(targetScale, m_AnimationDuration).OnComplete(() => t.DOScale(defaultScale, m_AnimationDuration)));
+            m_BeatAnimationTweens.ForEach(anim =>
+            {
+                anim.Restart();
+                anim.Play();
+            });
+            
+            print("Play animation");
 
             yield return m_WaitForSeconds;
             m_WaitingForBeat = false;

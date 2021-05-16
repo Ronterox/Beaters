@@ -226,7 +226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: buttonTag
-      value: Button2
+      value: Button3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
