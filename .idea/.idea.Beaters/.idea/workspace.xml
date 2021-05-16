@@ -3,21 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Core Falling Arrows/Arrow Button.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Core Falling Arrows/Arrow Button.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Core Falling Arrows/Note Object.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Core Falling Arrows/Note Object.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Locked Song UI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Locked Song UI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/LockedSongScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/LockedSongScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpop/Kpop Font.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpop/Kpop Font.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/CharacterScriptableSelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/CharacterScriptableSelector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/ScriptableSelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/ScriptableSelector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Still In Development.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Still In Development.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,9 +88,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/General/Selector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableItem.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/CharacterScriptableSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/RuneScriptableSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/ScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/InmunitySkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableSkill.cs" />
@@ -131,7 +118,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/UICarousel.cs" />
@@ -144,6 +130,10 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/RuneScriptableSelector.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/CharacterScriptableSelector.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/ScriptableSelector.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -212,7 +202,7 @@
       <workItem from="1620988760592" duration="1451000" />
       <workItem from="1621083189601" duration="5658000" />
       <workItem from="1621102153923" duration="3358000" />
-      <workItem from="1621167846232" duration="3685000" />
+      <workItem from="1621167846232" duration="5479000" />
     </task>
     <servers />
   </component>

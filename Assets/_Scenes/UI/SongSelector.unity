@@ -2160,6 +2160,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 199043729359012102, guid: 54e018ea8e502dac5befa768109ad9fc, type: 3}
+      propertyPath: guiManager
+      value: 
+      objectReference: {fileID: 7979172281588127241}
     - target: {fileID: 199043729401574432, guid: 54e018ea8e502dac5befa768109ad9fc, type: 3}
       propertyPath: m_PreserveAspect
       value: 1
