@@ -1,6 +1,7 @@
 using General;
 using Managers;
 using Plugins.Audio;
+using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +21,7 @@ namespace UI
             GameManager.PutSoundMap(m_Song);
             LevelLoadManager.LoadArrowGameplayScene();
         });
-
-        private void OnDisable() => SoundManager.Instance.StopBackgroundMusic();
-
+        
         public void ShowRecordScreen(Sprite sprite, int score, string grade, int combo, float accuracy)
         {
             characterImage.sprite = sprite;

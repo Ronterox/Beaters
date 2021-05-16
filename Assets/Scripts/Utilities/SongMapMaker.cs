@@ -12,6 +12,7 @@ using General;
 #endif
 using Managers;
 using Plugins.Tools;
+using ScriptableObjects;
 using SimpleFileBrowser;
 using TMPro;
 using UnityEngine;

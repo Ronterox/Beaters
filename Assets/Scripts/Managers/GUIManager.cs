@@ -42,10 +42,13 @@ namespace Managers
 
             ushort randomCharacter = DataManager.GetCharactersIds().GetRandom();
 
-            return characters.First(c => c.ID == randomCharacter);
+            character = characters.First(c => c.ID == randomCharacter);
+            GameManager.PutCharacter(character);
+            
+            return character;
         }
 
-        private void SetCharacterGUI(ScriptableCharacter character)
+        public void SetCharacterGUI(ScriptableCharacter character)
         {
             Palette palette = character.colorPalette;
             

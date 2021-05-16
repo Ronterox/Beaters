@@ -126,11 +126,8 @@
           </e>
           <e p="General" t="Include">
             <e p="Character.cs" t="Include" />
-            <e p="CharacterScriptableSelector.cs" t="Include" />
             <e p="IdentifiedScriptable.cs" t="Include" />
-            <e p="RuneScriptableSelector.cs" t="Include" />
-            <e p="ScriptableSelector.cs" t="Include" />
-            <e p="Song.cs" t="Include" />
+            <e p="StartSoundManager.cs" t="Include" />
             <e p="TutorialButtons.cs" t="Include" />
           </e>
           <e p="Managers" t="Include">
@@ -156,6 +153,7 @@
             <e p="ScriptableItem.cs" t="Include" />
             <e p="ScriptableRune.cs" t="Include" />
             <e p="ScriptableSkill.cs" t="Include" />
+            <e p="Song.cs" t="Include" />
           </e>
           <e p="Skills" t="Include">
             <e p="InmunitySkill.cs" t="Include" />
@@ -173,8 +171,11 @@
             <e p="SongRecordScreen.cs" t="Include" />
           </e>
           <e p="Utilities" t="Include">
+            <e p="CharacterScriptableSelector.cs" t="Include" />
             <e p="HoldableButton.cs" t="Include" />
             <e p="Rotation.cs" t="Include" />
+            <e p="RuneScriptableSelector.cs" t="Include" />
+            <e p="ScriptableSelector.cs" t="Include" />
             <e p="SongMapMaker.cs" t="Include" />
             <e p="StateEventCaller.cs" t="Include" />
             <e p="Turbulence.cs" t="Include" />

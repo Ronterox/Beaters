@@ -1,8 +1,7 @@
-using ScriptableObjects;
 using UnityEngine;
 using Utilities;
 
-namespace General
+namespace ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New Song", menuName = "Map Maker/New Song")]
     public class Song : ScriptableObject

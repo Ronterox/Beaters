@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using General;
 using Plugins.Tools;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace General
+namespace Utilities
 {
     public abstract class ScriptableSelector<T> : MonoBehaviour where T : IdentifiedScriptable
     {
@@ -28,14 +29,17 @@ namespace General
         public void TravelObjects(int index)
         {
             m_Index.ChangeValueLoop(index, m_PlayerObjects.Count);
-            CheckAndSetObject();
+            SetObject();
         }
 
         private void CheckAndSetObject()
         {
             if(m_PlayerObjects.Count < 1) return;
+            SetStartIndex();
             SetObject();
         }
+
+        protected virtual void SetStartIndex() => m_Index = 0;
 
         protected abstract List<ushort> GetObjectIds();
 

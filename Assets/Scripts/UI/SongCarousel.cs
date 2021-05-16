@@ -4,6 +4,7 @@ using General;
 using Managers;
 using Plugins.Tools;
 using Plugins.UI;
+using ScriptableObjects;
 using UnityEngine.EventSystems;
 using Utilities;
 
