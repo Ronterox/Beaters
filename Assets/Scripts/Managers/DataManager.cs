@@ -47,10 +47,10 @@ namespace Managers
     {
         public ushort songId;
 
-        public Difficulty[] completedDifficulties;
         public bool isCompleted;
-
         public int highestCombo;
+
+        public Difficulty[] completedDifficulties;
     }
 
     [System.Serializable]

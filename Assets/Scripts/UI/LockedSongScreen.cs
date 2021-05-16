@@ -1,6 +1,7 @@
 using System;
 using General;
 using Managers;
+using Plugins.Audio;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -12,8 +13,10 @@ namespace UI
     {
         public Image itemSprite1, itemSprite2;
         public TMP_Text itemText1, itemText2;
-
+        [Space]
         public Button unlockButton;
+        public Image lockedSongImage;
+
         private Image m_SongImage;
         private Song m_Song;
 
@@ -21,10 +24,12 @@ namespace UI
 
         private void Start() => unlockButton.onClick.AddListener(UnlockSong);
 
+        private void OnDisable() => SoundManager.Instance.StopBackgroundMusic();
+
         private void UnlockSong()
         {
             if (DataManager.ContainsSong(m_Song.ID)) return;
-            
+
             //Check for item requirement and then unlock
             if (m_CanUnlock)
             {
@@ -32,9 +37,9 @@ namespace UI
 
                 Color color = m_SongImage.color;
                 color.a = 1f;
-                
+
                 m_SongImage.color = color;
-                
+
                 gameObject.SetActive(false);
             }
         }
@@ -55,8 +60,12 @@ namespace UI
 
             m_Song = song;
             m_SongImage = songImage;
-            
+
+            lockedSongImage.sprite = songImage.sprite;
+
             gameObject.SetActive(true);
+
+            SoundManager.Instance.PlayBackgroundMusicNoFade(song.soundMap.audioClip);
         }
     }
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5767362949335748098}
   m_Layer: 0
   m_Name: Arrow Button
-  m_TagString: Player
+  m_TagString: Button1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9642284a305aeacf590d5e4e14dfe1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
   animationDuration: 0.1
   targetScale: {x: 3, y: 3, z: 1}
   isNoteAbove: 0
+  canBeClick: 1

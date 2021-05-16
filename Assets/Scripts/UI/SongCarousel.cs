@@ -11,7 +11,7 @@ namespace UI
 {
     public class SongCarousel : UICarousel
     {
-        public Song[] songs;
+        public Song[] songs, defaultSongs;
 
         public SongRecordScreen songRecordScreen;
         public LockedSongScreen lockedSongScreen;
@@ -20,6 +20,7 @@ namespace UI
         {
             const string SONG_FOLDER = "Songs";
 
+            CreateElements(defaultSongs, true);
             CreateElements(songs);
 
             if (!SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER))
@@ -38,13 +39,13 @@ namespace UI
             for (var i = 0; i < parameters.Length; i++) CreateElement(i, i == 0).Setup(parameters[i]);
         }
 
-        public void CreateElements(Song[] parameters)
+        public void CreateElements(Song[] parameters, bool unlock = false)
         {
             List<ushort> songIds = DataManager.GetSongsIds();
             for (var i = 0; i < parameters.Length; i++)
             {
                 Song song = parameters[i];
-                bool isUnlock = songIds.Contains(song.ID);
+                bool isUnlock = unlock || songIds.Contains(song.ID);
                 CreateElement(i, i == 0).Setup(song, isUnlock, songRecordScreen, isUnlock ? null : lockedSongScreen);
             }
         }

@@ -1,4 +1,3 @@
-using System;
 using General;
 using Managers;
 using Plugins.Audio;
@@ -35,7 +34,9 @@ namespace UI
 
         public void ShowRecordScreen(Song song)
         {
-            SoundManager.Instance.PlayBackgroundMusic(song.soundMap.audioClip);
+            gameObject.SetActive(true);
+            
+            SoundManager.Instance.PlayBackgroundMusicNoFade(song.soundMap.audioClip);
             
             //TODO: serialize this song values
             ShowRecordScreen(song.songImage, 100, "SSS", 50, 75);
