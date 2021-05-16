@@ -232,6 +232,8 @@ namespace Plugins.Audio
         {
             StopBackgroundMusic();
 
+            backgroundAudioSource.loop = loop;
+
             if (backgroundAudioSource.clip == clip)
             {
                 backgroundAudioSource.Play();
@@ -239,9 +241,7 @@ namespace Plugins.Audio
             }
 
             backgroundAudioSource.clip = clip;
-            backgroundAudioSource.loop = loop;
-
-            backgroundAudioSource.Play();;
+            backgroundAudioSource.Play();
         }
 
         /// <summary>

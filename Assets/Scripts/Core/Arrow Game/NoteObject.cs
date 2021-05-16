@@ -1,4 +1,5 @@
 using Managers;
+using Plugins.Properties;
 using UnityEngine;
 
 namespace Core.Arrow_Game
@@ -9,8 +10,10 @@ namespace Core.Arrow_Game
 
         [Header("Config")]
         public Chord sound;
+        [TagSelector]
+        public string buttonTag;
         public int comboLength;
-        public bool isCombo, isGameplay;
+        public bool isCombo;
 
         private SpriteRenderer m_SpriteRenderer;
 
@@ -67,7 +70,7 @@ namespace Core.Arrow_Game
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!other.CompareTag("Player")) return;
+            if (!other.CompareTag(buttonTag)) return;
 
             if (m_ArrowButton) RemoveNoteCallbacks();
 
@@ -80,7 +83,7 @@ namespace Core.Arrow_Game
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (!other.CompareTag("Player") || m_WasPressed) return;
+            if (!other.CompareTag(buttonTag) || m_WasPressed) return;
 
             GameplayManager.MissArrow();
             gameObject.SetActive(false);

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using General;
@@ -48,10 +47,10 @@ namespace Managers
     {
         public ushort songId;
 
-        public Difficulty[] completedDifficulties;
         public bool isCompleted;
-
         public int highestCombo;
+
+        public Difficulty[] completedDifficulties;
     }
 
     [System.Serializable]
@@ -138,22 +137,14 @@ namespace Managers
             runes.Add(new SerializableRune { runeId = rune.ID });
         }
 
-        public static List<ushort> GetCharactersIds()
-        {
-            List<SerializableCharacter> serializableCharacters = m_Instance.playerData.unlockedCharacters;
-            return serializableCharacters.Select(character => character.characterId).ToList();
-        }
+        public static List<ushort> GetCharactersIds() => m_Instance.playerData.unlockedCharacters.Select(character => character.characterId).ToList();
 
-        public static List<ushort> GetRunesIds()
-        {
-            List<SerializableRune> serializableRunes = m_Instance.playerData.unlockedRunes;
-            return serializableRunes.Select(rune => rune.runeId).ToList();
-        }
+        public static List<ushort> GetRunesIds() => m_Instance.playerData.unlockedRunes.Select(rune => rune.runeId).ToList();
 
-        public static List<ushort> GetSongsIds()
-        {
-            List<SerializableSong> serializableSongs = m_Instance.playerData.unlockedSongs;
-            return serializableSongs.Select(song => song.songId).ToList();
-        }
+        public static List<ushort> GetSongsIds() => m_Instance.playerData.unlockedSongs.Select(song => song.songId).ToList();
+
+        public static int GetItemQuantity(ushort id) => m_Instance.playerData.currentItems.FirstOrDefault(item => item.itemId == id).quantity;
+
+        public static bool ContainsSong(ushort id) => m_Instance.playerData.unlockedSongs.Any(song => song.songId == id);
     }
 }
