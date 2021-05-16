@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using Core.Arrow_Game;
 using General;
+using Plugins.Audio;
 using Plugins.Tools;
 using ScriptableObjects;
 using TMPro;
@@ -99,6 +102,8 @@ namespace Managers
         /// </summary>
         private void SetGameplayCharacter()
         {
+            currentCharacter.onDie += Lose;
+
             currentCharacter.SetCharacter(GameManager.GetCharacter());
 
             skillBarSlider.maxValue = currentCharacter.character.activeSkill.rechargeQuantity;
@@ -112,6 +117,29 @@ namespace Managers
                     skillBarSlider.value = 0;
                 }
             });
+        }
+
+        private void Lose() =>
+            StartCoroutine(StopTimeCoroutine(5f, () =>
+            {
+                mapScroller.StopMap();
+                ShowEndGameplayPanel(gameCanvas);
+            }));
+
+        private IEnumerator StopTimeCoroutine(float duration, Action afterStoppingTime)
+        {
+            AudioSource sound = SoundManager.Instance.backgroundAudioSource;
+            
+            while (!Time.timeScale.Approximates(0))
+            {
+                sound.pitch = Time.timeScale -= Time.deltaTime * duration;
+                yield return null;
+            }
+            
+            sound.pitch = Time.timeScale = 1f;
+            sound.Stop();
+            
+            afterStoppingTime?.Invoke();
         }
 
         /// <summary>
@@ -274,7 +302,7 @@ namespace Managers
             m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
 
             const int minimumDamage = 3;
-            
+
             Character character = m_Instance.currentCharacter;
             if (character.CanTakeDamage) character.TakeDamage(minimumDamage * (int)m_Instance.mapScroller.difficulty);
         }

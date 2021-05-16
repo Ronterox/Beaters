@@ -25,6 +25,10 @@ namespace General
 
         private bool m_IsDead;
 
+        public delegate void CharacterEvent();
+
+        public event CharacterEvent onDie;
+
         public bool CanTakeDamage { get; set; } = true;
         private bool m_IsLowHp;
 
@@ -42,6 +46,8 @@ namespace General
             currentHp = maxHp;
 
             scriptableCharacter.passiveSkill.UseSkill();
+            
+            UpdateText();
         }
 
         public void TakeDamage(int damage)
@@ -57,7 +63,12 @@ namespace General
                 //Temporally until animations
                 if (m_IsLowHp) characterImage.DOColor(Color.red, 2f);
             }
+            
+            UpdateText();
+        }
 
+        private void UpdateText()
+        {
             if (currentHp > maxHp * .75f) hpText.color = Color.green;
             else if (currentHp > maxHp * .5f) hpText.color = Color.yellow;
             else hpText.color = Color.red;
@@ -71,7 +82,7 @@ namespace General
         {
             m_IsDead = true;
             characterImage.DOColor(Color.clear, 5f);
-            //GameplayManager.EndGameplay();
+            onDie?.Invoke();
         }
     }
 }
