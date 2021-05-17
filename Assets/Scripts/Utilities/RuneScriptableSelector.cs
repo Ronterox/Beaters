@@ -16,6 +16,8 @@ namespace Utilities
 
         private void Start()
         {
+            template.SetActive(false);
+            
             foreach (ScriptableRune scriptableRune in gameRunes)
             {
                 var rune = Instantiate(template, content).GetComponent<SelectableRune>();

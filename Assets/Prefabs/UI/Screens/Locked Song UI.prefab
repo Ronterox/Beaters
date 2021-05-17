@@ -349,18 +349,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!225 &5763371771006332530
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6613372341365161538}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 0
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &8159693825934469548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,27 +1318,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3096899118156246181, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3096899118156246181, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3096899118156246181, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 3096899118156246181, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 3096899118156246181, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 3096899118156246181, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -75
       objectReference: {fileID: 0}
     - target: {fileID: 3096899118813754968, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
       propertyPath: m_Name
@@ -1504,13 +1492,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3096899119924158639, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+    - {fileID: 2276165222322536198, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+    - {fileID: 7370610238530530529, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+    - {fileID: 3096899118156246182, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+    - {fileID: 3096899118156246183, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
+    - {fileID: 3096899119924158632, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
---- !u!1 &6613372341365161538 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3096899119412590246, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
-  m_PrefabInstance: {fileID: 8159693826889877732}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8691411470407435118 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 694423933131950986, guid: db17799d95c834a5f999e1c4daf0eafd, type: 3}
