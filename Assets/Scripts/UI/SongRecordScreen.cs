@@ -10,10 +10,12 @@ namespace UI
 {
     public class SongRecordScreen : MonoBehaviour
     {
+        public Image songRecordImage;
+        [Space]
         public Image characterImage;
         public TMP_Text scoreText, gradeText, comboText, accuracyText;
+        [Space]
         public Button playButton;
-
         private Song m_Song;
 
         private void Start() => playButton.onClick.AddListener(() =>
@@ -41,6 +43,8 @@ namespace UI
             ShowRecordScreen(song.songImage, 100, "SSS", 50, 75);
             
             m_Song = song;
+
+            songRecordImage.sprite = song.songImage;
         }
     }
 }
