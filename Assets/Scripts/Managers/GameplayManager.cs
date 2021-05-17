@@ -13,12 +13,15 @@ using Random = UnityEngine.Random;
 
 namespace Managers
 {
+    public enum HitType { Good = 3, Perfect = 5, TooSlow = 2, TooSoon = 2 }
+    
     public class GameplayManager : Singleton<GameplayManager>
     {
         public MapScroller mapScroller;
 
         [Header("Config")]
         public Character currentCharacter;
+        public SimpleFeedbackObjectPooler feedbackTextPooler;
         [Space]
         public Canvas gameCanvas;
         public GameObject endGamePanel;
@@ -253,7 +256,9 @@ namespace Managers
         /// <param name="parentCanvas"></param>
         public void ShowEndGameplayPanel(Canvas parentCanvas)
         {
-            const float moneyMultiplier = 25 * 0.01f;
+            CheckHighestCombo();
+            
+            const float moneyMultiplier = .25f;
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
 
             var accuracyGain = (int)Mathf.Round(accuracy * moneyMultiplier);
@@ -283,7 +288,6 @@ namespace Managers
 
             gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
             //Give prizes
-            //Get panel stars or whatever
         }
 
         /// <summary>
@@ -294,9 +298,7 @@ namespace Managers
             // Can miss check in case of power
             if (!m_Instance || !m_Instance.CanMiss) return;
 
-            //Save highest combo
-            int combo = m_Instance.m_Combo;
-            if (combo > m_Instance.m_HighestCombo) m_Instance.m_HighestCombo = combo;
+            CheckHighestCombo();
 
             //Reset combo to 0
             m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
@@ -305,6 +307,15 @@ namespace Managers
 
             Character character = m_Instance.currentCharacter;
             if (character.CanTakeDamage) character.TakeDamage(minimumDamage * (int)m_Instance.mapScroller.difficulty);
+        }
+
+        /// <summary>
+        /// Save highest combo
+        /// </summary>
+        private static void CheckHighestCombo()
+        {
+            int combo = m_Instance.m_Combo;
+            if (combo > m_Instance.m_HighestCombo) m_Instance.m_HighestCombo = combo;
         }
 
         /// <summary>
@@ -321,13 +332,14 @@ namespace Managers
         /// <summary>
         /// Logic for hitting an arrow correctly
         /// </summary>
+        /// <param name="hitType"></param>
+        /// <param name="feedbackPosition"></param>
+        /// <param name="feedbackColor"></param>
         /// <param name="isCombo"></param>
         /// <param name="comboLength"></param>
-        public static void HitArrow(bool isCombo = false, int comboLength = 0)
+        public static void HitArrow(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo = false, int comboLength = 0)
         {
             if (!m_Instance) return;
-
-            const int ARROW_HIT_VALUE = 1;
 
             //Increment combo, taps, notes hit for player stats
             m_Instance.m_Taps++;
@@ -335,7 +347,7 @@ namespace Managers
             m_Instance.skillBarSlider.value++;
 
             //Get the points multiply by the combo and multiplier and finally rounded
-            int points = Mathf.RoundToInt(ARROW_HIT_VALUE * ++m_Instance.m_Combo * m_Instance.Multiplier);
+            int points = Mathf.RoundToInt((int)hitType * ++m_Instance.m_Combo * m_Instance.Multiplier);
 
             m_Instance.scoreText.text = $"{m_Instance.m_Score += points}";
             m_Instance.comboText.text = $"x{m_Instance.m_Combo}";
@@ -364,6 +376,9 @@ namespace Managers
             }
             else
                 m_Instance.m_ComboPrizeCounter = 0;
+            
+            //Hit Feedback
+            m_Instance.feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
         }
     }
 }

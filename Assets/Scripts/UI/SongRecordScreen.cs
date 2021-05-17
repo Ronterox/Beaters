@@ -26,8 +26,8 @@ namespace UI
             characterImage.sprite = sprite;
             scoreText.text = $"Score: {score}";
             comboText.text = $"Highest Combo: {combo}";
-            accuracyText.text = $"{accuracy}%";
-            gradeText.text = grade;
+            accuracyText.text = $"Accuracy: {accuracy}%";
+            gradeText.text = $"Grade: {grade}";
         }
 
         public void ShowRecordScreen(Song song)

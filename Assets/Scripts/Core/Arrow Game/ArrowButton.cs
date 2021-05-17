@@ -22,17 +22,19 @@ namespace Core.Arrow_Game
         public bool canBeClick = true;
 
         private Tween m_ClickAnimation;
+        private float buttonHeight;
 
 #if UNITY_ANDROID || UNITY_IPHONE
         private const int TOUCH_MAX_DISTANCE = 2;
 #endif
-        public delegate void ButtonEvent();
+        public delegate void ButtonEvent(float buttonHeight);
 
         public event ButtonEvent onButtonPress;
 
         private void Awake()
         {
             if (!mainCamera) mainCamera = Camera.main;
+            buttonHeight = transform.position.y;
         }
 
         private void Start()
@@ -46,7 +48,7 @@ namespace Core.Arrow_Game
         public void PressButton()
         {
             CheckButton();
-            onButtonPress?.Invoke();
+            onButtonPress?.Invoke(buttonHeight);
         }
 
 

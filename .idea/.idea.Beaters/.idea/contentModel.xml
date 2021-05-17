@@ -126,7 +126,9 @@
           </e>
           <e p="General" t="Include">
             <e p="Character.cs" t="Include" />
+            <e p="FeedbackText.cs" t="Include" />
             <e p="IdentifiedScriptable.cs" t="Include" />
+            <e p="SimpleFeedbackObjectPooler.cs" t="Include" />
             <e p="StartSoundManager.cs" t="Include" />
             <e p="TutorialButtons.cs" t="Include" />
           </e>
