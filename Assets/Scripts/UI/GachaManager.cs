@@ -89,6 +89,8 @@ namespace UI
                 m_Data.money -= requiredCoins;
                 GetPrizeAndSummon();
             });
+            
+            print("start");
 
             SetBanner();
         }
