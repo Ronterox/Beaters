@@ -33,27 +33,27 @@ namespace Core.Defenders
             m_Data.tapsDone++;
             switch (trailDirection)
             {
-                case Direction.up:
-                    ChangeTrail(isRight ? Direction.right : Direction.left);
+                case Direction.Up:
+                    ChangeTrail(isRight ? Direction.Right : Direction.Left);
                     break;
-                case Direction.down:
-                    ChangeTrail(isRight ? Direction.left : Direction.right);
+                case Direction.Down:
+                    ChangeTrail(isRight ? Direction.Left : Direction.Right);
                     break;
-                case Direction.left:
-                    ChangeTrail(isRight ? Direction.up : Direction.down);
+                case Direction.Left:
+                    ChangeTrail(isRight ? Direction.Up : Direction.Down);
                     break;
-                case Direction.right:
-                    ChangeTrail(isRight ? Direction.down : Direction.up);
+                case Direction.Right:
+                    ChangeTrail(isRight ? Direction.Down : Direction.Up);
                     break;
             }
         }
 
         public void ChangeTrail(Direction direction)
         {
-            upTrail.SetActive(direction == Direction.up);
-            downTrail.SetActive(direction == Direction.down);
-            leftTrail.SetActive(direction == Direction.left);
-            rightTrail.SetActive(direction == Direction.right);
+            upTrail.SetActive(direction == Direction.Up);
+            downTrail.SetActive(direction == Direction.Down);
+            leftTrail.SetActive(direction == Direction.Left);
+            rightTrail.SetActive(direction == Direction.Right);
 
             trailDirection = direction;
         }

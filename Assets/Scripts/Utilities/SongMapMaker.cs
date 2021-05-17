@@ -8,7 +8,6 @@ using System.Linq;
 using Core.Arrow_Game;
 using DG.Tweening;
 #if UNITY_EDITOR && !FORCE_JSON
-using General;
 #endif
 using Managers;
 using Plugins.Tools;

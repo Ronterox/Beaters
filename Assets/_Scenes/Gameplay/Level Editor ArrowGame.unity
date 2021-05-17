@@ -226,8 +226,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: buttonTag
-      value: Button2
+      value: Button3
       objectReference: {fileID: 0}
+    - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 551402131}
+    - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 43812119}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
 --- !u!114 &43812117 stripped
@@ -244,6 +252,11 @@ MonoBehaviour:
 --- !u!4 &43812118 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2283381610429603883, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+  m_PrefabInstance: {fileID: 43812116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &43812119 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
   m_PrefabInstance: {fileID: 43812116}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &114115648 stripped
@@ -681,6 +694,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 551402131}
+    - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 576212862}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
 --- !u!4 &576212860 stripped
@@ -699,6 +720,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f55eba05c704e2f28cdc219580496dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!212 &576212862 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+  m_PrefabInstance: {fileID: 576212859}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619461466
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,6 +976,14 @@ PrefabInstance:
       propertyPath: buttonTag
       value: Button4
       objectReference: {fileID: 0}
+    - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 551402131}
+    - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 746021462}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
 --- !u!4 &746021460 stripped
@@ -968,6 +1002,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f55eba05c704e2f28cdc219580496dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!212 &746021462 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+  m_PrefabInstance: {fileID: 746021459}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &829988090
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,6 +1333,14 @@ PrefabInstance:
       propertyPath: buttonTag
       value: Button2
       objectReference: {fileID: 0}
+    - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 551402131}
+    - target: {fileID: 8202176138193440935, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 2114717149}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
 --- !u!4 &2114717147 stripped
@@ -1312,6 +1359,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f55eba05c704e2f28cdc219580496dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!212 &2114717149 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
+  m_PrefabInstance: {fileID: 2114717146}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1381207061022033427
 PrefabInstance:
   m_ObjectHideFlags: 0

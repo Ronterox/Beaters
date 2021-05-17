@@ -75,7 +75,7 @@ namespace Managers
             characterBonus.text = $"Character Bonus: ({charGenre} {bonusText} multiplier)";
         }
 
-        public void SetAccuracy(int totalBeats, int hitBeats, float acc) => accuracy.text = $"{hitBeats} / {totalBeats} ({acc}%)";
+        public void SetAccuracy(int totalBeats, int hitBeats, float acc) => accuracy.text = $"{hitBeats} / {totalBeats} ({acc:N2}%)";
 
         public void SetHighestCombo(int combo) => highestCombo.text = "Highest Combo: " + combo;
     }

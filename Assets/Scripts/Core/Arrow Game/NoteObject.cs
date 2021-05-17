@@ -6,28 +6,33 @@ namespace Core.Arrow_Game
 {
     public class NoteObject : MonoBehaviour
     {
+        public Camera mainCamera;
         public ushort MakerId { get; set; }
 
         [Header("Config")]
         public Chord sound;
+        public SpriteRenderer spriteRenderer;
+        
         [TagSelector]
         public string buttonTag;
+        
         public int comboLength;
         public bool isCombo;
-
-        private SpriteRenderer m_SpriteRenderer;
 
         private ArrowButton m_ArrowButton;
 
         private bool m_WasPressed;
 
-        private void Awake() => m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        private void Awake()
+        {
+            if (!mainCamera) mainCamera = Camera.main;
+        }
 
         public void SetCombo(int length)
         {
             isCombo = true;
             comboLength = length;
-            m_SpriteRenderer.color = Color.yellow;
+            spriteRenderer.color = Color.yellow;
         }
 
 #if !UNITY_IPHONE && !UNITY_ANDROID
@@ -39,16 +44,28 @@ namespace Core.Arrow_Game
         }
 #endif
 
-        private void OnButtonPressCallback()
+        private void OnButtonPressCallback(float buttonHeight)
         {
             m_WasPressed = true;
 
-            GameplayManager.HitArrow(isCombo, comboLength);
+            HitType hitType = GetHitType(buttonHeight);
+
+            GameplayManager.HitArrow(hitType, mainCamera.WorldToScreenPoint(transform.position), spriteRenderer.color, isCombo, comboLength);
 
             gameObject.SetActive(false);
-            
+
             //TODO: Long note
             //SoundManager.Instance.PlayNonDiegeticSound(mapScroller.instrument.GetAudioClip(sound));
+        }
+
+        private HitType GetHitType(float buttonHeight)
+        {
+            float noteHeight = transform.position.y;
+            float difference = Mathf.Abs(noteHeight - buttonHeight);
+
+            if (difference < .5f) return HitType.Perfect;
+            if (difference < 1f) return HitType.Good;
+            return noteHeight > buttonHeight ? HitType.TooSoon : HitType.TooSlow;
         }
 
         private void OnEnable() => m_WasPressed = false;
