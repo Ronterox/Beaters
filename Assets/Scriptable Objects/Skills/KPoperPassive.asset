@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7a70b254007ae41b034159925d59a0, type: 3}
   m_Name: KPoperPassive
   m_EditorClassIdentifier: 
-  kind: 0
   effectDescription: 10% Score per combo
-  hasDuration: 0
   rechargeQuantity: 0
-  duration: 0
+  skillImage: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}

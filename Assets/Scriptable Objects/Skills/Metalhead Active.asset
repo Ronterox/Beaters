@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectDescription: 5 secs x2 score
   rechargeQuantity: 100
+  skillImage: {fileID: 21300000, guid: 063e412365cfecf3c85e537fe07007fd, type: 3}
   multiplierValue: 2
   duration: 5

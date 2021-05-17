@@ -10,9 +10,9 @@ using DG.Tweening;
 #if UNITY_EDITOR && !FORCE_JSON
 #endif
 using Managers;
+using Plugins.SimpleFileBrowser.Scripts;
 using Plugins.Tools;
 using ScriptableObjects;
-using SimpleFileBrowser;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

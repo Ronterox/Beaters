@@ -23,6 +23,7 @@ namespace Managers
         public static SoundMap GetSoundMap() => Instance.m_SoundMap ?? Instance.Song.soundMap;
 
         public static void PutRune(ScriptableRune scriptableRune) => Instance.m_Rune = scriptableRune;
+        public static ScriptableRune GetRune() => Instance.m_Rune;
 
         public static void PutCharacter(ScriptableCharacter scriptableCharacter) => Instance.m_Character = scriptableCharacter;
 

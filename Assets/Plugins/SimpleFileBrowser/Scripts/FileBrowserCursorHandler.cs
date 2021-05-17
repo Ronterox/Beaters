@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace SimpleFileBrowser
+namespace Plugins.SimpleFileBrowser.Scripts
 {
 	public class FileBrowserCursorHandler : MonoBehaviour
 #if UNITY_EDITOR || ( !UNITY_ANDROID && !UNITY_IOS )

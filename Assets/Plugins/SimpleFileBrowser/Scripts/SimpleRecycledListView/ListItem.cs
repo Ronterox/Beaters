@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SimpleFileBrowser
+namespace Plugins.SimpleFileBrowser.Scripts.SimpleRecycledListView
 {
 	[RequireComponent( typeof( RectTransform ) )]
 	public class ListItem : MonoBehaviour

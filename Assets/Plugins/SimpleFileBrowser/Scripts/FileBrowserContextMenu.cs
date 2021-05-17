@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace SimpleFileBrowser
+namespace Plugins.SimpleFileBrowser.Scripts
 {
 	public class FileBrowserContextMenu : MonoBehaviour
 	{

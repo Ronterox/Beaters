@@ -1,18 +1,19 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System;
-using System.IO;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using Plugins.SimpleFileBrowser.Scripts.SimpleRecycledListView;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 using UnityEngine.InputSystem;
 #endif
 
-namespace SimpleFileBrowser
+namespace Plugins.SimpleFileBrowser.Scripts
 {
     public class FileBrowser : MonoBehaviour, IListViewAdapter
     {
