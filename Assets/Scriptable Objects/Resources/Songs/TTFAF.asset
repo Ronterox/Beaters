@@ -18,7 +18,7 @@ MonoBehaviour:
     mapCreator: 
     bpm: 120
     genre: 5
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 8493b3c175fc00309a2bfa94517b9941, type: 3}
     audioPath: /dades/dades/Rebecca/ProjecteFinal/Beaters/beaters/Assets/Audio/Songs/Through
       The Fire And Flames (1).mp3
     notes:
