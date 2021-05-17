@@ -12,7 +12,6 @@ namespace UI
         public Image itemSprite1, itemSprite2;
         public TMP_Text itemText1, itemText2;
         [Space]
-        public Button unlockButton;
         public Image lockedSongImage;
 
         private Image m_SongImage;
@@ -20,9 +19,7 @@ namespace UI
 
         private bool m_CanUnlock;
 
-        private void Start() => unlockButton.onClick.AddListener(UnlockSong);
-        
-        private void UnlockSong()
+        public void UnlockSong()
         {
             if (DataManager.ContainsSong(m_Song.ID)) return;
 
@@ -30,6 +27,9 @@ namespace UI
             if (m_CanUnlock)
             {
                 DataManager.AddSong(m_Song);
+                
+                DataManager.AddItem(m_Song.requiredItem1, -m_Song.requiredQuantityItem1);
+                DataManager.AddItem(m_Song.requiredItem2, -m_Song.requiredQuantityItem2);
 
                 Color color = m_SongImage.color;
                 color.a = 1f;
