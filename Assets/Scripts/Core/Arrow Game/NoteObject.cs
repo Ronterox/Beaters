@@ -12,10 +12,10 @@ namespace Core.Arrow_Game
         [Header("Config")]
         public Chord sound;
         public SpriteRenderer spriteRenderer;
-        
+
         [TagSelector]
         public string buttonTag;
-        
+
         public int comboLength;
         public bool isCombo;
 

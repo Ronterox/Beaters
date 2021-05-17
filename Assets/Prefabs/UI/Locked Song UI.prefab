@@ -196,7 +196,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3954163327363622680}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7984656366530983312}
+        m_TargetAssemblyTypeName: UI.LockedSongScreen, Assembly-CSharp
+        m_MethodName: UnlockSong
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onSelect:
     m_PersistentCalls:
       m_Calls: []
@@ -873,7 +885,6 @@ MonoBehaviour:
   itemSprite2: {fileID: 8159693827535311624}
   itemText1: {fileID: 8159693827758493856}
   itemText2: {fileID: 8159693827786412361}
-  unlockButton: {fileID: 3091390498763884891}
   lockedSongImage: {fileID: 8159693827458512135}
 --- !u!1 &8159693827535311638
 GameObject:
