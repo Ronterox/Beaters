@@ -151,15 +151,20 @@
             <e p="SliderControl.cs" t="Include" />
           </e>
           <e p="ScriptableObjects" t="Include">
+            <e p="Runes" t="Include">
+              <e p="DurationRune.cs" t="Include" />
+              <e p="ScoreRune.cs" t="Include" />
+              <e p="SkillRequirementRune.cs" t="Include" />
+            </e>
             <e p="ScriptableCharacter.cs" t="Include" />
             <e p="ScriptableItem.cs" t="Include" />
             <e p="ScriptableRune.cs" t="Include" />
             <e p="ScriptableSkill.cs" t="Include" />
+            <e p="Skills" t="Include">
+              <e p="InmunitySkill.cs" t="Include" />
+              <e p="MultiplierSkill.cs" t="Include" />
+            </e>
             <e p="Song.cs" t="Include" />
-          </e>
-          <e p="Skills" t="Include">
-            <e p="InmunitySkill.cs" t="Include" />
-            <e p="MultiplierSkill.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
             <e p="ButtonManager.cs" t="Include" />

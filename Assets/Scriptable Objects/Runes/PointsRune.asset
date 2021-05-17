@@ -13,8 +13,5 @@ MonoBehaviour:
   m_Name: PointsRune
   m_EditorClassIdentifier: 
   runeName: Points Rune
-  value: 10
-  probability: 50
-  effect: +3 points per obtained punctuation
-  spriteOfTheRune: {fileID: 0}
-  nameOfTheSet: 0
+  effectDescription: Extra 10% more score
+  runeSprite: {fileID: 21300000, guid: 063e412365cfecf3c85e537fe07007fd, type: 3}

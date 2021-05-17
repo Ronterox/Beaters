@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Plugins.SimpleFileBrowser.Scripts.SimpleRecycledListView;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace SimpleFileBrowser
+namespace Plugins.SimpleFileBrowser.Scripts
 {
 	public class FileBrowserMovement : MonoBehaviour
 	{

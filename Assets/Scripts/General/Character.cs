@@ -1,4 +1,5 @@
-using DG.Tweening;
+using Managers;
+using Plugins.DOTween.Modules;
 using Plugins.Properties;
 using ScriptableObjects;
 using TMPro;
@@ -35,7 +36,7 @@ namespace General
         public bool CanTakeDamage { get; set; } = true;
         private bool m_IsLowHp;
 
-        public void SetCharacter(ScriptableCharacter scriptableCharacter)
+        public void SetCharacter(ScriptableCharacter scriptableCharacter, GameplayManager manager)
         {
             //Set serialized exp and lvl
             character = scriptableCharacter;
@@ -48,7 +49,7 @@ namespace General
             maxHp = Mathf.RoundToInt(character.hp + level * character.multiplier);
             currentHp = maxHp;
 
-            scriptableCharacter.passiveSkill.UseSkill();
+            scriptableCharacter.passiveSkill.UseSkill(manager);
 
             UpdateText();
         }
@@ -80,7 +81,7 @@ namespace General
             hpText.text = $"Current hp: {currentHp}";
         }
 
-        public void UsePower() => character.activeSkill.UseSkill();
+        public void UsePower(GameplayManager gameplayManager) => character.activeSkill.UseSkill(gameplayManager);
 
         public void Die()
         {

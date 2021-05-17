@@ -345,6 +345,7 @@ MonoBehaviour:
   objectList:
   - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
   - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
+  guiManager: {fileID: 0}
   characterName: {fileID: 199043729807967755}
 --- !u!114 &3826981873533408227
 MonoBehaviour:
@@ -1101,7 +1102,7 @@ GameObject:
   - component: {fileID: 6339890636173942377}
   - component: {fileID: 6496050581882675786}
   m_Layer: 5
-  m_Name: Rune Button
+  m_Name: Rune Button Selector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

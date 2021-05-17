@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 
 namespace ScriptableObjects
@@ -9,6 +10,6 @@ namespace ScriptableObjects
         public string effectDescription;
         public int rechargeQuantity;
 
-        public virtual void UseSkill() => Debug.Log($"Not implemented the skill {name}");
+        public virtual void UseSkill(GameplayManager manager) => Debug.Log($"Not implemented the skill {name}");
     }
 }

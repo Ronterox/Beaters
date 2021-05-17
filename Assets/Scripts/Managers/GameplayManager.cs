@@ -57,10 +57,12 @@ namespace Managers
         public bool CanMiss { get; set; } = true;
 
         private float m_Multiplier = 1f;
+        
+        public float DurationIncrement { get; set; }
         public float Multiplier
         {
             get => m_Multiplier;
-            set => m_Multiplier = value <= 0 ? 1f : value;
+            set => m_Multiplier = value < 1f ? 1f : value;
         }
         //------------------------
 
@@ -85,6 +87,9 @@ namespace Managers
             SetGameplayCharacter();
 
             ResetValues();
+            
+            ScriptableRune rune = GameManager.GetRune();
+            if(rune) rune.ActivateRune(this);
 
             StartMap();
         }
@@ -107,7 +112,7 @@ namespace Managers
         {
             currentCharacter.onDie += Lose;
 
-            currentCharacter.SetCharacter(GameManager.GetCharacter());
+            currentCharacter.SetCharacter(GameManager.GetCharacter(), this);
 
             skillBarSlider.maxValue = currentCharacter.character.activeSkill.rechargeQuantity;
 
@@ -116,7 +121,7 @@ namespace Managers
                 if (skillBarSlider.value >= skillBarSlider.maxValue)
                 {
                     //Use active only when available
-                    currentCharacter.UsePower();
+                    currentCharacter.UsePower(this);
                     skillBarSlider.value = 0;
                 }
             });
