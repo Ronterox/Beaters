@@ -145,5 +145,6 @@ namespace Managers
         public static int GetItemQuantity(ushort id) => m_Instance.playerData.currentItems.FirstOrDefault(item => item.itemId == id).quantity;
 
         public static bool ContainsSong(ushort id) => m_Instance.playerData.unlockedSongs.Any(song => song.songId == id);
+        public static bool ContainsRune(ushort id) => m_Instance.playerData.unlockedRunes.Any(rune => rune.runeId == id);
     }
 }
