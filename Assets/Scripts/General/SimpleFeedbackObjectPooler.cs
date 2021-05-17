@@ -26,17 +26,27 @@ namespace General
 
         public void ShowText(string text, Color color, Vector3 position)
         {
-            TMP_Text tmpText= m_Queue.Dequeue();
-            
-            tmpText.gameObject.transform.position = position;
+            TMP_Text tmpText = GetText(text, position);
+
             tmpText.color = color;
-
-            tmpText.gameObject.SetActive(false);
-            tmpText.gameObject.SetActive(true);
-
-            tmpText.text = text;
 
             m_Queue.Enqueue(tmpText);
         }
+
+        public TMP_Text GetText(string text, Vector3 position)
+        {
+            TMP_Text tmpText = m_Queue.Dequeue();
+
+            tmpText.gameObject.transform.position = position;
+
+            tmpText.gameObject.SetActive(false);
+            tmpText.gameObject.SetActive(true);
+            
+            tmpText.text = text;
+
+            return tmpText;
+        }
+
+        public void ShowText(string text, Vector3 position) => m_Queue.Enqueue(GetText(text, position));
     }
 }

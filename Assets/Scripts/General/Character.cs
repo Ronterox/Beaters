@@ -22,6 +22,9 @@ namespace General
 
         [Header("Feedback")]
         public TMP_Text hpText;
+        public Transform feedbackTextPositionTransform;
+        [Space]
+        public SimpleFeedbackObjectPooler feedbackPooler;
 
         private bool m_IsDead;
 
@@ -46,7 +49,7 @@ namespace General
             currentHp = maxHp;
 
             scriptableCharacter.passiveSkill.UseSkill();
-            
+
             UpdateText();
         }
 
@@ -63,7 +66,8 @@ namespace General
                 //Temporally until animations
                 if (m_IsLowHp) characterImage.DOColor(Color.red, 2f);
             }
-            
+
+            feedbackPooler.ShowText($"-{damage}", feedbackTextPositionTransform.position);
             UpdateText();
         }
 

@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 3808297387459025075}
   - component: {fileID: 8776127767285483265}
   - component: {fileID: 5612968885711697273}
+  - component: {fileID: 3770071601908162413}
   m_Layer: 5
   m_Name: Character
   m_TagString: Untagged
@@ -229,6 +230,23 @@ MonoBehaviour:
   level: 0
   exp: 0
   hpText: {fileID: 7742340043873407871}
+  feedbackTextPositionTransform: {fileID: 6948604193813491886}
+  feedbackPooler: {fileID: 3770071601908162413}
+--- !u!114 &3770071601908162413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3462957264322775219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22a7501ac859fe6981a231c673a55a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCanvas: {fileID: 8857276460501430907}
+  prefab: {fileID: 5699414670821785157, guid: 697f6a57536aa95f7b3b858b6b630436, type: 3}
+  size: 2
 --- !u!1 &3707585101299026682
 GameObject:
   m_ObjectHideFlags: 0
