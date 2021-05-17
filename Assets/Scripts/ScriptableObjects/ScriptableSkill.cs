@@ -9,6 +9,8 @@ namespace ScriptableObjects
         [TextArea]
         public string effectDescription;
         public int rechargeQuantity;
+        [Space]
+        public Sprite skillImage;
 
         public virtual void UseSkill(GameplayManager manager) => Debug.Log($"Not implemented the skill {name}");
     }
