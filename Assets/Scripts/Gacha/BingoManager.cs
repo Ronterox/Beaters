@@ -7,12 +7,16 @@ using Plugins.Tools;
 
 public class BingoManager : MonoBehaviour
 {
+    public Image bingoCardboard;
+
     public GameObject panelBingo;
     public GameObject[] bingoBoxes;
     public Button redeemReward;
     private const int OPEN_BINGO_GACHA = 6578;
 
     void Start() {
+
+    
 
     redeemReward.interactable = false;
 
