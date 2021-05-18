@@ -57,7 +57,7 @@ namespace Utilities
                 var rng = new System.Random(length);
                 int comboCounter = 0, currentCombo = 0;
 
-                const int probability = 5, minComboLength = 5, maxComboLength = 8;
+                const int probability = 10, minComboLength = 5, maxComboLength = 8;
 
                 void GenerateNote(Note note)
                 {
@@ -76,10 +76,9 @@ namespace Utilities
                         noteObject.SetCombo(currentCombo);
                         if (++comboCounter >= currentCombo) currentCombo = 0;
                     }
-                    else if (rng.Next(length) <= probability)
+                    else if (rng.Next(100) <= probability)
                     {
-                        noteObject.SetCombo(rng.Next(minComboLength, maxComboLength));
-                        comboCounter = 1;
+                        noteObject.SetCombo(currentCombo = rng.Next(minComboLength, maxComboLength));
                     }
                 }
 
@@ -268,9 +267,9 @@ namespace Utilities
 
             //Check is pressing button, and if there is a note over other note, don't drop it
             if (!buttonUp || EventSystem.current.IsPointerOverGameObject() || m_ButtonDownPosition != mousePosition) return;
-            
+
             CheckNoteAndDestroy(mousePosition, checkNoteCastRange);
-            
+
             Instantiate(m_SelectedGameObject,
                         mousePosition,
                         m_SelectedGameObject.transform.rotation,
