@@ -173,7 +173,7 @@ namespace Utilities
 
         //TODO: Fix save songs json and load work, change path for mobile
         /// <summary>
-        /// 
+        /// Sets the events for all buttons and input fields
         /// </summary>
         private void Start()
         {
@@ -213,7 +213,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Removes the preview of the selected item
         /// </summary>
         private void CleanPreview()
         {
@@ -222,13 +222,13 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Enables arrow game buttons to be click or not
         /// </summary>
         /// <param name="enable"></param>
         private void EnableButtons(bool enable) => playerButtons.ForEach(button => button.canBeClick = enable);
 
         /// <summary>
-        /// 
+        /// Detects if a object was selected and updates the preview
         /// </summary>
         private void Update()
         {
@@ -279,7 +279,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Shows the particle of clicking on the set position
         /// </summary>
         /// <param name="position"></param>
         private void ShowTouchParticle(Vector3 position)
@@ -289,7 +289,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Starts whe map maker
         /// </summary>
         /// <param name="mapName"></param>
         public void StartCreating(string mapName)
@@ -319,7 +319,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Updates the state text with an animation
         /// </summary>
         /// <param name="text"></param>
         private void SetState(string text)
@@ -331,7 +331,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Obtains the bpm written on the inputfield
         /// </summary>
         /// <returns></returns>
         private int GetBpm()
@@ -341,7 +341,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Updates the map bpm by the input field
         /// </summary>
         /// <param name="mapName"></param>
         private void UpdateBpm(string mapName)
@@ -358,7 +358,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Creates a game object holder for the map notes
         /// </summary>
         /// <param name="mapName"></param>
         private void CreateMapHolder(string mapName)
@@ -391,7 +391,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Stops teh map maker
         /// </summary>
         public void StopCreating()
         {
@@ -402,7 +402,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Loads all user songs
         /// </summary>
         public void LoadMapsData()
         {
@@ -418,7 +418,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Deletes the song by the map name
         /// </summary>
         /// <param name="mapName"></param>
         public void DeleteSoundMap(string mapName)
@@ -447,12 +447,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public void DeleteSoundMap() => DeleteSoundMap(songNameText.text);
-
-        /// <summary>
-        /// 
+        /// Checks if the map name is not written on the input and puts an error
         /// </summary>
         /// <param name="mapName"></param>
         /// <returns></returns>
@@ -464,7 +459,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Loads a map by the map name
         /// </summary>
         /// <param name="mapName"></param>
         public void LoadMap(string mapName)
@@ -510,7 +505,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Saves a map by the map name
         /// </summary>
         /// <param name="mapName"></param>
         public void SaveMap(string mapName)
@@ -575,7 +570,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Obtains a map by the map name
         /// </summary>
         /// <param name="mapName"></param>
         /// <returns></returns>
@@ -584,24 +579,29 @@ namespace Utilities
             ushort hashName = mapName.GetHashCodeUshort();
             return soundMaps.FirstOrDefault(map => map.ID == hashName);
         }
+        
+        /// <summary>
+        /// Deletes the soundmap written on the input field
+        /// </summary>
+        public void DeleteSoundMap() => DeleteSoundMap(songNameText.text);
 
         /// <summary>
-        /// 
+        /// Loads the map written on the input field
         /// </summary>
         public void LoadMap() => LoadMap(songNameInputField.text);
 
         /// <summary>
-        /// 
+        /// Saves the map written on the input field
         /// </summary>
         public void SaveMap() => SaveMap(songNameInputField.text);
 
         /// <summary>
-        /// 
+        /// Starts the map maker by the map written on the input field
         /// </summary>
         public void ContinueCreating() => StartCreating(songNameInputField.text);
 
         /// <summary>
-        /// 
+        /// Updates the dropdown list of created songs
         /// </summary>
         private void UpdateSongsList()
         {
@@ -615,7 +615,7 @@ namespace Utilities
         }
         
         /// <summary>
-        /// 
+        /// Updates the audio clip of the map written on the input field
         /// </summary>
         private void UpdateAudioMap()
         {
@@ -632,7 +632,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Asks for a sound file and obtains it
         /// </summary>
         public void AskForSoundFile()
         {
@@ -669,14 +669,14 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 
+        /// Loads an audio clip by the path passed asynchronously
         /// </summary>
         /// <param name="fullPath"></param>
         /// <param name="action"></param>
         public void GetAudioClip(string fullPath, Action<AudioClip> action) => StartCoroutine(GetAudioClipCoroutine(fullPath, action));
 
         /// <summary>
-        /// 
+        /// Coroutine to get an audio clip by path asynchronously
         /// </summary>
         /// <param name="fullPath"></param>
         /// <param name="action"></param>
