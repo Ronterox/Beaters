@@ -2,28 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/Character Selector.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/Character Selector.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperActive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperActive.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperPassive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperPassive.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Metalhead Active.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Metalhead Active.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/MetalheadPassive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/MetalheadPassive.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/Character.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/Character.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/FeedbackText.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/FeedbackText.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SelectableRune.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SelectableRune.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/CharacterScriptableSelector.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/CharacterScriptableSelector.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/CharacterScriptableSelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/CharacterScriptableSelector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/ScriptableSelector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/ScriptableSelector.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,8 +88,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverScript.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/PauseMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
@@ -151,9 +134,11 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Runes/DurationRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/ImageText.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SelectableRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/CharacterScriptableSelector.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />

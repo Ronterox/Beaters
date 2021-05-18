@@ -184,7 +184,6 @@
             <e p="HoldableButton.cs" t="Include" />
             <e p="Rotation.cs" t="Include" />
             <e p="RuneScriptableSelector.cs" t="Include" />
-            <e p="ScriptableSelector.cs" t="Include" />
             <e p="SongMapMaker.cs" t="Include" />
             <e p="StateEventCaller.cs" t="Include" />
             <e p="Turbulence.cs" t="Include" />

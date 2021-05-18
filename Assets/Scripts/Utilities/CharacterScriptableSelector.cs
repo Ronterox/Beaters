@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Managers;
+using Plugins.Tools;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -7,8 +7,11 @@ using UnityEngine.UI;
 
 namespace Utilities
 {
-    public class CharacterScriptableSelector : ScriptableSelector<ScriptableCharacter>
+    public class CharacterScriptableSelector : MonoBehaviour
     {
+        public Image objectImage;
+        public ScriptableCharacter[] objectList;
+        [Space]
         public GUIManager guiManager;
         [Space]
         public TMP_Text characterName;
@@ -16,17 +19,29 @@ namespace Utilities
         [Space]
         public Image activeSkillImage;
         public Image passiveSkillImage;
-        
+
         public TMP_Text activeSkillText, passiveSkillText;
+        private int m_Index;
 
-        protected override List<ushort> GetObjectIds() => DataManager.GetCharactersIds();
+        private void Start() => CheckAndSetObject();
 
-        protected override void SetObject()
+        private void CheckAndSetObject()
         {
-            ScriptableCharacter character = m_PlayerObjects[m_Index];
+            if(objectList.Length < 1) return;
+            SetStartIndex();
+            SetObject();
+        }
+        
+        public void TravelObjects(int index)
+        {
+            m_Index.ChangeValueLoop(index, objectList.Length);
+            SetObject();
+        }
 
-            objectImage.sprite = character.sprites[0];
-            
+        private void SetObject()
+        {
+            ScriptableCharacter character = objectList[m_Index];
+
             characterName.text = character.characterName;
             characterDescription.text = character.description;
 
@@ -36,10 +51,16 @@ namespace Utilities
             activeSkillImage.sprite = character.activeSkill.skillImage;
             passiveSkillImage.sprite = character.passiveSkill.skillImage;
 
-            GameManager.PutCharacter(character);
-            guiManager.SetCharacterGUI(character);
+            if (DataManager.ContainsCharacter(character.ID))
+            {
+                objectImage.sprite = character.sprites[0];
+                GameManager.PutCharacter(character);
+                guiManager.SetCharacterGUI(character);
+            }
+            else
+                objectImage.sprite = character.gachaButton;
         }
 
-        protected override void SetStartIndex() => m_Index = m_PlayerObjects.FindIndex(character => character.ID == GameManager.GetCharacter().ID);
+        private void SetStartIndex() => m_Index = objectList.FindIndex(character => character.ID == GameManager.GetCharacter().ID);
     }
 }

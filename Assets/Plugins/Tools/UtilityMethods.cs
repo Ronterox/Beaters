@@ -407,5 +407,14 @@ namespace Plugins.Tools
             Application.Quit();
 #endif
         }
+
+        public static int FindIndex<T>(this T[] array, Func<T, bool> condition)
+        {
+            for (var i = 0; i < array.Length; i++)
+            {
+                if (condition(array[i])) return i;
+            }
+            return -1;
+        }
     }
 }
