@@ -10,7 +10,7 @@ namespace Managers
     [System.Serializable]
     public class PlayerData
     {
-        public int tapsDone, money, tickets;
+        public int tapsDone, money, tickets, bingoBoxes;
         public double timePlayed, timePlayedInGame;
         [Header("Inventory and Progress")]
         public SerializableItem[] currentItems;

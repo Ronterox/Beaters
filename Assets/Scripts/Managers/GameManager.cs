@@ -13,8 +13,13 @@ namespace Managers
         private SoundMap m_SoundMap;
         private ScriptableObject m_Prize;
         private ScriptableCharacter m_Character;
+        private object m_value;
 
         public Song Song { get; private set; }
+
+        public static void PutValue(object value) => Instance.m_value = value;
+
+        public static object GetValue() => Instance.m_value;
 
         public static void PutSoundMap(SoundMap soundMap) => Instance.m_SoundMap = soundMap;
 
