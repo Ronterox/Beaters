@@ -46,10 +46,19 @@ namespace Managers
     {
         public ushort songId;
 
-        public bool isCompleted;
-        public int highestCombo;
+        public int highestCombo, highestScore;
+        public float accuracy;
 
         public Difficulty[] completedDifficulties;
+
+        public void UpdateValues(int combo, int score, float precision)
+        {
+            highestCombo = combo;
+            highestScore = score;
+            accuracy = precision;
+        }
+
+        public void SetId(ushort id) => songId = id;
     }
 
     [System.Serializable]
@@ -83,7 +92,7 @@ namespace Managers
 
             List<SerializableSong> unlockedSongs = m_Instance.playerData.unlockedSongs;
 
-            if (unlockedSongs.Any(sSong => sSong.songId == id)) return;
+            if (unlockedSongs.Any(srlSong => srlSong.songId == id)) return;
 
             unlockedSongs.Add(new SerializableSong { songId = id });
         }
@@ -136,6 +145,8 @@ namespace Managers
             runes.Add(new SerializableRune { runeId = rune.ID });
         }
 
+        public static SerializableSong GetSong(ushort id) => m_Instance.playerData.unlockedSongs.Find(song => song.songId == id);
+
         public static List<ushort> GetCharactersIds() => m_Instance.playerData.unlockedCharacters.Select(character => character.characterId).ToList();
 
         public static List<ushort> GetRunesIds() => m_Instance.playerData.unlockedRunes.Select(rune => rune.runeId).ToList();
@@ -149,5 +160,16 @@ namespace Managers
         public static bool ContainsSong(ushort id) => m_Instance.playerData.unlockedSongs.Any(song => song.songId == id);
 
         public static bool ContainsRune(ushort id) => m_Instance.playerData.unlockedRunes.Any(rune => rune.runeId == id);
+
+        public static void UpdateSong(SerializableSong serializableSong)
+        {
+            ushort id = serializableSong.songId;
+            List<SerializableSong> unlockedSongs = m_Instance.playerData.unlockedSongs;
+
+            int songIndex = unlockedSongs.FindIndex(song => song.songId == id);
+
+            if (songIndex != -1) unlockedSongs[songIndex] = serializableSong;
+            else unlockedSongs.Add(serializableSong);
+        }
     }
 }

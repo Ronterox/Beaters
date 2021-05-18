@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 namespace Managers
 {
     public enum HitType { Good = 3, Perfect = 5, TooSlow = 2, TooSoon = 2 }
-    
+
     public class GameplayManager : Singleton<GameplayManager>
     {
         public MapScroller mapScroller;
@@ -57,7 +57,7 @@ namespace Managers
         public bool CanMiss { get; set; } = true;
 
         private float m_Multiplier = 1f;
-        
+
         public float DurationIncrement { get; set; }
         public float Multiplier
         {
@@ -87,9 +87,9 @@ namespace Managers
             SetGameplayCharacter();
 
             ResetValues();
-            
+
             ScriptableRune rune = GameManager.GetRune();
-            if(rune) rune.ActivateRune(this);
+            if (rune) rune.ActivateRune(this);
 
             StartMap();
         }
@@ -137,16 +137,16 @@ namespace Managers
         private IEnumerator StopTimeCoroutine(float duration, Action afterStoppingTime)
         {
             AudioSource sound = SoundManager.Instance.backgroundAudioSource;
-            
+
             while (!Time.timeScale.Approximates(0))
             {
                 sound.pitch = Time.timeScale -= Time.deltaTime * duration;
                 yield return null;
             }
-            
+
             sound.pitch = Time.timeScale = 1f;
             sound.Stop();
-            
+
             afterStoppingTime?.Invoke();
         }
 
@@ -259,10 +259,10 @@ namespace Managers
         /// Shows the end gameplay panel
         /// </summary>
         /// <param name="parentCanvas"></param>
-        public void ShowEndGameplayPanel(Canvas parentCanvas)
+        private void ShowEndGameplayPanel(Canvas parentCanvas)
         {
             CheckHighestCombo();
-            
+
             const float moneyMultiplier = .25f;
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
 
@@ -272,8 +272,13 @@ namespace Managers
             m_Data.money += accuracyGain + comboGain;
             m_Data.tapsDone += m_Taps;
 
-            ScriptableCharacter character = GameManager.GetCharacter();
             SoundMap soundMap = mapScroller.SoundMap;
+            ScriptableCharacter character = GameManager.GetCharacter();
+            
+            SerializableSong songData = DataManager.GetSong(soundMap.ID);
+            if (songData.songId == 0) songData.SetId(soundMap.ID);
+
+            int oldHighScore = songData.highestScore;
 
             var gameOverPanel = Instantiate(endGamePanel, parentCanvas.transform).GetComponent<GameOverPanel>();
             //Set end panel values
@@ -289,10 +294,16 @@ namespace Managers
             gameOverPanel.SetGroupName(soundMap.genre);
             gameOverPanel.SetHighestCombo(m_HighestCombo);
 
-            gameOverPanel.SetNewHighScoreText(0, m_Score);
+            gameOverPanel.SetNewHighScoreText(songData.highestScore, m_Score);
 
             gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
-            //Give prizes
+
+            //Show prizes
+
+            if (m_Score <= oldHighScore) return;
+
+            songData.UpdateValues(m_Combo, m_Score, accuracy);
+            DataManager.UpdateSong(songData);
         }
 
         /// <summary>
@@ -381,7 +392,7 @@ namespace Managers
             }
             else
                 m_Instance.m_ComboPrizeCounter = 0;
-            
+
             //Hit Feedback
             m_Instance.feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
         }

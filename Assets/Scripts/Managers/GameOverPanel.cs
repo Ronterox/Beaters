@@ -63,10 +63,10 @@ namespace Managers
 
         public void SetMapMaker(string mapCreator) => mapMaker.text = mapCreator;
 
-        public void SetNewHighScoreText(int previouslyHighScore, int lastScore)
+        public void SetNewHighScoreText(int oldScore, int newScore)
         {
-            newHighScoreText.text = previouslyHighScore + "";
-            newHighScoreText.gameObject.SetActive(previouslyHighScore < lastScore);
+            newHighScoreText.text = newScore + "";
+            newHighScoreText.gameObject.SetActive(oldScore < newScore);
         }
 
         public void SetCharacterBonus(Genre charGenre, Genre genreOfTheSong)

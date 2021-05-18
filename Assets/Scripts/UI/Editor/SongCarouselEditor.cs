@@ -36,7 +36,7 @@ namespace UI.Editor
         protected new void OnEnable()
         {
             base.OnEnable();
-            m_SongImage = serializedObject.FindProperty("lockedSongImage");
+            m_SongImage = serializedObject.FindProperty("songImage");
             m_SongText = serializedObject.FindProperty("songName");
         }
         public override void OnInspectorGUI()

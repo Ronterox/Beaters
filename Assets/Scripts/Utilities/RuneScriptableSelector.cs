@@ -25,7 +25,7 @@ namespace Utilities
                 
                 rune.button.onClick.AddListener(() =>
                     {
-                        content.gameObject.SetActive(false);
+                        gameObject.SetActive(false);
                         GameManager.PutRune(scriptableRune);
                         selectedRune.Set(scriptableRune.runeName, scriptableRune.runeSprite);
                     });

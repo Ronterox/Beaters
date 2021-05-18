@@ -206,8 +206,6 @@ namespace Core.Arrow_Game
                 anim.Restart();
                 anim.Play();
             });
-            
-            print("Play animation");
 
             yield return m_WaitForSeconds;
             m_WaitingForBeat = false;
