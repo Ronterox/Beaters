@@ -37,9 +37,10 @@ namespace UI
             gameObject.SetActive(true);
             
             SoundManager.Instance.PlayBackgroundMusicNoFade(song.soundMap.audioClip);
+
+            SerializableSong serializableSong = DataManager.GetSong(song.ID);
             
-            //TODO: serialize this song values
-            ShowRecordScreen(song.songImage, 100, "SSS", 50, 75);
+            ShowRecordScreen(song.songImage, serializableSong.highestScore, "SSS", serializableSong.highestCombo, serializableSong.accuracy);
             
             m_Song = song;
 

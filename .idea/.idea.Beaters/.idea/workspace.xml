@@ -4,6 +4,7 @@
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,20 +93,15 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/Song.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/RuneScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/CharacterScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/ScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/StartSoundManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/ObjectPool.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleObjectPooler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" />
@@ -126,13 +122,18 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MultiplierSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/InmunitySkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Runes/DurationRune.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/ImageText.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SelectableRune.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/CharacterScriptableSelector.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
     </changedPaths>
   </component>
@@ -205,6 +206,7 @@
       <workItem from="1621167846232" duration="19457000" />
       <workItem from="1621249437567" duration="26470000" />
       <workItem from="1621337350342" duration="4010000" />
+      <workItem from="1621346620574" duration="12132000" />
     </task>
     <servers />
   </component>
