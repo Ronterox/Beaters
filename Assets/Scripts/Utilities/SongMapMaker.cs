@@ -153,7 +153,8 @@ namespace Utilities
         private GameObject m_SelectedGameObject;
         private ushort m_SelectedId;
 
-        private bool m_IsHoldingNote;
+        private bool m_IsNoteSelected;
+        private Vector3 m_ButtonDownPosition;
 
 #if !UNITY_EDITOR || FORCE_JSON
         private const string SONG_FOLDER = "Songs";
@@ -203,12 +204,12 @@ namespace Utilities
                         preview.color = makerNote.image.color;
                         m_SelectedGameObject = makerNote.noteObject.gameObject;
                         m_SelectedId = makerNote.id;
-                        m_IsHoldingNote = true;
+                        m_IsNoteSelected = true;
                     }
                 };
             }
 
-            //Disable the abbility to play game buttons
+            //Disable the ability to play game buttons
             EnableButtons(false);
         }
 
@@ -234,6 +235,9 @@ namespace Utilities
         {
             if (!IsCreating) return;
 
+            const float checkNoteCastRange = .4f;
+            const int rightClickButton = 1, leftClickButton = 0;
+
             Vector3 mousePosition = Input.mousePosition;
 
             //Set the position relative to the camera vision
@@ -246,36 +250,43 @@ namespace Utilities
             mousePosition.z = 0;
 
             //Position preview where the mouse is supposed to be
+
             m_PreviewTransform.position = mousePosition;
 
             //Check to destroy a tile note
-            if (Input.GetMouseButtonDown(0) && !m_IsHoldingNote)
-            {
-                RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, mapScroller.notesLayer.value);
-                if (result) Destroy(result.collider.gameObject);
-            }
+#if !UNITY_IPHONE && !UNITY_ANDROID
+            if (Input.GetMouseButtonDown(rightClickButton)) CheckNoteAndDestroy(mousePosition, checkNoteCastRange);
+#endif
+            //Check for input drop and show particle
+            bool buttonUp = Input.GetMouseButtonUp(0);
+            if (buttonUp) ShowTouchParticle(mousePosition);
 
-            if (!m_IsHoldingNote && Input.GetMouseButtonUp(0)) ShowTouchParticle(mousePosition);
+            //If not object selected exit
+            if (!m_IsNoteSelected) return;
 
-            //Check for holding note and dropping
-            if (!m_IsHoldingNote || !Input.GetMouseButtonUp(0)) return;
+            if (Input.GetMouseButtonDown(leftClickButton)) m_ButtonDownPosition = mousePosition;
 
-            //Check if note over other note, if it is don't drop
-            if (EventSystem.current.IsPointerOverGameObject() || Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, mapScroller.notesLayer.value))
-                return;
+            //Check is pressing button, and if there is a note over other note, don't drop it
+            if (!buttonUp || EventSystem.current.IsPointerOverGameObject() || m_ButtonDownPosition != mousePosition) return;
+            
+            CheckNoteAndDestroy(mousePosition, checkNoteCastRange);
+            
+            Instantiate(m_SelectedGameObject,
+                        mousePosition,
+                        m_SelectedGameObject.transform.rotation,
+                        m_CurrentMapGameObject.transform)
+                .GetComponent<NoteObject>().MakerId = m_SelectedId;
+        }
 
-            //If selected a gameobject and is working on a map drop and instantiate
-            if (m_SelectedGameObject && m_CurrentMapGameObject)
-            {
-                Instantiate(m_SelectedGameObject,
-                            mousePosition,
-                            m_SelectedGameObject.transform.rotation,
-                            m_CurrentMapGameObject.transform)
-                    .GetComponent<NoteObject>().MakerId = m_SelectedId;
-
-                CleanPreview();
-            }
-            m_IsHoldingNote = false;
+        /// <summary>
+        /// Casts and checks if there is a note around the position passed, if there is, destroys it
+        /// </summary>
+        /// <param name="mousePosition">the position where to cast</param>
+        /// <param name="castRange">the area of the circle cast</param>
+        private void CheckNoteAndDestroy(Vector3 mousePosition, float castRange)
+        {
+            RaycastHit2D result = Physics2D.CircleCast(mousePosition, castRange, Vector2.zero, 0, mapScroller.notesLayer.value);
+            if (result) Destroy(result.collider.gameObject);
         }
 
         /// <summary>
@@ -579,7 +590,7 @@ namespace Utilities
             ushort hashName = mapName.GetHashCodeUshort();
             return soundMaps.FirstOrDefault(map => map.ID == hashName);
         }
-        
+
         /// <summary>
         /// Deletes the soundmap written on the input field
         /// </summary>
@@ -613,7 +624,7 @@ namespace Utilities
 
             songListDropdown.AddOptions(mapNames);
         }
-        
+
         /// <summary>
         /// Updates the audio clip of the map written on the input field
         /// </summary>
