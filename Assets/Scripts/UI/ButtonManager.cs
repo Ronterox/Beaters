@@ -1,3 +1,4 @@
+using Managers;
 using Plugins.Properties;
 using Plugins.Tools;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace UI
     [System.Serializable]
     public struct MenuButton
     {
-        public Button selectableButton;
+        public Button button;
         [Scene]
         public string scene;
     }
@@ -18,9 +19,9 @@ namespace UI
     {
         public MenuButton[] menuButtons;
 
-        private void Start() => menuButtons.ForEach(button => button.selectableButton.onClick.AddListener(() => LoadScene(button.scene)));
+        private void Start() => menuButtons.ForEach(button => button.button.onClick.AddListener(() => LoadScene(button.scene)));
 
-        public void LoadScene(string sceneName) => SceneManager.LoadScene(sceneName);
+        public void LoadScene(string sceneName) => LevelLoadManager.LoadSceneWithTransition(sceneName, .5f);
 
         public void ReloadScene() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
@@ -28,13 +29,6 @@ namespace UI
 
         public void NextScene() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
-        public void ExitGame()
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
-        }
+        public void ExitGame() => UtilityMethods.CloseApplication();
     }
 }

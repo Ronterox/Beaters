@@ -1,19 +1,15 @@
-using Plugins.Tools;
+using General;
+using Managers;
 using UnityEngine;
 
 namespace ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New Rune", menuName = "Runes/New Rune")]
-    public class ScriptableRune : ScriptableObject
+    public class ScriptableRune : IdentifiedScriptable
     {
-        public enum RuneSet { Points, PercentualPoints, Passives, Actives }
-
-        public string runeName, effect;
-        public int value;
-        public float probability;
+        public string runeName, effectDescription;
         public Sprite runeSprite;
-        public RuneSet nameOfTheSet = RuneSet.Points;
 
-        public ushort ID => runeName.GetHashCodeUshort();
+        public virtual void ActivateRune(GameplayManager manager) => Debug.Log("Rune not yet implemented");
     }
 }

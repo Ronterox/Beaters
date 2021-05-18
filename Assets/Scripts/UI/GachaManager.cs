@@ -48,8 +48,16 @@ namespace UI
         private float m_Total, m_RandomNumber;
         private int m_BannerIndex;
 
+        private bool m_Payed;
+
         private void Start()
         {
+            if (DataManager.Instance.CharacterCount < 1)
+            {
+                GetPrizeAndSummon();
+                return;
+            }
+            
             m_Data = DataManager.Instance.playerData;
 
             const int requiredTickets = 1, requiredCoins = 100;
@@ -60,22 +68,24 @@ namespace UI
 
             ticketButton.onClick.AddListener(() =>
             {
-                if (m_Data.tickets < requiredTickets)
+                if (m_Payed || m_Data.tickets < requiredTickets)
                 {
                     Debug.Log("Not enough tickets!".ToColorString("red"));
                     return;
                 }
+                m_Payed = true;
                 m_Data.tickets -= requiredTickets;
                 GetPrizeAndSummon();
             });
 
             moneyButton.onClick.AddListener(() =>
             {
-                if (m_Data.money < requiredCoins)
+                if (m_Payed || m_Data.money < requiredCoins)
                 {
                     Debug.Log("Not enough money!".ToColorString("red"));
                     return;
                 }
+                m_Payed = true;
                 m_Data.money -= requiredCoins;
                 GetPrizeAndSummon();
             });

@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
+  m_Name: Zavodilla
+  m_EditorClassIdentifier: 
+  songImage: {fileID: 21300000, guid: b7e73b010fd3db7b1b0bea3fe5600cb0, type: 3}
+  soundMap:
+    name: Zavodilla
+    mapCreator: Aaron
+    bpm: 130
+    genre: 2
+    audioClip: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
+    audioPath: /home/rontero/Documents/Unity Projects/Beaters/Assets/Audio/Songs/Zavodila
+      (Vs Whitty Remix).mp3
+    notes:
+    - id: 1
+      x: -1
+      y: 21.434608
+      z: 0
+    - id: 1
+      x: -1
+      y: 23.821272
+      z: 0
+    - id: 3
+      x: 1
+      y: 24.821272
+      z: 0
+    - id: 2
+      x: 3
+      y: 25.821272
+      z: 0
+    - id: 2
+      x: 3
+      y: 27.821272
+      z: 0
+    - id: 1
+      x: -1
+      y: 29.821272
+      z: 0
+    - id: 3
+      x: 1
+      y: 31.821272
+      z: 0
+    - id: 0
+      x: -3
+      y: 32.821274
+      z: 0
+    - id: 1
+      x: -1
+      y: 34.821274
+      z: 0
+    - id: 2
+      x: 3
+      y: 35.821274
+      z: 0
+    - id: 3
+      x: 1
+      y: 37.821274
+      z: 0
+  requiredItem1: {fileID: 11400000, guid: aaaa7a2cc3af499bb975e2e691e2e191, type: 2}
+  requiredItem2: {fileID: 11400000, guid: 46bd4372404e80642a494f2f1c6e03f7, type: 2}
+  requiredQuantityItem1: 1
+  requiredQuantityItem2: 1

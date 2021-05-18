@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Plugins.Tools;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -105,8 +104,10 @@ namespace Plugins.Audio
         public float VoiceVolume => GetVolume(VOICE_VOLUME_PARAM);
         public float SFXVolume => GetVolume(SFX_VOLUME_PARAM);
 
+        public bool IsPlaying => backgroundAudioSource.isPlaying;
+
         /// Support variables
-        private AudioSource m_BackgroundMusic;
+        public AudioSource backgroundAudioSource;
         private SoundPooler m_SoundsPool;
         private SoundPooler m_CurrentInGamePooler;
 
@@ -126,7 +127,7 @@ namespace Plugins.Audio
 
         private void LateUpdate()
         {
-            float time = m_BackgroundMusic.time;
+            float time = backgroundAudioSource.time;
             songDeltaTime = time - timeLastFrame;
             timeLastFrame = time;
         }
@@ -141,7 +142,7 @@ namespace Plugins.Audio
         {
             base.Awake();
 
-            m_BackgroundMusic = gameObject.GetComponentSafely<AudioSource>();
+            backgroundAudioSource = gameObject.GetComponentSafely<AudioSource>();
             m_SoundsPool = GetComponent<SoundPooler>();
         }
 
@@ -175,21 +176,21 @@ namespace Plugins.Audio
         /// <param name="loop"></param>
         public IEnumerator _PlayBackgroundMusic(AudioClip clip, float fadeDuration = 1f, bool loop = true)
         {
-            if (m_BackgroundMusic.clip == clip)
+            if (backgroundAudioSource.clip == clip)
             {
                 StopBackgroundMusic();
-                m_BackgroundMusic.Play();
+                backgroundAudioSource.Play();
                 yield break;
             }
 
-            yield return StartCoroutine(FadeMixerVolume(m_BackgroundMusic.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, 0f));
+            yield return StartCoroutine(FadeMixerVolume(backgroundAudioSource.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, 0f));
 
-            m_BackgroundMusic.clip = clip;
-            m_BackgroundMusic.loop = loop;
+            backgroundAudioSource.clip = clip;
+            backgroundAudioSource.loop = loop;
 
-            m_BackgroundMusic.Play();
+            backgroundAudioSource.Play();
 
-            yield return StartCoroutine(FadeMixerVolume(m_BackgroundMusic.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, MusicVolume));
+            yield return StartCoroutine(FadeMixerVolume(backgroundAudioSource.outputAudioMixerGroup.audioMixer, MUSIC_VOLUME_PARAM, fadeDuration, MusicVolume));
         }
 
         /// <summary>
@@ -228,27 +229,21 @@ namespace Plugins.Audio
         /// Plays the background music instantly
         /// </summary>
         /// <param name="clip"></param>
-        /// <param name="delay">optional delay</param>
         /// <param name="loop"></param>
-        public void PlayBackgroundMusicNoFade(AudioClip clip, float delay = 0f, bool loop = true)
+        public void PlayBackgroundMusicNoFade(AudioClip clip, bool loop = true)
         {
             StopBackgroundMusic();
 
-            Action playSong = () =>
+            backgroundAudioSource.loop = loop;
+
+            if (backgroundAudioSource.clip == clip)
             {
-                if (m_BackgroundMusic.clip == clip)
-                {
-                    m_BackgroundMusic.Play();
-                    return;
-                }
+                backgroundAudioSource.Play();
+                return;
+            }
 
-                m_BackgroundMusic.clip = clip;
-                m_BackgroundMusic.loop = loop;
-
-                m_BackgroundMusic.Play();
-            };
-
-            playSong.DelayAction(delay);
+            backgroundAudioSource.clip = clip;
+            backgroundAudioSource.Play();
         }
 
         /// <summary>
@@ -285,23 +280,23 @@ namespace Plugins.Audio
         public void StopBackgroundMusic()
         {
             timeLastFrame = 0;
-            m_BackgroundMusic.Stop();
+            backgroundAudioSource.Stop();
         }
 
         /// <summary>
         /// Play a background music
         /// </summary>
-        public void PlayBackgroundMusic() => m_BackgroundMusic.Play();
+        public void PlayBackgroundMusic() => backgroundAudioSource.Play();
 
         /// <summary>
         /// Pause background music
         /// </summary>
-        public void PauseBackgroundMusic() => m_BackgroundMusic.Pause();
+        public void PauseBackgroundMusic() => backgroundAudioSource.Pause();
 
         /// <summary>
         /// Resume background music
         /// </summary>
-        public void UnPauseBackgroundMusic() => m_BackgroundMusic.UnPause();
+        public void UnPauseBackgroundMusic() => backgroundAudioSource.UnPause();
 
         /// <summary>
         /// Plays a sound

@@ -14,22 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: KPoper
   description: Loves kpop so much she will like to be korean and make her own music
-  skill:
-  - {fileID: 11400000, guid: e6c9e700ddd337c70b5be58061756b48, type: 2}
-  - {fileID: 11400000, guid: e1f23ebad1fc95b03a7abc388fea2efe, type: 2}
+  characterGenre: 0
+  hp: 120
+  multiplier: 1
+  activeSkill: {fileID: 11400000, guid: 218e55276f0a5dfa482b76fdc1cccde1, type: 2}
+  passiveSkill: {fileID: 11400000, guid: e6c9e700ddd337c70b5be58061756b48, type: 2}
+  backgroundImage: {fileID: 21300000, guid: e31e9ecf0498199c19a2c08d215e8d63, type: 3}
   colorPalette:
-    mainColor: {r: 1, g: 0.6462264, b: 0.923475, a: 1}
-    secondaryColor: {r: 0.67870766, g: 1, b: 0.5235849, a: 1}
+    mainColor: {r: 0.9245283, g: 0.745728, b: 0.8847949, a: 1}
+    secondaryColor: {r: 1, g: 0.3160377, b: 0.9506963, a: 1}
     complementaryColor1: {r: 0.5990566, g: 1, b: 0.9565443, a: 1}
     complementaryColor2: {r: 1, g: 0.514151, b: 0.514151, a: 0}
   sprites:
-  - {fileID: 21300000, guid: 5316c682b3e4e26e78a6da7f87c2f584, type: 3}
+  - {fileID: 21300000, guid: 21d6d41a672b539478924cd1361623b7, type: 3}
   - {fileID: 21300000, guid: dbcfda3e6f96bef2b933d2ba23bf3f8e, type: 3}
   - {fileID: 21300000, guid: 58ab7346c2bc7e010879092dbcccdc5a, type: 3}
   - {fileID: 21300000, guid: 569a7fc7c73b76257a00f140bbf3f7fc, type: 3}
   - {fileID: 21300000, guid: 0bb120e0f55b19162bd917d90cbe5cba, type: 3}
-  hp: 120
-  multiplier: 0
-  playButton: {fileID: 0}
-  gachaButton: {fileID: 21300000, guid: 5316c682b3e4e26e78a6da7f87c2f584, type: 3}
-  mapCreator: {fileID: 0}
+  font: {fileID: 11400000, guid: 6922b08e7a3f9a23396a9d564e4b03d2, type: 2}
+  playButton: {fileID: 21300000, guid: 64abc645a62680cf9b971a126a8323f5, type: 3}
+  gachaButton: {fileID: 21300000, guid: ae6bdd1b5a40f9550839f296f3edef18, type: 3}
+  mapCreator: {fileID: 21300000, guid: 1475b954eac4420a89b2454a992f5ad3, type: 3}
+  exitButton: {fileID: 0}
+  fullStar: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  emptyStar: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  buttonLayout: {fileID: 21300000, guid: 5d4802dd4b8a94e7ebdc8356540ff66e, type: 3}
+  usePrimaryColorInButtons: 1

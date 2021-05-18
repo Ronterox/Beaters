@@ -8,11 +8,11 @@ using System.Linq;
 using Core.Arrow_Game;
 using DG.Tweening;
 #if UNITY_EDITOR && !FORCE_JSON
-using General;
 #endif
 using Managers;
+using Plugins.SimpleFileBrowser.Scripts;
 using Plugins.Tools;
-using SimpleFileBrowser;
+using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,8 +24,9 @@ namespace Utilities
     [Serializable]
     public class SoundMap
     {
-        public string name;
+        public string name, mapCreator;
         public float bpm;
+        public Genre genre = Genre.Custom;
 
 #if !UNITY_EDITOR || FORCE_JSON
         [NonSerialized]
@@ -40,16 +41,24 @@ namespace Utilities
 
         public void SetNotes(Note[] newNotes) => notes = newNotes;
 
+        /// <summary>
+        /// Generates the map notes inside the set parent, based on the passed maker notes
+        /// </summary>
+        /// <param name="makerNotes"></param>
+        /// <param name="parent"></param>
+        /// <param name="generateCombo">optional parameter to see if you want to generate combo notes</param>
         public void GenerateNotes(MakerNote[] makerNotes, Transform parent, bool generateCombo = true)
         {
+            //TODO: fix generation of procedural combo
+            //Check of generation of procedural combos, guitar hero style
             if (generateCombo)
             {
                 int length = makerNotes.Length;
                 var rng = new System.Random(length);
                 int comboCounter = 0, currentCombo = 0;
 
-                const int probability = 10, minComboLength = 5, maxComboLength = 8;
-                
+                const int probability = 5, minComboLength = 5, maxComboLength = 8;
+
                 void GenerateNote(Note note)
                 {
                     MakerNote makerNote = makerNotes.First(makeNote => makeNote.id == note.id);
@@ -58,8 +67,10 @@ namespace Utilities
                     GameObject obj = makerNote.noteObject.gameObject;
 
                     var noteObject = UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent).GetComponent<NoteObject>();
+                    //Set the id so we can save or instantiate same object
                     noteObject.MakerId = makerNote.id;
 
+                    //Check if need to continue a combo or if it generates one
                     if (currentCombo != 0)
                     {
                         noteObject.SetCombo(currentCombo);
@@ -71,7 +82,7 @@ namespace Utilities
                         comboCounter = 1;
                     }
                 }
-                
+
                 notes?.ForEach(GenerateNote);
             }
             else
@@ -84,9 +95,10 @@ namespace Utilities
                     GameObject obj = makerNote.noteObject.gameObject;
 
                     var noteObject = UnityEngine.Object.Instantiate(obj, position, obj.transform.rotation, parent).GetComponent<NoteObject>();
+                    //Set the id so we can save or instantiate same object
                     noteObject.MakerId = makerNote.id;
                 }
-                
+
                 notes?.ForEach(GenerateNote);
             }
         }
@@ -116,6 +128,8 @@ namespace Utilities
 
         [Header("Config")]
         public MapScroller mapScroller;
+        public ArrowButton[] playerButtons;
+
         [Header("Inputs")]
         public TMP_InputField songNameInputField;
         public TMP_InputField bpmInputField;
@@ -139,7 +153,8 @@ namespace Utilities
         private GameObject m_SelectedGameObject;
         private ushort m_SelectedId;
 
-        private bool m_IsHoldingNote;
+        private bool m_IsNoteSelected;
+        private Vector3 m_ButtonDownPosition;
 
 #if !UNITY_EDITOR || FORCE_JSON
         private const string SONG_FOLDER = "Songs";
@@ -157,24 +172,30 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
-        //TODO: Forward and backwards on song editor 5 secs
         //TODO: Fix save songs json and load work, change path for mobile
+        /// <summary>
+        /// Sets the events for all buttons and input fields
+        /// </summary>
         private void Start()
         {
 #if UNITY_EDITOR && !FORCE_JSON
+            //Write the full canonical path for the audios folder on editor
             audioSongsRelativePath = audioSongsRelativePath.Replace("Assets", Application.dataPath);
 #endif
             LoadMapsData();
 
+            //Add listener for updates in case of changes of map option
             songListDropdown.onValueChanged.AddListener(option => LoadMap(songListDropdown.options[option].text));
 
             bpmInputField.onSubmit.AddListener(txt => UpdateBpm(songNameInputField.text));
             songNameInputField.onSubmit.AddListener(StartCreating);
 
+            //On player screen show text
             SetState("Not working on any map");
 
             foreach (MakerNote makerNote in mapScroller.makerNotes)
             {
+                //We add the action of setting preview/objects etc to the list of spawneables
                 makerNote.button.onButtonDown += () =>
                 {
                     if (IsCreating)
@@ -183,21 +204,39 @@ namespace Utilities
                         preview.color = makerNote.image.color;
                         m_SelectedGameObject = makerNote.noteObject.gameObject;
                         m_SelectedId = makerNote.id;
-                        m_IsHoldingNote = true;
+                        m_IsNoteSelected = true;
                     }
                 };
             }
+
+            //Disable the ability to play game buttons
+            EnableButtons(false);
         }
 
+        /// <summary>
+        /// Removes the preview of the selected item
+        /// </summary>
         private void CleanPreview()
         {
             preview.sprite = null;
             m_SelectedGameObject = null;
         }
 
+        /// <summary>
+        /// Enables arrow game buttons to be click or not
+        /// </summary>
+        /// <param name="enable"></param>
+        private void EnableButtons(bool enable) => playerButtons.ForEach(button => button.canBeClick = enable);
+
+        /// <summary>
+        /// Detects if a object was selected and updates the preview
+        /// </summary>
         private void Update()
         {
             if (!IsCreating) return;
+
+            const float checkNoteCastRange = .4f;
+            const int rightClickButton = 1, leftClickButton = 0;
 
             Vector3 mousePosition = Input.mousePosition;
 
@@ -211,45 +250,64 @@ namespace Utilities
             mousePosition.z = 0;
 
             //Position preview where the mouse is supposed to be
+
             m_PreviewTransform.position = mousePosition;
 
             //Check to destroy a tile note
-            if (Input.GetMouseButtonDown(0) && !m_IsHoldingNote)
-            {
-                RaycastHit2D result = Physics2D.CircleCast(mousePosition, .4f, Vector2.zero, 0, mapScroller.notesLayer.value);
-                if (result) Destroy(result.collider.gameObject);
-            }
+#if !UNITY_IPHONE && !UNITY_ANDROID
+            if (Input.GetMouseButtonDown(rightClickButton)) CheckNoteAndDestroy(mousePosition, checkNoteCastRange);
+#endif
+            //Check for input drop and show particle
+            bool buttonUp = Input.GetMouseButtonUp(0);
+            if (buttonUp) ShowTouchParticle(mousePosition);
 
-            if (!m_IsHoldingNote && Input.GetMouseButtonUp(0)) ShowTouchParticle(mousePosition);
+            //If not object selected exit
+            if (!m_IsNoteSelected) return;
 
-            //Check for holding note and dropping
-            if (!m_IsHoldingNote || !Input.GetMouseButtonUp(0)) return;
+            if (Input.GetMouseButtonDown(leftClickButton)) m_ButtonDownPosition = mousePosition;
 
-            if (EventSystem.current.IsPointerOverGameObject() || Physics2D.CircleCast(mousePosition, .4f, Vector2.zero)) return;
-
-            if (m_SelectedGameObject && m_CurrentMapGameObject)
-            {
-                Instantiate(m_SelectedGameObject,
-                            mousePosition,
-                            m_SelectedGameObject.transform.rotation,
-                            m_CurrentMapGameObject.transform)
-                    .GetComponent<NoteObject>().MakerId = m_SelectedId;
-
-                CleanPreview();
-            }
-            m_IsHoldingNote = false;
+            //Check is pressing button, and if there is a note over other note, don't drop it
+            if (!buttonUp || EventSystem.current.IsPointerOverGameObject() || m_ButtonDownPosition != mousePosition) return;
+            
+            CheckNoteAndDestroy(mousePosition, checkNoteCastRange);
+            
+            Instantiate(m_SelectedGameObject,
+                        mousePosition,
+                        m_SelectedGameObject.transform.rotation,
+                        m_CurrentMapGameObject.transform)
+                .GetComponent<NoteObject>().MakerId = m_SelectedId;
         }
 
+        /// <summary>
+        /// Casts and checks if there is a note around the position passed, if there is, destroys it
+        /// </summary>
+        /// <param name="mousePosition">the position where to cast</param>
+        /// <param name="castRange">the area of the circle cast</param>
+        private void CheckNoteAndDestroy(Vector3 mousePosition, float castRange)
+        {
+            RaycastHit2D result = Physics2D.CircleCast(mousePosition, castRange, Vector2.zero, 0, mapScroller.notesLayer.value);
+            if (result) Destroy(result.collider.gameObject);
+        }
+
+        /// <summary>
+        /// Shows the particle of clicking on the set position
+        /// </summary>
+        /// <param name="position"></param>
         private void ShowTouchParticle(Vector3 position)
         {
             touchParticle.Play();
             touchParticle.transform.position = position;
         }
 
+        /// <summary>
+        /// Starts whe map maker
+        /// </summary>
+        /// <param name="mapName"></param>
         public void StartCreating(string mapName)
         {
             if (IsMapNameEmpty(mapName)) return;
 
+            //Activate use of creator interface
             IsCreating = true;
             SetState($"Working on {mapName}");
 
@@ -257,17 +315,24 @@ namespace Utilities
             {
                 string currentMap = m_CurrentMapGameObject.name;
 
+                //If already working on this map ignored
                 if (currentMap.Equals(mapName)) return;
 
-                SaveMap(currentMap);
+                //else destroy the map and create the new map holder
                 Destroy(m_CurrentMapGameObject);
 
                 CreateMapHolder(mapName);
             }
             else
                 CreateMapHolder(mapName);
+
+            EnableButtons(false);
         }
 
+        /// <summary>
+        /// Updates the state text with an animation
+        /// </summary>
+        /// <param name="text"></param>
         private void SetState(string text)
         {
             if (stateText) stateText.text = text;
@@ -276,12 +341,20 @@ namespace Utilities
             stateText.transform.DOScale(2, duration).OnComplete(() => stateText.transform.DOScale(1, duration));
         }
 
+        /// <summary>
+        /// Obtains the bpm written on the inputfield
+        /// </summary>
+        /// <returns></returns>
         private int GetBpm()
         {
             int.TryParse(bpmInputField.text, out int bpm);
             return bpm;
         }
 
+        /// <summary>
+        /// Updates the map bpm by the input field
+        /// </summary>
+        /// <param name="mapName"></param>
         private void UpdateBpm(string mapName)
         {
             SoundMap soundMap = GetSoundMap(mapName);
@@ -295,6 +368,10 @@ namespace Utilities
             print("Updated bpm!");
         }
 
+        /// <summary>
+        /// Creates a game object holder for the map notes
+        /// </summary>
+        /// <param name="mapName"></param>
         private void CreateMapHolder(string mapName)
         {
             if (m_CurrentMapGameObject) Destroy(m_CurrentMapGameObject);
@@ -324,13 +401,20 @@ namespace Utilities
             mapScroller.SetSoundMap(soundMap);
         }
 
+        /// <summary>
+        /// Stops teh map maker
+        /// </summary>
         public void StopCreating()
         {
             IsCreating = false;
             CleanPreview();
             SetState(mapScroller.IsStarted ? "Playing Map" : "Not working on mapName");
+            EnableButtons(true);
         }
 
+        /// <summary>
+        /// Loads all user songs
+        /// </summary>
         public void LoadMapsData()
         {
 #if UNITY_EDITOR && !FORCE_JSON
@@ -344,16 +428,40 @@ namespace Utilities
             UpdateSongsList();
         }
 
+        /// <summary>
+        /// Deletes the song by the map name
+        /// </summary>
+        /// <param name="mapName"></param>
         public void DeleteSoundMap(string mapName)
         {
             if (IsMapNameEmpty(mapName)) return;
+
             ushort hashName = mapName.GetHashCodeUshort();
-            soundMaps.RemoveOne(map => map.ID == hashName);
-            SetState($"{mapName} was deleted successfully!");
+            SoundMap soundMap = soundMaps.Find(map => map.ID == hashName);
+
+            //TODO: also delete file scriptable or json in each case
+            if (soundMap != null)
+            {
+                string audioPath = soundMap.audioPath;
+                if (File.Exists(audioPath)) File.Delete(audioPath);
+
+                soundMaps.Remove(soundMap);
+
+                SetState($"{mapName} was deleted successfully!");
+
+                UpdateSongsList();
+            }
+            else
+            {
+                SetState($"{mapName} was not found!");
+            }
         }
 
-        public void DeleteSoundMap() => DeleteSoundMap(songNameText.text);
-
+        /// <summary>
+        /// Checks if the map name is not written on the input and puts an error
+        /// </summary>
+        /// <param name="mapName"></param>
+        /// <returns></returns>
         private bool IsMapNameEmpty(string mapName)
         {
             if (!string.IsNullOrEmpty(mapName)) return false;
@@ -361,6 +469,10 @@ namespace Utilities
             return true;
         }
 
+        /// <summary>
+        /// Loads a map by the map name
+        /// </summary>
+        /// <param name="mapName"></param>
         public void LoadMap(string mapName)
         {
             if (IsMapNameEmpty(mapName)) return;
@@ -375,7 +487,7 @@ namespace Utilities
             {
                 IsCreating = true;
                 CreateMapHolder(mapName);
-                soundMap.GenerateNotes(mapScroller.makerNotes, m_CurrentMapGameObject.transform);
+                soundMap.GenerateNotes(mapScroller.makerNotes, m_CurrentMapGameObject.transform, false);
 
                 SetState("Loading map clip...");
 
@@ -403,6 +515,10 @@ namespace Utilities
             mapScroller.ResetPos();
         }
 
+        /// <summary>
+        /// Saves a map by the map name
+        /// </summary>
+        /// <param name="mapName"></param>
         public void SaveMap(string mapName)
         {
             if (IsMapNameEmpty(mapName)) return;
@@ -413,7 +529,7 @@ namespace Utilities
             {
                 mapScroller.ResetPos();
 
-                NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>();
+                NoteObject[] noteObjects = m_CurrentMapGameObject.GetComponentsInChildren<NoteObject>(true);
                 Note[] notes = (
                     from noteObject in noteObjects
                     let position = noteObject.transform.position
@@ -432,6 +548,8 @@ namespace Utilities
 
 #if UNITY_EDITOR && !FORCE_JSON
                 string soundFilePath = audioSongsRelativePath + audioSong.name;
+
+                if (!Path.HasExtension(soundFilePath)) soundFilePath += ".mp3";
                 if (!File.Exists(soundFilePath)) File.Copy(audioClipPath ?? string.Empty, soundFilePath);
 
                 GetAudioClip(soundFilePath, clip =>
@@ -447,8 +565,9 @@ namespace Utilities
                 });
 #else
                 string folderPath = Application.dataPath + $"/{SONG_FOLDER}/";
-
                 string soundFilePath = folderPath + audioSong.name;
+
+                if (!Path.HasExtension(soundFilePath)) soundFilePath += ".mp3";
                 if (!File.Exists(soundFilePath)) File.Copy(audioClipPath, soundFilePath);
 
                 soundMap.audioClip = audioSong;
@@ -456,24 +575,45 @@ namespace Utilities
 
                 SaveLoadManager.SaveAsJsonFile(soundMap, folderPath, $"{soundMap.name}.json");
 #endif
-
                 mapScroller.SetSoundMap(soundMap);
             }
             else StartCreating(mapName);
         }
 
+        /// <summary>
+        /// Obtains a map by the map name
+        /// </summary>
+        /// <param name="mapName"></param>
+        /// <returns></returns>
         private SoundMap GetSoundMap(string mapName)
         {
             ushort hashName = mapName.GetHashCodeUshort();
             return soundMaps.FirstOrDefault(map => map.ID == hashName);
         }
 
+        /// <summary>
+        /// Deletes the soundmap written on the input field
+        /// </summary>
+        public void DeleteSoundMap() => DeleteSoundMap(songNameText.text);
+
+        /// <summary>
+        /// Loads the map written on the input field
+        /// </summary>
         public void LoadMap() => LoadMap(songNameInputField.text);
 
+        /// <summary>
+        /// Saves the map written on the input field
+        /// </summary>
         public void SaveMap() => SaveMap(songNameInputField.text);
 
+        /// <summary>
+        /// Starts the map maker by the map written on the input field
+        /// </summary>
         public void ContinueCreating() => StartCreating(songNameInputField.text);
 
+        /// <summary>
+        /// Updates the dropdown list of created songs
+        /// </summary>
         private void UpdateSongsList()
         {
             songListDropdown.ClearOptions();
@@ -485,16 +625,40 @@ namespace Utilities
             songListDropdown.AddOptions(mapNames);
         }
 
+        /// <summary>
+        /// Updates the audio clip of the map written on the input field
+        /// </summary>
+        private void UpdateAudioMap()
+        {
+            SoundMap soundMap = GetSoundMap(songNameInputField.text);
+
+            if (soundMap != null)
+            {
+                soundMap.audioClip = audioSong;
+                soundMap.audioPath = audioClipPath;
+                mapScroller.SetSoundMap(soundMap);
+            }
+
+            print("Updated bpm!");
+        }
+
+        /// <summary>
+        /// Asks for a sound file and obtains it
+        /// </summary>
         public void AskForSoundFile()
         {
 #if UNITY_ANDROID || UNITY_IPHONE
+            //Check mobile permissions and ask for them if needed
             FileBrowser.Permission permission = FileBrowser.CheckPermission();
             if (permission == FileBrowser.Permission.ShouldAsk) FileBrowser.AskPermissions = true;
 #endif
+            //Set the filters of the browser for audio file types
             FileBrowser.SetFilters(false, ".mp3", ".wav");
 
+            //Show the browser
             FileBrowser.ShowLoadDialog(paths =>
             {
+                //Check for the selected and get the audio clip
                 string path = paths[0];
 
                 if (!FileBrowserHelpers.FileExists(path)) return;
@@ -507,16 +671,27 @@ namespace Utilities
                         audioSong = clip;
                         audioClipPath = path;
 
-                        songNameText.text = audioSong.name = Path.GetFileNameWithoutExtension(path);
+                        songNameText.text = Path.GetFileNameWithoutExtension(path);
 
-                        SaveMap();
+                        UpdateAudioMap();
                     });
                 }
             }, null, FileBrowser.PickMode.Files);
         }
 
+        /// <summary>
+        /// Loads an audio clip by the path passed asynchronously
+        /// </summary>
+        /// <param name="fullPath"></param>
+        /// <param name="action"></param>
         public void GetAudioClip(string fullPath, Action<AudioClip> action) => StartCoroutine(GetAudioClipCoroutine(fullPath, action));
 
+        /// <summary>
+        /// Coroutine to get an audio clip by path asynchronously
+        /// </summary>
+        /// <param name="fullPath"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
         private IEnumerator GetAudioClipCoroutine(string fullPath, Action<AudioClip> action)
         {
             using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip($"file://{fullPath}", AudioType.MPEG);

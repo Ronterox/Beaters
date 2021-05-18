@@ -385,5 +385,36 @@ namespace Plugins.Tools
         {
             foreach (Transform child in parent.transform) action(child.gameObject);
         }
+
+        /// <summary>
+        /// Iterates through the transform children
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="action"></param>
+        public static void ForEachChildTransform(this GameObject parent, Action<Transform> action)
+        {
+            foreach (Transform child in parent.transform) action(child);
+        }
+
+        /// <summary>
+        /// Closes the application for the editor or build
+        /// </summary>
+        public static void CloseApplication()
+        {
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+
+        public static int FindIndex<T>(this T[] array, Func<T, bool> condition)
+        {
+            for (var i = 0; i < array.Length; i++)
+            {
+                if (condition(array[i])) return i;
+            }
+            return -1;
+        }
     }
 }

@@ -1,4 +1,3 @@
-using General;
 using Plugins.Tools;
 using ScriptableObjects;
 using UnityEngine;
@@ -13,6 +12,7 @@ namespace Managers
         private SoundMap m_SoundMap;
         private ScriptableObject m_Prize;
         private ScriptableCharacter m_Character;
+        private ScriptableRune m_Rune;
         private object m_value;
 
         public Song Song { get; private set; }
@@ -27,7 +27,12 @@ namespace Managers
 
         public static SoundMap GetSoundMap() => Instance.m_SoundMap ?? Instance.Song.soundMap;
 
+        public static void PutRune(ScriptableRune scriptableRune) => Instance.m_Rune = scriptableRune;
+        public static ScriptableRune GetRune() => Instance.m_Rune;
+
         public static void PutCharacter(ScriptableCharacter scriptableCharacter) => Instance.m_Character = scriptableCharacter;
+
+        public static ScriptableCharacter GetCharacter() => Instance.m_Character;
 
         public static void PutPrize(ScriptableObject scriptableObject)
         {

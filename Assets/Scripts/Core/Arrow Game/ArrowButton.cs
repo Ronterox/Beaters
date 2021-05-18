@@ -1,6 +1,8 @@
 using DG.Tweening;
 using Managers;
+#if UNITY_ANDROID || UNITY_IPHONE
 using Plugins.Tools;
+#endif
 using UnityEngine;
 
 namespace Core.Arrow_Game
@@ -17,23 +19,36 @@ namespace Core.Arrow_Game
         [Plugins.Properties.ReadOnly]
         public bool isNoteAbove;
 
+        public bool canBeClick = true;
+
+        private Tween m_ClickAnimation;
+        private float buttonHeight;
+
 #if UNITY_ANDROID || UNITY_IPHONE
         private const int TOUCH_MAX_DISTANCE = 2;
 #endif
-        public delegate void ButtonEvent();
+        public delegate void ButtonEvent(float buttonHeight);
 
         public event ButtonEvent onButtonPress;
 
         private void Awake()
         {
             if (!mainCamera) mainCamera = Camera.main;
+            buttonHeight = transform.position.y;
         }
 
-        private void Start() => m_DefaultScale = transform.localScale;
+        private void Start()
+        {
+            m_DefaultScale = transform.localScale;
+            SetAnimation();
+        }
+
+        private void SetAnimation() => m_ClickAnimation = transform.DOScale(targetScale, animationDuration).OnComplete(() => transform.DOScale(m_DefaultScale, animationDuration)).SetAutoKill(false);
+
         public void PressButton()
         {
             CheckButton();
-            onButtonPress?.Invoke();
+            onButtonPress?.Invoke(buttonHeight);
         }
 
 
@@ -41,7 +56,7 @@ namespace Core.Arrow_Game
         //If slow and you need fps improvement you can reduce this code to be only on the CameraManager
         private void Update()
         {
-            if (Input.touchCount < 1) return;
+            if (!canBeClick || Input.touchCount < 1) return;
 
             foreach (Touch touch in Input.touches)
             {
@@ -62,14 +77,19 @@ namespace Core.Arrow_Game
             }
         }
 #else
-        private void OnMouseDown() => onButtonPress?.Invoke();
+        private void OnMouseDown()
+        {
+            if (!canBeClick) return;
+            PressButton();
+        }
 #endif
 
         private void CheckButton()
         {
             if (!isNoteAbove) GameplayManager.MissArrowTap();
             //Arrow animation with tween
-            transform.DOScale(targetScale, animationDuration).OnComplete(() => transform.DOScale(m_DefaultScale, animationDuration));
+            m_ClickAnimation.Restart();
+            m_ClickAnimation.Play();
         }
     }
 }

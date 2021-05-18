@@ -1,7 +1,8 @@
-using General;
 using Managers;
 using Plugins.UI;
+using ScriptableObjects;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
 
@@ -19,17 +20,51 @@ namespace UI
             {
                 case SoundMap soundMap:
                     songName.text = soundMap.name;
-                    onClick.AddListener(() => GameManager.PutSoundMap(soundMap));
+                    onClick.AddListener(() =>
+                    {
+                        GameManager.PutSoundMap(soundMap);
+                        LevelLoadManager.LoadArrowGameplayScene();
+                    });
                     break;
                 case Song song:
                     songImage.sprite = song.songImage;
                     songName.text = song.soundMap.name;
-                    onClick.AddListener(() => GameManager.PutSoundMap(song));
+
+                    void PlayMap()
+                    {
+                        // Show record screen
+                        if (parameters[2] is SongRecordScreen recordScreen) recordScreen.ShowRecordScreen(song);
+                    }
+
+                    if (parameters[1] is bool isUnlock && isUnlock)
+                    {
+                        onClick.AddListener(PlayMap);
+                    }
+                    else
+                    {
+                        void ShowUnlockPanel()
+                        {
+                            if (DataManager.ContainsSong(song.ID))
+                            {
+                                PlayMap();
+                            }
+                            else if (parameters[3] is LockedSongScreen lockedScreen)
+                            {
+                                lockedScreen.ShowLockedScreen(song, songImage);
+                            }
+                        }
+
+                        onClick.AddListener(ShowUnlockPanel);
+
+                        Color transparentColor = songImage.color;
+                        transparentColor.a = .5f;
+
+                        songImage.color = transparentColor;
+                    }
+
                     break;
             }
-            
-            onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
-            
+
             return this;
         }
     }

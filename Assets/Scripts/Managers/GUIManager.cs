@@ -1,10 +1,12 @@
+using System.Linq;
+using Plugins.Tools;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Managers
 {
-    //TODO: Change the script to only allow owned characters to be chosen
     [System.Serializable]
     public struct GUIImage
     {
@@ -13,24 +15,60 @@ namespace Managers
         public Image image;
         public PaletteColor paletteColor;
     }
-
     public class GUIManager : MonoBehaviour
     {
         public GUIImage[] images;
+        [Space]
         public ScriptableCharacter[] characters;
-        public Image playButton, gachaLogo, mapCreator;
+        [Space]
+        public Image backgroundImage;
+        public Image[] playButtons;
+        public Image gachaLogo, mapCreator, exitGame;
+        [Space]
+        public TMP_Text[] textsOfTheUI;
+        public Image[] buttonsToChange;
 
-        private void Start() => SetCharacterGUI(characters[Random.Range(0, characters.Length)]);
+        private void Start()
+        {
+            if (DataManager.Instance.CharacterCount < 1) return;
 
-        private void SetCharacterGUI(ScriptableCharacter character)
+            SetCharacterGUI(GetCharacter());
+        }
+
+        private ScriptableCharacter GetCharacter()
+        {
+            ScriptableCharacter character = GameManager.GetCharacter();
+            if (character) return character;
+
+            ushort randomCharacter = DataManager.GetCharactersIds().GetRandom();
+
+            character = characters.First(c => c.ID == randomCharacter);
+            GameManager.PutCharacter(character);
+            
+            return character;
+        }
+
+        public void SetCharacterGUI(ScriptableCharacter character)
         {
             Palette palette = character.colorPalette;
+            
+            SetSprite(gachaLogo, character.gachaButton);
+            SetSprite(mapCreator, character.mapCreator);
+            SetSprite(backgroundImage, character.backgroundImage);
+            SetSprite(exitGame, character.exitButton);
 
-            foreach (GUIImage guiImage in images) guiImage.image.color = palette.GetColor(guiImage.paletteColor);
+            if (character.usePrimaryColorInButtons) images.ForEach(image => image.image.color = palette.GetColor(image.paletteColor));
+            else images.ForEach(image => image.image.color = Color.white);
 
-            playButton.sprite = character.playButton;
-            gachaLogo.sprite = character.gachaButton;
-            mapCreator.sprite = character.mapCreator;
+            playButtons?.ForEach(image => SetSprite(image, character.playButton));
+
+            buttonsToChange?.ForEach(button => button.sprite = character.buttonLayout);
+            textsOfTheUI.ForEach(text => text.font = character.font);
+        }
+
+        private void SetSprite(Image image, Sprite sprite)
+        {
+            if (sprite && image) image.sprite = sprite;
         }
     }
 }

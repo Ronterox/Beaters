@@ -5111,7 +5111,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8822733279488847629}
   - component: {fileID: 1154796573}
-  - component: {fileID: 1154796572}
   - component: {fileID: 1154796574}
   m_Layer: 0
   m_Name: GachaPlatform
@@ -5157,25 +5156,6 @@ PlayableDirector:
     value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
---- !u!114 &1154796572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826243079909436771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44e3ac5869eec1ff6bcb0330adefb770, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  table:
-  - obj: {fileID: 0}
-    probability: 33
-  - obj: {fileID: 0}
-    probability: 33
-  - obj: {fileID: 0}
-    probability: 33
 --- !u!114 &1154796574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5190,10 +5170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gachaMenuScene: GachaMenu
   boxTransform: {fileID: 543450653626167389}
-  randomLoot: {fileID: 1154796572}
   timeline: {fileID: 1154796573}
   canvasGroup: {fileID: 0}
-  reward: {fileID: 0}
+  rewardSpriteRenderer: {fileID: 0}
   position: {x: 1.5, y: -3, z: 2.65}
   positionReward: {x: 1.5, y: 10, z: 2.65}
   scale: {x: 25, y: 25, z: 25}

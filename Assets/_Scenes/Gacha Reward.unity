@@ -196,7 +196,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &261377776
 MonoBehaviour:
@@ -253,6 +253,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 111238, guid: 9a27543fde51ae84eb6ae8259b9789bc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 111242, guid: 9a27543fde51ae84eb6ae8259b9789bc, type: 3}
       propertyPath: m_Name
       value: SnowBackground
@@ -260,6 +264,18 @@ PrefabInstance:
     - target: {fileID: 111242, guid: 9a27543fde51ae84eb6ae8259b9789bc, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 111242, guid: 9a27543fde51ae84eb6ae8259b9789bc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 111244, guid: 9a27543fde51ae84eb6ae8259b9789bc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 111246, guid: 9a27543fde51ae84eb6ae8259b9789bc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 411242, guid: 9a27543fde51ae84eb6ae8259b9789bc, type: 3}
       propertyPath: m_RootOrder
@@ -322,7 +338,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!108 &553359897
 Light:
@@ -529,7 +545,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!212 &1023477449
 SpriteRenderer:
@@ -640,7 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bcf633db74231d4e8a502518975d104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateAxis: {x: 1, y: 5, z: 10}
+  rotateAxis: {x: 0, y: 5, z: 0}
   speed: 4
   alwaysRotate: 0
 --- !u!212 &1059878287
@@ -683,7 +699,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: dbcfda3e6f96bef2b933d2ba23bf3f8e, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 7475979ed16de74cb90d856be80cd5df, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -710,7 +726,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!224 &1136949508
 RectTransform:
@@ -844,6 +860,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8701516496269886081, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
+      propertyPath: UVModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701516496269886081, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
+      propertyPath: useRigidbodyForVelocity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8822733279488847629, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -895,6 +919,10 @@ PrefabInstance:
     - target: {fileID: 8826243079909436771, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
       propertyPath: m_Name
       value: GachaPlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 8863402515870999305, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1154796572, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
@@ -1419,7 +1447,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &2146346261
 MonoBehaviour:

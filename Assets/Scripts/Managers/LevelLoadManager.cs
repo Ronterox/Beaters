@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Plugins.DOTween.Modules;
 using Plugins.Properties;
 using Plugins.Tools;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Managers
     {
         public float transitionDuration;
         [Scene]
-        public string arrowGameplayScene;
+        public string arrowGameplayScene, mainMenuScene;
         public CanvasGroup transitionPanel;
 
         private void Start() => OpenTransition(transitionDuration);
@@ -23,7 +24,8 @@ namespace Managers
             if (!canvasGroup) return;
 
             canvasGroup.alpha = Mathf.Abs(target - 1f);
-            Instance.transitionPanel.DOFade(target, duration).OnComplete(() =>
+            
+            m_Instance.transitionPanel.DOFade(target, duration).OnComplete(() =>
             {
                 canvasGroup.gameObject.SetActive(canvasGroup.alpha != 0);
                 onEnd?.Invoke();
@@ -37,5 +39,7 @@ namespace Managers
         public static void LoadSceneWithTransition(string scene, float duration) => CloseTransition(duration, () => SceneManager.LoadScene(scene));
 
         public static void LoadArrowGameplayScene() => LoadSceneWithTransition(m_Instance.arrowGameplayScene, m_Instance.transitionDuration);
+
+        public static void LoadMainMenu() => LoadSceneWithTransition(m_Instance.mainMenuScene, m_Instance.transitionDuration);
     }
 }
