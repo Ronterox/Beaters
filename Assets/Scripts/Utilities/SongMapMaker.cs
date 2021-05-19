@@ -1,4 +1,4 @@
-//#define FORCE_JSON
+#define FORCE_JSON
 
 using System;
 using System.Collections;
@@ -8,8 +8,8 @@ using System.Linq;
 using Core.Arrow_Game;
 using DG.Tweening;
 using Managers;
-using Plugins.SimpleFileBrowser.Scripts;
 using Plugins.Tools;
+using SimpleFileBrowser;
 #if UNITY_EDITOR && !FORCE_JSON
 using ScriptableObjects;
 #endif
@@ -231,7 +231,10 @@ namespace Utilities
             if (!IsCreating) return;
 
             const float checkNoteCastRange = .4f;
-            const int rightClickButton = 1, leftClickButton = 0;
+#if !UNITY_IPHONE && !UNITY_ANDROID
+            const int rightClickButton = 1;
+#endif
+            const int leftClickButton = 0;
 
             Vector3 mousePosition = Input.mousePosition;
 
@@ -419,8 +422,13 @@ namespace Utilities
             IEnumerable<SoundMap> songsScriptables = Resources.LoadAll<Song>("Songs").Select(song => song.soundMap);
             soundMaps.AddRange(songsScriptables);
 #else
+#if UNITY_ANDROID
+            if (!SaveLoadManager.SaveFolderInPersistentDirectoryExists(SONG_FOLDER)) return;
+            SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolder<SoundMap>(SONG_FOLDER).ToArray();
+#else
             if (!SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER)) return;
             SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToArray();
+#endif
             soundMaps.AddRange(savedSoundMaps);
 #endif
             UpdateSongsList();
@@ -562,7 +570,11 @@ namespace Utilities
                     UnityEditor.AssetDatabase.CreateAsset(song, $"{songScriptablesRelativePath}/{soundMap.name}.asset");
                 });
 #else
+#if UNITY_ANDROID
+                string folderPath = Application.persistentDataPath + $"/{SONG_FOLDER}/";
+#else
                 string folderPath = Application.dataPath + $"/{SONG_FOLDER}/";
+#endif
                 string soundFilePath = folderPath + audioSong.name;
 
                 if (!Path.HasExtension(soundFilePath)) soundFilePath += ".mp3";

@@ -2,11 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Songs/Bitch.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Songs/Bitch.json.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Songs/lalalakuten_pointo.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Songs/lalalakuten_pointo.mp3.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Android/SimpleFileBrowser.aar" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Android/SimpleFileBrowser.aar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Resources/SimpleFileBrowserCanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Resources/SimpleFileBrowserCanvas.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserContextMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserContextMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserCursorHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserCursorHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserDeleteConfirmationPanel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserDeleteConfirmationPanel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserHelpers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserHelpers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserQuickLink.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserQuickLink.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserRenamedItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowserRenamedItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/NonDrawingGraphic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/NonDrawingGraphic.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/SimpleRecycledListView/IListViewAdapter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/SimpleRecycledListView/IListViewAdapter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/SimpleRecycledListView/ListItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/SimpleRecycledListView/ListItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/SimpleRecycledListView/RecycledListView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/SimpleRecycledListView/RecycledListView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,10 +103,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/ScriptableSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/StartSoundManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/ObjectPool.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleObjectPooler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
@@ -132,7 +140,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
@@ -141,6 +148,11 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Song.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Android/FBPermissionCallbackAndroid.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Android/FBCallbackHelper.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Android/FBDirectoryReceiveCallbackAndroid.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowser.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
     </changedPaths>
   </component>

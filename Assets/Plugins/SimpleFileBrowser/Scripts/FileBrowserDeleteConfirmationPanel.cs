@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 using UnityEngine.InputSystem;
 #endif
 
-namespace Plugins.SimpleFileBrowser.Scripts
+namespace SimpleFileBrowser
 {
 	public class FileBrowserDeleteConfirmationPanel : MonoBehaviour
 	{

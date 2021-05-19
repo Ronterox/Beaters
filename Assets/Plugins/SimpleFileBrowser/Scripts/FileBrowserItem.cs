@@ -1,9 +1,8 @@
-﻿using Plugins.SimpleFileBrowser.Scripts.SimpleRecycledListView;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-namespace Plugins.SimpleFileBrowser.Scripts
+namespace SimpleFileBrowser
 {
 	public class FileBrowserItem : ListItem, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 #if UNITY_EDITOR || ( !UNITY_ANDROID && !UNITY_IOS )
