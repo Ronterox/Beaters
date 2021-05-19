@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Diagnostics;
 using Plugins.Tools;
 using UnityEngine;
 
@@ -66,12 +64,12 @@ namespace UI
 
             public void FitSpacingToScreenSize(Vector2 refScreenSize)
             {
-                float refScreenFloat = (refScreenSize.x + refScreenSize.y) / 2f;
-                float screenFloat = (Screen.width + Screen.height) / 2f;
+                float refScreenFloat = (refScreenSize.x + refScreenSize.y) * .5f;
+                float screenFloat = (Screen.width + Screen.height) * .5f;
                 buttonSpacing = baseButtonSpacing * screenFloat / refScreenFloat;
             }
         }
-        public GameObject[] buttonRefs;
+        public ButtonFader[] buttonRefs;
 
         public enum ScaleMode { MatchWidthHeight, IndependentWithHeight }
 
@@ -85,13 +83,9 @@ namespace UI
 
         public LinearSpawner linSpawner = new LinearSpawner();
 
-        [HideInInspector]
-        public List<GameObject> buttons;
-
         private int lastScreenWidth, lastScreenHeight;
         private void Start()
         {
-            buttons = new List<GameObject>();
             m_ButtonScaler = new ButtonScaler();
 
             lastScreenWidth = Screen.width;
@@ -101,10 +95,7 @@ namespace UI
 
             linSpawner.FitSpacingToScreenSize(m_ButtonScaler.referenceScreenSize);
 
-            if (revealSettings.revealOnStart)
-            {
-                SpawnButtons();
-            }
+            if (revealSettings.revealOnStart) SpawnButtons();
         }
         private void Update()
         {
@@ -134,32 +125,28 @@ namespace UI
                     break;
             }
         }
+        
         public void SpawnButtons()
         {
             revealSettings.opening = true;
 
-            for (int i = buttons.Count - 1; i >= 0; i--) Destroy(buttons[i]);
+            SetButtonRefsEnable(false);
 
-            buttons.Clear();
-
-            ClearCommonButtonBranchers();
-            
             Transform tform = transform;
+            buttonRefs.ForEach(buttonRef => buttonRef.transform.position = tform.position);
 
-            buttonRefs.ForEach(buttonRef => buttons.Add(Instantiate(buttonRef, tform.position, Quaternion.identity, tform)));
-            
+            SetButtonRefsEnable(true);
+
             revealSettings.spawned = true;
         }
+        
         private void RevealLinearlyNormal()
         {
-            for (int i = 0; i < buttons.Count; i++)
+            for (var i = 0; i < buttonRefs.Length; i++)
             {
                 Vector3 targetPost;
 
-                var buttonRect = buttons[i].GetComponent<RectTransform>();
-
                 var sizeDelta = new Vector2(m_ButtonScaler.newButtonSize.x, m_ButtonScaler.newButtonSize.y);
-                buttonRect.sizeDelta = sizeDelta;
 
                 Vector3 position = transform.position;
 
@@ -168,18 +155,20 @@ namespace UI
 
                 targetPost.z = 0;
 
-                buttonRect.position = Vector3.Lerp(buttonRect.position, targetPost, revealSettings.translateSmooth * Time.deltaTime);
+                if (buttonRefs[i].transform is RectTransform buttonRect)
+                {
+                    buttonRect.sizeDelta = sizeDelta;
+                    buttonRect.position = Vector3.Lerp(buttonRect.position, targetPost, revealSettings.translateSmooth * Time.deltaTime);
+                }
             }
         }
         private void RevealLinearlyFade()
         {
-            for (var i = 0; i < buttons.Count; i++)
+            for (var i = 0; i < buttonRefs.Length; i++)
             {
                 Vector3 targetPos;
 
                 var sizeDelta = new Vector2(m_ButtonScaler.newButtonSize.x, m_ButtonScaler.newButtonSize.y);
-                
-                if(buttons[i].transform is RectTransform buttonRect) buttonRect.sizeDelta = sizeDelta;
 
                 Vector3 position = transform.position;
 
@@ -188,13 +177,14 @@ namespace UI
 
                 targetPos.z = 0;
 
-                ButtonFader previousButtonFader = i > 0 ? buttons[i - 1].GetComponent<ButtonFader>() : null;
-
-                var buttonFader = buttons[i].GetComponent<ButtonFader>();
+                ButtonFader previousButtonFader = i > 0 ? buttonRefs[i - 1] : null;
+                ButtonFader buttonFader = buttonRefs[i];
+                
+                if (buttonFader.transform is RectTransform buttonRect) buttonRect.sizeDelta = sizeDelta;
 
                 void FadeAndPosition()
                 {
-                    buttons[i].transform.position = targetPos;
+                    buttonFader.transform.position = targetPos;
                     if (buttonFader) buttonFader.Fade(revealSettings.fadeSmooth);
                 }
 
@@ -206,18 +196,6 @@ namespace UI
             }
         }
 
-        private void ClearCommonButtonBranchers()
-        {
-            GameObject[] branches = GameObject.FindGameObjectsWithTag("ButtonBrancher");
-            foreach (GameObject brancher in branches)
-            {
-                if (brancher.transform.parent == transform.parent)
-                {
-                    var bb = brancher.GetComponent<ButtonBrancher>();
-                    for (int i = bb.buttons.Count - 1; i >= 0; i--) Destroy(bb.buttons[i]);
-                    bb.buttons.Clear();
-                }
-            }
-        }
+        private void SetButtonRefsEnable(bool enable) => buttonRefs.ForEach(buttonRef => buttonRef.gameObject.SetActive(enable));
     }
 }

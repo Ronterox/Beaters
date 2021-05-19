@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using DG.Tweening;
 using Managers;
 using Plugins.Tools;
@@ -201,27 +200,11 @@ namespace Core.Arrow_Game
         {
             m_WaitingForBeat = true;
             
-            var stopwatch = Stopwatch.StartNew();
-
             m_BeatAnimationTweens.ForEach(anim =>
             {
                 anim.Restart();
                 anim.Play();
             });
-            
-            stopwatch.Stop();
-
-            var stopWatchNormalForEach = Stopwatch.StartNew();
-
-            foreach (Tween beatAnimationTween in m_BeatAnimationTweens)
-            {
-                beatAnimationTween.Restart();
-                beatAnimationTween.Play();
-            }
-            
-            stopWatchNormalForEach.Stop();
-
-            print($"Function took {stopwatch.ElapsedMilliseconds} and normal took {stopWatchNormalForEach.ElapsedMilliseconds}");
 
             yield return m_WaitForSeconds;
             m_WaitingForBeat = false;
