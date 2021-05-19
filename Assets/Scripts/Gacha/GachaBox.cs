@@ -1,7 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
 using Managers;
-using Plugins.DOTween.Modules;
 using Plugins.Properties;
 using ScriptableObjects;
 using UnityEngine.Playables;
@@ -27,6 +26,7 @@ namespace Gacha
         public float moveScaleDuration;
 
         private bool m_CanClick, m_SawPrize;
+        
         private const int OPEN_BINGO_GACHA = 6578;
 
         private void Start()

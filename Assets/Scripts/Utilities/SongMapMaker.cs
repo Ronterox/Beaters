@@ -7,12 +7,12 @@ using System.IO;
 using System.Linq;
 using Core.Arrow_Game;
 using DG.Tweening;
-#if UNITY_EDITOR && !FORCE_JSON
-#endif
 using Managers;
 using Plugins.SimpleFileBrowser.Scripts;
 using Plugins.Tools;
+#if UNITY_EDITOR && !FORCE_JSON
 using ScriptableObjects;
+#endif
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,9 +28,6 @@ namespace Utilities
         public float bpm;
         public Genre genre = Genre.Custom;
 
-#if !UNITY_EDITOR || FORCE_JSON
-        [NonSerialized]
-#endif
         public AudioClip audioClip;
         public string audioPath;
 
@@ -50,7 +47,6 @@ namespace Utilities
         public void GenerateNotes(MakerNote[] makerNotes, Transform parent, bool generateCombo = true)
         {
             //Check of generation of procedural combos, guitar hero style
-            
             if (generateCombo)
             {
                 int length = makerNotes.Length;

@@ -3511,7 +3511,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bingoCardboard: {fileID: 198028342}
-  characters: []
+  characters:
+  - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
+  - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
   panelBingo: {fileID: 198028331}
   bingoBoxes:
   - {fileID: 198028341}

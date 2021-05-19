@@ -4,12 +4,28 @@
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ButtonBrancher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/ButtonBrancher.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ButtonFader.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ButtonFader.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleAudio.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleAudio.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics2D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics2D.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleSprite.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleSprite.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleUnityVersion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleUnityVersion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModuleUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/FeedbackText.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/FeedbackText.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/GachaMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/GachaMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +66,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/SimpleFeedbackObjectPooler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/UI/ImageText.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/StartSoundManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/2b/94082126/Action.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/CheckForEventSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowser.cs" root0="FORCE_HIGHLIGHTING" />
@@ -92,13 +109,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/TutorialButton.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/Song.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/RuneScriptableSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/CharacterScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/ScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/StartSoundManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
@@ -107,19 +117,15 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleObjectPooler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/FeedbackText.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/LockedSongScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleFeedbackObjectPooler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ScriptableSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/UI/UICarousel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Runes/ScoreRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Runes/SkillRequirementRune.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MultiplierSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/InmunitySkill.cs" />
@@ -128,21 +134,32 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SelectableRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/CharacterScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonFader.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/TutorialButtons.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonBrancher.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/FeedbackText.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScrollerGeneral.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Song.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -163,6 +180,14 @@
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$USER_HOME$/Downloads/AndroidTest/beaters.x86_64" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Downloads/AndroidTest" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />

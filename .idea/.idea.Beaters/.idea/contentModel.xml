@@ -122,6 +122,7 @@
             </e>
           </e>
           <e p="Gacha" t="Include">
+            <e p="BingoManager.cs" t="Include" />
             <e p="GachaBox.cs" t="Include" />
             <e p="GlowRotate.cs" t="Include" />
           </e>
