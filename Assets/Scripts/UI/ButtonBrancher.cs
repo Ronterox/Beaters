@@ -125,7 +125,7 @@ namespace UI
                     break;
             }
         }
-        
+
         public void SpawnButtons()
         {
             revealSettings.opening = true;
@@ -139,48 +139,45 @@ namespace UI
 
             revealSettings.spawned = true;
         }
-        
+
         private void RevealLinearlyNormal()
         {
+            Vector3 position = transform.position;
+
             for (var i = 0; i < buttonRefs.Length; i++)
             {
-                Vector3 targetPost;
+                var buttonRect = (RectTransform)buttonRefs[i].transform;
 
-                var sizeDelta = new Vector2(m_ButtonScaler.newButtonSize.x, m_ButtonScaler.newButtonSize.y);
+                Vector2 sizeDelta = buttonRect.sizeDelta;
 
-                Vector3 position = transform.position;
-
-                targetPost.x = linSpawner.direction.x * ((i + linSpawner.buttonNumOffset) * (sizeDelta.x + linSpawner.buttonSpacing)) + position.x;
-                targetPost.y = linSpawner.direction.y * ((i + linSpawner.buttonNumOffset) * (sizeDelta.y + linSpawner.buttonSpacing)) + position.y;
-
-                targetPost.z = 0;
-
-                if (buttonRefs[i].transform is RectTransform buttonRect)
+                var targetPos = new Vector3
                 {
-                    buttonRect.sizeDelta = sizeDelta;
-                    buttonRect.position = Vector3.Lerp(buttonRect.position, targetPost, revealSettings.translateSmooth * Time.deltaTime);
-                }
+                    x = linSpawner.direction.x * ((i + linSpawner.buttonNumOffset) * (sizeDelta.x + linSpawner.buttonSpacing)) + position.x,
+                    y = linSpawner.direction.y * ((i + linSpawner.buttonNumOffset) * (sizeDelta.y + linSpawner.buttonSpacing)) + position.y,
+                    z = 0
+                };
+
+                buttonRect.position = Vector3.Lerp(buttonRect.position, targetPos, revealSettings.translateSmooth * Time.deltaTime);
             }
         }
         private void RevealLinearlyFade()
         {
             for (var i = 0; i < buttonRefs.Length; i++)
             {
-                Vector3 targetPos;
+                ButtonFader previousButtonFader = i > 0 ? buttonRefs[i - 1] : null;
+                ButtonFader buttonFader = buttonRefs[i];
 
-                var sizeDelta = new Vector2(m_ButtonScaler.newButtonSize.x, m_ButtonScaler.newButtonSize.y);
+                var buttonRect = (RectTransform)buttonFader.transform;
+                Vector2 sizeDelta = buttonRect.sizeDelta;
 
                 Vector3 position = transform.position;
 
-                targetPos.x = linSpawner.direction.x * ((i + linSpawner.buttonNumOffset) * (sizeDelta.x + linSpawner.buttonSpacing)) + position.x;
-                targetPos.y = linSpawner.direction.y * ((i + linSpawner.buttonNumOffset) * (sizeDelta.y + linSpawner.buttonSpacing)) + position.y;
-
-                targetPos.z = 0;
-
-                ButtonFader previousButtonFader = i > 0 ? buttonRefs[i - 1] : null;
-                ButtonFader buttonFader = buttonRefs[i];
-                
-                if (buttonFader.transform is RectTransform buttonRect) buttonRect.sizeDelta = sizeDelta;
+                var targetPos = new Vector3
+                {
+                    x = linSpawner.direction.x * ((i + linSpawner.buttonNumOffset) * (sizeDelta.x + linSpawner.buttonSpacing)) + position.x,
+                    y = linSpawner.direction.y * ((i + linSpawner.buttonNumOffset) * (sizeDelta.y + linSpawner.buttonSpacing)) + position.y,
+                    z = 0
+                };
 
                 void FadeAndPosition()
                 {
