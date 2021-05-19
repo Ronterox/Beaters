@@ -367,7 +367,8 @@ namespace Utilities
         /// Creates a game object holder for the map notes
         /// </summary>
         /// <param name="mapName"></param>
-        private void CreateMapHolder(string mapName)
+        /// <param name="setSoundMap"></param>
+        private void CreateMapHolder(string mapName, bool setSoundMap = true)
         {
             if (m_CurrentMapGameObject) Destroy(m_CurrentMapGameObject);
 
@@ -376,6 +377,8 @@ namespace Utilities
                 name = mapName,
                 transform = { parent = mapScroller.transform }
             };
+
+            if (!setSoundMap) return;
 
             SoundMap soundMap = GetSoundMap(mapName);
 
@@ -481,7 +484,7 @@ namespace Utilities
             else
             {
                 IsCreating = true;
-                CreateMapHolder(mapName);
+                CreateMapHolder(mapName, false);
                 soundMap.GenerateNotes(mapScroller.makerNotes, m_CurrentMapGameObject.transform, false);
 
                 SetState("Loading map clip...");
@@ -563,6 +566,8 @@ namespace Utilities
                 string soundFilePath = folderPath + audioSong.name;
 
                 if (!Path.HasExtension(soundFilePath)) soundFilePath += ".mp3";
+
+                if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
                 if (!File.Exists(soundFilePath)) File.Copy(audioClipPath, soundFilePath);
 
                 soundMap.audioClip = audioSong;
@@ -570,6 +575,8 @@ namespace Utilities
 
                 SaveLoadManager.SaveAsJsonFile(soundMap, folderPath, $"{soundMap.name}.json");
 #endif
+                SetState("Map saved successfully!");
+
                 mapScroller.SetSoundMap(soundMap);
             }
             else StartCreating(mapName);
