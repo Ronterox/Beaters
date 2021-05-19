@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: KPoper
   description: Loves kpop so much she will like to be korean and make her own music
   characterGenre: 0
-  hp: 120
+  hp: 80
   multiplier: 1
   activeSkill: {fileID: 11400000, guid: 218e55276f0a5dfa482b76fdc1cccde1, type: 2}
   passiveSkill: {fileID: 11400000, guid: e6c9e700ddd337c70b5be58061756b48, type: 2}
@@ -40,3 +40,4 @@ MonoBehaviour:
   emptyStar: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
   buttonLayout: {fileID: 21300000, guid: 5d4802dd4b8a94e7ebdc8356540ff66e, type: 3}
   usePrimaryColorInButtons: 1
+  bingoColor: 0
