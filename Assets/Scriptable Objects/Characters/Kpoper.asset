@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Kpoper
   m_EditorClassIdentifier: 
   characterName: KPoper
-  description: Loves kpop so much she will like to be korean and make her own music
+  description: Used to have a very extreme addiction to bubble tea, now she dyes
+    her hair twice per week and dances until passing out
   characterGenre: 0
   hp: 80
   multiplier: 1
@@ -36,8 +37,8 @@ MonoBehaviour:
   gachaButton: {fileID: 21300000, guid: ae6bdd1b5a40f9550839f296f3edef18, type: 3}
   mapCreator: {fileID: 21300000, guid: 1475b954eac4420a89b2454a992f5ad3, type: 3}
   exitButton: {fileID: 0}
-  fullStar: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
-  emptyStar: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  fullStar: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
+  emptyStar: {fileID: 21300000, guid: f38d92cb132634aa781a286e39fc9c3a, type: 3}
   buttonLayout: {fileID: 21300000, guid: 5d4802dd4b8a94e7ebdc8356540ff66e, type: 3}
   usePrimaryColorInButtons: 1
   bingoColor: 0

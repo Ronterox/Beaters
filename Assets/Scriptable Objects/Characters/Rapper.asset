@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e277ea999410e234c95f9661dfefdb6b, type: 3}
-  m_Name: Metalhead
+  m_Name: Rapper
   m_EditorClassIdentifier: 
-  characterName: Metalhead
-  description: "Drinks more beer than there\u2019s water in the ocean. Just wanna
-    rock all day everyday, loves guitar solos with sick licks at atleast 200 bpm"
-  characterGenre: 1
-  hp: 100
+  characterName: Rapper
+  description: Sold his soul to the streets. Now he is making better life decisions,
+    other than using a flat cap. Loves to eat spaghetti.
+  characterGenre: 4
+  hp: 110
   multiplier: 1
-  activeSkill: {fileID: 11400000, guid: 948f0281195ff69a784e10e80db1ac19, type: 2}
-  passiveSkill: {fileID: 11400000, guid: a855efc5c9558b17e97eeb5d91754496, type: 2}
-  backgroundImage: {fileID: 21300000, guid: 54a427f8496dab7d79f20c136919b459, type: 3}
+  activeSkill: {fileID: 0}
+  passiveSkill: {fileID: 0}
+  backgroundImage: {fileID: 21300000, guid: 6f009082d8bc1d9e08b25686180087e6, type: 3}
   colorPalette:
     mainColor: {r: 0, g: 0, b: 0, a: 0.57254905}
     secondaryColor: {r: 0.41960785, g: 0, b: 0, a: 0.7882353}
@@ -32,13 +32,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bac2a8c8b296e9a62ad8b82737909d9a, type: 3}
   - {fileID: 21300000, guid: 7978be4701f65adeb9d0963c4961a92a, type: 3}
   - {fileID: 21300000, guid: f6ae56a8cd9ce7c4d9414f7c14498a5b, type: 3}
-  font: {fileID: 11400000, guid: be7bf88e9ff9289ad8c6671950e2c2ae, type: 2}
-  playButton: {fileID: 21300000, guid: a9dc130401b134b1b8ee5672f8336856, type: 3}
+  font: {fileID: 11400000, guid: 7c76d9f8d54829a81966c9ddfa58cc53, type: 2}
+  playButton: {fileID: 21300000, guid: b1aaa545832e3a425ab611d928ee5d9d, type: 3}
   gachaButton: {fileID: 21300000, guid: 985645e4509876aedbb3e72a027a9120, type: 3}
   mapCreator: {fileID: 21300000, guid: 1475b954eac4420a89b2454a992f5ad3, type: 3}
   exitButton: {fileID: 0}
   fullStar: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
   emptyStar: {fileID: 21300000, guid: f38d92cb132634aa781a286e39fc9c3a, type: 3}
-  buttonLayout: {fileID: 21300000, guid: 7fa8b60a517dd3fe39ffe58b855279df, type: 3}
+  buttonLayout: {fileID: 21300000, guid: 0a7ccdb6757de8cdfbe28774a636ffac, type: 3}
   usePrimaryColorInButtons: 1
   bingoColor: 1

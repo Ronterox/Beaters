@@ -3150,6 +3150,42 @@ PrefabInstance:
       propertyPath: imageToChange
       value: 
       objectReference: {fileID: 7979172281809107009}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: banners.Array.data[0].lootTable.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: banners.Array.data[0].lootTable.Array.data[2].loot
+      value: 
+      objectReference: {fileID: 11400000, guid: 5cbe8683692276c249979e238ee08ec2, type: 2}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: banners.Array.data[0].lootTable.Array.data[3].loot
+      value: 
+      objectReference: {fileID: 11400000, guid: e6e5f3de18bf2e692963af0f92b02d45, type: 2}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: banners.Array.data[0].lootTable.Array.data[4].loot
+      value: 
+      objectReference: {fileID: 11400000, guid: ff154e146b0e8f61191380744698d584, type: 2}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: banners.Array.data[0].lootTable.Array.data[0].probability
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: banners.Array.data[0].lootTable.Array.data[1].probability
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: banners.Array.data[0].lootTable.Array.data[2].probability
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: banners.Array.data[0].lootTable.Array.data[3].probability
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: banners.Array.data[0].lootTable.Array.data[4].probability
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8375739123040416148, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
       propertyPath: m_RootOrder
       value: 6
