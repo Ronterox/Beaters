@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Plugins.SimpleFileBrowser.Scripts
+namespace SimpleFileBrowser
 {
 	public class FileBrowserQuickLink : FileBrowserItem
 	{

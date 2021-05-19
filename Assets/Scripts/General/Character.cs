@@ -1,5 +1,5 @@
+using DG.Tweening;
 using Managers;
-using Plugins.DOTween.Modules;
 using Plugins.Properties;
 using ScriptableObjects;
 using TMPro;

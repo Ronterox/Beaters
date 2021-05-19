@@ -43,6 +43,13 @@ namespace Plugins.Tools
         public static bool SaveFolderExists(string folderName = DEFAULT_FOLDER_NAME) => Directory.Exists(folderName.DetermineSavePath());
         
         /// <summary>
+        /// There is a folder for the on the persistent path
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <returns></returns>
+        public static bool SaveFolderInPersistentDirectoryExists(string folderName = DEFAULT_FOLDER_NAME) => Directory.Exists($"{Application.persistentDataPath}/{folderName}/");
+
+        /// <summary>
         /// There is a folder for the save
         /// </summary>
         /// <param name="folderName"></param>
@@ -271,6 +278,16 @@ namespace Plugins.Tools
         public static IEnumerable<T> LoadMultipleJsonFromFolderInGameDirectory<T>(string folderName = DEFAULT_FOLDER_NAME)
         {
             string savePath = Application.dataPath + $"/{folderName}/";
+            return LoadJsonsFromFolder<T>(savePath);
+        }
+        
+        /// <summary>
+        /// Load the specified file based on a file name into a specified folder
+        /// </summary>
+        /// <param name="folderName">Folder's name.</param>
+        public static IEnumerable<T> LoadMultipleJsonFromFolder<T>(string folderName = DEFAULT_FOLDER_NAME)
+        {
+            string savePath = Application.persistentDataPath + $"/{folderName}/";
             return LoadJsonsFromFolder<T>(savePath);
         }
 

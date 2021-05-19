@@ -274,7 +274,7 @@ namespace Managers
 
             SoundMap soundMap = mapScroller.SoundMap;
             ScriptableCharacter character = GameManager.GetCharacter();
-            
+
             SerializableSong songData = DataManager.GetSong(soundMap.ID);
             if (songData.songId == 0) songData.SetId(soundMap.ID);
 

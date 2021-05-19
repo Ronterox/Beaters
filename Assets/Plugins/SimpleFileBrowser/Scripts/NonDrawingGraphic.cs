@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Plugins.SimpleFileBrowser.Scripts
+namespace SimpleFileBrowser
 {
 	// Credit: http://answers.unity.com/answers/1157876/view.html
 	[RequireComponent( typeof( CanvasRenderer ) )]

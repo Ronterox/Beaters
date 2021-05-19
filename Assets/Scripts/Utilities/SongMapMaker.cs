@@ -1,4 +1,4 @@
-//#define FORCE_JSON
+#define FORCE_JSON
 
 using System;
 using System.Collections;
@@ -7,12 +7,12 @@ using System.IO;
 using System.Linq;
 using Core.Arrow_Game;
 using DG.Tweening;
-#if UNITY_EDITOR && !FORCE_JSON
-#endif
 using Managers;
-using Plugins.SimpleFileBrowser.Scripts;
 using Plugins.Tools;
+using SimpleFileBrowser;
+#if UNITY_EDITOR && !FORCE_JSON
 using ScriptableObjects;
+#endif
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,9 +28,6 @@ namespace Utilities
         public float bpm;
         public Genre genre = Genre.Custom;
 
-#if !UNITY_EDITOR || FORCE_JSON
-        [NonSerialized]
-#endif
         public AudioClip audioClip;
         public string audioPath;
 
@@ -50,7 +47,6 @@ namespace Utilities
         public void GenerateNotes(MakerNote[] makerNotes, Transform parent, bool generateCombo = true)
         {
             //Check of generation of procedural combos, guitar hero style
-            
             if (generateCombo)
             {
                 int length = makerNotes.Length;
@@ -235,7 +231,10 @@ namespace Utilities
             if (!IsCreating) return;
 
             const float checkNoteCastRange = .4f;
-            const int rightClickButton = 1, leftClickButton = 0;
+#if !UNITY_IPHONE && !UNITY_ANDROID
+            const int rightClickButton = 1;
+#endif
+            const int leftClickButton = 0;
 
             Vector3 mousePosition = Input.mousePosition;
 
@@ -371,7 +370,8 @@ namespace Utilities
         /// Creates a game object holder for the map notes
         /// </summary>
         /// <param name="mapName"></param>
-        private void CreateMapHolder(string mapName)
+        /// <param name="setSoundMap"></param>
+        private void CreateMapHolder(string mapName, bool setSoundMap = true)
         {
             if (m_CurrentMapGameObject) Destroy(m_CurrentMapGameObject);
 
@@ -380,6 +380,8 @@ namespace Utilities
                 name = mapName,
                 transform = { parent = mapScroller.transform }
             };
+
+            if (!setSoundMap) return;
 
             SoundMap soundMap = GetSoundMap(mapName);
 
@@ -420,8 +422,13 @@ namespace Utilities
             IEnumerable<SoundMap> songsScriptables = Resources.LoadAll<Song>("Songs").Select(song => song.soundMap);
             soundMaps.AddRange(songsScriptables);
 #else
+#if UNITY_ANDROID
+            if (!SaveLoadManager.SaveFolderInPersistentDirectoryExists(SONG_FOLDER)) return;
+            SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolder<SoundMap>(SONG_FOLDER).ToArray();
+#else
             if (!SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER)) return;
             SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToArray();
+#endif
             soundMaps.AddRange(savedSoundMaps);
 #endif
             UpdateSongsList();
@@ -485,7 +492,7 @@ namespace Utilities
             else
             {
                 IsCreating = true;
-                CreateMapHolder(mapName);
+                CreateMapHolder(mapName, false);
                 soundMap.GenerateNotes(mapScroller.makerNotes, m_CurrentMapGameObject.transform, false);
 
                 SetState("Loading map clip...");
@@ -563,10 +570,16 @@ namespace Utilities
                     UnityEditor.AssetDatabase.CreateAsset(song, $"{songScriptablesRelativePath}/{soundMap.name}.asset");
                 });
 #else
+#if UNITY_ANDROID
+                string folderPath = Application.persistentDataPath + $"/{SONG_FOLDER}/";
+#else
                 string folderPath = Application.dataPath + $"/{SONG_FOLDER}/";
+#endif
                 string soundFilePath = folderPath + audioSong.name;
 
                 if (!Path.HasExtension(soundFilePath)) soundFilePath += ".mp3";
+
+                if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
                 if (!File.Exists(soundFilePath)) File.Copy(audioClipPath, soundFilePath);
 
                 soundMap.audioClip = audioSong;
@@ -574,6 +587,8 @@ namespace Utilities
 
                 SaveLoadManager.SaveAsJsonFile(soundMap, folderPath, $"{soundMap.name}.json");
 #endif
+                SetState("Map saved successfully!");
+
                 mapScroller.SetSoundMap(soundMap);
             }
             else StartCreating(mapName);

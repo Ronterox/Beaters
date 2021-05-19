@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Plugins.SimpleFileBrowser.Scripts.SimpleRecycledListView
+namespace SimpleFileBrowser
 {
 	[RequireComponent( typeof( ScrollRect ) )]
 	public class RecycledListView : MonoBehaviour

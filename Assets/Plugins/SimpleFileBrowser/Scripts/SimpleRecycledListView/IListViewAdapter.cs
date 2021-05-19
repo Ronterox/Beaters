@@ -1,4 +1,4 @@
-﻿namespace Plugins.SimpleFileBrowser.Scripts.SimpleRecycledListView
+﻿namespace SimpleFileBrowser
 {
 	public delegate void OnItemClickedHandler( ListItem item );
 
