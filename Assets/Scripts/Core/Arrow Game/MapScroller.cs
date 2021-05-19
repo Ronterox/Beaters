@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 using Managers;
 using Plugins.Tools;
 using UnityEngine;
@@ -69,13 +68,14 @@ namespace Core.Arrow_Game
         private void Start()
         {
             SoundManager.Instance.StopBackgroundMusic();
-            
+
             m_BeatAnimationTweens = new List<Tween>();
-            animateByBpm.ForEach(tform =>
+
+            foreach (Transform tform in animateByBpm)
             {
                 Tween anim = tform.DOScale(targetScale, m_AnimationDuration).OnComplete(() => tform.DOScale(defaultScale, m_AnimationDuration)).SetAutoKill(false);
                 m_BeatAnimationTweens.Add(anim);
-            });
+            }
 
             ResetPos();
 
@@ -146,7 +146,7 @@ namespace Core.Arrow_Game
 
             ActivateNoteToRelativePosition();
         }
-        
+
         private void ActivateNoteToRelativePosition()
         {
             const float notesPositionY = -6f;
@@ -200,12 +200,28 @@ namespace Core.Arrow_Game
         private IEnumerator AnimateBeatCoroutine()
         {
             m_WaitingForBeat = true;
+            
+            var stopwatch = Stopwatch.StartNew();
 
             m_BeatAnimationTweens.ForEach(anim =>
             {
                 anim.Restart();
                 anim.Play();
             });
+            
+            stopwatch.Stop();
+
+            var stopWatchNormalForEach = Stopwatch.StartNew();
+
+            foreach (Tween beatAnimationTween in m_BeatAnimationTweens)
+            {
+                beatAnimationTween.Restart();
+                beatAnimationTween.Play();
+            }
+            
+            stopWatchNormalForEach.Stop();
+
+            print($"Function took {stopwatch.ElapsedMilliseconds} and normal took {stopWatchNormalForEach.ElapsedMilliseconds}");
 
             yield return m_WaitForSeconds;
             m_WaitingForBeat = false;

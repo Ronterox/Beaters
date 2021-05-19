@@ -948,6 +948,7 @@ GameObject:
   - component: {fileID: 659962780926713665}
   - component: {fileID: 659962780926713664}
   - component: {fileID: 659962780926713679}
+  - component: {fileID: 4950163012755129785}
   - component: {fileID: 3906572142158500600}
   m_Layer: 5
   m_Name: Start Button
@@ -1082,6 +1083,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &4950163012755129785
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659962780926713677}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &3906572142158500600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1094,6 +1107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57b0da2d786ccbaf87697a50228cca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 4950163012755129785}
   faded: 0
 --- !u!1 &659962781080285966
 GameObject:
@@ -1375,6 +1389,7 @@ GameObject:
   - component: {fileID: 659962781439458079}
   - component: {fileID: 659962781439458078}
   - component: {fileID: 659962781439458077}
+  - component: {fileID: 7951705743871722369}
   - component: {fileID: 8928864370396629189}
   m_Layer: 5
   m_Name: Resume Button
@@ -1509,6 +1524,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &7951705743871722369
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659962781439458075}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8928864370396629189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1521,6 +1548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57b0da2d786ccbaf87697a50228cca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 7951705743871722369}
   faded: 0
 --- !u!1 &659962781543533761
 GameObject:
@@ -1534,6 +1562,7 @@ GameObject:
   - component: {fileID: 659962781543533765}
   - component: {fileID: 659962781543533764}
   - component: {fileID: 659962781543533763}
+  - component: {fileID: 7433084273543896113}
   - component: {fileID: 5007969929429603219}
   m_Layer: 5
   m_Name: Stop Button
@@ -1668,6 +1697,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &7433084273543896113
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659962781543533761}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &5007969929429603219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1680,6 +1721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57b0da2d786ccbaf87697a50228cca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 7433084273543896113}
   faded: 0
 --- !u!1 &659962781785021311
 GameObject:
@@ -2697,7 +2739,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3846369046648488850}
   m_HandleRect: {fileID: 3752711401267594225}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2805,7 +2847,6 @@ MonoBehaviour:
   referenceButtonSize: {x: 175, y: 150}
   referenceScreenSize: {x: 1920, y: 1080}
   revealSettings:
-    option: 0
     translateSmooth: 5
     fadeSmooth: 0.03
     revealOnStart: 0
@@ -2817,13 +2858,6 @@ MonoBehaviour:
     baseButtonSpacing: 5
     buttonNumOffset: 1
     buttonSpacing: 5
-  circSpawner:
-    revealStyle: 0
-    angle:
-      minAngle: 0
-      maxAngle: 0
-    baseDistFromBrancher: 20
-    distFromBrancher: 0
   buttons: []
 --- !u!114 &7081061921972479999
 MonoBehaviour:
@@ -7039,6 +7073,7 @@ GameObject:
   - component: {fileID: 4353919758350598692}
   - component: {fileID: 5459779791339929725}
   - component: {fileID: 6614197930008427334}
+  - component: {fileID: 2765803330249624144}
   - component: {fileID: 2059421028696265979}
   m_Layer: 5
   m_Name: Reset Button
@@ -7149,6 +7184,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &2765803330249624144
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8047619085405422766}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &2059421028696265979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7161,6 +7208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57b0da2d786ccbaf87697a50228cca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 2765803330249624144}
   faded: 0
 --- !u!1 &8561891011764238906
 GameObject:
@@ -7630,13 +7678,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c032bf53ff2bcecd929f4160111847e, type: 3}
---- !u!4 &6744775958777896008 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1566069341176993605, guid: 5c032bf53ff2bcecd929f4160111847e, type: 3}
-  m_PrefabInstance: {fileID: 5197587433099692813}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &6744775958777896009 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1566069341176993604, guid: 5c032bf53ff2bcecd929f4160111847e, type: 3}
+  m_PrefabInstance: {fileID: 5197587433099692813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6744775958777896008 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1566069341176993605, guid: 5c032bf53ff2bcecd929f4160111847e, type: 3}
   m_PrefabInstance: {fileID: 5197587433099692813}
   m_PrefabAsset: {fileID: 0}

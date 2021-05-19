@@ -168,6 +168,8 @@
             <e p="Song.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
+            <e p="ButtonBrancher.cs" t="Include" />
+            <e p="ButtonFader.cs" t="Include" />
             <e p="ButtonManager.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="SongCarouselEditor.cs" t="Include" />

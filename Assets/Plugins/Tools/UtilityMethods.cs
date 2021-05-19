@@ -280,10 +280,10 @@ namespace Plugins.Tools
         /// <summary>
         /// Best random shuffle method
         /// </summary>
-        /// <param name="rng">seed of randomness</param>
         /// <param name="array"></param>
+        /// <param name="rng">seed of randomness</param>
         /// <typeparam name="T"></typeparam>
-        public static T[] Shuffle<T>(this T[] array, System.Random rng)
+        public static void Shuffle<T>(this T[] array, System.Random rng)
         {
             int n = array.Length;
             while (n > 1)
@@ -293,7 +293,6 @@ namespace Plugins.Tools
                 array[n] = array[k];
                 array[k] = temp;
             }
-            return array;
         }
 
         /// <summary>
@@ -301,18 +300,15 @@ namespace Plugins.Tools
         /// </summary>
         /// <param name="array"></param>
         /// <typeparam name="T"></typeparam>
-        public static T[] Shuffle<T>(this T[] array) => Shuffle(array, new System.Random());
+        public static void Shuffle<T>(this T[] array) => Shuffle(array, new System.Random());
 
         /// <summary>
-        /// Foreach extension method for arrays
+        /// For each method for arrays
         /// </summary>
         /// <param name="array"></param>
         /// <param name="action"></param>
         /// <typeparam name="T"></typeparam>
-        public static void ForEach<T>(this IEnumerable<T> array, Action<T> action)
-        {
-            foreach (T x1 in array) action.Invoke(x1);
-        }
+        public static void ForEach<T>(this T[] array, Action<T> action) => Array.ForEach(array, action);
 
         /// <summary>
         /// Gets a random value from an array
@@ -342,7 +338,7 @@ namespace Plugins.Tools
         /// <param name="list"></param>
         /// <param name="condition"></param>
         /// <typeparam name="T"></typeparam>
-        public static bool RemoveOne<T>(this List<T> list, Func<T, bool> condition)
+        public static bool RemoveOne<T>(this List<T> list, Predicate<T> condition)
         {
             for (var i = 0; i < list.Count; i++)
             {
@@ -408,7 +404,14 @@ namespace Plugins.Tools
 #endif
         }
 
-        public static int FindIndex<T>(this T[] array, Func<T, bool> condition)
+        /// <summary>
+        /// Fins the index of the condition on the array
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="condition"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static int FindIndex<T>(this T[] array, Predicate<T> condition)
         {
             for (var i = 0; i < array.Length; i++)
             {
