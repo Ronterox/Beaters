@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 using Managers;
 using Plugins.Tools;
+using ScriptableObjects;
 
 public class BingoManager : MonoBehaviour
 {
     public Image bingoCardboard;
+    public ScriptableCharacter[] characters;
 
     public GameObject panelBingo;
     public GameObject[] bingoBoxes;
@@ -16,7 +19,9 @@ public class BingoManager : MonoBehaviour
 
     void Start() {
 
-    
+        redeemReward.onClick.AddListener(TaskOnClick);
+
+    SetCharacterGUI(GetCharacter());
 
     redeemReward.interactable = false;
 
@@ -38,9 +43,40 @@ public class BingoManager : MonoBehaviour
         }
     }
 
+
+
     void checkButton(){
         if(DataManager.Instance.playerData.bingoBoxes == 9){
             redeemReward.interactable = true;
         }
+    }
+
+
+    private ScriptableCharacter GetCharacter()
+        {
+            ScriptableCharacter character = GameManager.GetCharacter();
+            if (character) return character;
+
+            ushort randomCharacter = DataManager.GetCharactersIds().GetRandom();
+
+            character = characters.First(c => c.ID == randomCharacter);
+            GameManager.PutCharacter(character);
+            
+            return character;
+        }
+
+        public void SetCharacterGUI(ScriptableCharacter character)
+        {
+            Palette palette = character.colorPalette;
+            bingoCardboard.color = palette.GetColor(character.bingoColor);
+        }
+
+    private void TaskOnClick(){
+        Debug.Log("Give prize");
+        DataManager.Instance.playerData.bingoBoxes = 0;
+        foreach(var bingobox in bingoBoxes)
+            {
+                bingobox.SetActive(false);
+            }
     }
 }
