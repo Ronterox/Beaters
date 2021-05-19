@@ -1,195 +1,73 @@
+using DG.Tweening;
 using Plugins.Tools;
 using UnityEngine;
 
 namespace UI
 {
+    [System.Serializable]
+    public class LinearSpawner
+    {
+        public Vector2 direction = new Vector2(0, 1);
+
+        [Range(0f, 1f)]
+        public float buttonSpacing = .5f;
+        public float buttonNumOffset;
+    }
+
     public class ButtonBrancher : MonoBehaviour
     {
-        public class ButtonScaler
-        {
-            private ScaleMode m_ScaleMode;
-            private Vector2 m_ReferenceButtonSize;
+        public RectTransform[] buttonRefs;
 
-            public Vector2 referenceScreenSize;
-            public Vector2 newButtonSize;
+        public float moveDuration = 1f;
+        public bool revealOnStart;
 
-            public void Initialize(Vector2 refButtonSize, Vector2 refScreenSize, int scaleMode)
-            {
-                m_ScaleMode = (ScaleMode)scaleMode;
-                m_ReferenceButtonSize = refButtonSize;
-                referenceScreenSize = refScreenSize;
-                SetNewButtonSize();
-            }
-
-            private void SetNewButtonSize()
-            {
-                switch (m_ScaleMode)
-                {
-                    case ScaleMode.IndependentWithHeight:
-                        newButtonSize.x = m_ReferenceButtonSize.x * Screen.width / referenceScreenSize.x;
-                        newButtonSize.y = m_ReferenceButtonSize.y * Screen.height / referenceScreenSize.y;
-                        break;
-                    case ScaleMode.MatchWidthHeight:
-                        newButtonSize.x = m_ReferenceButtonSize.x * Screen.width / referenceScreenSize.x;
-                        newButtonSize.y = newButtonSize.x;
-                        break;
-                }
-            }
-        }
-        [System.Serializable]
-        public class RevealSettings
-        {
-            public float translateSmooth = 5f;
-            public float fadeSmooth = 0.01f;
-            public bool revealOnStart;
-
-            [HideInInspector]
-            public bool opening;
-            [HideInInspector]
-            public bool spawned;
-        }
-
-        [System.Serializable]
-        public class LinearSpawner
-        {
-            public enum RevealStyle { SlideToPosition, FadeInAtPosition }
-
-            public RevealStyle revealStyle;
-            public Vector2 direction = new Vector2(0, 1);
-            public float baseButtonSpacing = 5f;
-            public int buttonNumOffset;
-
-            [HideInInspector]
-            public float buttonSpacing = 5f;
-
-            public void FitSpacingToScreenSize(Vector2 refScreenSize)
-            {
-                float refScreenFloat = (refScreenSize.x + refScreenSize.y) * .5f;
-                float screenFloat = (Screen.width + Screen.height) * .5f;
-                buttonSpacing = baseButtonSpacing * screenFloat / refScreenFloat;
-            }
-        }
-        public ButtonFader[] buttonRefs;
-
-        public enum ScaleMode { MatchWidthHeight, IndependentWithHeight }
-
-        public ScaleMode mode;
-
-        public Vector2 referenceButtonSize, referenceScreenSize;
-
-        private ButtonScaler m_ButtonScaler = new ButtonScaler();
-
-        public RevealSettings revealSettings = new RevealSettings();
+        private bool m_Spawned;
 
         public LinearSpawner linSpawner = new LinearSpawner();
 
-        private int lastScreenWidth, lastScreenHeight;
         private void Start()
         {
-            m_ButtonScaler = new ButtonScaler();
-
-            lastScreenWidth = Screen.width;
-            lastScreenHeight = Screen.height;
-
-            m_ButtonScaler.Initialize(referenceButtonSize, referenceScreenSize, (int)mode);
-
-            linSpawner.FitSpacingToScreenSize(m_ButtonScaler.referenceScreenSize);
-
-            if (revealSettings.revealOnStart) SpawnButtons();
-        }
-        private void Update()
-        {
-            if (Screen.width != lastScreenWidth || Screen.height != lastScreenHeight)
-            {
-                lastScreenWidth = Screen.width;
-                lastScreenHeight = Screen.height;
-
-                m_ButtonScaler.Initialize(referenceButtonSize, referenceScreenSize, (int)mode);
-
-                linSpawner.FitSpacingToScreenSize(m_ButtonScaler.referenceScreenSize);
-
-                SpawnButtons();
-            }
-
-            if (!revealSettings.opening) return;
-
-            if (!revealSettings.spawned) SpawnButtons();
-
-            switch (linSpawner.revealStyle)
-            {
-                case LinearSpawner.RevealStyle.SlideToPosition:
-                    RevealLinearlyNormal();
-                    break;
-                case LinearSpawner.RevealStyle.FadeInAtPosition:
-                    RevealLinearlyFade();
-                    break;
-            }
+            if (revealOnStart) ShowButton();
         }
 
-        public void SpawnButtons()
+        public void ShowHideButtons()
         {
-            revealSettings.opening = true;
+            m_Spawned = !m_Spawned;
 
-            SetButtonRefsEnable(false);
+            if (m_Spawned) ShowButton();
+            else HideButtons();
+        }
 
+        private void ShowButton()
+        {
             Transform tform = transform;
             buttonRefs.ForEach(buttonRef => buttonRef.transform.position = tform.position);
 
             SetButtonRefsEnable(true);
 
-            revealSettings.spawned = true;
+            RevealLinearlyNormal();
         }
+
+        private void HideButtons() => SetButtonRefsEnable(false);
 
         private void RevealLinearlyNormal()
         {
             Vector3 position = transform.position;
+            Vector3 spawnerDirection = linSpawner.direction.normalized;
 
             for (var i = 0; i < buttonRefs.Length; i++)
             {
-                var buttonRect = (RectTransform)buttonRefs[i].transform;
-
+                RectTransform buttonRect = buttonRefs[i];
                 Vector2 sizeDelta = buttonRect.sizeDelta;
 
                 var targetPos = new Vector3
                 {
-                    x = linSpawner.direction.x * ((i + linSpawner.buttonNumOffset) * (sizeDelta.x + linSpawner.buttonSpacing)) + position.x,
-                    y = linSpawner.direction.y * ((i + linSpawner.buttonNumOffset) * (sizeDelta.y + linSpawner.buttonSpacing)) + position.y,
+                    x = spawnerDirection.x * ((i + linSpawner.buttonNumOffset) * (sizeDelta.x * linSpawner.buttonSpacing)) + position.x,
+                    y = spawnerDirection.y * ((i + linSpawner.buttonNumOffset) * (sizeDelta.y * linSpawner.buttonSpacing)) + position.y,
                     z = 0
                 };
 
-                buttonRect.position = Vector3.Lerp(buttonRect.position, targetPos, revealSettings.translateSmooth * Time.deltaTime);
-            }
-        }
-        private void RevealLinearlyFade()
-        {
-            for (var i = 0; i < buttonRefs.Length; i++)
-            {
-                ButtonFader previousButtonFader = i > 0 ? buttonRefs[i - 1] : null;
-                ButtonFader buttonFader = buttonRefs[i];
-
-                var buttonRect = (RectTransform)buttonFader.transform;
-                Vector2 sizeDelta = buttonRect.sizeDelta;
-
-                Vector3 position = transform.position;
-
-                var targetPos = new Vector3
-                {
-                    x = linSpawner.direction.x * ((i + linSpawner.buttonNumOffset) * (sizeDelta.x + linSpawner.buttonSpacing)) + position.x,
-                    y = linSpawner.direction.y * ((i + linSpawner.buttonNumOffset) * (sizeDelta.y + linSpawner.buttonSpacing)) + position.y,
-                    z = 0
-                };
-
-                void FadeAndPosition()
-                {
-                    buttonFader.transform.position = targetPos;
-                    if (buttonFader) buttonFader.Fade(revealSettings.fadeSmooth);
-                }
-
-                if (previousButtonFader)
-                {
-                    if (previousButtonFader.faded) FadeAndPosition();
-                }
-                else FadeAndPosition();
+                buttonRect.DOMove(targetPos, moveDuration);
             }
         }
 
