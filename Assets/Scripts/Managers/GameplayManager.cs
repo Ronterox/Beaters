@@ -21,7 +21,7 @@ namespace Managers
 
         [Header("Config")]
         public Character currentCharacter;
-        public SimpleFeedbackObjectPooler feedbackTextPooler;
+        public SimpleFeedbackObjectPooler feedbackTextPooler, skillGainTextPooler;
         [Space]
         public Transform gameCanvas;
         public GameObject endGamePanel;
@@ -53,6 +53,8 @@ namespace Managers
         private GameManager m_GameManager;
 
         private float m_StartTime;
+        private Vector3 m_SkillSliderPosition;
+        
         //POWERS RELATED VARIABLES
         public bool CanMiss { get; set; } = true;
 
@@ -81,6 +83,8 @@ namespace Managers
             m_GameManager = GameManager.Instance;
 
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
+
+            m_SkillSliderPosition = skillBarSlider.transform.position;
 
             SetPauseButton();
 
@@ -361,6 +365,8 @@ namespace Managers
             m_Instance.m_Taps++;
             m_Instance.m_NotesHit++;
             m_Instance.skillBarSlider.value++;
+            
+            m_Instance.skillGainTextPooler.ShowText($"+1", Color.yellow, m_Instance.m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
             int points = Mathf.RoundToInt((int)hitType * ++m_Instance.m_Combo * m_Instance.Multiplier);
@@ -387,6 +393,8 @@ namespace Managers
                 const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
                 m_Instance.skillBarSlider.value += maxMoneyGain + minMoneyGain;
+                
+                m_Instance.skillGainTextPooler.ShowText($"+{maxMoneyGain + minMoneyGain}", Color.yellow, m_Instance.m_SkillSliderPosition);
 
                 if (song) m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
             }

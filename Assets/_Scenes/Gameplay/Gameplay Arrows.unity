@@ -1724,26 +1724,6 @@ PrefabInstance:
       propertyPath: parentCanvas
       value: 
       objectReference: {fileID: 8857276459189565685}
-    - target: {fileID: 3826572633390337692, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: spawnPosition
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3826572633390337692, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: spawnPositions.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3826572633390337692, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: spawnPositions.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3826572633390337692, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: spawnPositions.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3826572633390337692, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: spawnPositions.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3826572633401589594, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
       propertyPath: scoreBar
       value: 
@@ -1840,6 +1820,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7507109897699540335, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
+      propertyPath: parentCanvas
+      value: 
+      objectReference: {fileID: 8857276459189565685}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
 --- !u!114 &3826572633390337690 stripped
