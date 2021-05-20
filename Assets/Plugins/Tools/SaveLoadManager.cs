@@ -41,7 +41,7 @@ namespace Plugins.Tools
         /// <param name="folderName"></param>
         /// <returns></returns>
         public static bool SaveFolderExists(string folderName = DEFAULT_FOLDER_NAME) => Directory.Exists(folderName.DetermineSavePath());
-        
+
         /// <summary>
         /// There is a folder for the on the persistent path
         /// </summary>
@@ -280,7 +280,7 @@ namespace Plugins.Tools
             string savePath = Application.dataPath + $"/{folderName}/";
             return LoadJsonsFromFolder<T>(savePath);
         }
-        
+
         /// <summary>
         /// Load the specified file based on a file name into a specified folder
         /// </summary>
@@ -299,6 +299,17 @@ namespace Plugins.Tools
         public static void DeleteSave(string fileName, string folderName = DEFAULT_FOLDER_NAME)
         {
             string filePath = folderName.DetermineSavePath() + fileName;
+            File.Delete(filePath);
+        }
+
+        /// <summary>
+        /// Deletes a save file inside a folder on the persistence path
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="folderName"></param>
+        public static void DeleteSaveInPersistenceFolder(string fileName, string folderName = DEFAULT_FOLDER_NAME)
+        {
+            string filePath = Application.persistentDataPath + $"/{folderName}/{fileName}";
             File.Delete(filePath);
         }
 

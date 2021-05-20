@@ -141,7 +141,7 @@ namespace Core.Arrow_Game
             if (transform.position.y > 0) transform.position = Vector3.zero;
 
             float time = SoundManager.Instance.backgroundAudioSource.time - seconds;
-            SoundManager.Instance.backgroundAudioSource.time = Mathf.Max(0, time);
+            SoundManager.Instance.backgroundAudioSource.time = Mathf.Max(0f, time);
 
             ActivateNoteToRelativePosition();
         }

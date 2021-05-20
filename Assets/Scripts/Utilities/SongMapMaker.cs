@@ -1,4 +1,4 @@
-#define FORCE_JSON
+//#define FORCE_JSON
 
 using System;
 using System.Collections;
@@ -12,6 +12,7 @@ using Plugins.Tools;
 using SimpleFileBrowser;
 #if UNITY_EDITOR && !FORCE_JSON
 using ScriptableObjects;
+using UnityEditor;
 #endif
 using TMPro;
 using UnityEngine;
@@ -151,15 +152,13 @@ namespace Utilities
         private bool m_IsNoteSelected;
         private Vector3 m_ButtonDownPosition;
 
-#if !UNITY_EDITOR || FORCE_JSON
         private const string SONG_FOLDER = "Songs";
-#endif
         private const int DEFAULT_BPM = 120;
 
 #if UNITY_EDITOR && !FORCE_JSON
         [Header("Editor Only")]
-        public string songScriptablesRelativePath;
-        public string audioSongsRelativePath;
+        public string songScriptablesRelativePath; //doesn't end with "/"
+        public string audioSongsRelativePath;      //doesn't end with "/"
 #endif
         private void Awake()
         {
@@ -167,7 +166,6 @@ namespace Utilities
             m_MainCamera = Camera.main;
         }
 
-        //TODO: Fix save songs json and load work, change path for mobile
         /// <summary>
         /// Sets the events for all buttons and input fields
         /// </summary>
@@ -211,10 +209,11 @@ namespace Utilities
         /// <summary>
         /// Removes the preview of the selected item
         /// </summary>
-        private void CleanPreview()
+        public void CleanPreview()
         {
             preview.sprite = null;
             m_SelectedGameObject = null;
+            m_IsNoteSelected = false;
         }
 
         /// <summary>
@@ -260,7 +259,11 @@ namespace Utilities
             if (buttonUp) ShowTouchParticle(mousePosition);
 
             //If not object selected exit
-            if (!m_IsNoteSelected) return;
+            if (!m_IsNoteSelected)
+            {
+                if (buttonUp) CheckNoteAndDestroy(mousePosition, checkNoteCastRange);
+                return;
+            }
 
             if (Input.GetMouseButtonDown(leftClickButton)) m_ButtonDownPosition = mousePosition;
 
@@ -419,7 +422,7 @@ namespace Utilities
         public void LoadMapsData()
         {
 #if UNITY_EDITOR && !FORCE_JSON
-            IEnumerable<SoundMap> songsScriptables = Resources.LoadAll<Song>("Songs").Select(song => song.soundMap);
+            IEnumerable<SoundMap> songsScriptables = Resources.LoadAll<Song>(SONG_FOLDER).Select(song => song.soundMap);
             soundMaps.AddRange(songsScriptables);
 #else
 #if UNITY_ANDROID
@@ -445,12 +448,18 @@ namespace Utilities
             ushort hashName = mapName.GetHashCodeUshort();
             SoundMap soundMap = soundMaps.Find(map => map.ID == hashName);
 
-            //TODO: also delete file scriptable or json in each case
             if (soundMap != null)
             {
                 string audioPath = soundMap.audioPath;
                 if (File.Exists(audioPath)) File.Delete(audioPath);
 
+#if UNITY_EDITOR && !FORCE_JSON
+                AssetDatabase.DeleteAsset(GetSongAssetPath(soundMap.name));
+#elif UNITY_ANDROID && !UNITY_EDITOR
+                if (SaveLoadManager.DeleteSaveInPersistenceFolder($"{soundMap.name}.json", SONG_FOLDER))
+#else
+                SaveLoadManager.DeleteSaveInGameFolder($"{soundMap.name}.json", SONG_FOLDER);
+#endif
                 soundMaps.Remove(soundMap);
 
                 SetState($"{mapName} was deleted successfully!");
@@ -462,6 +471,14 @@ namespace Utilities
                 SetState($"{mapName} was not found!");
             }
         }
+#if UNITY_EDITOR
+        /// <summary>
+        /// Gets the song asset path string by name
+        /// </summary>
+        /// <param name="assetName"></param>
+        /// <returns></returns>
+        private string GetSongAssetPath(string assetName) => $"{songScriptablesRelativePath}/{assetName}.asset";
+#endif
 
         /// <summary>
         /// Checks if the map name is not written on the input and puts an error
@@ -567,7 +584,7 @@ namespace Utilities
                     var song = ScriptableObject.CreateInstance<Song>();
                     song.soundMap = soundMap;
 
-                    UnityEditor.AssetDatabase.CreateAsset(song, $"{songScriptablesRelativePath}/{soundMap.name}.asset");
+                    AssetDatabase.CreateAsset(song, GetSongAssetPath(soundMap.name));
                 });
 #else
 #if UNITY_ANDROID
