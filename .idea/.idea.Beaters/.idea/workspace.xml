@@ -2,18 +2,94 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Creepster.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Creepster/Creepster-Regular SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Creepster/Creepster-Regular SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Creepster/Creepster-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Creepster/Creepster-Regular.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Creepster/OFL.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Creepster/OFL.txt.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Kpop.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Kpop/Itim-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Kpop/Itim-Regular.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Kpop/Kpop Font.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Kpop/Kpop Font.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Kpop/OFL.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Kpop/OFL.txt.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Press_Start_2P.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Press_Start_2P/OFL.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Press_Start_2P/OFL.txt.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Press_Start_2P/PressStart2P-Regular SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Press_Start_2P/PressStart2P-Regular SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Press_Start_2P/PressStart2P-Regular.ttf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/clock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/clock.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/Game UI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/Game UI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/GameOverPanel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/GameOverPanel.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Utilities/Song Maker Canvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/Song Record UI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/Song Record UI.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Gacha/bingo.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Gacha/bingo.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Gacha/bingoGACHA.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Gacha/bingoGACHA.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/BingoScreen/bingoBackground.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/BingoScreen/bingoBackground.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Gamer/Press_Start_2P.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Gamer/Press_Start_2P/OFL.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Gamer/Press_Start_2P/OFL.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Gamer/Press_Start_2P/PressStart2P-Regular SDF.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Gamer/Press_Start_2P/PressStart2P-Regular SDF.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Gamer/Press_Start_2P/PressStart2P-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Gamer/Press_Start_2P/PressStart2P-Regular.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Generic/GachaBannerLogo.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Generic/GachaBannerLogo.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Generic/RuneBannerLogo.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Generic/RuneBannerLogo.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/BackArrow.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/BackArrow.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/ButtonBackgroundKpoper.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/ButtonBackgroundKpoper.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/CoinsLogo.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/CoinsLogo.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/ExitButton.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/ExitButton.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/GachaLogo.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/GachaLogo.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpop.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpop/Itim-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpop/Itim-Regular.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpop/Kpop Font.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpop/Kpop Font.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpop/OFL.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpop/OFL.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/KpopWallpaper.gif.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/KpopWallpaper.gif.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpoper.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Kpoper.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/KpoperSilueta.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/KpoperSilueta.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/LevelBuilderLogo.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/LevelBuilderLogo.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/OptionsMenu.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/OptionsMenu.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/PlayButtonKpoper.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/PlayButtonKpoper.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Seal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Kpoper/Seal.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/LockedSong/unlock.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/LockedSong/unlock.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/ButtonBackgroundMetalhead.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/ButtonBackgroundMetalhead.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/Creepster.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/Creepster/Creepster-Regular SDF.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/Creepster/Creepster-Regular SDF.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/Creepster/Creepster-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/Creepster/Creepster-Regular.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/Creepster/OFL.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/Creepster/OFL.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/Metalhead.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/Metalhead.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/MetalheadBackground.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/MetalheadBackground.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/MetalheadSilueta.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/MetalheadSilueta.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/PlayButtonMetalhead.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Metalhead/PlayButtonMetalhead.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Rapper/Rapper.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Rapper/Rapper.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Rapper/RapperSilueta.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Rapper/RapperSilueta.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/accuracy.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/accuracy.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/cancel.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/cancel.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/notebook.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/notebook.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/score.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Record/score.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Textures/Distortion Effect/Alpha.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Textures/Distortion Effect/Alpha.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Textures/Distortion Effect/Color.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Textures/Distortion Effect/Color.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Textures/Distortion Effect/Normal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Textures/Distortion Effect/Normal.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Textures/Distortion Effect/Normal2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Textures/Distortion Effect/Normal2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Textures/FogTexture.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Textures/FogTexture.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Textures/Platform Effects/Normal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Textures/Platform Effects/Normal.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Textures/Snow Effect/SnowTexture2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Textures/Snow Effect/SnowTexture2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Textures/Trail Effect/Alpha.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Textures/Trail Effect/Alpha.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Textures/Trail Effect/Lights.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Textures/Trail Effect/Lights.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +173,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
@@ -145,9 +220,10 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
