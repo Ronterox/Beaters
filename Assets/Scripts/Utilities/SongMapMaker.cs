@@ -425,7 +425,7 @@ namespace Utilities
             IEnumerable<SoundMap> songsScriptables = Resources.LoadAll<Song>(SONG_FOLDER).Select(song => song.soundMap);
             soundMaps.AddRange(songsScriptables);
 #else
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
             if (!SaveLoadManager.SaveFolderInPersistentDirectoryExists(SONG_FOLDER)) return;
             SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolder<SoundMap>(SONG_FOLDER).ToArray();
 #else
