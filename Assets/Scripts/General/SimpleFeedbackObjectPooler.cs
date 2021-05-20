@@ -13,7 +13,7 @@ namespace General
         [Space]
         public Color defaultColor;
 
-        private Queue<TMP_Text> m_Queue = new Queue<TMP_Text>();
+        private readonly Queue<TMP_Text> m_Queue = new Queue<TMP_Text>();
 
         private void Start()
         {

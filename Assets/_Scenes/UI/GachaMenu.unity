@@ -3510,10 +3510,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfaf44729a4ff85c2acff766500e469d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gachaManager: {fileID: 1589711680}
   bingoCardboard: {fileID: 198028342}
-  characters:
-  - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
-  - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
   panelBingo: {fileID: 198028331}
   bingoBoxes:
   - {fileID: 198028341}

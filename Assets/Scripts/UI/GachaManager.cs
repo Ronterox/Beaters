@@ -93,7 +93,7 @@ namespace UI
             SetBanner();
         }
 
-        private void GetPrizeAndSummon()
+        public void GetPrizeAndSummon()
         {
             GameManager.PutPrize(RandomItem());
             LevelLoadManager.LoadSceneWithTransition(gachaScene, .5f);
