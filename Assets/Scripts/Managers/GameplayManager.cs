@@ -324,7 +324,7 @@ namespace Managers
             const int minimumDamage = 3;
 
             Character character = m_Instance.currentCharacter;
-            if (character.CanTakeDamage) character.TakeDamage(minimumDamage * (int)m_Instance.mapScroller.difficulty);
+            if (!character.IsDead) character.TakeDamage(minimumDamage * (int)m_Instance.mapScroller.difficulty);
         }
 
         /// <summary>

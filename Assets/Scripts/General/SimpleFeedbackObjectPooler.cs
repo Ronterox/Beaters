@@ -10,6 +10,8 @@ namespace General
         [Space]
         public GameObject prefab;
         public int size;
+        [Space]
+        public Color defaultColor;
 
         private Queue<TMP_Text> m_Queue = new Queue<TMP_Text>();
 
@@ -18,8 +20,12 @@ namespace General
             for (var i = 0; i < size; i++)
             {
                 var text = Instantiate(prefab).GetComponent<TMP_Text>();
-                text.gameObject.transform.SetParent(parentCanvas);
+                
+                text.transform.SetParent(parentCanvas);
                 text.gameObject.SetActive(false);
+                
+                text.color = defaultColor;
+                
                 m_Queue.Enqueue(text);
             }
         }
