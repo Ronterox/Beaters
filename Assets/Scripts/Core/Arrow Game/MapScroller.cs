@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
 using Plugins.Tools;
+using TMPro;
 using UnityEngine;
 using Utilities;
 using SoundManager = Plugins.Audio.SoundManager;
@@ -50,9 +51,8 @@ namespace Core.Arrow_Game
         [Space]
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
-
-        [Header("Song State Feedback")]
-        public TimerUI startTimer;
+        [Space]
+        public TMP_Text timerText;
 
         public bool IsStarted { get; private set; }
         private float m_bps;
@@ -77,13 +77,6 @@ namespace Core.Arrow_Game
             }
 
             ResetPos();
-
-            startTimer.onTimerStop += () =>
-            {
-                startTimer.timerText.text = "Go!";
-                Action deactivate = () => startTimer.gameObject.SetActive(false);
-                deactivate.DelayAction(1f);
-            };
         }
 
         public void StartMap()
@@ -96,12 +89,16 @@ namespace Core.Arrow_Game
             CameraManager.Instance.CanDoPanning = false;
 
             //Start Timer Setting
-            startTimer.timerText.text = "Ready?";
-            startTimer.gameObject.SetActive(true);
+            timerText.text = "Ready?";
+            timerText.gameObject.SetActive(true);
 
             Action activateTimer = () =>
             {
-                startTimer.StartTimer(2);
+                timerText.text = "Go!";
+                
+                Action deactivate = () => timerText.gameObject.SetActive(false);
+                deactivate.DelayAction(.5f);
+                
                 SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, false);
             };
 

@@ -943,7 +943,6 @@ GameObject:
   - component: {fileID: 8857276459698927742}
   - component: {fileID: 8857276459698927741}
   - component: {fileID: 8857276459698927740}
-  - component: {fileID: 8857276459698927743}
   m_Layer: 5
   m_Name: Start Timer
   m_TagString: Untagged
@@ -1067,24 +1066,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8857276459698927743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8857276459698927737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c024ad85576cbf0d90735c705052e52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  timerTime: 4
-  resetOnEnd: 0
-  startTime: 1
-  timerText: {fileID: 8857276459698927740}
-  showType: 2
 --- !u!1 &8857276459758345754
 GameObject:
   m_ObjectHideFlags: 0

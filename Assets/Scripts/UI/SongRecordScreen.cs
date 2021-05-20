@@ -40,7 +40,7 @@ namespace UI
 
             SerializableSong serializableSong = DataManager.GetSong(song.ID);
             
-            ShowRecordScreen(song.songImage, serializableSong.highestScore, "SSS", serializableSong.highestCombo, serializableSong.accuracy);
+            ShowRecordScreen(GameManager.GetCharacter().sprites[0], serializableSong.highestScore, "SSS", serializableSong.highestCombo, serializableSong.accuracy);
             
             m_Song = song;
 

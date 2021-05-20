@@ -23,7 +23,7 @@ namespace Managers
         public Character currentCharacter;
         public SimpleFeedbackObjectPooler feedbackTextPooler;
         [Space]
-        public Canvas gameCanvas;
+        public Transform gameCanvas;
         public GameObject endGamePanel;
         [Space]
         public Button pauseButton;
@@ -259,7 +259,7 @@ namespace Managers
         /// Shows the end gameplay panel
         /// </summary>
         /// <param name="parentCanvas"></param>
-        private void ShowEndGameplayPanel(Canvas parentCanvas)
+        private void ShowEndGameplayPanel(Transform parentCanvas)
         {
             CheckHighestCombo();
 
@@ -280,21 +280,21 @@ namespace Managers
 
             int oldHighScore = songData.highestScore;
 
-            var gameOverPanel = Instantiate(endGamePanel, parentCanvas.transform).GetComponent<GameOverPanel>();
+            var gameOverPanel = Instantiate(endGamePanel, parentCanvas).GetComponent<GameOverPanel>();
             //Set end panel values
             gameOverPanel.SetSongName(soundMap.name);
             gameOverPanel.SetCharacterVisuals(character);
             gameOverPanel.SetCharacterBonus(character.characterGenre, soundMap.genre);
 
-            gameOverPanel.SetScore(m_Score);
+            gameOverPanel.SetScore(songData.highestScore, m_Score);
             gameOverPanel.SetStars(m_StarsCount, character);
             gameOverPanel.SetAccuracy(soundMap.notes.Length, m_NotesHit, accuracy);
 
             gameOverPanel.SetMapMaker(soundMap.mapCreator);
             gameOverPanel.SetGroupName(soundMap.genre);
+            
             gameOverPanel.SetHighestCombo(m_HighestCombo);
-
-            gameOverPanel.SetNewHighScoreText(songData.highestScore, m_Score);
+            gameOverPanel.SetRewardsText(comboGain, accuracyGain);
 
             gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
 

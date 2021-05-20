@@ -1693,13 +1693,17 @@ PrefabInstance:
       value: Map Scroller
       objectReference: {fileID: 0}
     - target: {fileID: 4292082070910409577, guid: 815f55bf984500030af38a3a30fae8cf, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 6744775958206347497}
+    - target: {fileID: 4292082070910409577, guid: 815f55bf984500030af38a3a30fae8cf, type: 3}
       propertyPath: isGameplay
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4292082070910409577, guid: 815f55bf984500030af38a3a30fae8cf, type: 3}
       propertyPath: startTimer
       value: 
-      objectReference: {fileID: 6744775958206347497}
+      objectReference: {fileID: 0}
     - target: {fileID: 4292082070910409577, guid: 815f55bf984500030af38a3a30fae8cf, type: 3}
       propertyPath: generateCombos
       value: 0
@@ -2363,13 +2367,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &6744775958206347497 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3676943248579019386, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2470404616009769629, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
   m_PrefabInstance: {fileID: 6744775958206347489}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c024ad85576cbf0d90735c705052e52, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6757369716854004315
