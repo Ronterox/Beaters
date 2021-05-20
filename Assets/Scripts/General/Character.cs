@@ -24,7 +24,8 @@ namespace General
         [Header("Feedback")]
         public TMP_Text hpText;
         public Transform feedbackTextPositionTransform;
-        [Space]
+        [Header("Animations")]
+        public RectTransform objectiveTransformPosition;
         public SimpleFeedbackObjectPooler feedbackPooler;
 
         private bool m_IsDead;
@@ -71,6 +72,8 @@ namespace General
             feedbackPooler.ShowText($"-{damage}", feedbackTextPositionTransform.position);
             UpdateText();
         }
+
+        public void MoveToPosition(float duration) => transform.DOMove(objectiveTransformPosition.position, duration);
 
         private void UpdateText()
         {

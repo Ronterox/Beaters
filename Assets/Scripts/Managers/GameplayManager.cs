@@ -94,8 +94,6 @@ namespace Managers
 
             ScriptableRune rune = GameManager.GetRune();
             if (rune) rune.ActivateRune(this);
-
-            StartMap();
         }
 
         /// <summary>
@@ -366,7 +364,7 @@ namespace Managers
             m_Instance.m_NotesHit++;
             m_Instance.skillBarSlider.value++;
             
-            m_Instance.skillGainTextPooler.ShowText($"+1", Color.yellow, m_Instance.m_SkillSliderPosition);
+            m_Instance.skillGainTextPooler.ShowText($"+1", m_Instance.m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
             int points = Mathf.RoundToInt((int)hitType * ++m_Instance.m_Combo * m_Instance.Multiplier);
@@ -394,7 +392,7 @@ namespace Managers
 
                 m_Instance.skillBarSlider.value += maxMoneyGain + minMoneyGain;
                 
-                m_Instance.skillGainTextPooler.ShowText($"+{maxMoneyGain + minMoneyGain}", Color.yellow, m_Instance.m_SkillSliderPosition);
+                m_Instance.skillGainTextPooler.ShowText($"+{maxMoneyGain + minMoneyGain}", m_Instance.m_SkillSliderPosition);
 
                 if (song) m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
             }

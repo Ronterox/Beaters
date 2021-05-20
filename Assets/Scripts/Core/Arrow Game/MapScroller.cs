@@ -53,6 +53,8 @@ namespace Core.Arrow_Game
         private float m_AnimationDuration;
         [Space]
         public TMP_Text timerText;
+        [Space]
+        public Animator characterAnimator;
 
         public bool IsStarted { get; private set; }
         private float m_bps;
@@ -104,6 +106,8 @@ namespace Core.Arrow_Game
 
             activateTimer.DelayAction(1f);
             //__________________
+
+            if (characterAnimator) characterAnimator.speed = m_bps * .5f;
 
             print("Started Map!");
         }
