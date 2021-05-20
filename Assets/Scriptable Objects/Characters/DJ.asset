@@ -18,8 +18,8 @@ MonoBehaviour:
   characterGenre: 2
   hp: 90
   multiplier: 1
-  activeSkill: {fileID: 0}
-  passiveSkill: {fileID: 0}
+  activeSkill: {fileID: 11400000, guid: 95934fab14f25df45b703b8448937439, type: 2}
+  passiveSkill: {fileID: 11400000, guid: 9bf78432721402746b3f7b6da747ebbf, type: 2}
   backgroundImage: {fileID: 21300000, guid: 97e466a00bf25c518bdbc0713c184cf5, type: 3}
   colorPalette:
     mainColor: {r: 0, g: 0, b: 0, a: 0.57254905}
@@ -27,7 +27,7 @@ MonoBehaviour:
     complementaryColor1: {r: 0, g: 0.7924528, b: 0.14836839, a: 1}
     complementaryColor2: {r: 0.045907274, g: 0, b: 0.8018868, a: 0}
   sprites:
-  - {fileID: 21300000, guid: 6f648409c0a29f19a8a323d46d4bd72c, type: 3}
+  - {fileID: 21300000, guid: caf141c83ff012aba832265ac5cdefea, type: 3}
   - {fileID: 21300000, guid: bf1eb0087be170edeb418a8530b11535, type: 3}
   - {fileID: 21300000, guid: bac2a8c8b296e9a62ad8b82737909d9a, type: 3}
   - {fileID: 21300000, guid: 7978be4701f65adeb9d0963c4961a92a, type: 3}

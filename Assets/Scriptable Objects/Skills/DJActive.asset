@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7a70b254007ae41b034159925d59a0, type: 3}
   m_Name: DJActive
   m_EditorClassIdentifier: 
-  effectDescription: 
-  rechargeQuantity: 0
+  effectDescription: Slowdown the song for X secs (DJ Scratch animation)
+  rechargeQuantity: 50
   skillImage: {fileID: 0}

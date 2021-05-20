@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Gamer
   m_EditorClassIdentifier: 
   characterName: Gamer
-  description: Just wanna rock all day everyday, loves guitar solos with sick licks
-    at atleast 200bpm
+  description: "Hasn\u2019t experienced the feeling of talking to a woman yet. He
+    got burnt when trying to leave his house once. Hasn\u2019t left it since then."
   characterGenre: 3
   hp: 100
   multiplier: 1
-  activeSkill: {fileID: 0}
-  passiveSkill: {fileID: 0}
+  activeSkill: {fileID: 11400000, guid: 78b8ae4e4ef6ffa4e9dd7cc47eec6991, type: 2}
+  passiveSkill: {fileID: 11400000, guid: 556d314ff6e5fa349bb7f7c89b45ae8b, type: 2}
   backgroundImage: {fileID: 21300000, guid: 1dd88d82be612d921a9c0748a216bc5a, type: 3}
   colorPalette:
     mainColor: {r: 0, g: 0, b: 0, a: 0.57254905}
@@ -27,7 +27,7 @@ MonoBehaviour:
     complementaryColor1: {r: 0, g: 0.7924528, b: 0.14836839, a: 1}
     complementaryColor2: {r: 0.045907274, g: 0, b: 0.8018868, a: 0}
   sprites:
-  - {fileID: 21300000, guid: 6f648409c0a29f19a8a323d46d4bd72c, type: 3}
+  - {fileID: 21300000, guid: 0823f67eb3cf86c158741a248f99d047, type: 3}
   - {fileID: 21300000, guid: bf1eb0087be170edeb418a8530b11535, type: 3}
   - {fileID: 21300000, guid: bac2a8c8b296e9a62ad8b82737909d9a, type: 3}
   - {fileID: 21300000, guid: 7978be4701f65adeb9d0963c4961a92a, type: 3}

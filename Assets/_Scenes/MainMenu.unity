@@ -149,6 +149,9 @@ MonoBehaviour:
   characters:
   - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
   - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
+  - {fileID: 11400000, guid: 5cbe8683692276c249979e238ee08ec2, type: 2}
+  - {fileID: 11400000, guid: e6e5f3de18bf2e692963af0f92b02d45, type: 2}
+  - {fileID: 11400000, guid: ff154e146b0e8f61191380744698d584, type: 2}
   backgroundImage: {fileID: 423129603}
   playButtons:
   - {fileID: 1376621055}

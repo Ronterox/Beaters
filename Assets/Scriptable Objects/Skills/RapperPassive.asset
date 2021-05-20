@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7a70b254007ae41b034159925d59a0, type: 3}
   m_Name: RapperPassive
   m_EditorClassIdentifier: 
-  effectDescription: 
+  effectDescription: Yellow notes heal x% (max 3%)
   rechargeQuantity: 0
   skillImage: {fileID: 0}
