@@ -882,13 +882,14 @@ MonoBehaviour:
   characters:
   - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
   - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
-  playButton: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  playButtons: []
   gachaLogo: {fileID: 0}
   mapCreator: {fileID: 0}
   exitGame: {fileID: 0}
-  backgroundImage: {fileID: 0}
   textsOfTheUI:
   - {fileID: 268259196}
+  buttonsToChange: []
 --- !u!114 &1248208840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,7 +947,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
