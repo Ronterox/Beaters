@@ -5,6 +5,7 @@ using Plugins.Tools;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI
 {
@@ -43,7 +44,10 @@ namespace UI
         public TMP_Text moneyText;
         [Space]
         public Button bannerButton;
-        public Transform ticketButton, moneyButton;
+        public HoldableButton ticketButton, moneyButton;
+        [Header("Feedback")]
+        public PopUp moneyPopUp;
+        public PopUp ticketPopUp;
 
         private PlayerData m_Data;
         private float m_Total, m_RandomNumber;
@@ -67,6 +71,12 @@ namespace UI
             ticketText.text = GetRequiredItemString(ticketName, m_Data.tickets, requiredTickets);
             moneyText.text = GetRequiredItemString(coinName, m_Data.money, requiredCoins);
 
+            ticketButton.onButtonDown += ticketPopUp.Show;
+            ticketButton.onButtonUp += ticketPopUp.Hide;
+            
+            moneyButton.onButtonDown += moneyPopUp.Show;
+            moneyButton.onButtonUp += moneyPopUp.Hide;
+
             bannerButton.onClick.AddListener(() =>
             {
                 const float animationDuration = .8f, animationStrength = .5f;
@@ -77,7 +87,7 @@ namespace UI
                     if (!m_AnimatingCoins)
                     {
                         m_AnimatingCoins = true;
-                        ticketButton.DOShakeScale(animationDuration, animationStrength, animationVibrato).OnComplete(() => m_AnimatingCoins = false);
+                        ticketButton.transform.DOShakeScale(animationDuration, animationStrength, animationVibrato).OnComplete(() => m_AnimatingCoins = false);
                     }
                 }
                 else
@@ -92,7 +102,7 @@ namespace UI
                     if (!m_AnimatingTickets)
                     {
                         m_AnimatingTickets = true;
-                        moneyButton.DOShakeScale(animationDuration, animationStrength, animationVibrato).OnComplete(() => m_AnimatingTickets = false);
+                        moneyButton.transform.DOShakeScale(animationDuration, animationStrength, animationVibrato).OnComplete(() => m_AnimatingTickets = false);
                     }
                 }
                 else

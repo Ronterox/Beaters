@@ -456,7 +456,7 @@ namespace Utilities
 #if UNITY_EDITOR && !FORCE_JSON
                 AssetDatabase.DeleteAsset(GetSongAssetPath(soundMap.name));
 #elif UNITY_ANDROID && !UNITY_EDITOR
-                if (SaveLoadManager.DeleteSaveInPersistenceFolder($"{soundMap.name}.json", SONG_FOLDER))
+                SaveLoadManager.DeleteSaveInPersistenceFolder($"{soundMap.name}.json", SONG_FOLDER);
 #else
                 SaveLoadManager.DeleteSaveInGameFolder($"{soundMap.name}.json", SONG_FOLDER);
 #endif
