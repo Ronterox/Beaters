@@ -94,6 +94,8 @@ namespace Managers
 
             ScriptableRune rune = GameManager.GetRune();
             if (rune) rune.ActivateRune(this);
+
+            CanMiss = false;
         }
 
         /// <summary>
@@ -194,7 +196,7 @@ namespace Managers
         public void StartMap()
         {
             m_Ended = false;
-            m_Started = true;
+            m_Started = CanMiss = true;
 
             SoundMap soundMap = GameManager.GetSoundMap();
 
