@@ -11,11 +11,6 @@ namespace Core.Arrow_Game
     {
         public Camera mainCamera;
 
-        [Header("Animations")]
-        public float animationDuration;
-        public Vector3 targetScale;
-        private Vector3 m_DefaultScale;
-
         [Plugins.Properties.ReadOnly]
         public bool isNoteAbove;
 
@@ -37,13 +32,7 @@ namespace Core.Arrow_Game
             buttonHeight = transform.position.y;
         }
 
-        private void Start()
-        {
-            m_DefaultScale = transform.localScale;
-            SetAnimation();
-        }
-
-        private void SetAnimation() => m_ClickAnimation = transform.DOScale(targetScale, animationDuration).OnComplete(() => transform.DOScale(m_DefaultScale, animationDuration)).SetAutoKill(false);
+        private void Start() => m_ClickAnimation = transform.DOShakeScale(.5f, .5f,10,0).SetAutoKill(false);
 
         public void PressButton()
         {
