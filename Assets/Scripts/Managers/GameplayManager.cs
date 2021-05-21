@@ -143,27 +143,48 @@ namespace Managers
             });
         }
 
+        /// <summary>
+        /// Loses the game and calls everything related
+        /// </summary>
         private void Lose() =>
-            StartCoroutine(StopTimeCoroutine(5f, () =>
+            SlowTime(2f, 0f, () =>
             {
                 mapScroller.StopMap();
                 ShowEndGameplayPanel(gameCanvas);
-            }));
+                SoundManager.Instance.backgroundAudioSource.Stop();
+            });
 
-        private IEnumerator StopTimeCoroutine(float duration, Action afterStoppingTime)
+        /// <summary>
+        /// Slows the game time
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="objective"></param>
+        /// <param name="afterSlowingTime"></param>
+        public void SlowTime(float duration, float objective, Action afterSlowingTime = null) => StartCoroutine(SlowTimeCoroutine(duration, objective, afterSlowingTime));
+
+        /// <summary>
+        /// Slow time coroutine
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="objective"></param>
+        /// <param name="afterSlowingTime"></param>
+        /// <returns></returns>
+        public static IEnumerator SlowTimeCoroutine(float duration, float objective, Action afterSlowingTime)
         {
             AudioSource sound = SoundManager.Instance.backgroundAudioSource;
-
-            while (!Time.timeScale.Approximates(0))
+            
+            var currentTime = 0f;
+            float startValue = Time.timeScale;
+            while (duration > currentTime)
             {
-                sound.pitch = Time.timeScale -= Time.deltaTime * duration;
+                sound.pitch = Time.timeScale = Mathf.Lerp(startValue, objective, currentTime / duration);
+                currentTime += Time.unscaledDeltaTime;
                 yield return null;
             }
 
             sound.pitch = Time.timeScale = 1f;
-            sound.Stop();
 
-            afterStoppingTime?.Invoke();
+            afterSlowingTime?.Invoke();
         }
 
         /// <summary>
@@ -337,10 +358,10 @@ namespace Managers
             }
 
             if (m_Instance.FreeTapsCount > ++m_Instance.m_MissedTaps) return;
-            
+
             Character character = m_Instance.currentCharacter;
 
-            if (m_Instance.CanLose && !character.IsDead) character.TakeDamage(m_Instance.MinimumDamage * (int)m_Instance.mapScroller.difficulty);
+            if (m_Instance.CanLose && !character.IsDead) character.TakeDamage(m_Instance.MinimumDamage);
         }
 
         /// <summary>

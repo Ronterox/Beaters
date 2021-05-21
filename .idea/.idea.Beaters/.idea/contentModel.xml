@@ -185,6 +185,7 @@
               <e p="MinimumComboSkill.cs" t="Include" />
               <e p="MoneySkill.cs" t="Include" />
               <e p="MultiplierSkill.cs" t="Include" />
+              <e p="SlowTimeSkill.cs" t="Include" />
             </e>
             <e p="Song.cs" t="Include" />
           </e>
