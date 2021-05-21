@@ -23,7 +23,7 @@ namespace Gacha
             int userBoxes = DataManager.Instance.playerData.bingoBoxes;
 
             redeemReward.onClick.AddListener(TaskOnClick);
-            redeemReward.interactable = userBoxes < bingoBoxes.Length;
+            redeemReward.interactable = userBoxes >= bingoBoxes.Length;
 
             for (var i = 0; i < userBoxes; i++) bingoBoxes[i].SetActive(true);
 
