@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +133,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleFeedbackObjectPooler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/Editor/SelectableButtonEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" />
@@ -141,6 +141,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/LockedSongScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -223,7 +224,7 @@
       <workItem from="1621346620574" duration="12132000" />
       <workItem from="1621424914117" duration="11285000" />
       <workItem from="1621511924624" duration="4972000" />
-      <workItem from="1621600202166" duration="8762000" />
+      <workItem from="1621600202166" duration="9438000" />
     </task>
     <servers />
   </component>

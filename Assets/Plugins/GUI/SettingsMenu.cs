@@ -19,13 +19,12 @@ namespace Plugins.GUI
     public class SettingsMenu : MonoBehaviour
     {
         public Settings settings;
+        private Resolution[] m_Resolutions;
         
-        private Resolution[] resolutions;
-
         public Slider generalVolume, sfxVolume, musicVolume;
 
+        [Space]
         public Toggle fullscreenToggle;
-
         public TMP_Dropdown resolutionDropdown;
 
         private const string SAVED_FILENAME = "settings.cfg";
@@ -36,12 +35,12 @@ namespace Plugins.GUI
         /// </summary>
         private void SetSystemResolutions()
         {
-            resolutions = Screen.resolutions;
+            m_Resolutions = Screen.resolutions;
 
             var resolutionsList = new List<string>();
             var resolutionIndex = 0;
 
-            foreach (Resolution resolution in resolutions)
+            foreach (Resolution resolution in m_Resolutions)
             {
                 resolutionsList.Add(resolution.width + " x " + resolution.height);
                 if (resolution.Equals(Screen.currentResolution)) resolutionIndex = resolutionsList.Count - 1;
@@ -70,12 +69,12 @@ namespace Plugins.GUI
         public void SetSFXVolume(float volume) => SoundManager.Instance.SetSFXVolume(settings.sfxVolume = volume);
 
         /// <summary>
-        /// Sets the resolution available at the specific position on the array of resolutions
+        /// Sets the resolution available at the specific position on the array of m_Resolutions
         /// </summary>
         /// <param name="resolutionIndex"></param>
         public void SetResolution(int resolutionIndex)
         {
-            Resolution currentResolution = resolutions[resolutionIndex];
+            Resolution currentResolution = m_Resolutions[resolutionIndex];
             settings.resolution = resolutionIndex;
             Screen.SetResolution(currentResolution.width, currentResolution.height, Screen.fullScreen);
         }

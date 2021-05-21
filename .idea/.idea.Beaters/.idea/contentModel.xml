@@ -177,7 +177,11 @@
             <e p="ScriptableRune.cs" t="Include" />
             <e p="ScriptableSkill.cs" t="Include" />
             <e p="Skills" t="Include">
+              <e p="ExtraScoreSkill.cs" t="Include" />
+              <e p="HealSkill.cs" t="Include" />
               <e p="InmunitySkill.cs" t="Include" />
+              <e p="LessDamageSkill.cs" t="Include" />
+              <e p="MoneySkill.cs" t="Include" />
               <e p="MultiplierSkill.cs" t="Include" />
             </e>
             <e p="Song.cs" t="Include" />
@@ -210,6 +214,20 @@
           <e p="Distortion Shader.shader" t="Include" />
           <e p="TrailShader.shader" t="Include" />
           <e p="TrailShader2.shader" t="Include" />
+        </e>
+        <e p="Sprites" t="Include">
+          <e p="Interface" t="Include">
+            <e p="DJ" t="Include">
+              <e p="DJ" t="Include">
+                <e p="OFL.txt" t="Include" />
+              </e>
+            </e>
+            <e p="Rapper" t="Include">
+              <e p="Rapper" t="Include">
+                <e p="OFL.txt" t="Include" />
+              </e>
+            </e>
+          </e>
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">

@@ -50,7 +50,6 @@ namespace Managers
         private int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
 
         private PlayerData m_Data;
-        private GameManager m_GameManager;
 
         private float m_StartTime;
         private Vector3 m_SkillSliderPosition;
@@ -69,9 +68,9 @@ namespace Managers
         
         public float moneyMultiplier = .25f;
         public int minimumDamage = 9;
-        public bool everyNoteGivesMoney = false;
+        public bool everyNoteGivesMoney;
         
-        public bool comboTimeHeal = false;
+        public bool comboTimeHeal;
         public float healingValue;
 
         //------------------------
@@ -88,7 +87,6 @@ namespace Managers
         private void Start()
         {
             m_Data = DataManager.Instance.playerData;
-            m_GameManager = GameManager.Instance;
 
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
@@ -331,7 +329,7 @@ namespace Managers
             m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
 
             Character character = m_Instance.currentCharacter;
-            if (!character.IsDead) character.TakeDamage(minimumDamage * (int)m_Instance.mapScroller.difficulty);
+            if (!character.IsDead) character.TakeDamage(m_Instance.minimumDamage * (int)m_Instance.mapScroller.difficulty);
         }
 
         /// <summary>
@@ -390,12 +388,12 @@ namespace Managers
                 m_Instance.starsCounter.text = $"{++m_Instance.m_StarsCount}";
             }
 
-            if(everyNoteGivesMoney) GiveMoney();
+            if(m_Instance.everyNoteGivesMoney) GiveMoney();
 
             //Check if is combo or if is in middle of a combo and give prize
             if (isCombo && ++m_Instance.m_ComboPrizeCounter >= comboLength)
             {
-                if(comboTimeHeal) currentCharacter.Heal(healingValue);
+                if(m_Instance.comboTimeHeal) m_Instance.currentCharacter.Heal(m_Instance.healingValue);
                 //TODO: Responsive money gain, damage done and skill gain
                 const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
@@ -412,7 +410,7 @@ namespace Managers
             m_Instance.feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
         }
 
-      private static GiveMoney()
+      private static void GiveMoney()
       {
           const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
         
