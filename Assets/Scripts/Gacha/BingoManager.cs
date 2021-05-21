@@ -22,10 +22,10 @@ namespace Gacha
         {
             int userBoxes = DataManager.Instance.playerData.bingoBoxes;
 
+            for (var i = 0; i < userBoxes; i++) bingoBoxes[i].SetActive(true);
+
             redeemReward.onClick.AddListener(TaskOnClick);
             redeemReward.interactable = userBoxes >= bingoBoxes.Length;
-
-            for (var i = 0; i < userBoxes; i++) bingoBoxes[i].SetActive(true);
 
             if (GameManager.GetValue() is int value && value == OPEN_BINGO_GACHA)
             {
@@ -35,7 +35,8 @@ namespace Gacha
                 if (!redeemReward.interactable)
                 {
                     int box = DataManager.Instance.playerData.bingoBoxes++;
-                    if (box < bingoBoxes.Length) bingoBoxes[box].SetActive(true);   
+                    if (box < bingoBoxes.Length) bingoBoxes[box].SetActive(true);
+                    else redeemReward.interactable = true;
                 }
             }
 
