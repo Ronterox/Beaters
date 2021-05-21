@@ -6,7 +6,7 @@ namespace ScriptableObjects.Skills
     [CreateAssetMenu(fileName = "New Skill", menuName = "Skills/Extra Score Skill")]
     public class ExtraScoreSkill : ScriptableSkill
     {
-        [Range(0.1f, 1f)]
+        [Range(0f, 1f)]
         public float scoreMultiplierValue;
 
         public override void UseSkill(GameplayManager manager)

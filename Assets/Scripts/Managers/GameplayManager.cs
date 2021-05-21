@@ -58,23 +58,25 @@ namespace Managers
 
         //POWERS RELATED VARIABLES
         public bool CanMiss { get; set; } = true;
-
-        private float m_Multiplier = 1f;
-
-        public float DurationIncrement { get; set; }
         public float Multiplier
         {
             get => m_Multiplier;
             set => m_Multiplier = value < 1f ? 1f : value;
         }
+        private float m_Multiplier = 1f;
+        public float DurationIncrement { get; set; }
 
         public float MoneyMultiplier { get; set; } = .25f;
         public int MinimumDamage { get; set; } = 9;
         public bool EveryNoteGivesMoney { get; set; }
         public bool ComboTimeHeal { get; set; }
         public float HealingValueComboTime { get; set; }
-
         public int MinimumCombo { get; set; }
+
+        public int FreeTapsCount { get; set; }
+
+        private int m_MissedTaps;
+
         //------------------------
 
         protected override void Awake()
@@ -82,6 +84,8 @@ namespace Managers
             base.Awake();
             m_StartTime = Time.realtimeSinceStartup;
         }
+
+        public void SetFreeTaps(int taps) => FreeTapsCount = m_MissedTaps + taps;
 
         /// <summary>
         /// Sets the gameplay values
@@ -332,6 +336,8 @@ namespace Managers
                 m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
             }
 
+            if (m_Instance.FreeTapsCount > ++m_Instance.m_MissedTaps) return;
+            
             Character character = m_Instance.currentCharacter;
 
             if (m_Instance.CanLose && !character.IsDead) character.TakeDamage(m_Instance.MinimumDamage * (int)m_Instance.mapScroller.difficulty);

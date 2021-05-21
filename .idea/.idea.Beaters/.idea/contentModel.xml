@@ -178,6 +178,7 @@
             <e p="ScriptableSkill.cs" t="Include" />
             <e p="Skills" t="Include">
               <e p="ExtraScoreSkill.cs" t="Include" />
+              <e p="FreeTapSkill.cs" t="Include" />
               <e p="HealSkill.cs" t="Include" />
               <e p="InmunitySkill.cs" t="Include" />
               <e p="LessDamageSkill.cs" t="Include" />
