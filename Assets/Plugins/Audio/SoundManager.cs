@@ -104,6 +104,8 @@ namespace Plugins.Audio
         public float VoiceVolume => GetVolume(VOICE_VOLUME_PARAM);
         public float SFXVolume => GetVolume(SFX_VOLUME_PARAM);
 
+        public bool IsPlaying => backgroundAudioSource.isPlaying;
+
         /// Support variables
         public AudioSource backgroundAudioSource;
         private SoundPooler m_SoundsPool;
@@ -232,6 +234,8 @@ namespace Plugins.Audio
         {
             StopBackgroundMusic();
 
+            backgroundAudioSource.loop = loop;
+
             if (backgroundAudioSource.clip == clip)
             {
                 backgroundAudioSource.Play();
@@ -239,9 +243,7 @@ namespace Plugins.Audio
             }
 
             backgroundAudioSource.clip = clip;
-            backgroundAudioSource.loop = loop;
-
-            backgroundAudioSource.Play();;
+            backgroundAudioSource.Play();
         }
 
         /// <summary>

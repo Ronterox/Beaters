@@ -1,9 +1,11 @@
+using DG.Tweening;
 using Managers;
 using Plugins.Properties;
 using Plugins.Tools;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI
 {
@@ -41,12 +43,17 @@ namespace UI
         public TMP_Text ticketText;
         public TMP_Text moneyText;
         [Space]
-        public Button ticketButton;
-        public Button moneyButton;
+        public Button bannerButton;
+        public HoldableButton ticketButton, moneyButton;
+        [Header("Feedback")]
+        public PopUp moneyPopUp;
+        public PopUp ticketPopUp;
 
         private PlayerData m_Data;
         private float m_Total, m_RandomNumber;
         private int m_BannerIndex;
+
+        private bool m_AnimatingCoins, m_AnimatingTickets;
 
         private void Start()
         {
@@ -55,7 +62,7 @@ namespace UI
                 GetPrizeAndSummon();
                 return;
             }
-            
+
             m_Data = DataManager.Instance.playerData;
 
             const int requiredTickets = 1, requiredCoins = 100;
@@ -64,33 +71,54 @@ namespace UI
             ticketText.text = GetRequiredItemString(ticketName, m_Data.tickets, requiredTickets);
             moneyText.text = GetRequiredItemString(coinName, m_Data.money, requiredCoins);
 
-            ticketButton.onClick.AddListener(() =>
-            {
-                if (m_Data.tickets < requiredTickets)
-                {
-                    Debug.Log("Not enough tickets!".ToColorString("red"));
-                    return;
-                }
-                m_Data.tickets -= requiredTickets;
-                GetPrizeAndSummon();
-            });
+            ticketButton.onButtonDown += ticketPopUp.Show;
+            ticketButton.onButtonUp += ticketPopUp.Hide;
+            
+            moneyButton.onButtonDown += moneyPopUp.Show;
+            moneyButton.onButtonUp += moneyPopUp.Hide;
 
-            moneyButton.onClick.AddListener(() =>
+            bannerButton.onClick.AddListener(() =>
             {
+                const float animationDuration = .8f, animationStrength = .5f;
+                const int animationVibrato = 7;
+                
                 if (m_Data.money < requiredCoins)
                 {
-                    Debug.Log("Not enough money!".ToColorString("red"));
+                    if (!m_AnimatingCoins)
+                    {
+                        m_AnimatingCoins = true;
+                        ticketButton.transform.DOShakeScale(animationDuration, animationStrength, animationVibrato).OnComplete(() => m_AnimatingCoins = false);
+                    }
+                }
+                else
+                {
+                    m_Data.money -= requiredCoins;
+                    GetPrizeAndSummon();
                     return;
                 }
-                m_Data.money -= requiredCoins;
-                GetPrizeAndSummon();
+
+                if (m_Data.tickets < requiredTickets)
+                {
+                    if (!m_AnimatingTickets)
+                    {
+                        m_AnimatingTickets = true;
+                        moneyButton.transform.DOShakeScale(animationDuration, animationStrength, animationVibrato).OnComplete(() => m_AnimatingTickets = false);
+                    }
+                }
+                else
+                {
+                    m_Data.tickets -= requiredTickets;
+                    GetPrizeAndSummon();
+                }
             });
 
             SetBanner();
         }
 
-        private void GetPrizeAndSummon()
+        public void GetPrizeAndSummon()
         {
+            bannerButton.interactable = false;
+            
             GameManager.PutPrize(RandomItem());
             LevelLoadManager.LoadSceneWithTransition(gachaScene, .5f);
         }

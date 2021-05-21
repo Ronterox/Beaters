@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3826572633401589597}
   - component: {fileID: 3826572633401589594}
   - component: {fileID: 6925172793618570845}
+  - component: {fileID: 3826572633390337692}
+  - component: {fileID: 7507109897699540335}
   m_Layer: 0
   m_Name: Gameplay Manager
   m_TagString: Untagged
@@ -45,14 +47,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapScroller: {fileID: 0}
+  currentCharacter: {fileID: 0}
+  feedbackTextPooler: {fileID: 3826572633390337692}
+  skillGainTextPooler: {fileID: 7507109897699540335}
   gameCanvas: {fileID: 0}
   endGamePanel: {fileID: 4994941090046625560, guid: e7b70cb13ff7cc2118996196e5c8ca2a, type: 3}
   pauseButton: {fileID: 0}
+  pauseMenu: {fileID: 0}
   songTimeBar: {fileID: 0}
   starsCounter: {fileID: 0}
+  scoreBar: {fileID: 0}
   comboText: {fileID: 0}
   scoreText: {fileID: 0}
-  scoreBar: {fileID: 0}
   skillButton: {fileID: 0}
   skillBarSlider: {fileID: 0}
   songTimer: {fileID: 6925172793618570845}
@@ -72,3 +78,33 @@ MonoBehaviour:
   timerTime: 4
   resetOnEnd: 0
   startTime: 1
+--- !u!114 &3826572633390337692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826572633401589595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22a7501ac859fe6981a231c673a55a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCanvas: {fileID: 0}
+  prefab: {fileID: 5699414670821785157, guid: 697f6a57536aa95f7b3b858b6b630436, type: 3}
+  size: 3
+--- !u!114 &7507109897699540335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826572633401589595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22a7501ac859fe6981a231c673a55a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCanvas: {fileID: 0}
+  prefab: {fileID: 5699414670821785157, guid: 697f6a57536aa95f7b3b858b6b630436, type: 3}
+  size: 2

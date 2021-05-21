@@ -10,10 +10,7 @@ namespace Plugins.GUI
     [System.Serializable]
     public class Settings
     {
-        public float generalVolume;
-        public float uiVolume;
-        public float sfxVolume;
-        public float musicVolume;
+        public float generalVolume, sfxVolume, musicVolume;
 
         public bool fullScreen;
         public int resolution;
@@ -22,37 +19,28 @@ namespace Plugins.GUI
     public class SettingsMenu : MonoBehaviour
     {
         public Settings settings;
+        private Resolution[] m_Resolutions;
         
-        private Resolution[] resolutions;
+        public Slider generalVolume, sfxVolume, musicVolume;
 
-        [SerializeField] private Slider generalVolume;
-        [SerializeField] private Slider uiVolume;
-        [SerializeField] private Slider sfxVolume;
-        [SerializeField] private Slider musicVolume;
-
-        [SerializeField] private Toggle fullscreenToggle;
-
-        [SerializeField] private TMP_Dropdown resolutionDropdown;
+        [Space]
+        public Toggle fullscreenToggle;
+        public TMP_Dropdown resolutionDropdown;
 
         private const string SAVED_FILENAME = "settings.cfg";
-        private void Start()
-        {
-            SetSystemResolutions();
-            CheckForSavedSettings();
-            gameObject.SetActive(false);
-        }
+        private void Start() => SetSystemResolutions();
 
         /// <summary>
         /// Finds and sets the available Resolution Options for the user
         /// </summary>
         private void SetSystemResolutions()
         {
-            resolutions = Screen.resolutions;
+            m_Resolutions = Screen.resolutions;
 
             var resolutionsList = new List<string>();
             var resolutionIndex = 0;
 
-            foreach (Resolution resolution in resolutions)
+            foreach (Resolution resolution in m_Resolutions)
             {
                 resolutionsList.Add(resolution.width + " x " + resolution.height);
                 if (resolution.Equals(Screen.currentResolution)) resolutionIndex = resolutionsList.Count - 1;
@@ -60,52 +48,6 @@ namespace Plugins.GUI
             resolutionDropdown.AddOptions(resolutionsList);
             resolutionDropdown.value = resolutionIndex;
             resolutionDropdown.RefreshShownValue();
-        }
-
-        /// <summary>
-        /// Checks if there is saved settings, else it creates it
-        /// </summary>
-        private void CheckForSavedSettings()
-        {
-            if (SaveLoadManager.SaveExists(SAVED_FILENAME))
-            {
-                settings = SaveLoadManager.Load<Settings>(SAVED_FILENAME);
-#if !UNITY_EDITOR
-                SetResolution(settings.resolution);
-                SetFullscreen(settings.fullScreen);
-#endif
-                UpdateGameObjects();
-            }
-            else
-            {
-                /*SoundManager soundManager = SoundManager.Instance;
-                settings = new Settings
-                {
-                    fullScreen = fullscreenToggle.isOn,
-
-                    generalVolume = soundManager.generalVolume,
-                    musicVolume = soundManager.musicVolume,
-                    sfxVolume = soundManager.sfxVolume,
-                    uiVolume = soundManager.uiVolume
-                };
-                SaveSettings();
-                */
-            }
-        }
-
-        /// <summary>
-        /// Updates the visual values for each gameObject
-        /// </summary>
-        private void UpdateGameObjects()
-        {
-            fullscreenToggle.isOn = settings.fullScreen;
-
-            generalVolume.value = settings.generalVolume;
-            uiVolume.value = settings.uiVolume;
-            sfxVolume.value = settings.sfxVolume;
-            musicVolume.value = settings.musicVolume;
-
-            resolutionDropdown.value = settings.resolution;
         }
 
         /// <summary>
@@ -127,18 +69,12 @@ namespace Plugins.GUI
         public void SetSFXVolume(float volume) => SoundManager.Instance.SetSFXVolume(settings.sfxVolume = volume);
 
         /// <summary>
-        /// Sets the ui volume of the game
-        /// </summary>
-        /// <param name="volume"></param>
-        public void SetUIVolume(float volume) => SoundManager.Instance.SetVoiceVolume(settings.uiVolume = volume);
-
-        /// <summary>
-        /// Sets the resolution available at the specific position on the array of resolutions
+        /// Sets the resolution available at the specific position on the array of m_Resolutions
         /// </summary>
         /// <param name="resolutionIndex"></param>
         public void SetResolution(int resolutionIndex)
         {
-            Resolution currentResolution = resolutions[resolutionIndex];
+            Resolution currentResolution = m_Resolutions[resolutionIndex];
             settings.resolution = resolutionIndex;
             Screen.SetResolution(currentResolution.width, currentResolution.height, Screen.fullScreen);
         }

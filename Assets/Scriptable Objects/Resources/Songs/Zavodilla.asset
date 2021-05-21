@@ -15,7 +15,7 @@ MonoBehaviour:
   songImage: {fileID: 21300000, guid: b7e73b010fd3db7b1b0bea3fe5600cb0, type: 3}
   soundMap:
     name: Zavodilla
-    mapCreator: 
+    mapCreator: Aaron
     bpm: 130
     genre: 2
     audioClip: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
@@ -66,4 +66,7 @@ MonoBehaviour:
       x: 1
       y: 37.821274
       z: 0
-  requiredItems: {fileID: 0}
+  requiredItem1: {fileID: 11400000, guid: aaaa7a2cc3af499bb975e2e691e2e191, type: 2}
+  requiredItem2: {fileID: 11400000, guid: 46bd4372404e80642a494f2f1c6e03f7, type: 2}
+  requiredQuantityItem1: 1
+  requiredQuantityItem2: 1

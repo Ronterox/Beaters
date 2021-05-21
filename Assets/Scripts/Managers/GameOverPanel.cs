@@ -19,9 +19,11 @@ namespace Managers
                         scoreInMiddlePart,
                         accuracy,
                         highestCombo,
-                        backToMenuButton,
+                        backToMenuButtonText,
                         replayButton,
-                        randomSongButton;
+                        randomSongButtonText,
+                        comboRewardText,
+                        accuracyRewardText;
 
         [Space]
         public Image[] stars;
@@ -43,18 +45,22 @@ namespace Managers
 
         public void SetCharacterVisuals(ScriptableCharacter character)
         {
-            songName.font = groupName.font = mapMaker.font =
-                score.font = newHighScoreText.font = characterBonus.font =
-                    difficulty.font = scoreInMiddlePart.font = accuracy.font =
-                        highestCombo.font = backToMenuButton.font = replayButton.font = randomSongButton.font = character.font;
+            accuracyRewardText.font = comboRewardText.font = songName.font
+                = groupName.font = mapMaker.font = score.font = newHighScoreText.font = characterBonus.font
+                    = difficulty.font = scoreInMiddlePart.font = accuracy.font = highestCombo.font
+                        = backToMenuButtonText.font = replayButton.font = randomSongButtonText.font = character.font;
 
             panel.sprite = character.backgroundImage;
         }
 
-        public void SetScore(int value)
+        public void SetScore(int oldScore, int newScore)
         {
-            var scoreString = value.ToString();
-            score.text = scoreInMiddlePart.text = "Score: " + scoreString;
+            string scoreString = newScore + "";
+            
+            score.text = scoreString;
+            scoreInMiddlePart.text = $"Score: {scoreString}";
+            
+            newHighScoreText.gameObject.SetActive(oldScore < newScore);
         }
 
         public void SetSongName(string nameOfTheSong) => songName.text = nameOfTheSong;
@@ -63,20 +69,20 @@ namespace Managers
 
         public void SetMapMaker(string mapCreator) => mapMaker.text = mapCreator;
 
-        public void SetNewHighScoreText(int previouslyHighScore, int lastScore)
-        {
-            newHighScoreText.text = previouslyHighScore + "";
-            newHighScoreText.gameObject.SetActive(previouslyHighScore < lastScore);
-        }
-
         public void SetCharacterBonus(Genre charGenre, Genre genreOfTheSong)
         {
             string bonusText = charGenre == genreOfTheSong ? "x1.2" : "x1";
             characterBonus.text = $"Character Bonus: ({charGenre} {bonusText} multiplier)";
         }
 
-        public void SetAccuracy(int totalBeats, int hitBeats, float acc) => accuracy.text = $"{hitBeats} / {totalBeats} ({acc}%)";
+        public void SetAccuracy(int totalBeats, int hitBeats, float acc) => accuracy.text = $"{hitBeats} / {totalBeats} ({acc:N2}%)";
 
         public void SetHighestCombo(int combo) => highestCombo.text = "Highest Combo: " + combo;
+
+        public void SetRewardsText(int comboGain, int accuracyGain)
+        {
+            comboRewardText.text = $"+{comboGain} Combo coins";
+            accuracyRewardText.text = $"+{accuracyGain} Accuracy coins";
+        }
     }
 }

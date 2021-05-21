@@ -39,18 +39,10 @@ namespace Managers
         [Header("Audio")]
         public AudioClip achievementSound;
 
-        public static List<AchievementStatus> Serialize()
-        {
-            var list = new List<AchievementStatus>();
-            m_Instance.achievements.ForEach(achievement => list.Add(achievement.status));
-            return list;
-        }
+        public static List<AchievementStatus> Serialize() => m_Instance.achievements.Select(achievement => achievement.status).ToList();
 
-        public static void Deserialize(List<AchievementStatus> achievementStatuses) =>
-            m_Instance.achievements.ForEach(achievement =>
-            {
-                achievement.status = achievementStatuses.Find(x => x.relatedId == achievement.ID);
-            });
+        public static void Deserialize(List<AchievementStatus> achievementStatuses) => m_Instance.achievements
+            .ForEach(achievement => achievement.status = achievementStatuses.Find(x => x.relatedId == achievement.ID));
 
         /// <summary>
         /// Updates the achievement by the passed id, and increments it, if it reaches the goal. Completes the achievement

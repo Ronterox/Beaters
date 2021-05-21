@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
 using Plugins.Tools;
+using TMPro;
 using UnityEngine;
 using Utilities;
 using SoundManager = Plugins.Audio.SoundManager;
@@ -45,12 +47,14 @@ namespace Core.Arrow_Game
 
         [Header("Visual Feedback")]
         public Transform[] animateByBpm;
+        private List<Tween> m_BeatAnimationTweens;
         [Space]
         public Vector3 targetScale, defaultScale;
         private float m_AnimationDuration;
-
-        [Header("Song State Feedback")]
-        public TimerUI startTimer;
+        [Space]
+        public TMP_Text timerText;
+        [Space]
+        public Animator characterAnimator;
 
         public bool IsStarted { get; private set; }
         private float m_bps;
@@ -64,14 +68,17 @@ namespace Core.Arrow_Game
 
         private void Start()
         {
-            ResetPos();
+            SoundManager.Instance.StopBackgroundMusic();
 
-            startTimer.onTimerStop += () =>
+            m_BeatAnimationTweens = new List<Tween>();
+
+            foreach (Transform tform in animateByBpm)
             {
-                startTimer.timerText.text = "Go!";
-                Action deactivate = () => startTimer.gameObject.SetActive(false);
-                deactivate.DelayAction(1f);
-            };
+                Tween anim = tform.DOScale(targetScale, m_AnimationDuration).OnComplete(() => tform.DOScale(defaultScale, m_AnimationDuration)).SetAutoKill(false);
+                m_BeatAnimationTweens.Add(anim);
+            }
+
+            ResetPos();
         }
 
         public void StartMap()
@@ -84,17 +91,23 @@ namespace Core.Arrow_Game
             CameraManager.Instance.CanDoPanning = false;
 
             //Start Timer Setting
-            startTimer.timerText.text = "Ready?";
-            startTimer.gameObject.SetActive(true);
+            timerText.text = "Ready?";
+            timerText.gameObject.SetActive(true);
 
             Action activateTimer = () =>
             {
-                startTimer.StartTimer(2);
+                timerText.text = "Go!";
+                
+                Action deactivate = () => timerText.gameObject.SetActive(false);
+                deactivate.DelayAction(.5f);
+                
                 SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, false);
             };
 
             activateTimer.DelayAction(1f);
             //__________________
+
+            if (characterAnimator) characterAnimator.speed = m_bps * .5f;
 
             print("Started Map!");
         }
@@ -122,6 +135,18 @@ namespace Core.Arrow_Game
             ActivateNoteToRelativePosition();
         }
 
+        public void FastBackwards(int seconds)
+        {
+            transform.position += new Vector3(0f, m_bps * seconds, 0f);
+
+            if (transform.position.y > 0) transform.position = Vector3.zero;
+
+            float time = SoundManager.Instance.backgroundAudioSource.time - seconds;
+            SoundManager.Instance.backgroundAudioSource.time = Mathf.Max(0f, time);
+
+            ActivateNoteToRelativePosition();
+        }
+
         private void ActivateNoteToRelativePosition()
         {
             const float notesPositionY = -6f;
@@ -130,18 +155,6 @@ namespace Core.Arrow_Game
                 child.SetActive(child.transform.position.y > notesPositionY);
                 child.ForEachChild(c => c.SetActive(c.transform.position.y > notesPositionY));
             });
-        }
-
-        public void FastBackwards(int seconds)
-        {
-            transform.position += new Vector3(0f, m_bps * seconds, 0f);
-
-            if (transform.position.y > 0) transform.position = Vector3.zero;
-
-            float time = SoundManager.Instance.backgroundAudioSource.time - seconds;
-            SoundManager.Instance.backgroundAudioSource.time = Mathf.Max(0, time);
-
-            ActivateNoteToRelativePosition();
         }
 
         public void ResetPos() => transform.position = Vector3.zero;
@@ -187,8 +200,12 @@ namespace Core.Arrow_Game
         private IEnumerator AnimateBeatCoroutine()
         {
             m_WaitingForBeat = true;
-
-            animateByBpm.ForEach(t => t.DOScale(targetScale, m_AnimationDuration).OnComplete(() => t.DOScale(defaultScale, m_AnimationDuration)));
+            
+            m_BeatAnimationTweens.ForEach(anim =>
+            {
+                anim.Restart();
+                anim.Play();
+            });
 
             yield return m_WaitForSeconds;
             m_WaitingForBeat = false;

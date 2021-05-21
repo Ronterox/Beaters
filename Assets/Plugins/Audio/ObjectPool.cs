@@ -1,5 +1,6 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Plugins.Audio
@@ -9,6 +10,7 @@ namespace Plugins.Audio
     /// </summary>
     /// <typeparam name="TPool"></typeparam>
     /// <typeparam name="TObject"></typeparam>
+    /// <typeparam name="TConfig"></typeparam>
     [System.Serializable]
     public class PoolConfig<TPool, TObject, TConfig>
         where TPool : ObjectPool<TPool, TObject, TConfig>
@@ -27,6 +29,7 @@ namespace Plugins.Audio
     /// </summary>
     /// <typeparam name="TPool"></typeparam>
     /// <typeparam name="TObject"></typeparam>
+    /// <typeparam name="TConfig"></typeparam>
     public abstract class ObjectPool<TPool, TObject, TConfig> : MonoBehaviour
         where TPool : ObjectPool<TPool, TObject, TConfig>
         where TConfig : PoolConfig<TPool, TObject, TConfig>
@@ -55,10 +58,11 @@ namespace Plugins.Audio
 
         protected TObject CreateNewPoolObject()
         {
-            TObject newPoolObject = new TObject();
-            newPoolObject.instance = Instantiate(prefab);
-            newPoolObject.instance.transform.SetParent(m_PoolContent);
-            newPoolObject.inPool = true;
+            var newPoolObject = new TObject
+            {
+                instance = Instantiate(prefab, m_PoolContent, true), 
+                inPool = true
+            };
             newPoolObject.SetReferences(this as TPool);
             newPoolObject.Sleep();
             return newPoolObject;
@@ -66,14 +70,11 @@ namespace Plugins.Audio
 
         public virtual TObject Pop()
         {
-            for (int i = 0; i < pool.Count; i++)
+            foreach (TObject t in pool.Where(t => t.inPool))
             {
-                if (pool[i].inPool)
-                {
-                    pool[i].inPool = false;
-                    pool[i].WakeUp();
-                    return pool[i];
-                }
+                t.inPool = false;
+                t.WakeUp();
+                return t;
             }
 
             TObject newPoolObject = CreateNewPoolObject();
@@ -95,7 +96,8 @@ namespace Plugins.Audio
     /// </summary>
     /// <typeparam name="TPool"></typeparam>
     /// <typeparam name="TObject"></typeparam>
-    [Serializable]
+    /// <typeparam name="TConfig"></typeparam>
+    [System.Serializable]
     public abstract class PoolObject<TPool, TObject, TConfig>
         where TConfig : PoolConfig<TPool, TObject, TConfig>
         where TPool : ObjectPool<TPool, TObject, TConfig>
@@ -118,24 +120,15 @@ namespace Plugins.Audio
         /// Set position
         /// </summary>
         /// <param name="position"></param>
-        public void SetPosition(Vector3 position)
-        {
-            instance.transform.position = position;
-        }
+        public void SetPosition(Vector3 position) => instance.transform.position = position;
 
-        public virtual void WakeUp()
-        {
-            instance.SetActive(true);
-        }
+        public virtual void WakeUp() => instance.SetActive(true);
 
-        public virtual void Sleep()
-        {
-            instance.SetActive(false);
-        }
+        public virtual void Sleep() => instance.SetActive(false);
 
         public virtual void ReturnToPool()
         {
-            TObject thisObject = this as TObject;
+            var thisObject = this as TObject;
             objectPool.Push(thisObject);
         }
     }

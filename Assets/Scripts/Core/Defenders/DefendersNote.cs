@@ -3,7 +3,7 @@ using Managers;
 
 namespace Core.Defenders
 {
-    public enum Direction { up, down, right, left }
+    public enum Direction { Up, Down, Right, Left }
 
     public class DefendersNote : MonoBehaviour
     {
@@ -18,7 +18,7 @@ namespace Core.Defenders
             }
             else if (other.CompareTag("Player"))
             {
-                GameplayManager.HitArrow();
+                GameplayManager.HitArrow(HitType.Good, transform.position, Color.white);
                 gameObject.SetActive(false);
             }
         }

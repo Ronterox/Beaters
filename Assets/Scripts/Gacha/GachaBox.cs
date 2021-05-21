@@ -26,6 +26,8 @@ namespace Gacha
         public float moveScaleDuration;
 
         private bool m_CanClick, m_SawPrize;
+        
+        private const int OPEN_BINGO_GACHA = 6578;
 
         private void Start()
         {
@@ -42,6 +44,7 @@ namespace Gacha
             if (m_SawPrize)
             {
                 m_CanClick = false;
+                GameManager.PutValue(OPEN_BINGO_GACHA);
                 LevelLoadManager.LoadSceneWithTransition(gachaMenuScene, .5f);
             }
             else AnimateBox();

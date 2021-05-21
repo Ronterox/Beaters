@@ -1,6 +1,6 @@
-using General;
 using Managers;
 using Plugins.UI;
+using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,20 +29,37 @@ namespace UI
                 case Song song:
                     songImage.sprite = song.songImage;
                     songName.text = song.soundMap.name;
-
-                    //TODO: Show item requirement to unlock song
-                    //if (parameters[1] is bool isUnlock && isUnlock)
+                    
+                    void PlayMap()
                     {
-                        onClick.AddListener(() =>
-                        {
-                            GameManager.PutSoundMap(song);
-                            LevelLoadManager.LoadArrowGameplayScene();
-                        });
+                        // Show record screen
+                        if (parameters[2] is SongRecordScreen recordScreen) recordScreen.ShowRecordScreen(song);
                     }
-                    //else
+
+                    if (parameters[1] is bool isUnlock && isUnlock)
                     {
-                        //Color defaultColor = songImage.color;
-                        //songImage.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, .5f);
+                        onClick.AddListener(PlayMap);
+                    }
+                    else
+                    {
+                        void ShowUnlockPanel()
+                        {
+                            if (DataManager.ContainsSong(song.ID))
+                            {
+                                PlayMap();
+                            }
+                            else if (parameters[3] is LockedSongScreen lockedScreen)
+                            {
+                                lockedScreen.ShowLockedScreen(song, songImage);
+                            }
+                        }
+
+                        onClick.AddListener(ShowUnlockPanel);
+
+                        Color transparentColor = songImage.color;
+                        transparentColor.a = .5f;
+
+                        songImage.color = transparentColor;
                     }
 
                     break;
