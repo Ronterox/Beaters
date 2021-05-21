@@ -72,6 +72,11 @@ namespace General
             UpdateText();
         }
 
+        public void Heal(float healing){
+            float percentage = currentHp * healing;
+            currentHp += (int) percentage;
+        }
+
         private void UpdateText()
         {
             if (currentHp > maxHp * .75f) hpText.color = Color.green;

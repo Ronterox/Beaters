@@ -64,6 +64,14 @@ namespace Managers
             get => m_Multiplier;
             set => m_Multiplier = value < 1f ? 1f : value;
         }
+        
+        public float moneyMultiplier = .25f;
+        public int minimumDamage = 9;
+        public bool everyNoteGivesMoney = false;
+        
+        public bool comboTimeHeal = false;
+        public float healingValue;
+
         //------------------------
 
         protected override void Awake()
@@ -262,8 +270,7 @@ namespace Managers
         private void ShowEndGameplayPanel(Canvas parentCanvas)
         {
             CheckHighestCombo();
-
-            const float moneyMultiplier = .25f;
+            
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
 
             var accuracyGain = (int)Mathf.Round(accuracy * moneyMultiplier);
@@ -319,10 +326,8 @@ namespace Managers
             //Reset combo to 0
             m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
 
-            const int minimumDamage = 3;
-
             Character character = m_Instance.currentCharacter;
-            if (character.CanTakeDamage) character.TakeDamage(minimumDamage * (int)m_Instance.mapScroller.difficulty);
+            if (character.CanTakeDamage) character.TakeDamage(m_Instance.minimumDamage);
         }
 
         /// <summary>
@@ -379,16 +384,18 @@ namespace Managers
                 m_Instance.starsCounter.text = $"{++m_Instance.m_StarsCount}";
             }
 
+            if(everyNoteGivesMoney) GiveMoney();
+
             //Check if is combo or if is in middle of a combo and give prize
             if (isCombo && ++m_Instance.m_ComboPrizeCounter >= comboLength)
             {
-                Song song = m_Instance.m_GameManager.Song;
-
+                if(comboTimeHeal) currentCharacter.Heal(healingValue);
+                //TODO: Responsive money gain, damage done and skill gain
                 const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
                 m_Instance.skillBarSlider.value += maxMoneyGain + minMoneyGain;
 
-                if (song) m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
+                GiveMoney();
             }
             else
                 m_Instance.m_ComboPrizeCounter = 0;
@@ -396,5 +403,14 @@ namespace Managers
             //Hit Feedback
             m_Instance.feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
         }
+
+      private static GiveMoney()
+      {
+          const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
+        
+          m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
+      }
+
+
     }
 }
