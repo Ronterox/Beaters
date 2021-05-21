@@ -1,9 +1,12 @@
+using DG.Tweening;
 using Managers;
 using Plugins.Audio;
+using Plugins.Tools;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI
 {
@@ -13,11 +16,20 @@ namespace UI
         public TMP_Text itemText1, itemText2;
         [Space]
         public Image lockedSongImage;
+        [Space]
+        public HoldableButton[] popUpButtons;
+        public PopUp popUp;
 
         private Image m_SongImage;
         private Song m_Song;
 
-        private bool m_CanUnlock;
+        private bool m_CanUnlock, m_Animating;
+
+        private void Start() => popUpButtons.ForEach(button =>
+        {
+            button.onButtonDown += popUp.Show;
+            button.onButtonUp += popUp.Hide;
+        });
 
         public void UnlockSong()
         {
@@ -27,7 +39,7 @@ namespace UI
             if (m_CanUnlock)
             {
                 DataManager.AddSong(m_Song);
-                
+
                 DataManager.AddItem(m_Song.requiredItem1, -m_Song.requiredQuantityItem1);
                 DataManager.AddItem(m_Song.requiredItem2, -m_Song.requiredQuantityItem2);
 
@@ -37,6 +49,14 @@ namespace UI
                 m_SongImage.color = color;
 
                 gameObject.SetActive(false);
+            }
+            else if (!m_Animating)
+            {
+                const float animationDuration = .8f, animationStrength = .5f;
+                const int animationVibrato = 7;
+
+                m_Animating = true;
+                popUpButtons.ForEach(button => button.transform.DOShakeScale(animationDuration, animationStrength, animationVibrato).OnComplete(() => m_Animating = false));
             }
         }
 

@@ -42,6 +42,9 @@
             <e p="readme.txt" t="Include" />
           </e>
           <e p="GUI" t="Include">
+            <e p="Editor" t="Include">
+              <e p="SelectableButtonEditor.cs" t="Include" />
+            </e>
             <e p="PauseMenu.cs" t="Include" />
             <e p="SelectableButton.cs" t="Include" />
             <e p="SettingsMenu.cs" t="Include" />
@@ -195,6 +198,7 @@
           <e p="Utilities" t="Include">
             <e p="CharacterScriptableSelector.cs" t="Include" />
             <e p="HoldableButton.cs" t="Include" />
+            <e p="PopUp.cs" t="Include" />
             <e p="Rotation.cs" t="Include" />
             <e p="RuneScriptableSelector.cs" t="Include" />
             <e p="SongMapMaker.cs" t="Include" />
