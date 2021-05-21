@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feb6d784d2cb08df687d07ae04e0a968, type: 3}
-  m_Name: DJActive
+  m_Script: {fileID: 11500000, guid: 110d5dc5ad7257710b814cb8935453fb, type: 3}
+  m_Name: Kpoper Passive
   m_EditorClassIdentifier: 
-  effectDescription: Slowdown the song for 5 secs (DJ Scratch animation)
+  effectDescription: 10% more score
   rechargeQuantity: 50
-  skillImage: {fileID: 21300000, guid: 5e65958c9cf613ef48c4f903313b6c1a, type: 3}
-  duration: 5
+  skillImage: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
+  scoreMultiplierValue: 0.1

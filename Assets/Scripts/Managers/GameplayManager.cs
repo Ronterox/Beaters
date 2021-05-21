@@ -146,7 +146,7 @@ namespace Managers
         /// <summary>
         /// Loses the game and calls everything related
         /// </summary>
-        private void Lose() =>
+        public void Lose() =>
             SlowTime(2f, 0f, () =>
             {
                 mapScroller.StopMap();

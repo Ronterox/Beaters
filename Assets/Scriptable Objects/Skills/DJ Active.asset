@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e42f0383944beb60fb93d33253581f5d, type: 3}
-  m_Name: RapperActive
+  m_Script: {fileID: 11500000, guid: feb6d784d2cb08df687d07ae04e0a968, type: 3}
+  m_Name: DJ Active
   m_EditorClassIdentifier: 
-  effectDescription: Notes give you money for 5s (Drop the mic animation)
+  effectDescription: Slowdown the song for 5 secs (DJ Scratch animation)
   rechargeQuantity: 50
-  skillImage: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  skillImage: {fileID: 21300000, guid: 5e65958c9cf613ef48c4f903313b6c1a, type: 3}
   duration: 5
