@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe7a70b254007ae41b034159925d59a0, type: 3}
-  m_Name: RapperPassive
+  m_Script: {fileID: 11500000, guid: f04c97dbdc1f7b4eea5b9699d799ac03, type: 3}
+  m_Name: Rapper Passive
   m_EditorClassIdentifier: 
-  effectDescription: Yellow notes heal x% (max 3%)
-  rechargeQuantity: 0
-  skillImage: {fileID: 0}
+  effectDescription: Yellow notes heal 3% hp
+  rechargeQuantity: 50
+  skillImage: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  healingValue: 0.03

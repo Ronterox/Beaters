@@ -181,6 +181,7 @@
               <e p="HealSkill.cs" t="Include" />
               <e p="InmunitySkill.cs" t="Include" />
               <e p="LessDamageSkill.cs" t="Include" />
+              <e p="MinimumComboSkill.cs" t="Include" />
               <e p="MoneySkill.cs" t="Include" />
               <e p="MultiplierSkill.cs" t="Include" />
             </e>

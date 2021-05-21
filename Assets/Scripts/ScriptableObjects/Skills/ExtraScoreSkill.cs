@@ -1,6 +1,4 @@
-using System;
 using Managers;
-using Plugins.Tools;
 using UnityEngine;
 
 namespace ScriptableObjects.Skills

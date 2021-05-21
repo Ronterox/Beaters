@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110d5dc5ad7257710b814cb8935453fb, type: 3}
   m_Name: KpoperPassive
   m_EditorClassIdentifier: 
-  effectDescription: 
-  rechargeQuantity: 0
-  skillImage: {fileID: 0}
-  scoreMultiplierValue: 0
+  effectDescription: 10% more score
+  rechargeQuantity: 50
+  skillImage: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
+  scoreMultiplierValue: 0.1
