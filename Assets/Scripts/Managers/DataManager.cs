@@ -81,7 +81,7 @@ namespace Managers
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }
 
-        private void OnDestroy()
+        private void OnApplicationQuit()
         {
             if (m_Instance == this) SaveLoadManager.Save(playerData, PLAYER_FILE);
         }

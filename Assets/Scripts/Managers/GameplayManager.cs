@@ -21,9 +21,9 @@ namespace Managers
 
         [Header("Config")]
         public Character currentCharacter;
-        public SimpleFeedbackObjectPooler feedbackTextPooler;
+        public SimpleFeedbackObjectPooler feedbackTextPooler, skillGainTextPooler;
         [Space]
-        public Canvas gameCanvas;
+        public Transform gameCanvas;
         public GameObject endGamePanel;
         [Space]
         public Button pauseButton;
@@ -53,6 +53,8 @@ namespace Managers
         private GameManager m_GameManager;
 
         private float m_StartTime;
+        private Vector3 m_SkillSliderPosition;
+        
         //POWERS RELATED VARIABLES
         public bool CanMiss { get; set; } = true;
 
@@ -90,6 +92,8 @@ namespace Managers
 
             scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
+            m_SkillSliderPosition = skillBarSlider.transform.position;
+
             SetPauseButton();
 
             SetGameplayCharacter();
@@ -99,7 +103,7 @@ namespace Managers
             ScriptableRune rune = GameManager.GetRune();
             if (rune) rune.ActivateRune(this);
 
-            StartMap();
+            CanMiss = false;
         }
 
         /// <summary>
@@ -200,7 +204,7 @@ namespace Managers
         public void StartMap()
         {
             m_Ended = false;
-            m_Started = true;
+            m_Started = CanMiss = true;
 
             SoundMap soundMap = GameManager.GetSoundMap();
 
@@ -267,7 +271,7 @@ namespace Managers
         /// Shows the end gameplay panel
         /// </summary>
         /// <param name="parentCanvas"></param>
-        private void ShowEndGameplayPanel(Canvas parentCanvas)
+        private void ShowEndGameplayPanel(Transform parentCanvas)
         {
             CheckHighestCombo();
             
@@ -287,21 +291,21 @@ namespace Managers
 
             int oldHighScore = songData.highestScore;
 
-            var gameOverPanel = Instantiate(endGamePanel, parentCanvas.transform).GetComponent<GameOverPanel>();
+            var gameOverPanel = Instantiate(endGamePanel, parentCanvas).GetComponent<GameOverPanel>();
             //Set end panel values
             gameOverPanel.SetSongName(soundMap.name);
             gameOverPanel.SetCharacterVisuals(character);
             gameOverPanel.SetCharacterBonus(character.characterGenre, soundMap.genre);
 
-            gameOverPanel.SetScore(m_Score);
+            gameOverPanel.SetScore(songData.highestScore, m_Score);
             gameOverPanel.SetStars(m_StarsCount, character);
             gameOverPanel.SetAccuracy(soundMap.notes.Length, m_NotesHit, accuracy);
 
             gameOverPanel.SetMapMaker(soundMap.mapCreator);
             gameOverPanel.SetGroupName(soundMap.genre);
+            
             gameOverPanel.SetHighestCombo(m_HighestCombo);
-
-            gameOverPanel.SetNewHighScoreText(songData.highestScore, m_Score);
+            gameOverPanel.SetRewardsText(comboGain, accuracyGain);
 
             gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
 
@@ -327,7 +331,7 @@ namespace Managers
             m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
 
             Character character = m_Instance.currentCharacter;
-            if (character.CanTakeDamage) character.TakeDamage(m_Instance.minimumDamage);
+            if (!character.IsDead) character.TakeDamage(minimumDamage * (int)m_Instance.mapScroller.difficulty);
         }
 
         /// <summary>
@@ -366,6 +370,8 @@ namespace Managers
             m_Instance.m_Taps++;
             m_Instance.m_NotesHit++;
             m_Instance.skillBarSlider.value++;
+            
+            m_Instance.skillGainTextPooler.ShowText($"+1", m_Instance.m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
             int points = Mathf.RoundToInt((int)hitType * ++m_Instance.m_Combo * m_Instance.Multiplier);
@@ -394,6 +400,8 @@ namespace Managers
                 const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
                 m_Instance.skillBarSlider.value += maxMoneyGain + minMoneyGain;
+                
+                m_Instance.skillGainTextPooler.ShowText($"+{maxMoneyGain + minMoneyGain}", m_Instance.m_SkillSliderPosition);
 
                 GiveMoney();
             }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +26,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/UI/UICarousel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/FeedbackText.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/PopUp.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Plugins/GUI/Editor/SelectableButtonEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/2b/94082126/Action.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/Character.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Editor/UI/ScrollRectEditor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -57,6 +59,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/a7/3b2642a4/Time.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/3b/6bc2bfb5/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3EAFBE1D-22CF-4565-A6A1-DF7DE10101D6/6b/515b239c/TweenExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3E204661-03FC-4B9C-8A19-6E0AC83D3B12/15/254a970f/Editor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/aa/ec41b3e4/Random.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/45A7E2C2-1932-477F-B79A-B37AC0B8886A/2d/c590fdc5/AudioSource.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SelectableRune.cs" root0="FORCE_HIGHLIGHTING" />
@@ -83,19 +86,10 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/3e/92dea299/Stopwatch.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/Rotation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/TutorialButtons.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/f6/02d626ec/Resolution.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/LockedSongScreen.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleFeedbackObjectPooler.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/ScriptableSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/UI/UICarousel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableRune.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Runes/ScoreRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Runes/SkillRequirementRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MultiplierSkill.cs" />
@@ -105,9 +99,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SelectableRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/CharacterScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonFader.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ArchievementsManager.cs" />
@@ -116,27 +108,39 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonBrancher.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/FeedbackText.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScrollerGeneral.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Song.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Android/FBPermissionCallbackAndroid.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Android/FBCallbackHelper.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Android/FBDirectoryReceiveCallbackAndroid.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowser.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics2D.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleFeedbackObjectPooler.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/GUI/Editor/SelectableButtonEditor.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/PopUp.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/LockedSongScreen.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -219,6 +223,7 @@
       <workItem from="1621346620574" duration="12132000" />
       <workItem from="1621424914117" duration="11285000" />
       <workItem from="1621511924624" duration="4972000" />
+      <workItem from="1621600202166" duration="8762000" />
     </task>
     <servers />
   </component>

@@ -30,8 +30,6 @@ namespace UI
                     songImage.sprite = song.songImage;
                     songName.text = song.soundMap.name;
                     
-                    print($"The song audioclip is {song.soundMap.audioClip}");
-
                     void PlayMap()
                     {
                         // Show record screen

@@ -25,15 +25,19 @@ namespace General
         public TMP_Text hpText;
         public Transform feedbackTextPositionTransform;
         [Space]
+        public Slider hpSlider;
+        public Image hpBarFill;
+        
+        [Header("Animations")]
+        public RectTransform objectiveTransformPosition;
         public SimpleFeedbackObjectPooler feedbackPooler;
 
-        private bool m_IsDead;
+        public bool IsDead { get; private set; }
 
         public delegate void CharacterEvent();
 
         public event CharacterEvent onDie;
 
-        public bool CanTakeDamage { get; set; } = true;
         private bool m_IsLowHp;
 
         public void SetCharacter(ScriptableCharacter scriptableCharacter, GameplayManager manager)
@@ -47,7 +51,8 @@ namespace General
             level = 1;
 
             maxHp = Mathf.RoundToInt(character.hp + level * character.multiplier);
-            currentHp = maxHp;
+            
+            hpSlider.maxValue = hpSlider.value = currentHp = maxHp;
 
             scriptableCharacter.passiveSkill.UseSkill(manager);
 
@@ -56,7 +61,7 @@ namespace General
 
         public void TakeDamage(int damage)
         {
-            if (m_IsDead) return;
+            if (IsDead) return;
 
             currentHp -= damage;
             if (currentHp <= 0) Die();
@@ -72,6 +77,8 @@ namespace General
             UpdateText();
         }
 
+        public void MoveToPosition(float duration) => transform.DOMove(objectiveTransformPosition.position, duration);
+
         public void Heal(float healing){
             float percentage = currentHp * healing;
             currentHp += (int) percentage;
@@ -79,18 +86,19 @@ namespace General
 
         private void UpdateText()
         {
-            if (currentHp > maxHp * .75f) hpText.color = Color.green;
-            else if (currentHp > maxHp * .5f) hpText.color = Color.yellow;
-            else hpText.color = Color.red;
+            if (currentHp > maxHp * .75f) hpBarFill.color = Color.green;
+            else if (currentHp > maxHp * .5f) hpBarFill.color = Color.yellow;
+            else hpBarFill.color = Color.red;
 
-            hpText.text = $"Current hp: {currentHp}";
+            hpText.text = currentHp + "";
+            hpSlider.value = currentHp;
         }
 
         public void UsePower(GameplayManager gameplayManager) => character.activeSkill.UseSkill(gameplayManager);
 
         public void Die()
         {
-            m_IsDead = true;
+            IsDead = true;
             characterImage.DOColor(Color.clear, 5f);
             onDie?.Invoke();
         }

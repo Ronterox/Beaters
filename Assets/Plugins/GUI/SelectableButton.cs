@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -8,14 +9,13 @@ namespace Plugins.GUI
     [AddComponentMenu("Penguins Mafia/GUI/Selectable Button")]
     public class SelectableButton : Button
     {
-        public UnityEvent onSelect;
-        public UnityEvent onDeselect;
+        public UnityEvent onSelect, onDeselect;
 
         public void SetActions(UnityAction onClickAction, UnityAction onSelectAction = null, UnityAction onDeselectAction = null)
         {
-            if(onClickAction != null) onClick.AddListener(onClickAction);
-            if(onSelectAction != null) onSelect.AddListener(onSelectAction);
-            if(onDeselectAction != null) onDeselect.AddListener(onDeselectAction);
+            if (onClickAction != null) onClick.AddListener(onClickAction);
+            if (onSelectAction != null) onSelect.AddListener(onSelectAction);
+            if (onDeselectAction != null) onDeselect.AddListener(onDeselectAction);
         }
 
         public override void OnSelect(BaseEventData eventData)
@@ -30,6 +30,7 @@ namespace Plugins.GUI
             onDeselect?.Invoke();
         }
 
+#if !UNITY_ANDROID && !UNITY_IPHONE
         public override void OnPointerEnter(PointerEventData eventData)
         {
             base.OnPointerEnter(eventData);
@@ -41,5 +42,6 @@ namespace Plugins.GUI
             base.OnPointerExit(eventData);
             onDeselect?.Invoke();
         }
+#endif
     }
 }

@@ -3435,7 +3435,6 @@ GameObject:
   - component: {fileID: 382648080063137016}
   - component: {fileID: 5036246399784203329}
   - component: {fileID: 2470404616009769629}
-  - component: {fileID: 3676943248579019386}
   m_Layer: 5
   m_Name: Start Timer
   m_TagString: Untagged
@@ -3559,24 +3558,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &3676943248579019386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4077845481750045803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c024ad85576cbf0d90735c705052e52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  timerTime: 4
-  resetOnEnd: 0
-  startTime: 1
-  timerText: {fileID: 2470404616009769629}
-  showType: 2
 --- !u!1 &4454921385988423904
 GameObject:
   m_ObjectHideFlags: 0
@@ -7713,13 +7694,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c032bf53ff2bcecd929f4160111847e, type: 3}
---- !u!198 &6744775958777896009 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1566069341176993604, guid: 5c032bf53ff2bcecd929f4160111847e, type: 3}
-  m_PrefabInstance: {fileID: 5197587433099692813}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6744775958777896008 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1566069341176993605, guid: 5c032bf53ff2bcecd929f4160111847e, type: 3}
+  m_PrefabInstance: {fileID: 5197587433099692813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6744775958777896009 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1566069341176993604, guid: 5c032bf53ff2bcecd929f4160111847e, type: 3}
   m_PrefabInstance: {fileID: 5197587433099692813}
   m_PrefabAsset: {fileID: 0}

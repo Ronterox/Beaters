@@ -1430,7 +1430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1814,7 +1814,6 @@ GameObject:
   - component: {fileID: 1181979591}
   - component: {fileID: 1181979594}
   - component: {fileID: 1181979593}
-  - component: {fileID: 1181979592}
   m_Layer: 5
   m_Name: Coins Button
   m_TagString: Untagged
@@ -1842,50 +1841,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.36767578}
   m_SizeDelta: {x: 0, y: -0.07299805}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1181979592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1181979590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1181979593}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1181979593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3137,7 +3092,11 @@ PrefabInstance:
     - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
       propertyPath: moneyButton
       value: 
-      objectReference: {fileID: 1181979592}
+      objectReference: {fileID: 1181979591}
+    - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
+      propertyPath: bannerButton
+      value: 
+      objectReference: {fileID: 7979172281205442129}
     - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
       propertyPath: textToChange
       value: 
@@ -3145,7 +3104,7 @@ PrefabInstance:
     - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
       propertyPath: ticketButton
       value: 
-      objectReference: {fileID: 1987395458}
+      objectReference: {fileID: 1987395457}
     - target: {fileID: 5430674325006656789, guid: 41301d8aac27ab20cb4192c6b85a7efa, type: 3}
       propertyPath: imageToChange
       value: 
@@ -3316,7 +3275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -3510,13 +3469,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfaf44729a4ff85c2acff766500e469d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gachaManager: {fileID: 1589711680}
   bingoCardboard: {fileID: 198028342}
-  characters:
-  - {fileID: 11400000, guid: 5cbe8683692276c249979e238ee08ec2, type: 2}
-  - {fileID: 11400000, guid: e6e5f3de18bf2e692963af0f92b02d45, type: 2}
-  - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
-  - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
-  - {fileID: 11400000, guid: ff154e146b0e8f61191380744698d584, type: 2}
   panelBingo: {fileID: 198028331}
   bingoBoxes:
   - {fileID: 198028341}
