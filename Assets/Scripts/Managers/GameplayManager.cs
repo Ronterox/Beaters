@@ -53,25 +53,29 @@ namespace Managers
 
         private float m_StartTime;
         private Vector3 m_SkillSliderPosition;
-        
+
+        public bool CanLose { get; set; } = true;
+
         //POWERS RELATED VARIABLES
         public bool CanMiss { get; set; } = true;
-
-        private float m_Multiplier = 1f;
-
-        public float DurationIncrement { get; set; }
         public float Multiplier
         {
             get => m_Multiplier;
             set => m_Multiplier = value < 1f ? 1f : value;
         }
-        
-        public float moneyMultiplier = .25f;
-        public int minimumDamage = 9;
-        public bool everyNoteGivesMoney;
-        
-        public bool comboTimeHeal;
-        public float healingValue;
+        private float m_Multiplier = 1f;
+        public float DurationIncrement { get; set; }
+
+        public float MoneyMultiplier { get; set; } = .25f;
+        public int MinimumDamage { get; set; } = 9;
+        public bool EveryNoteGivesMoney { get; set; }
+        public bool ComboTimeHeal { get; set; }
+        public float HealingValueComboTime { get; set; }
+        public int MinimumCombo { get; set; }
+
+        public int FreeTapsCount { get; set; }
+
+        private int m_MissedTaps;
 
         //------------------------
 
@@ -80,6 +84,8 @@ namespace Managers
             base.Awake();
             m_StartTime = Time.realtimeSinceStartup;
         }
+
+        public void SetFreeTaps(int taps) => FreeTapsCount = m_MissedTaps + taps;
 
         /// <summary>
         /// Sets the gameplay values
@@ -137,27 +143,48 @@ namespace Managers
             });
         }
 
-        private void Lose() =>
-            StartCoroutine(StopTimeCoroutine(5f, () =>
+        /// <summary>
+        /// Loses the game and calls everything related
+        /// </summary>
+        public void Lose() =>
+            SlowTime(2f, 0f, () =>
             {
                 mapScroller.StopMap();
                 ShowEndGameplayPanel(gameCanvas);
-            }));
+                SoundManager.Instance.backgroundAudioSource.Stop();
+            });
 
-        private IEnumerator StopTimeCoroutine(float duration, Action afterStoppingTime)
+        /// <summary>
+        /// Slows the game time
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="objective"></param>
+        /// <param name="afterSlowingTime"></param>
+        public void SlowTime(float duration, float objective, Action afterSlowingTime = null) => StartCoroutine(SlowTimeCoroutine(duration, objective, afterSlowingTime));
+
+        /// <summary>
+        /// Slow time coroutine
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="objective"></param>
+        /// <param name="afterSlowingTime"></param>
+        /// <returns></returns>
+        public static IEnumerator SlowTimeCoroutine(float duration, float objective, Action afterSlowingTime)
         {
             AudioSource sound = SoundManager.Instance.backgroundAudioSource;
-
-            while (!Time.timeScale.Approximates(0))
+            
+            var currentTime = 0f;
+            float startValue = Time.timeScale;
+            while (duration > currentTime)
             {
-                sound.pitch = Time.timeScale -= Time.deltaTime * duration;
+                sound.pitch = Time.timeScale = Mathf.Lerp(startValue, objective, currentTime / duration);
+                currentTime += Time.unscaledDeltaTime;
                 yield return null;
             }
 
             sound.pitch = Time.timeScale = 1f;
-            sound.Stop();
 
-            afterStoppingTime?.Invoke();
+            afterSlowingTime?.Invoke();
         }
 
         /// <summary>
@@ -272,11 +299,11 @@ namespace Managers
         private void ShowEndGameplayPanel(Transform parentCanvas)
         {
             CheckHighestCombo();
-            
+
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
 
-            var accuracyGain = (int)Mathf.Round(accuracy * moneyMultiplier);
-            var comboGain = (int)Mathf.Round(m_HighestCombo * moneyMultiplier);
+            var accuracyGain = (int)Mathf.Round(accuracy * MoneyMultiplier);
+            var comboGain = (int)Mathf.Round(m_HighestCombo * MoneyMultiplier);
 
             m_Data.money += accuracyGain + comboGain;
             m_Data.tapsDone += m_Taps;
@@ -301,7 +328,7 @@ namespace Managers
 
             gameOverPanel.SetMapMaker(soundMap.mapCreator);
             gameOverPanel.SetGroupName(soundMap.genre);
-            
+
             gameOverPanel.SetHighestCombo(m_HighestCombo);
             gameOverPanel.SetRewardsText(comboGain, accuracyGain);
 
@@ -323,17 +350,22 @@ namespace Managers
             // Can miss check in case of power
             if (!m_Instance || !m_Instance.CanMiss) return;
 
-            CheckHighestCombo();
+            if (m_Instance.m_Combo > m_Instance.MinimumCombo)
+            {
+                CheckHighestCombo();
+                //Reset combo to 0
+                m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
+            }
 
-            //Reset combo to 0
-            m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
+            if (m_Instance.FreeTapsCount > ++m_Instance.m_MissedTaps) return;
 
             Character character = m_Instance.currentCharacter;
-            if (!character.IsDead) character.TakeDamage(m_Instance.minimumDamage * (int)m_Instance.mapScroller.difficulty);
+
+            if (m_Instance.CanLose && !character.IsDead) character.TakeDamage(m_Instance.MinimumDamage);
         }
 
         /// <summary>
-        /// Save highest combo
+        /// Saves highest combo
         /// </summary>
         private static void CheckHighestCombo()
         {
@@ -368,7 +400,7 @@ namespace Managers
             m_Instance.m_Taps++;
             m_Instance.m_NotesHit++;
             m_Instance.skillBarSlider.value++;
-            
+
             m_Instance.skillGainTextPooler.ShowText($"+1", m_Instance.m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
@@ -388,17 +420,18 @@ namespace Managers
                 m_Instance.starsCounter.text = $"{++m_Instance.m_StarsCount}";
             }
 
-            if(m_Instance.everyNoteGivesMoney) GiveMoney();
+            if (m_Instance.EveryNoteGivesMoney) GiveMoney();
 
             //Check if is combo or if is in middle of a combo and give prize
-            if (isCombo && ++m_Instance.m_ComboPrizeCounter >= comboLength)
+            if (isCombo)
             {
-                if(m_Instance.comboTimeHeal) m_Instance.currentCharacter.Heal(m_Instance.healingValue);
+                if (m_Instance.ComboTimeHeal) m_Instance.currentCharacter.Heal(m_Instance.HealingValueComboTime);
                 //TODO: Responsive money gain, damage done and skill gain
                 const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
-                m_Instance.skillBarSlider.value += maxMoneyGain + minMoneyGain;
-                
+                bool completedCombo = ++m_Instance.m_ComboPrizeCounter >= comboLength;
+                m_Instance.skillBarSlider.value += completedCombo ? (maxMoneyGain + minMoneyGain) * comboLength : maxMoneyGain + minMoneyGain;
+
                 m_Instance.skillGainTextPooler.ShowText($"+{maxMoneyGain + minMoneyGain}", m_Instance.m_SkillSliderPosition);
 
                 GiveMoney();
@@ -410,13 +443,11 @@ namespace Managers
             m_Instance.feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
         }
 
-      private static void GiveMoney()
-      {
-          const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
-        
-          m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
-      }
+        private static void GiveMoney()
+        {
+            const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
-
+            m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
+        }
     }
 }

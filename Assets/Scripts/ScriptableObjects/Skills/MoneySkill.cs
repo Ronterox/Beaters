@@ -12,9 +12,9 @@ namespace ScriptableObjects.Skills
 
         public override void UseSkill(GameplayManager manager)
         {
-            manager.everyNoteGivesMoney = true;
+            manager.EveryNoteGivesMoney = true;
             
-            Action deactivateMultiplier = () => manager.everyNoteGivesMoney = false;
+            Action deactivateMultiplier = () => manager.EveryNoteGivesMoney = false;
             
             deactivateMultiplier.DelayAction(duration + manager.DurationIncrement);
         }

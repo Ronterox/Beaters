@@ -27,7 +27,7 @@ namespace General
         [Space]
         public Slider hpSlider;
         public Image hpBarFill;
-        
+
         [Header("Animations")]
         public RectTransform objectiveTransformPosition;
         public SimpleFeedbackObjectPooler feedbackPooler;
@@ -51,7 +51,7 @@ namespace General
             level = 1;
 
             maxHp = Mathf.RoundToInt(character.hp + level * character.multiplier);
-            
+
             hpSlider.maxValue = hpSlider.value = currentHp = maxHp;
 
             scriptableCharacter.passiveSkill.UseSkill(manager);
@@ -79,9 +79,10 @@ namespace General
 
         public void MoveToPosition(float duration) => transform.DOMove(objectiveTransformPosition.position, duration);
 
-        public void Heal(float healing){
-            float percentage = currentHp * healing;
-            currentHp += (int) percentage;
+        public void Heal(float healingPercentage)
+        {
+            float percentage = currentHp * healingPercentage;
+            currentHp += (int)percentage;
         }
 
         private void UpdateText()

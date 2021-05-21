@@ -18,8 +18,8 @@ MonoBehaviour:
   characterGenre: 2
   hp: 90
   multiplier: 1
-  activeSkill: {fileID: 11400000, guid: 95934fab14f25df45b703b8448937439, type: 2}
-  passiveSkill: {fileID: 11400000, guid: 9bf78432721402746b3f7b6da747ebbf, type: 2}
+  activeSkill: {fileID: 11400000, guid: 3e933a25d2a2a4c2aa5a459ef6ba7538, type: 2}
+  passiveSkill: {fileID: 11400000, guid: 7d4442180247d6e7c88a5f0a72c81634, type: 2}
   backgroundImage: {fileID: 21300000, guid: 97e466a00bf25c518bdbc0713c184cf5, type: 3}
   colorPalette:
     mainColor: {r: 0, g: 0, b: 0, a: 0.57254905}

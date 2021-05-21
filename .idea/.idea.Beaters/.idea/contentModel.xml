@@ -178,11 +178,15 @@
             <e p="ScriptableSkill.cs" t="Include" />
             <e p="Skills" t="Include">
               <e p="ExtraScoreSkill.cs" t="Include" />
+              <e p="FreeTapSkill.cs" t="Include" />
               <e p="HealSkill.cs" t="Include" />
               <e p="InmunitySkill.cs" t="Include" />
               <e p="LessDamageSkill.cs" t="Include" />
+              <e p="MinimumComboSkill.cs" t="Include" />
               <e p="MoneySkill.cs" t="Include" />
               <e p="MultiplierSkill.cs" t="Include" />
+              <e p="ReviveChanceSkill.cs" t="Include" />
+              <e p="SlowTimeSkill.cs" t="Include" />
             </e>
             <e p="Song.cs" t="Include" />
           </e>

@@ -2,8 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/ReviveChanceSkill.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Characters/Metalhead.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJActive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJ Active.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJActive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJ Active.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJPassive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJ Passive.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJPassive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJ Passive.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/GamerActive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Gamer Active.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/GamerActive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Gamer Active.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/GamerPassive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Gamer Passive.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/GamerPassive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Gamer Passive.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperActive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoper Active.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoperActive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KPoper Active.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KpoperPassive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Kpoper Passive.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/KpoperPassive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Kpoper Passive.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/MetalheadPassive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Metalhead Passive.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/MetalheadPassive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Metalhead Passive.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/RapperActive.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Rapper Active.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/RapperActive.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/Rapper Active.asset.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/DJ/DJ/ShareTech-Regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/DJ/DJ/ShareTech-Regular SDF.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +54,14 @@
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Editor/UI/ScrollRectEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/8e/84fc504b/Camera.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/ReviveChanceSkill.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/45A7E2C2-1932-477F-B79A-B37AC0B8886A/b3/6f39b072/AudioClip.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B1B1E86F-281A-470D-B217-C578E6BC1908/f5/fbdd488e/ReadOnlyAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/18/d4584d77/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Selectable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/c3/237882a8/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MinimumComboSkill.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/IdentifiedScriptable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/StartSoundManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3E204661-03FC-4B9C-8A19-6E0AC83D3B12/41/6d29f023/EditorGUILayout.cs" root0="SKIP_HIGHLIGHTING" />
@@ -49,6 +71,7 @@
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Image.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Unity/Hub/Editor/2020.3.6f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Editor/UI/ButtonEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/UI/Editor/UICarouselElementEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/FreeTapSkill.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DB12E24F-2E90-40C4-AAAD-3E5C9B3FE877/2c/e5379b84/ParticleSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/da/1df44d47/ScriptableObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" root0="FORCE_HIGHLIGHTING" />
@@ -59,6 +82,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/a7/3b2642a4/Time.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/3b/6bc2bfb5/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/SlowTimeSkill.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3EAFBE1D-22CF-4565-A6A1-DF7DE10101D6/6b/515b239c/TweenExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3E204661-03FC-4B9C-8A19-6E0AC83D3B12/15/254a970f/Editor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/aa/ec41b3e4/Random.cs" root0="SKIP_HIGHLIGHTING" />
@@ -91,13 +115,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Runes/SkillRequirementRune.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableSkill.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MultiplierSkill.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/InmunitySkill.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Runes/DurationRune.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/UI/ImageText.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SelectableRune.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/CharacterScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/RuneScriptableSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" />
@@ -130,7 +147,6 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleFeedbackObjectPooler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
@@ -139,9 +155,17 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/PopUp.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/LockedSongScreen.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/HealSkill.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/LessDamageSkill.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MinimumComboSkill.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/FreeTapSkill.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/ExtraScoreSkill.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/SlowTimeSkill.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/ReviveChanceSkill.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -224,7 +248,8 @@
       <workItem from="1621346620574" duration="12132000" />
       <workItem from="1621424914117" duration="11285000" />
       <workItem from="1621511924624" duration="4972000" />
-      <workItem from="1621600202166" duration="9438000" />
+      <workItem from="1621600202166" duration="10157000" />
+      <workItem from="1621613719928" duration="9706000" />
     </task>
     <servers />
   </component>
