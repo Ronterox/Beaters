@@ -83,7 +83,7 @@ namespace Plugins.Audio
                 item.pool.initialPoolCount = item.InitialObjectCount;
                 item.pool.PoolName = item.PoolName;
 
-                m_Pools[item.Prefab.name.GetHashCode()] = item.pool as TInstancePooler;
+                m_Pools[item.PoolName.GetHashCode()] = item.pool as TInstancePooler;
             }
 
             m_Running = new PriorityQueue<TPooledType>();

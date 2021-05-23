@@ -40,7 +40,8 @@ namespace Gacha
                 }
             }
 
-            SetCharacterGUI(GameManager.GetCharacter());
+            ScriptableCharacter character = GameManager.GetCharacter();
+            if(character) SetCharacterGUI(character);
         }
 
         public void SetCharacterGUI(ScriptableCharacter character)

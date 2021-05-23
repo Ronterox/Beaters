@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Plugins.Audio;
 using Plugins.Properties;
 using Plugins.Tools;
@@ -26,19 +27,25 @@ namespace Plugins.GUI
 
         public Slider generalVolume, sfxVolume, musicVolume;
         public Slider tapOffsetSlider;
-        
+
+        [Space]
+        public Button tapOffsetButton;
+
         [Space]
         public Toggle fullscreenToggle;
         public TMP_Dropdown resolutionDropdown;
+        [Space]
+        public AudioClip metronomeAudioClip;
 
         public const string SAVED_FILENAME = "settings.cfg";
+        private Stopwatch m_Stopwatch = new Stopwatch();
 
         private void Awake() => SetOldSettings();
 
         private void Start()
         {
             SetSystemResolutions();
-            
+
             generalVolume.value = sfxVolume.value = musicVolume.value = generalVolume.maxValue;
 
             fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
@@ -47,14 +54,38 @@ namespace Plugins.GUI
             generalVolume.onValueChanged.AddListener(SetGeneralVolume);
             sfxVolume.onValueChanged.AddListener(SetSFXVolume);
             musicVolume.onValueChanged.AddListener(SetMusicVolume);
+
+            tapOffsetButton.onClick.AddListener(StartOffSetCalculation);
+        }
+
+        private void OnDestroy() => SaveSettings();
+
+        private void Update()
+        {
+            if (m_Stopwatch.IsRunning && Input.GetMouseButtonDown(0)) CalculateOffSet();
+        }
+
+        private void CalculateOffSet()
+        {
+            const float expectedMs = 2000; //Perfect timed total 4 beats 
+            m_Stopwatch.Stop();
+
+            float resultOffset = m_Stopwatch.ElapsedMilliseconds - expectedMs;
+            tapOffsetSlider.value = resultOffset;
+
+            SoundManager.Instance.StopAllSfx();
+        }
+
+        private void StartOffSetCalculation()
+        {
+            SoundManager.Instance.PlayNonDiegeticSound(metronomeAudioClip);
+            m_Stopwatch.Restart();
         }
 
         private void SetOldSettings()
         {
             if (SaveLoadManager.SaveExists(SAVED_FILENAME)) m_Settings = SaveLoadManager.Load<Settings>(SAVED_FILENAME);
         }
-
-        private void OnDestroy() => SaveSettings();
 
         /// <summary>
         /// Finds and sets the available Resolution Options for the user
@@ -114,16 +145,17 @@ namespace Plugins.GUI
         private void SaveSettings()
         {
             SoundManager soundManager = SoundManager.Instance;
-            
+
             m_Settings.fullScreen = Screen.fullScreen;
-            
+
             m_Settings.generalVolume = soundManager.MasterVolume;
             m_Settings.musicVolume = soundManager.MusicVolume;
             m_Settings.sfxVolume = soundManager.SFXVolume;
 
             m_Settings.tapOffset = (int)tapOffsetSlider.value;
-            
+
             SaveLoadManager.Save(m_Settings, SAVED_FILENAME);
         }
     }
+
 }
