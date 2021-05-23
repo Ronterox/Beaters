@@ -2851,6 +2851,132 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1001 &1740480759
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7979172281555303169}
+    m_Modifications:
+    - target: {fileID: 1222091118, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -24.000305
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443447173941443431, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_text
+      value: This is the Gacha screen! \n\nHere you can try your luck and get new
+        items, runes or characters.\n\nENJOY YOUR GACHA TIME!
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443447173941443431, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_fontSize
+      value: 50.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7445635147697564937, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 8171220030494800822, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_Name
+      value: DialogPopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8548954922942874509, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8548954922942874509, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8548954922942874509, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -43
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
 --- !u!114 &1747843890 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 132958302164825520, guid: aabd317ba1724efa98f80fbbfa67deae, type: 3}
@@ -3127,6 +3253,11 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!224 &1900221331 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+  m_PrefabInstance: {fileID: 1740480759}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1923404776
 GameObject:
   m_ObjectHideFlags: 0
@@ -3655,6 +3786,7 @@ RectTransform:
   m_Children:
   - {fileID: 7979172281049003473}
   - {fileID: 198028330}
+  - {fileID: 1900221331}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
