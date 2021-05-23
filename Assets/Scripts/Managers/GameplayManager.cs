@@ -55,6 +55,8 @@ namespace Managers
         private Vector3 m_SkillSliderPosition;
 
         public bool CanLose { get; set; } = true;
+        
+        private const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
         //POWERS RELATED VARIABLES
         public bool CanMiss { get; set; } = true;
@@ -427,7 +429,6 @@ namespace Managers
             {
                 if (m_Instance.ComboTimeHeal) m_Instance.currentCharacter.Heal(m_Instance.HealingValueComboTime);
                 //TODO: Responsive money gain, damage done and skill gain
-                const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
 
                 bool completedCombo = ++m_Instance.m_ComboPrizeCounter >= comboLength;
                 m_Instance.skillBarSlider.value += completedCombo ? (maxMoneyGain + minMoneyGain) * comboLength : maxMoneyGain + minMoneyGain;
@@ -443,11 +444,6 @@ namespace Managers
             m_Instance.feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
         }
 
-        private static void GiveMoney()
-        {
-            const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
-
-            m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
-        }
+        private static void GiveMoney() => m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
     }
 }

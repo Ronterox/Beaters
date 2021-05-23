@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Plugins.Tools;
@@ -81,7 +82,11 @@ namespace Managers
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }
 
-        private void OnApplicationQuit()
+        private void OnApplicationQuit() => SaveData();
+
+        private void OnApplicationPause(bool pauseStatus) => SaveData();
+
+        public void SaveData()
         {
             if (m_Instance == this) SaveLoadManager.Save(playerData, PLAYER_FILE);
         }

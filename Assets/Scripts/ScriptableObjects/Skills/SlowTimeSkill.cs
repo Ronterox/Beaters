@@ -8,6 +8,6 @@ namespace ScriptableObjects.Skills
     {
         public float duration;
         
-        public override void UseSkill(GameplayManager manager) => manager.SlowTime(duration, 0f);
+        public override void UseSkill(GameplayManager manager) => manager.SlowTime(duration + manager.DurationIncrement, 0f);
     }
 }

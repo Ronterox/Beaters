@@ -34,7 +34,7 @@ namespace Gacha
 
                 if (!redeemReward.interactable)
                 {
-                    int box = DataManager.Instance.playerData.bingoBoxes++;
+                    int box = ++DataManager.Instance.playerData.bingoBoxes;
                     if (box < bingoBoxes.Length) bingoBoxes[box].SetActive(true);
                     else redeemReward.interactable = true;
                 }
