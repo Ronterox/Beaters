@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Plugins.Audio;
+using Plugins.Properties;
 using Plugins.Tools;
 using TMPro;
 using UnityEngine;
@@ -13,22 +14,47 @@ namespace Plugins.GUI
         public float generalVolume, sfxVolume, musicVolume;
 
         public bool fullScreen;
-        public int resolution;
+        public int resolution, tapOffset;
     }
 
     public class SettingsMenu : MonoBehaviour
     {
-        public Settings settings;
+        [ReadOnly]
+        private Settings m_Settings = new Settings();
+        [ReadOnly]
         private Resolution[] m_Resolutions;
-        
-        public Slider generalVolume, sfxVolume, musicVolume;
 
+        public Slider generalVolume, sfxVolume, musicVolume;
+        public Slider tapOffsetSlider;
+        
         [Space]
         public Toggle fullscreenToggle;
         public TMP_Dropdown resolutionDropdown;
 
-        private const string SAVED_FILENAME = "settings.cfg";
-        private void Start() => SetSystemResolutions();
+        public const string SAVED_FILENAME = "settings.cfg";
+
+        private void Awake() => SetOldSettings();
+
+        private void Start()
+        {
+            SetSystemResolutions();
+            
+            generalVolume.value = sfxVolume.value = musicVolume.value = generalVolume.maxValue;
+
+            fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
+            resolutionDropdown.onValueChanged.AddListener(SetResolution);
+
+            generalVolume.onValueChanged.AddListener(SetGeneralVolume);
+            sfxVolume.onValueChanged.AddListener(SetSFXVolume);
+            musicVolume.onValueChanged.AddListener(SetMusicVolume);
+        }
+
+        private void SetOldSettings()
+        {
+            if (SaveLoadManager.SaveExists(SAVED_FILENAME)) m_Settings = SaveLoadManager.Load<Settings>(SAVED_FILENAME);
+        }
+
+        private void OnDestroy() => SaveSettings();
 
         /// <summary>
         /// Finds and sets the available Resolution Options for the user
@@ -54,19 +80,19 @@ namespace Plugins.GUI
         /// Sets the general volume of the game
         /// </summary>
         /// <param name="volume"></param>
-        public void SetGeneralVolume(float volume) => SoundManager.Instance.SetMasterVolume(settings.generalVolume = volume);
+        public void SetGeneralVolume(float volume) => SoundManager.Instance.SetMasterVolume(m_Settings.generalVolume = volume);
 
         /// <summary>
         /// Sets the music volume of the game
         /// </summary>
         /// <param name="volume"></param>
-        public void SetMusicVolume(float volume) => SoundManager.Instance.SetMusicVolume(settings.musicVolume = volume);
+        public void SetMusicVolume(float volume) => SoundManager.Instance.SetMusicVolume(m_Settings.musicVolume = volume);
 
         /// <summary>
         /// Sets the sound effects volume of the game
         /// </summary>
         /// <param name="volume"></param>
-        public void SetSFXVolume(float volume) => SoundManager.Instance.SetSFXVolume(settings.sfxVolume = volume);
+        public void SetSFXVolume(float volume) => SoundManager.Instance.SetSFXVolume(m_Settings.sfxVolume = volume);
 
         /// <summary>
         /// Sets the resolution available at the specific position on the array of m_Resolutions
@@ -75,18 +101,29 @@ namespace Plugins.GUI
         public void SetResolution(int resolutionIndex)
         {
             Resolution currentResolution = m_Resolutions[resolutionIndex];
-            settings.resolution = resolutionIndex;
+            m_Settings.resolution = resolutionIndex;
             Screen.SetResolution(currentResolution.width, currentResolution.height, Screen.fullScreen);
         }
-
-        private void OnDisable() => SaveSettings();
 
         /// <summary>
         /// Sets the application to fullscreen or not fullscreen
         /// </summary>
         /// <param name="isFullscreen"></param>
-        public void SetFullscreen(bool isFullscreen) => Screen.fullScreen = settings.fullScreen = isFullscreen;
+        public void SetFullscreen(bool isFullscreen) => Screen.fullScreen = isFullscreen;
 
-        private void SaveSettings() => SaveLoadManager.Save(settings, SAVED_FILENAME);
+        private void SaveSettings()
+        {
+            SoundManager soundManager = SoundManager.Instance;
+            
+            m_Settings.fullScreen = Screen.fullScreen;
+            
+            m_Settings.generalVolume = soundManager.MasterVolume;
+            m_Settings.musicVolume = soundManager.MusicVolume;
+            m_Settings.sfxVolume = soundManager.SFXVolume;
+
+            m_Settings.tapOffset = (int)tapOffsetSlider.value;
+            
+            SaveLoadManager.Save(m_Settings, SAVED_FILENAME);
+        }
     }
 }

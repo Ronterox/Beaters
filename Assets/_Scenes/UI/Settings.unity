@@ -2469,7 +2469,7 @@ GameObject:
   - component: {fileID: 1018290391}
   - component: {fileID: 1018290392}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Sfx Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2829,7 +2829,7 @@ GameObject:
   - component: {fileID: 1107398684}
   - component: {fileID: 1107398685}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Audio Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3486,15 +3486,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98b93640f5c58ba28af14c7005f89b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings:
-    generalVolume: 0
-    sfxVolume: 0
-    musicVolume: 0
-    fullScreen: 0
-    resolution: 0
   generalVolume: {fileID: 1450984922}
   sfxVolume: {fileID: 1018290392}
   musicVolume: {fileID: 1885442876}
+  tapOffsetSlider: {fileID: 1107398685}
   fullscreenToggle: {fileID: 902304624}
   resolutionDropdown: {fileID: 866073247}
 --- !u!114 &1248208846
@@ -3896,7 +3891,7 @@ GameObject:
   - component: {fileID: 1450984921}
   - component: {fileID: 1450984922}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Master Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4818,7 +4813,7 @@ GameObject:
   - component: {fileID: 1885442875}
   - component: {fileID: 1885442876}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Music Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
