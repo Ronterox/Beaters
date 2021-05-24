@@ -1435,6 +1435,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 423129602}
     m_Modifications:
+    - target: {fileID: 1740480761, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: playerPrefKey
+      value: First Time Menu
+      objectReference: {fileID: 0}
     - target: {fileID: 8171220030494800822, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
       propertyPath: m_Name
       value: DialogPopUp
@@ -1525,23 +1529,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
---- !u!1 &1147158780 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8171220030494800822, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
-  m_PrefabInstance: {fileID: 1147158779}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1147158781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1147158780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dea71422c9e76684fbf0387defb3fe5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1204340880
 GameObject:
   m_ObjectHideFlags: 0

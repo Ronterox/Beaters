@@ -537,6 +537,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2067395507}
     m_Modifications:
+    - target: {fileID: 1740480761, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: playerPrefKey
+      value: First Time Creator
+      objectReference: {fileID: 0}
     - target: {fileID: 7443447173941443431, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
       propertyPath: m_text
       value: This is the Level editor! \n\nLoad your song, select your bpm and start
@@ -640,23 +644,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
---- !u!1 &440870185 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8171220030494800822, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
-  m_PrefabInstance: {fileID: 440870184}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &440870186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440870185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74283a00cf9887942b75e3f8d07de664, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &470813644
 PrefabInstance:
   m_ObjectHideFlags: 0

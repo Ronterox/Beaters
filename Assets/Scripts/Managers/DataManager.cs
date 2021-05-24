@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Plugins.Tools;
@@ -79,6 +78,9 @@ namespace Managers
         private void Start()
         {
             if (m_Instance != this) return;
+#if UNITY_EDITOR
+            PlayerPrefs.DeleteAll();
+#endif
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }
 

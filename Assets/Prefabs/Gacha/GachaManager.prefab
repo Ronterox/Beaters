@@ -48,35 +48,33 @@ MonoBehaviour:
   - type: 1
     lootTable:
     - loot: {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
-      probability: 50
+      probability: 25
     - loot: {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
-      probability: 50
+      probability: 25
     - loot: {fileID: 11400000, guid: 5cbe8683692276c249979e238ee08ec2, type: 2}
-      probability: 50
+      probability: 25
     - loot: {fileID: 11400000, guid: e6e5f3de18bf2e692963af0f92b02d45, type: 2}
-      probability: 50
+      probability: 25
     - loot: {fileID: 11400000, guid: ff154e146b0e8f61191380744698d584, type: 2}
-      probability: 50
+      probability: 25
   - type: 0
     lootTable:
     - loot: {fileID: 11400000, guid: 2f668823779209642b9baf3c5a18f49a, type: 2}
-      probability: 30
+      probability: 25
     - loot: {fileID: 11400000, guid: 40feead8dc8d467429909c3d0418d7a3, type: 2}
-      probability: 40
+      probability: 25
     - loot: {fileID: 11400000, guid: b2b4ce03143fb114b9394adf7318ad73, type: 2}
-      probability: 40
-    - loot: {fileID: 0}
-      probability: 50
+      probability: 25
     - loot: {fileID: 11400000, guid: 0447b5b56b7b85d4885d52240896376d, type: 2}
-      probability: 30
+      probability: 25
   - type: 2
     lootTable:
     - loot: {fileID: 11400000, guid: aaaa7a2cc3af499bb975e2e691e2e191, type: 2}
-      probability: 20
+      probability: 25
     - loot: {fileID: 11400000, guid: 46bd4372404e80642a494f2f1c6e03f7, type: 2}
       probability: 25
     - loot: {fileID: 11400000, guid: 547c46dfe25d6fa4da8df48c5b9e5665, type: 2}
-      probability: 20
+      probability: 25
     - loot: {fileID: 11400000, guid: 1ce0ba3e289b79c889465534fdb2f3e8, type: 2}
       probability: 25
   imageToChange: {fileID: 0}
@@ -86,5 +84,8 @@ MonoBehaviour:
   itemBannerSprite: {fileID: 21300000, guid: 1475b954eac4420a89b2454a992f5ad3, type: 3}
   ticketText: {fileID: 0}
   moneyText: {fileID: 0}
+  bannerButton: {fileID: 0}
   ticketButton: {fileID: 0}
   moneyButton: {fileID: 0}
+  moneyPopUp: {fileID: 0}
+  ticketPopUp: {fileID: 0}
