@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
   m_Name: Tutorial
   m_EditorClassIdentifier: 
-  songImage: {fileID: 0}
+  songImage: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
   soundMap:
     name: Tutorial
-    mapCreator: 
+    mapCreator: Aaron
     bpm: 120
-    genre: 5
-    audioClip: {fileID: 0}
+    genre: 3
+    audioClip: {fileID: 8300000, guid: f6d7c73269c961e4b9ab9d54965ab383, type: 3}
     audioPath: C:/Users/Marcel/Desktop/beaters/Assets/Audio/SongsTutorialSong.mp3
     notes:
     - id: 0
