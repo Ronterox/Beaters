@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
+using Plugins.GUI;
 using Plugins.Tools;
 using TMPro;
 using UnityEngine;
@@ -66,6 +67,8 @@ namespace Core.Arrow_Game
         public int MapNotesQuantity => m_SoundMap.notes.Length;
         public SoundMap SoundMap => m_SoundMap;
 
+        private int m_TapOffset;
+
         private void Start()
         {
             SoundManager.Instance.StopBackgroundMusic();
@@ -79,6 +82,8 @@ namespace Core.Arrow_Game
             }
 
             ResetPos();
+
+            if (SaveLoadManager.SaveExists(SettingsMenu.SAVED_FILENAME)) m_TapOffset = SaveLoadManager.Load<Settings>(SettingsMenu.SAVED_FILENAME).tapOffset;
         }
 
         public void StartMap()
@@ -217,7 +222,7 @@ namespace Core.Arrow_Game
 
             m_CurrentSong = m_SoundMap.audioClip;
 
-            m_bps = m_SoundMap.bpm / 60 * (float)difficulty;
+            m_bps = m_SoundMap.bpm / 60 * (float)difficulty + m_TapOffset;
 
             float songLength = m_SoundMap.audioClip.length;
 

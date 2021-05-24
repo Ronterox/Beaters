@@ -16,7 +16,7 @@ namespace Gacha
         public GameObject[] bingoBoxes;
         public Button redeemReward;
 
-        private const int OPEN_BINGO_GACHA = 6578;
+        public const int OPEN_BINGO_GACHA = 6578;
 
         private void Start()
         {
@@ -40,7 +40,8 @@ namespace Gacha
                 }
             }
 
-            SetCharacterGUI(GameManager.GetCharacter());
+            ScriptableCharacter character = GameManager.GetCharacter();
+            if(character) SetCharacterGUI(character);
         }
 
         public void SetCharacterGUI(ScriptableCharacter character)

@@ -48,7 +48,7 @@ MonoBehaviour:
   PrefabConfig:
   - InitialObjectCount: 3
     Prefab: {fileID: 2492880569690624280, guid: 2dc900f04ad10964782b4c7748d0e8e4, type: 3}
-    PoolName: Sounds
+    PoolName: SoundFXPool_Item
 --- !u!114 &7439474933589280157
 MonoBehaviour:
   m_ObjectHideFlags: 0

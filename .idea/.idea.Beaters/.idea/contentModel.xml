@@ -199,6 +199,7 @@
             <e p="GachaManager.cs" t="Include" />
             <e p="LockedSongScreen.cs" t="Include" />
             <e p="SelectableRune.cs" t="Include" />
+            <e p="SliderValueToText.cs" t="Include" />
             <e p="SongCarousel.cs" t="Include" />
             <e p="SongCarouselElement.cs" t="Include" />
             <e p="SongRecordScreen.cs" t="Include" />
