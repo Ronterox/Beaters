@@ -8,7 +8,6 @@ public class DialogPopUpMenu : MonoBehaviour
     void Start()
     {
 
-
         if (!PlayerPrefs.HasKey("isFirstTime") || PlayerPrefs.GetInt("isFirstTime") != 1)
         {
             PlayerPrefs.SetInt("isFirstTime", 1);

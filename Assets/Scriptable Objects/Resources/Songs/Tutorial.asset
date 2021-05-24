@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
   m_Name: Tutorial
   m_EditorClassIdentifier: 
-  songImage: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
+  songImage: {fileID: 21300000, guid: 3ba12d8d1a6fb434387d63cf15434e7b, type: 3}
   soundMap:
     name: Tutorial
     mapCreator: Aaron
