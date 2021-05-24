@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
   m_Name: Skyarrow Bridge
   m_EditorClassIdentifier: 
-  songImage: {fileID: 0}
+  songImage: {fileID: 21300000, guid: fd15bd3dcbfb55d4faafb4f10ab305ba, type: 3}
   soundMap:
     name: Skyarrow Bridge
-    mapCreator: 
+    mapCreator: Aaron
     bpm: 120
-    genre: 5
-    audioClip: {fileID: 0}
+    genre: 3
+    audioClip: {fileID: 8300000, guid: c7f758d8c55d454469be4c10f868ff6b, type: 3}
     audioPath: C:/Users/Marcel/Desktop/beaters/Assets/Audio/SongsSkyarrowBridge.mp3
     notes:
     - id: 2
