@@ -2,54 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUp.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/CurvedLineSettings.lighting" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/CurvedLineSettings.lighting.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/Slider.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/Slider.PNG.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/StraightSlider.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/StraightSlider.PNG.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/approachcircle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/approachcircle.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/hitcircle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/hitcircle.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/hitcircleoverlay.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/hitcircleoverlay.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/lineMaterial.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Sprites/Osu Mode/lineMaterial.mat.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Gacha/GachaManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Gacha/GachaManager.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/DialogPopUp.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/DialogPopUp.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpCreator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpCreator.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpGacha.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpGacha.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUp.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpMenu.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpMenu.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpSong.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpSong.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/CurvedLineSettings.lighting" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/CurvedLineSettings.lighting.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/Slider.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/Slider.PNG.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/StraightSlider.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/StraightSlider.PNG.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/approachcircle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/approachcircle.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/hitcircle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/hitcircle.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/hitcircleoverlay.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/hitcircleoverlay.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/lineMaterial.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/osuMode/lineMaterial.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Level Editor ArrowGame.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/MainMenu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/GachaMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/GachaMenu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/SongSelector.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,8 +99,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/ButtonBrancher.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/FeedbackText.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" />
@@ -161,7 +117,6 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/TimerUI.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleFeedbackObjectPooler.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/Editor/SelectableButtonEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
@@ -177,7 +132,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/SlowTimeSkill.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SliderValueToText.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
@@ -192,6 +146,10 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUp.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/TutorialButtons.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -278,7 +236,7 @@
       <workItem from="1621613719928" duration="10305000" />
       <workItem from="1621625419730" duration="996000" />
       <workItem from="1621779109394" duration="10324000" />
-      <workItem from="1621853725459" duration="2365000" />
+      <workItem from="1621853725459" duration="6654000" />
     </task>
     <servers />
   </component>

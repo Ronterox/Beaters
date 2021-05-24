@@ -55,8 +55,8 @@ namespace Managers
         private Vector3 m_SkillSliderPosition;
 
         public bool CanLose { get; set; } = true;
-        
-        private const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
+
+        private int m_MaxMoneyGain, m_MinMoneyGain;
 
         //POWERS RELATED VARIABLES
         public bool CanMiss { get; set; } = true;
@@ -174,7 +174,7 @@ namespace Managers
         public static IEnumerator SlowTimeCoroutine(float duration, float objective, Action afterSlowingTime)
         {
             AudioSource sound = SoundManager.Instance.backgroundAudioSource;
-            
+
             var currentTime = 0f;
             float startValue = Time.timeScale;
             while (duration > currentTime)
@@ -235,7 +235,28 @@ namespace Managers
 
             SoundMap soundMap = GameManager.GetSoundMap();
 
-            SetSongValues(soundMap.audioClip.length, soundMap.notes.Length);
+            float audioClipLength = soundMap.audioClip.length;
+            int notesLength = soundMap.notes.Length;
+
+            const float short_song_length = 60, medium_song_length = 120;
+
+            if (audioClipLength < short_song_length)
+            {
+                m_MaxMoneyGain = 34;
+                m_MinMoneyGain = 17;
+            }
+            else if (audioClipLength < medium_song_length)
+            {
+                m_MaxMoneyGain = 50;
+                m_MinMoneyGain = 25;
+            }
+            else
+            {
+                m_MaxMoneyGain = 100;
+                m_MinMoneyGain = 50;
+            }
+
+            SetSongValues(audioClipLength, notesLength);
             songTimer.StartTimer();
 
             mapScroller.SetSoundMap(soundMap, true);
@@ -304,8 +325,11 @@ namespace Managers
 
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
 
-            var accuracyGain = (int)Mathf.Round(accuracy * MoneyMultiplier);
-            var comboGain = (int)Mathf.Round(m_HighestCombo * MoneyMultiplier);
+            float rng = Random.Range(m_MinMoneyGain, m_MaxMoneyGain);
+            const float percentageGainLimiter = .10f;
+
+            int accuracyGain = Mathf.RoundToInt((accuracy * percentageGainLimiter + rng) * MoneyMultiplier),
+                comboGain = Mathf.RoundToInt((m_HighestCombo * percentageGainLimiter + rng) * MoneyMultiplier);
 
             m_Data.money += accuracyGain + comboGain;
             m_Data.tapsDone += m_Taps;
@@ -347,42 +371,40 @@ namespace Managers
         /// <summary>
         /// Logic for missing an arrow without tapping
         /// </summary>
-        public static void MissArrow()
+        public void MissArrow()
         {
             // Can miss check in case of power
-            if (!m_Instance || !m_Instance.CanMiss) return;
+            if (!CanMiss) return;
 
-            if (m_Instance.m_Combo > m_Instance.MinimumCombo)
+            if (m_Combo > MinimumCombo)
             {
                 CheckHighestCombo();
                 //Reset combo to 0
-                m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
+                comboText.text = $"x{m_Combo = 0}";
             }
 
-            if (m_Instance.FreeTapsCount > ++m_Instance.m_MissedTaps) return;
+            if (FreeTapsCount > ++m_MissedTaps) return;
 
-            Character character = m_Instance.currentCharacter;
+            Character character = currentCharacter;
 
-            if (m_Instance.CanLose && !character.IsDead) character.TakeDamage(m_Instance.MinimumDamage);
+            if (CanLose && !character.IsDead) character.TakeDamage(MinimumDamage);
         }
 
         /// <summary>
         /// Saves highest combo
         /// </summary>
-        private static void CheckHighestCombo()
+        private void CheckHighestCombo()
         {
-            int combo = m_Instance.m_Combo;
-            if (combo > m_Instance.m_HighestCombo) m_Instance.m_HighestCombo = combo;
+            int combo = m_Combo;
+            if (combo > m_HighestCombo) m_HighestCombo = combo;
         }
 
         /// <summary>
         /// Logic for missing an arrow by tapping
         /// </summary>
-        public static void MissArrowTap()
+        public void MissArrowTap()
         {
-            if (!m_Instance) return;
-
-            m_Instance.m_Taps++;
+            m_Taps++;
             MissArrow();
         }
 
@@ -394,24 +416,22 @@ namespace Managers
         /// <param name="feedbackColor"></param>
         /// <param name="isCombo"></param>
         /// <param name="comboLength"></param>
-        public static void HitArrow(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo = false, int comboLength = 0)
+        public void HitArrow(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo = false, int comboLength = 0)
         {
-            if (!m_Instance) return;
-
             //Increment combo, taps, notes hit for player stats
-            m_Instance.m_Taps++;
-            m_Instance.m_NotesHit++;
-            m_Instance.skillBarSlider.value++;
+            m_Taps++;
+            m_NotesHit++;
+            skillBarSlider.value++;
 
-            m_Instance.skillGainTextPooler.ShowText($"+1", m_Instance.m_SkillSliderPosition);
+            skillGainTextPooler.ShowText($"+1", m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
-            int points = Mathf.RoundToInt((int)hitType * ++m_Instance.m_Combo * m_Instance.Multiplier);
+            int points = Mathf.RoundToInt((int)hitType * ++m_Combo * Multiplier);
 
-            m_Instance.scoreText.text = $"{m_Instance.m_Score += points}";
-            m_Instance.comboText.text = $"x{m_Instance.m_Combo}";
+            scoreText.text = $"{m_Score += points}";
+            comboText.text = $"x{m_Combo}";
 
-            Slider bar = m_Instance.scoreBar;
+            Slider bar = scoreBar;
 
             float newScoreValue = bar.value + points;
             bar.value = newScoreValue % bar.maxValue;
@@ -419,31 +439,31 @@ namespace Managers
             //Increment the start count if went upper the score limit
             if (newScoreValue >= bar.maxValue)
             {
-                m_Instance.starsCounter.text = $"{++m_Instance.m_StarsCount}";
+                starsCounter.text = $"{++m_StarsCount}";
             }
 
-            if (m_Instance.EveryNoteGivesMoney) GiveMoney();
+            if (EveryNoteGivesMoney) m_Data.money += (int)(Random.Range(m_MinMoneyGain, m_MaxMoneyGain) * .10f * MoneyMultiplier);
 
             //Check if is combo or if is in middle of a combo and give prize
             if (isCombo)
             {
-                if (m_Instance.ComboTimeHeal) m_Instance.currentCharacter.Heal(m_Instance.HealingValueComboTime);
-                //TODO: Responsive money gain, damage done and skill gain
+                if (ComboTimeHeal) currentCharacter.Heal(HealingValueComboTime);
 
-                bool completedCombo = ++m_Instance.m_ComboPrizeCounter >= comboLength;
-                m_Instance.skillBarSlider.value += completedCombo ? (maxMoneyGain + minMoneyGain) * comboLength : maxMoneyGain + minMoneyGain;
+                bool completedCombo = ++m_ComboPrizeCounter >= comboLength;
 
-                m_Instance.skillGainTextPooler.ShowText($"+{maxMoneyGain + minMoneyGain}", m_Instance.m_SkillSliderPosition);
+                float rng = Random.Range(m_MinMoneyGain, m_MaxMoneyGain);
+                
+                float totalGain = completedCombo ? rng * comboLength * .05f : rng * .05f;
 
-                GiveMoney();
+                skillBarSlider.value += totalGain;
+
+                skillGainTextPooler.ShowText($"+{totalGain}", m_SkillSliderPosition);
             }
             else
-                m_Instance.m_ComboPrizeCounter = 0;
+                m_ComboPrizeCounter = 0;
 
             //Hit Feedback
-            m_Instance.feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
+            feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
         }
-
-        private static void GiveMoney() => m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
     }
 }
