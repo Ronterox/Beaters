@@ -18,7 +18,8 @@ namespace Gacha
         public CanvasGroup canvasGroup;
 
         [Header("Reward Config")]
-        public SpriteRenderer rewardSpriteRenderer;
+        public Transform rewardTransform;
+        public SpriteRenderer[] sprites;
         public Vector3 position, positionReward, scale, scaleReward;
 
         [Header("Animation Config")]
@@ -54,21 +55,32 @@ namespace Gacha
 
             SetRewardObject();
 
-            Transform reward = rewardSpriteRenderer.transform;
-
-            reward.DOMove(positionReward, moveScaleDuration);
-            reward.DOScale(scaleReward, moveScaleDuration);
+            rewardTransform.DOMove(positionReward, moveScaleDuration);
+            rewardTransform.DOScale(scaleReward, moveScaleDuration);
 
             canvasGroup.alpha = 1;
             canvasGroup.DOFade(0f, fadeDuration).OnComplete(timeline.Play);
         }
 
-        private void SetRewardObject() => rewardSpriteRenderer.sprite = GameManager.GetPrize() switch
+        private void SetRewardObject()
         {
-            ScriptableCharacter character => character.sprites[0],
-            ScriptableItem item => item.itemSprite,
-            ScriptableRune rune => rune.runeSprite,
-            _ => rewardSpriteRenderer.sprite
-        };
+            ScriptableObject[] prizes = GameManager.GetPrizes();
+
+            for (var i = 0; i < prizes.Length; i++)
+            {
+                SpriteRenderer currentRenderer = sprites[i];
+                currentRenderer.gameObject.SetActive(true);
+                currentRenderer.sprite = GetPrizeVisualization(prizes[i]);
+            }
+        }
+
+        private Sprite GetPrizeVisualization(ScriptableObject scriptableObject) =>
+            scriptableObject switch
+            {
+                ScriptableCharacter character => character.sprites[0],
+                ScriptableItem item => item.itemSprite,
+                ScriptableRune rune => rune.runeSprite,
+                _ => null
+            };
     }
 }

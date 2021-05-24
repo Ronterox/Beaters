@@ -3,11 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Press_Start_2P/PressStart2P-Regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Press_Start_2P/PressStart2P-Regular SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/Rapper/Rapper/Girassol-Regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/Rapper/Rapper/Girassol-Regular SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gacha Reward.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gacha Reward.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +111,6 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Scripts/FileBrowser.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/DOTween/Modules/DOTweenModulePhysics2D.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SaveLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
@@ -130,11 +130,9 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/ExtraScoreSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/ReviveChanceSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/SlowTimeSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SliderValueToText.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/Pooler.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
@@ -150,6 +148,9 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -236,7 +237,7 @@
       <workItem from="1621613719928" duration="10305000" />
       <workItem from="1621625419730" duration="996000" />
       <workItem from="1621779109394" duration="10324000" />
-      <workItem from="1621853725459" duration="6654000" />
+      <workItem from="1621853725459" duration="10954000" />
     </task>
     <servers />
   </component>
