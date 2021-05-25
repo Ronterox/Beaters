@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Plugins.UI
 {
     /// <summary>
-    /// You are supposed to make your own class which will inherit from this, and then use the CreateElement method to instantitate your type of UICarrouselElement
+    /// You are supposed to make your own class which will inherit from this, and then use the CreateElement method to instantiate your type of UICarrouselElement
     /// Don't forget to also inherit the custom editor
     /// </summary>
     public class UICarousel : ScrollRect
@@ -151,7 +151,7 @@ namespace Plugins.UI
                 newNormalizedPosition.y = Mathf.Clamp01(newNormalizedPosition.y);
             }
 
-            DOTween.To(() => normalizedPosition, x => normalizedPosition = x, newNormalizedPosition, 1f / scrollSpeed).SetEase(scrollEase);
+            DG.Tweening.DOTween.To(() => normalizedPosition, x => normalizedPosition = x, newNormalizedPosition, 1f / scrollSpeed).SetEase(scrollEase);
         }
 
         private Vector3 GetWidgetWorldPoint(RectTransform target)

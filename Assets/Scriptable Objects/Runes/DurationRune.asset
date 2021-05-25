@@ -13,8 +13,5 @@ MonoBehaviour:
   m_Name: DurationRune
   m_EditorClassIdentifier: 
   runeName: Duration rune
-  value: 10
-  probability: 50
-  effect: +1% duration to active skills
-  spriteOfTheRune: {fileID: 0}
-  nameOfTheSet: 3
+  effectDescription: Extra 1 second duration for active skills
+  runeSprite: {fileID: 21300000, guid: 089872be0ef7f20e6ad2fc7087d9f945, type: 3}

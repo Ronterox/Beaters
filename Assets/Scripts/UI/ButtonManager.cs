@@ -19,9 +19,9 @@ namespace UI
     {
         public MenuButton[] menuButtons;
 
-        private void Start() => menuButtons.ForEach(button => button.button.onClick.AddListener(() => LoadScene(button.scene)));
+        private void Start() => menuButtons.ForEach(menuButton => menuButton.button.onClick.AddListener(() => LoadScene(menuButton.scene)));
 
-        public void LoadScene(string sceneName) => LevelLoadManager.LoadSceneWithTransition(sceneName, .5f);
+        private void LoadScene(string sceneName) => LevelLoadManager.LoadSceneWithTransition(sceneName, .5f);
 
         public void ReloadScene() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 

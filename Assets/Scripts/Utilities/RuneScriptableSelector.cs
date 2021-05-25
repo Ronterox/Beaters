@@ -1,20 +1,35 @@
-using System.Collections.Generic;
 using Managers;
+using Plugins.UI;
 using ScriptableObjects;
+using UI;
+using UnityEngine;
 
 namespace Utilities
 {
-    public class RuneScriptableSelector : ScriptableSelector<ScriptableRune>
+    public class RuneScriptableSelector : MonoBehaviour
     {
-        protected override List<ushort> GetObjectIds() => DataManager.GetRunesIds();
+        public Transform content;
+        public GameObject template;
+        [Space]
+        public ScriptableRune[] gameRunes;
+        public ImageText selectedRune;
 
-        protected override void SetObject()
+        private void Start()
         {
-            ScriptableRune rune = m_PlayerObjects[m_Index];
-
-            objectImage.sprite = rune.runeSprite;
-
-            GameManager.PutRune(rune);
+            template.SetActive(false);
+            
+            foreach (ScriptableRune scriptableRune in gameRunes)
+            {
+                var rune = Instantiate(template, content).GetComponent<SelectableRune>();
+                rune.Set(scriptableRune);
+                
+                rune.button.onClick.AddListener(() =>
+                    {
+                        gameObject.SetActive(false);
+                        GameManager.PutRune(scriptableRune);
+                        selectedRune.Set(scriptableRune.runeName, scriptableRune.runeSprite);
+                    });
+            }
         }
     }
 }

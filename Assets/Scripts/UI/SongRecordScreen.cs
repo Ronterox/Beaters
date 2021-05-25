@@ -1,4 +1,3 @@
-using General;
 using Managers;
 using Plugins.Audio;
 using ScriptableObjects;
@@ -10,10 +9,14 @@ namespace UI
 {
     public class SongRecordScreen : MonoBehaviour
     {
-        public Image characterImage;
-        public TMP_Text scoreText, gradeText, comboText, accuracyText;
+        public Image songRecordImage, characterImage;
+        
+        [Space]
+        public TMP_Text scoreText;
+        public TMP_Text gradeText, comboText, accuracyText, songTimeText;
+        
+        [Space]
         public Button playButton;
-
         private Song m_Song;
 
         private void Start() => playButton.onClick.AddListener(() =>
@@ -22,13 +25,14 @@ namespace UI
             LevelLoadManager.LoadArrowGameplayScene();
         });
         
-        public void ShowRecordScreen(Sprite sprite, int score, string grade, int combo, float accuracy)
+        public void ShowRecordScreen(Sprite sprite, int score, string grade, int combo, float accuracy, float time)
         {
             characterImage.sprite = sprite;
             scoreText.text = $"Score: {score}";
             comboText.text = $"Highest Combo: {combo}";
-            accuracyText.text = $"{accuracy}%";
-            gradeText.text = grade;
+            accuracyText.text = $"Accuracy: {accuracy}%";
+            gradeText.text = $"Grade: {grade}";
+            songTimeText.text = $"Length: {Mathf.Floor(time * 0.016665f) % 60:00}:{time % 60:00}";
         }
 
         public void ShowRecordScreen(Song song)
@@ -36,11 +40,17 @@ namespace UI
             gameObject.SetActive(true);
             
             SoundManager.Instance.PlayBackgroundMusicNoFade(song.soundMap.audioClip);
+
+            SerializableSong serializableSong = DataManager.GetSong(song.ID);
             
-            //TODO: serialize this song values
-            ShowRecordScreen(song.songImage, 100, "SSS", 50, 75);
+            ShowRecordScreen(GameManager.GetCharacter().sprites[0], serializableSong.highestScore, 
+                             "No Grade", 
+                             serializableSong.highestCombo, 
+                             serializableSong.accuracy, song.soundMap.audioClip.length);
             
             m_Song = song;
+
+            songRecordImage.sprite = song.songImage;
         }
     }
 }

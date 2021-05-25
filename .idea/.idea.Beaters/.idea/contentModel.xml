@@ -9,6 +9,17 @@
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Fonts" t="Include">
+          <e p="Creepster" t="Include">
+            <e p="OFL.txt" t="Include" />
+          </e>
+          <e p="Kpop" t="Include">
+            <e p="OFL.txt" t="Include" />
+          </e>
+          <e p="Press_Start_2P" t="Include">
+            <e p="OFL.txt" t="Include" />
+          </e>
+        </e>
         <e p="Plugins" t="Include">
           <e p="Audio" t="Include">
             <e p="ObjectPool.cs" t="Include" />
@@ -31,6 +42,9 @@
             <e p="readme.txt" t="Include" />
           </e>
           <e p="GUI" t="Include">
+            <e p="Editor" t="Include">
+              <e p="SelectableButtonEditor.cs" t="Include" />
+            </e>
             <e p="PauseMenu.cs" t="Include" />
             <e p="SelectableButton.cs" t="Include" />
             <e p="SettingsMenu.cs" t="Include" />
@@ -102,6 +116,7 @@
               <e p="UICarouselEditor.cs" t="Include" />
               <e p="UICarouselElementEditor.cs" t="Include" />
             </e>
+            <e p="ImageText.cs" t="Include" />
             <e p="UICarousel.cs" t="Include" />
             <e p="UICarouselElement.cs" t="Include" />
           </e>
@@ -121,12 +136,15 @@
             </e>
           </e>
           <e p="Gacha" t="Include">
+            <e p="BingoManager.cs" t="Include" />
             <e p="GachaBox.cs" t="Include" />
             <e p="GlowRotate.cs" t="Include" />
           </e>
           <e p="General" t="Include">
             <e p="Character.cs" t="Include" />
+            <e p="FeedbackText.cs" t="Include" />
             <e p="IdentifiedScriptable.cs" t="Include" />
+            <e p="SimpleFeedbackObjectPooler.cs" t="Include" />
             <e p="StartSoundManager.cs" t="Include" />
             <e p="TutorialButtons.cs" t="Include" />
           </e>
@@ -149,23 +167,40 @@
             <e p="SliderControl.cs" t="Include" />
           </e>
           <e p="ScriptableObjects" t="Include">
+            <e p="Runes" t="Include">
+              <e p="DurationRune.cs" t="Include" />
+              <e p="ScoreRune.cs" t="Include" />
+              <e p="SkillRequirementRune.cs" t="Include" />
+            </e>
             <e p="ScriptableCharacter.cs" t="Include" />
             <e p="ScriptableItem.cs" t="Include" />
             <e p="ScriptableRune.cs" t="Include" />
             <e p="ScriptableSkill.cs" t="Include" />
+            <e p="Skills" t="Include">
+              <e p="ExtraScoreSkill.cs" t="Include" />
+              <e p="FreeTapSkill.cs" t="Include" />
+              <e p="HealSkill.cs" t="Include" />
+              <e p="InmunitySkill.cs" t="Include" />
+              <e p="LessDamageSkill.cs" t="Include" />
+              <e p="MinimumComboSkill.cs" t="Include" />
+              <e p="MoneySkill.cs" t="Include" />
+              <e p="MultiplierSkill.cs" t="Include" />
+              <e p="ReviveChanceSkill.cs" t="Include" />
+              <e p="SlowTimeSkill.cs" t="Include" />
+            </e>
             <e p="Song.cs" t="Include" />
           </e>
-          <e p="Skills" t="Include">
-            <e p="InmunitySkill.cs" t="Include" />
-            <e p="MultiplierSkill.cs" t="Include" />
-          </e>
           <e p="UI" t="Include">
+            <e p="ButtonBrancher.cs" t="Include" />
             <e p="ButtonManager.cs" t="Include" />
+            <e p="DialogPopUp.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="SongCarouselEditor.cs" t="Include" />
             </e>
             <e p="GachaManager.cs" t="Include" />
             <e p="LockedSongScreen.cs" t="Include" />
+            <e p="SelectableRune.cs" t="Include" />
+            <e p="SliderValueToText.cs" t="Include" />
             <e p="SongCarousel.cs" t="Include" />
             <e p="SongCarouselElement.cs" t="Include" />
             <e p="SongRecordScreen.cs" t="Include" />
@@ -173,9 +208,9 @@
           <e p="Utilities" t="Include">
             <e p="CharacterScriptableSelector.cs" t="Include" />
             <e p="HoldableButton.cs" t="Include" />
+            <e p="PopUp.cs" t="Include" />
             <e p="Rotation.cs" t="Include" />
             <e p="RuneScriptableSelector.cs" t="Include" />
-            <e p="ScriptableSelector.cs" t="Include" />
             <e p="SongMapMaker.cs" t="Include" />
             <e p="StateEventCaller.cs" t="Include" />
             <e p="Turbulence.cs" t="Include" />
@@ -188,18 +223,13 @@
         </e>
         <e p="Sprites" t="Include">
           <e p="Interface" t="Include">
-            <e p="Gamer" t="Include">
-              <e p="Press_Start_2P" t="Include">
+            <e p="DJ" t="Include">
+              <e p="DJ" t="Include">
                 <e p="OFL.txt" t="Include" />
               </e>
             </e>
-            <e p="Kpoper" t="Include">
-              <e p="Kpop" t="Include">
-                <e p="OFL.txt" t="Include" />
-              </e>
-            </e>
-            <e p="Metalhead" t="Include">
-              <e p="Creepster" t="Include">
+            <e p="Rapper" t="Include">
+              <e p="Rapper" t="Include">
                 <e p="OFL.txt" t="Include" />
               </e>
             </e>

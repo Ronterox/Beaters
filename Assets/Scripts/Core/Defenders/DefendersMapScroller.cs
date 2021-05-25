@@ -19,16 +19,16 @@ namespace Core.Defenders
         {
             switch (direction)
             {
-                case Direction.left:
+                case Direction.Left:
                     transform.position -= new Vector3(bps * SoundManager.songDeltaTime, 0f, 0f);
                     break;
-                case Direction.right:
+                case Direction.Right:
                     transform.position += new Vector3(bps * SoundManager.songDeltaTime, 0f, 0f);
                     break;
-                case Direction.up:
+                case Direction.Up:
                     transform.position += new Vector3(0f, bps * SoundManager.songDeltaTime, 0f);
                     break;
-                case Direction.down:
+                case Direction.Down:
                     transform.position -= new Vector3(0f, bps * SoundManager.songDeltaTime, 0f);
                     break;
             }

@@ -42,6 +42,7 @@ namespace Gacha
             if (m_SawPrize)
             {
                 m_CanClick = false;
+                GameManager.PutValue(BingoManager.OPEN_BINGO_GACHA);
                 LevelLoadManager.LoadSceneWithTransition(gachaMenuScene, .5f);
             }
             else AnimateBox();

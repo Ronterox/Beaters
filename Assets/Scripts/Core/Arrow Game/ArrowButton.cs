@@ -11,34 +11,33 @@ namespace Core.Arrow_Game
     {
         public Camera mainCamera;
 
-        [Header("Animations")]
-        public float animationDuration;
-        public Vector3 targetScale;
-        private Vector3 m_DefaultScale;
-
         [Plugins.Properties.ReadOnly]
         public bool isNoteAbove;
 
         public bool canBeClick = true;
 
+        private Tween m_ClickAnimation;
+        private float buttonHeight;
+
 #if UNITY_ANDROID || UNITY_IPHONE
         private const int TOUCH_MAX_DISTANCE = 2;
 #endif
-        public delegate void ButtonEvent();
+        public delegate void ButtonEvent(float buttonHeight);
 
         public event ButtonEvent onButtonPress;
 
         private void Awake()
         {
             if (!mainCamera) mainCamera = Camera.main;
+            buttonHeight = transform.position.y;
         }
 
-        private void Start() => m_DefaultScale = transform.localScale;
+        private void Start() => m_ClickAnimation = transform.DOShakeScale(.5f, .5f,10,0).SetAutoKill(false);
 
         public void PressButton()
         {
             CheckButton();
-            onButtonPress?.Invoke();
+            onButtonPress?.Invoke(buttonHeight);
         }
 
 
@@ -78,7 +77,8 @@ namespace Core.Arrow_Game
         {
             if (!isNoteAbove) GameplayManager.MissArrowTap();
             //Arrow animation with tween
-            transform.DOScale(targetScale, animationDuration).OnComplete(() => transform.DOScale(m_DefaultScale, animationDuration));
+            m_ClickAnimation.Restart();
+            m_ClickAnimation.Play();
         }
     }
 }

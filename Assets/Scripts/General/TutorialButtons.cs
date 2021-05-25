@@ -10,10 +10,12 @@ namespace General
 
         private void Start()
         {
-            if (DataManager.Instance.CharacterCount < 1) canvasGroups.ForEach(button =>
+            if (DataManager.Instance.CharacterCount >= 1) return;
+
+            canvasGroups.ForEach(group =>
             {
-                button.interactable = false;
-                button.alpha = .5f;
+                group.interactable = false;
+                group.alpha = .5f;
             });
         }
     }

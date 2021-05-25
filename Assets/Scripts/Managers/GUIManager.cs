@@ -44,14 +44,14 @@ namespace Managers
 
             character = characters.First(c => c.ID == randomCharacter);
             GameManager.PutCharacter(character);
-            
+
             return character;
         }
 
         public void SetCharacterGUI(ScriptableCharacter character)
         {
             Palette palette = character.colorPalette;
-            
+
             SetSprite(gachaLogo, character.gachaButton);
             SetSprite(mapCreator, character.mapCreator);
             SetSprite(backgroundImage, character.backgroundImage);
@@ -60,9 +60,10 @@ namespace Managers
             if (character.usePrimaryColorInButtons) images.ForEach(image => image.image.color = palette.GetColor(image.paletteColor));
             else images.ForEach(image => image.image.color = Color.white);
 
-            playButtons?.ForEach(image => SetSprite(image, character.playButton));
-
-            buttonsToChange?.ForEach(button => button.sprite = character.buttonLayout);
+            playButtons.ForEach(image => SetSprite(image, character.playButton));
+            
+            buttonsToChange.ForEach(button => button.sprite = character.buttonLayout);
+            
             textsOfTheUI.ForEach(text => text.font = character.font);
         }
 

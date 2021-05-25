@@ -63,7 +63,7 @@ namespace SimpleFileBrowser
                 this.name = name;
 
                 extension = extension.ToLowerInvariant();
-                extensions = new HashSet<string> { extension };
+                extensions = new HashSet<string>() { extension };
                 defaultExtension = extension;
             }
 
@@ -71,7 +71,7 @@ namespace SimpleFileBrowser
             {
                 this.name = name;
 
-                for (int i = 0; i < extensions.Length; i++)
+                for (var i = 0; i < extensions.Length; i++)
                     extensions[i] = extensions[i].ToLowerInvariant();
 
                 this.extensions = new HashSet<string>(extensions);
@@ -80,7 +80,7 @@ namespace SimpleFileBrowser
 
             public override string ToString()
             {
-                string result = string.Empty;
+                var result = string.Empty;
 
                 if (name != null)
                     result += name;
@@ -90,7 +90,7 @@ namespace SimpleFileBrowser
                     if (name != null)
                         result += " (";
 
-                    int index = 0;
+                    var index = 0;
                     foreach (string extension in extensions)
                     {
                         if (index++ > 0)
@@ -130,7 +130,7 @@ namespace SimpleFileBrowser
             set => m_askPermissions = value;
         }
 
-        private static bool m_singleClickMode = false;
+        private static bool m_singleClickMode;
         public static bool SingleClickMode
         {
             get => m_singleClickMode;
@@ -160,20 +160,21 @@ namespace SimpleFileBrowser
             get { return m_displayHiddenFilesToggle; }
             set
             {
-                if (m_displayHiddenFilesToggle == value) return;
-                
-                m_displayHiddenFilesToggle = value;
-
-                if (m_instance)
+                if (m_displayHiddenFilesToggle != value)
                 {
-                    if (!value)
-                        m_instance.showHiddenFilesToggle.gameObject.SetActive(false);
-                    else if (m_instance.windowTR.sizeDelta.x >= m_instance.narrowScreenWidth)
+                    m_displayHiddenFilesToggle = value;
+
+                    if (m_instance)
                     {
+                        if (!value)
+                            m_instance.showHiddenFilesToggle.gameObject.SetActive(false);
+                        else if (m_instance.windowTR.sizeDelta.x >= m_instance.narrowScreenWidth)
+                        {
 #if !UNITY_EDITOR && UNITY_ANDROID
 							if( !FileBrowserHelpers.ShouldUseSAF )
 #endif
-                        m_instance.showHiddenFilesToggle.gameObject.SetActive(true);
+                            m_instance.showHiddenFilesToggle.gameObject.SetActive(true);
+                        }
                     }
                 }
             }
@@ -212,14 +213,13 @@ namespace SimpleFileBrowser
             get => m_foldersFilterText;
             set
             {
-                if (m_foldersFilterText != value)
-                {
-                    string oldValue = m_foldersFilterText;
-                    m_foldersFilterText = value;
+                if (m_foldersFilterText == value) return;
+                
+                string oldValue = m_foldersFilterText;
+                m_foldersFilterText = value;
 
-                    if (m_instance && m_instance.filtersDropdown.options[0].text == oldValue)
-                        m_instance.filtersDropdown.options[0].text = value;
-                }
+                if (m_instance && m_instance.filtersDropdown.options[0].text == oldValue)
+                    m_instance.filtersDropdown.options[0].text = value;
             }
         }
 
@@ -230,31 +230,37 @@ namespace SimpleFileBrowser
             get => m_pickFolderQuickLinkText;
             set
             {
-                if (m_pickFolderQuickLinkText == value) return;
-                
-                m_pickFolderQuickLinkText = value;
-
-                if (m_instance)
+                if (m_pickFolderQuickLinkText != value)
                 {
-                    foreach (FileBrowserQuickLink quickLink in m_instance.allQuickLinks.Where(quickLink => quickLink && quickLink.TargetPath == SAF_PICK_FOLDER_QUICK_LINK_PATH))
+                    m_pickFolderQuickLinkText = value;
+
+                    if (m_instance)
                     {
-                        quickLink.SetQuickLink(m_instance.driveIcon, value, SAF_PICK_FOLDER_QUICK_LINK_PATH);
-                        break;
+                        for (var i = 0; i < m_instance.allQuickLinks.Count; i++)
+                        {
+                            FileBrowserQuickLink quickLink = m_instance.allQuickLinks[i];
+                            if (quickLink && quickLink.TargetPath == SAF_PICK_FOLDER_QUICK_LINK_PATH)
+                            {
+                                quickLink.SetQuickLink(m_instance.driveIcon, value, SAF_PICK_FOLDER_QUICK_LINK_PATH);
+                                break;
+                            }
+                        }
                     }
                 }
             }
         }
 
-        private static FileBrowser m_instance = null;
+        private static FileBrowser m_instance;
         private static FileBrowser Instance
         {
             get
             {
-                if (m_instance) return m_instance;
-                
-                m_instance = Instantiate(Resources.Load<GameObject>("SimpleFileBrowserCanvas")).GetComponent<FileBrowser>();
-                DontDestroyOnLoad(m_instance.gameObject);
-                m_instance.gameObject.SetActive(false);
+                if (!m_instance)
+                {
+                    m_instance = Instantiate(Resources.Load<GameObject>("SimpleFileBrowserCanvas")).GetComponent<FileBrowser>();
+                    DontDestroyOnLoad(m_instance.gameObject);
+                    m_instance.gameObject.SetActive(false);
+                }
 
                 return m_instance;
             }
@@ -569,8 +575,8 @@ namespace SimpleFileBrowser
 					else
 #endif
                     {
-                        foreach (FileBrowserQuickLink browserQuickLink in allQuickLinks)
-                            browserQuickLink.SetSelected(browserQuickLink.TargetPath == m_currentPath);
+                        for (var i = 0; i < allQuickLinks.Count; i++)
+                            allQuickLinks[i].SetSelected(allQuickLinks[i].TargetPath == m_currentPath);
                     }
                 }
 
@@ -585,16 +591,17 @@ namespace SimpleFileBrowser
             get => m_searchString;
             set
             {
-                if (m_searchString == value) return;
-                
-                m_searchString = value;
-                searchInputField.text = m_searchString;
+                if (m_searchString != value)
+                {
+                    m_searchString = value;
+                    searchInputField.text = m_searchString;
 
-                RefreshFiles(false);
+                    RefreshFiles(false);
+                }
             }
         }
 
-        private bool m_acceptNonExistingFilename = false;
+        private bool m_acceptNonExistingFilename;
         private bool AcceptNonExistingFilename
         {
             get => m_acceptNonExistingFilename;
@@ -638,14 +645,14 @@ namespace SimpleFileBrowser
         private bool m_multiSelectionToggleSelectionMode;
         internal bool MultiSelectionToggleSelectionMode
         {
-            get { return m_multiSelectionToggleSelectionMode; }
+            get => m_multiSelectionToggleSelectionMode;
             private set
             {
                 if (m_multiSelectionToggleSelectionMode != value)
                 {
                     m_multiSelectionToggleSelectionMode = value;
 
-                    for (int i = 0; i < allItems.Count; i++)
+                    for (var i = 0; i < allItems.Count; i++)
                     {
                         if (allItems[i].gameObject.activeSelf)
                             allItems[i].SetSelected(selectedFileEntries.Contains(allItems[i].Position));
@@ -865,7 +872,7 @@ namespace SimpleFileBrowser
 
         void IListViewAdapter.SetItemContent(ListItem item)
         {
-            FileBrowserItem file = (FileBrowserItem)item;
+            var file = (FileBrowserItem)item;
             FileSystemEntry fileInfo = validFileEntries[item.Position];
 
             file.SetFile(GetIconForFileEntry(fileInfo), fileInfo.Name, fileInfo.IsDirectory);
@@ -926,14 +933,13 @@ namespace SimpleFileBrowser
             }
 
 #if UNITY_EDITOR || ( !UNITY_ANDROID && !UNITY_WSA && !UNITY_WSA_10_0 )
-            for (int i = 0; i < quickLinks.Length; i++)
+            foreach (QuickLink quickLink in quickLinks)
             {
-                QuickLink quickLink = quickLinks[i];
                 string quickLinkPath = Environment.GetFolderPath(quickLink.target);
 #if UNITY_STANDALONE_OSX
-				// Documents folder must be appended manually on Mac OS
-				if( quickLink.target == Environment.SpecialFolder.MyDocuments && !string.IsNullOrEmpty( quickLinkPath ) )
-					quickLinkPath = Path.Combine( quickLinkPath, "Documents" );
+                // Documents folder must be appended manually on Mac OS
+                if( quickLink.target == Environment.SpecialFolder.MyDocuments && !string.IsNullOrEmpty( quickLinkPath ) )
+                    quickLinkPath = Path.Combine( quickLinkPath, "Documents" );
 #endif
 
                 AddQuickLink(quickLink.icon, quickLink.name, quickLinkPath);
@@ -947,7 +953,7 @@ namespace SimpleFileBrowser
         {
             // Check if drives has changed since the last refresh
 #if !UNITY_EDITOR && UNITY_ANDROID
-			string drivesList = FileBrowserHelpers.AJC.CallStatic<string>( "GetExternalDrives" );
+			string drivesList = FileBrowserHelpers.AJC.CallStatic<string>( "GetExternalDrives", FileBrowserHelpers.Context );
 			if( drivesList == driveQuickLinks || ( string.IsNullOrEmpty( drivesList ) && string.IsNullOrEmpty( driveQuickLinks ) ) )
 				return;
 
@@ -959,8 +965,7 @@ namespace SimpleFileBrowser
             {
                 bool drivesListHasntChanged = !drives.Where((t, i) => t != driveQuickLinks[i]).Any();
 
-                if (drivesListHasntChanged)
-                    return;
+                if (drivesListHasntChanged) return;
             }
 
             driveQuickLinks = drives;
@@ -985,67 +990,67 @@ namespace SimpleFileBrowser
 				bool defaultPathInitialized = false;
 				int driveIndex = 1;
 				string[] drives = drivesList.Split( ':' );
-				for( int i = 0; i < drives.Length; i++ )
-				{
-					try
-					{
-						//string driveName = new DirectoryInfo( drives[i] ).Name;
-						//if( driveName.Length <= 1 )
-						//{
-						//	try
-						//	{
-						//		driveName = Directory.GetParent( drives[i] ).Name + "/" + driveName;
-						//	}
-						//	catch
-						//	{
-						//		driveName = "Drive " + driveIndex++;
-						//	}
-						//}	
+				foreach (string drive in drives)
+                {
+                    try
+                    {
+                        //string driveName = new DirectoryInfo( drives[i] ).Name;
+                        //if( driveName.Length <= 1 )
+                        //{
+                        //	try
+                        //	{
+                        //		driveName = Directory.GetParent( drives[i] ).Name + "/" + driveName;
+                        //	}
+                        //	catch
+                        //	{
+                        //		driveName = "Drive " + driveIndex++;
+                        //	}
+                        //}	
 
-						string driveName;
-						if( !defaultPathInitialized )
-						{
-							defaultInitialPath = drives[i];
-							defaultPathInitialized = true;
+                        string driveName;
+                        if( !defaultPathInitialized )
+                        {
+                            defaultInitialPath = drive;
+                            defaultPathInitialized = true;
 
-							driveName = "Primary Drive";
-						}
-						else
-						{
-							if( driveIndex == 1 )
-								driveName = "External Drive";
-							else
-								driveName = "External Drive " + driveIndex;
+                            driveName = "Primary Drive";
+                        }
+                        else
+                        {
+                            if( driveIndex == 1 )
+                                driveName = "External Drive";
+                            else
+                                driveName = "External Drive " + driveIndex;
 
-							driveIndex++;
-						}
+                            driveIndex++;
+                        }
 
-						if( AddQuickLink( driveIcon, driveName, drives[i] ) )
-							numberOfDriveQuickLinks++;
-					}
-					catch { }
-				}
+                        if( AddQuickLink( driveIcon, driveName, drive ) )
+                            numberOfDriveQuickLinks++;
+                    }
+                    catch { }
+                }
 			}
 #else
-            for (int i = 0; i < drives.Length; i++)
+            foreach (string drive in drives)
             {
-                if (string.IsNullOrEmpty(drives[i]))
+                if (string.IsNullOrEmpty(drive))
                     continue;
 
-#if UNITY_STANDALONE_OSX
+#if !UNITY_STANDALONE_OSX
 				// There are a number of useless drives listed on Mac OS, filter them
-				if( drives[i] == "/" )
+				if( drive == "/" )
 				{
-					if( AddQuickLink( driveIcon, "Root", drives[i] ) )
+					if( AddQuickLink( driveIcon, "Root", drive ) )
 						numberOfDriveQuickLinks++;
 				}
-				else if( drives[i].StartsWith( "/Volumes/" ) && drives[i] != "/Volumes/Recovery" )
+				else if( drive.StartsWith( "/Volumes/" ) && drive != "/Volumes/Recovery" )
 				{
-					if( AddQuickLink( driveIcon, drives[i].Substring( drives[i].LastIndexOf( '/' ) + 1 ), drives[i] ) )
+					if( AddQuickLink( driveIcon, drive.Substring( drive.LastIndexOf( '/' ) + 1 ), drive ) )
 						numberOfDriveQuickLinks++;
 				}
 #else
-                if (AddQuickLink(driveIcon, drives[i], drives[i]))
+                if (AddQuickLink(driveIcon, drive, drive))
                     numberOfDriveQuickLinks++;
 #endif
             }
@@ -1054,13 +1059,13 @@ namespace SimpleFileBrowser
             // Reposition custom quick links
             if (customQuickLinks != null)
             {
-                Vector2 anchoredPos = new Vector2(0f, -quickLinksContainer.sizeDelta.y);
-                foreach (FileBrowserQuickLink browserQuickLink in customQuickLinks)
+                var anchoredPos = new Vector2(0f, -quickLinksContainer.sizeDelta.y);
+                foreach (FileBrowserQuickLink quickLink in customQuickLinks)
                 {
-                    browserQuickLink.TransformComponent.anchoredPosition = anchoredPos;
+                    quickLink.TransformComponent.anchoredPosition = anchoredPos;
                     anchoredPos.y -= itemHeight;
 
-                    allQuickLinks.Add(browserQuickLink);
+                    allQuickLinks.Add(quickLink);
                 }
 
                 quickLinksContainer.sizeDelta = new Vector2(0f, -anchoredPos.y);
@@ -1088,14 +1093,12 @@ namespace SimpleFileBrowser
 
         public void OnBackButtonPressed()
         {
-            if (currentPathIndex > 0)
-                CurrentPath = pathsFollowed[--currentPathIndex];
+            if (currentPathIndex > 0) CurrentPath = pathsFollowed[--currentPathIndex];
         }
 
         public void OnForwardButtonPressed()
         {
-            if (currentPathIndex < pathsFollowed.Count - 1)
-                CurrentPath = pathsFollowed[++currentPathIndex];
+            if (currentPathIndex < pathsFollowed.Count - 1) CurrentPath = pathsFollowed[++currentPathIndex];
         }
 
         public void OnUpButtonPressed()
@@ -1129,18 +1132,18 @@ namespace SimpleFileBrowser
 
         private void ShowContextMenuAt(Vector2 position, bool isMoreOptionsMenu)
         {
-            if (string.IsNullOrEmpty(m_currentPath))
-                return;
+            if (string.IsNullOrEmpty(m_currentPath)) return;
 
             bool selectAllButtonVisible = isMoreOptionsMenu && m_allowMultiSelection && validFileEntries.Count > 0;
             bool deselectAllButtonVisible = isMoreOptionsMenu && selectedFileEntries.Count > 1;
+            
             bool deleteButtonVisible = contextMenuShowDeleteButton && selectedFileEntries.Count > 0;
             bool renameButtonVisible = contextMenuShowRenameButton && selectedFileEntries.Count == 1;
 
             if (selectAllButtonVisible && m_pickerMode == PickMode.Files)
             {
                 // In file selection mode, if only folders exist in the current path, "Select All" option shouldn't be visible
-                selectAllButtonVisible = validFileEntries.Any(validEntry => !validEntry.IsDirectory);
+                selectAllButtonVisible = validFileEntries.Any(fileEntry => !fileEntry.IsDirectory);
             }
 
             contextMenu.Show(selectAllButtonVisible, deselectAllButtonVisible, deleteButtonVisible, renameButtonVisible, position, isMoreOptionsMenu);
@@ -1168,15 +1171,15 @@ namespace SimpleFileBrowser
                 // Beforehand, check if a folder is selected in file selection mode. If so, open that directory
                 if (m_pickerMode == PickMode.Files)
                 {
-                    foreach (int selectedFileEntry in selectedFileEntries.Where(selectedFileEntry => validFileEntries[selectedFileEntry].IsDirectory))
+                    foreach (int fileEntry in selectedFileEntries.Where(fileEntry => validFileEntries[fileEntry].IsDirectory))
                     {
-                        CurrentPath = validFileEntries[selectedFileEntry].Path;
+                        CurrentPath = validFileEntries[fileEntry].Path;
                         return;
                     }
                 }
 
-                string[] result = new string[selectedFileEntries.Count];
-                for (int i = 0; i < selectedFileEntries.Count; i++)
+                var result = new string[selectedFileEntries.Count];
+                for (var i = 0; i < selectedFileEntries.Count; i++)
                     result[i] = validFileEntries[selectedFileEntries[i]].Path;
 
                 OnOperationSuccessful(result);
@@ -1188,7 +1191,7 @@ namespace SimpleFileBrowser
 
                 // In the first iteration, verify that all filenames entered to the input field are valid
                 // ExtractFilenameFromInput doesn't use Substring, so this iteration is GC-free
-                int fileCount = 0;
+                var fileCount = 0;
                 int startIndex = 0, nextStartIndex;
                 while (startIndex < filenameInput.Length)
                 {
@@ -1240,7 +1243,7 @@ namespace SimpleFileBrowser
                 }
 
                 // In the second iteration, extract filenames from the input field
-                string[] result = new string[fileCount];
+                var result = new string[fileCount];
 
                 startIndex = 0;
                 fileCount = 0;
@@ -1330,8 +1333,7 @@ namespace SimpleFileBrowser
             onSuccess = null;
             onCancel = null;
 
-            if (invokeCancelCallback)
-                _onCancel?.Invoke();
+            if (invokeCancelCallback) _onCancel?.Invoke();
         }
 
         public void OnPathChanged(string newPath)
@@ -1373,17 +1375,16 @@ namespace SimpleFileBrowser
 
         public void OnItemSelected(FileBrowserItem item, bool isDoubleClick)
         {
-            if (item == null)
-                return;
+            if (!item) return;
 
-            if (item is FileBrowserQuickLink)
+            if (item is FileBrowserQuickLink link)
             {
 #if !UNITY_EDITOR && UNITY_ANDROID
-				if( ( (FileBrowserQuickLink) item ).TargetPath == SAF_PICK_FOLDER_QUICK_LINK_PATH )
+				if( link.TargetPath == SAF_PICK_FOLDER_QUICK_LINK_PATH )
 					FileBrowserHelpers.AJC.CallStatic( "PickSAFFolder", FileBrowserHelpers.Context, new FBDirectoryReceiveCallbackAndroid( OnSAFDirectoryPicked ) );
 				else
 #endif
-                CurrentPath = ((FileBrowserQuickLink)item).TargetPath;
+                CurrentPath = link.TargetPath;
 
                 return;
             }
@@ -1463,12 +1464,12 @@ namespace SimpleFileBrowser
                 UpdateFilenameInputFieldWithSelection();
             }
 
-            foreach (FileBrowserItem browserItem in allItems.Where(fileBrowserItem => fileBrowserItem.gameObject.activeSelf))
+            foreach (FileBrowserItem browserItem in allItems.Where(browserItem => browserItem.gameObject.activeSelf))
             {
                 browserItem.SetSelected(selectedFileEntries.Contains(browserItem.Position));
             }
 
-            if (selectedFileEntries.Count > 0 && (isDoubleClick || (SingleClickMode && !m_multiSelectionToggleSelectionMode)))
+            if (selectedFileEntries.Count <= 0 || !isDoubleClick && (!SingleClickMode || m_multiSelectionToggleSelectionMode)) return;
             {
                 if (!item.IsDirectory)
                 {
@@ -1479,29 +1480,24 @@ namespace SimpleFileBrowser
                 {
                     // Enter the directory
 #if !UNITY_EDITOR && UNITY_ANDROID
-					if( FileBrowserHelpers.ShouldUseSAF )
-					{
-						for( int i = 0; i < validFileEntries.Count; i++ )
-						{
-							FileSystemEntry fileInfo = validFileEntries[i];
-							if( fileInfo.IsDirectory && fileInfo.Name == item.Name )
-							{
-								CurrentPath = fileInfo.Path;
-								return;
-							}
-						}
-					}
-					else
+                    if( FileBrowserHelpers.ShouldUseSAF )
+                    {
+                        foreach (FileSystemEntry fileInfo in validFileEntries.Where(fileInfo => fileInfo.IsDirectory && fileInfo.Name == item.Name))
+                        {
+                            CurrentPath = fileInfo.Path;
+                            return;
+                        }
+                    }
+                    else
 #endif
-                    CurrentPath = Path.Combine(m_currentPath, item.Name);
+                        CurrentPath = Path.Combine(m_currentPath, item.Name);
                 }
             }
         }
 
         public void OnItemHeld(FileBrowserItem item)
         {
-            if (item is FileBrowserQuickLink)
-                OnItemSelected(item, false);
+            if (item is FileBrowserQuickLink) OnItemSelected(item, false);
             else if (m_allowMultiSelection && (!item.IsDirectory || m_pickerMode != PickMode.Files)) // Holding a folder in file selection mode should do nothing
             {
                 if (!MultiSelectionToggleSelectionMode)
@@ -1512,16 +1508,14 @@ namespace SimpleFileBrowser
                         // user won't be able to deselect the selected folders without exiting MultiSelectionToggleSelectionMode
                         for (int i = selectedFileEntries.Count - 1; i >= 0; i--)
                         {
-                            if (validFileEntries[selectedFileEntries[i]].IsDirectory)
-                                selectedFileEntries.RemoveAt(i);
+                            if (validFileEntries[selectedFileEntries[i]].IsDirectory) selectedFileEntries.RemoveAt(i);
                         }
                     }
 
                     MultiSelectionToggleSelectionMode = true;
                 }
 
-                if (!selectedFileEntries.Contains(item.Position))
-                    OnItemSelected(item, false);
+                if (!selectedFileEntries.Contains(item.Position)) OnItemSelected(item, false);
             }
         }
 
@@ -1601,13 +1595,11 @@ namespace SimpleFileBrowser
 
         private char OnValidateFilenameInput(string text, int charIndex, char addedChar)
         {
-            if (addedChar == '\n')
-            {
-                OnSubmitButtonClicked();
-                return '\0';
-            }
-
-            return addedChar;
+            if (addedChar != '\n') return addedChar;
+            
+            OnSubmitButtonClicked();
+            
+            return '\0';
         }
 
         private void OnFilenameInputChanged(string text)
@@ -1667,10 +1659,7 @@ namespace SimpleFileBrowser
         {
             if (pathChanged)
             {
-                if (!string.IsNullOrEmpty(m_currentPath))
-                    allFileEntries = FileBrowserHelpers.GetEntriesInDirectory(m_currentPath);
-                else
-                    allFileEntries = null;
+                allFileEntries = !string.IsNullOrEmpty(m_currentPath) ? FileBrowserHelpers.GetEntriesInDirectory(m_currentPath) : null;
             }
 
             selectedFileEntries.Clear();
@@ -1693,43 +1682,35 @@ namespace SimpleFileBrowser
                     // 2. Directories and files are sorted by their names
                     Array.Sort(allFileEntries, (entry1, entry2) =>
                     {
-                        if (entry1.IsDirectory != entry2.IsDirectory)
-                            return entry1.IsDirectory ? -1 : 1;
-                        else
-                            return entry1.Name.CompareTo(entry2.Name);
+                        if (entry1.IsDirectory != entry2.IsDirectory) return entry1.IsDirectory ? -1 : 1;
+                        return string.Compare(entry1.Name, entry2.Name, StringComparison.Ordinal);
                     });
                 }
 
-                for (int i = 0; i < allFileEntries.Length; i++)
+                foreach (FileSystemEntry fileEntry in allFileEntries)
                 {
                     try
                     {
-                        FileSystemEntry item = allFileEntries[i];
+                        FileSystemEntry item = fileEntry;
 
                         if (!item.IsDirectory)
                         {
-                            if (m_pickerMode == PickMode.Folders)
-                                continue;
+                            if (m_pickerMode == PickMode.Folders) continue;
 
-                            if ((item.Attributes & ignoredFileAttributes) != 0)
-                                continue;
+                            if ((item.Attributes & ignoredFileAttributes) != 0) continue;
 
                             string extension = item.Extension.ToLowerInvariant();
-                            if (excludedExtensionsSet.Contains(extension))
-                                continue;
+                            if (excludedExtensionsSet.Contains(extension)) continue;
 
                             HashSet<string> extensions = filters[filtersDropdown.value].extensions;
-                            if (extensions != null && !extensions.Contains(extension))
-                                continue;
+                            if (extensions != null && !extensions.Contains(extension)) continue;
                         }
                         else
                         {
-                            if ((item.Attributes & ignoredFileAttributes) != 0)
-                                continue;
+                            if ((item.Attributes & ignoredFileAttributes) != 0) continue;
                         }
 
-                        if (m_searchString.Length == 0 || item.Name.ToLower().Contains(searchStringLowercase))
-                            validFileEntries.Add(item);
+                        if (m_searchString.Length == 0 || item.Name.ToLower().Contains(searchStringLowercase)) validFileEntries.Add(item);
                     }
                     catch (Exception e)
                     {
@@ -1745,10 +1726,11 @@ namespace SimpleFileBrowser
                 {
                     for (var j = 0; j < validFileEntries.Count; j++)
                     {
-                        if (validFileEntries[j].Name != pendingFileEntry) continue;
-                        
-                        selectedFileEntries.Add(j);
-                        break;
+                        if (validFileEntries[j].Name == pendingFileEntry)
+                        {
+                            selectedFileEntries.Add(j);
+                            break;
+                        }
                     }
                 }
 
@@ -1759,8 +1741,7 @@ namespace SimpleFileBrowser
             {
                 filenameInputField.interactable = true;
 
-                if (selectedFileEntries.Count == 0)
-                    filenameInputField.text = string.Empty;
+                if (selectedFileEntries.Count == 0) filenameInputField.text = string.Empty;
             }
 
             listView.UpdateList();
@@ -1781,13 +1762,12 @@ namespace SimpleFileBrowser
 
             if (m_pickerMode != PickMode.Files)
             {
-                for (int i = 0; i < validFileEntries.Count; i++)
-                    selectedFileEntries.Add(i);
+                for (var i = 0; i < validFileEntries.Count; i++) selectedFileEntries.Add(i);
             }
             else
             {
                 // Don't select folders in file picking mode if MultiSelectionToggleSelectionMode is enabled or about to be enabled
-                for (int i = 0; i < validFileEntries.Count; i++)
+                for (var i = 0; i < validFileEntries.Count; i++)
                 {
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WSA || UNITY_WSA_10_0
                     if (!m_multiSelectionToggleSelectionMode || !validFileEntries[i].IsDirectory)
@@ -1822,10 +1802,7 @@ namespace SimpleFileBrowser
         }
 
         // Prompts user to create a new folder in the current directory
-        public void CreateNewFolder()
-        {
-            StartCoroutine(CreateNewFolderCoroutine());
-        }
+        public void CreateNewFolder() => StartCoroutine(CreateNewFolderCoroutine());
 
         private IEnumerator CreateNewFolderCoroutine()
         {
@@ -1853,7 +1830,7 @@ namespace SimpleFileBrowser
             filesContainer.anchoredPosition = new Vector2(0f, -itemHeight);
 
             ((RectTransform)renameItem.transform).anchoredPosition = new Vector2(1f, itemHeight);
-            renameItem.Show(string.Empty, selectedFileColor, folderIcon, (folderName) =>
+            renameItem.Show(string.Empty, selectedFileColor, folderIcon, folderName =>
             {
                 filesScrollRect.movementType = ScrollRect.MovementType.Clamped;
                 filesContainer.anchoredPosition = Vector2.zero;
@@ -1872,8 +1849,8 @@ namespace SimpleFileBrowser
                     filenameInputField.text = folderName;
 
                 // Focus on the newly created folder
-                int fileEntryIndex = 0;
-                for (int i = 0; i < validFileEntries.Count; i++)
+                var fileEntryIndex = 0;
+                for (var i = 0; i < validFileEntries.Count; i++)
                 {
                     if (validFileEntries[i].Name == folderName)
                     {
@@ -1882,7 +1859,7 @@ namespace SimpleFileBrowser
                     }
                 }
 
-                filesScrollRect.verticalNormalizedPosition = validFileEntries.Count > 1 ? (1f - (float)fileEntryIndex / (validFileEntries.Count - 1)) : 1f;
+                filesScrollRect.verticalNormalizedPosition = validFileEntries.Count > 1 ? 1f - (float)fileEntryIndex / (validFileEntries.Count - 1) : 1f;
             });
         }
 
@@ -1900,21 +1877,20 @@ namespace SimpleFileBrowser
             // Check if selected file is currently visible in ScrollRect
             // We consider it visible if both the previous file entry and the next file entry are visible
             bool prevFileEntryVisible = false, nextFileEntryVisible = false;
-            foreach (FileBrowserItem item in allItems.Where(item => item.gameObject.activeSelf))
+            
+            foreach (FileBrowserItem browserItem in allItems.Where(browserItem => browserItem.gameObject.activeSelf))
             {
-                if (item.Position == fileEntryIndex - 1)
+                if (browserItem.Position == fileEntryIndex - 1)
                 {
                     prevFileEntryVisible = true;
 
-                    if (prevFileEntryVisible && nextFileEntryVisible)
-                        break;
+                    if (prevFileEntryVisible && nextFileEntryVisible) break;
                 }
-                else if (item.Position == fileEntryIndex + 1)
+                else if (browserItem.Position == fileEntryIndex + 1)
                 {
                     nextFileEntryVisible = true;
 
-                    if (prevFileEntryVisible && nextFileEntryVisible)
-                        break;
+                    if (prevFileEntryVisible && nextFileEntryVisible) break;
                 }
             }
 
@@ -1974,8 +1950,7 @@ namespace SimpleFileBrowser
         private void PersistFileEntrySelection()
         {
             pendingFileEntrySelection.Clear();
-            foreach (int entry in selectedFileEntries)
-                pendingFileEntrySelection.Add(validFileEntries[entry].Name);
+            foreach (int fileEntry in selectedFileEntries) pendingFileEntrySelection.Add(validFileEntries[fileEntry].Name);
         }
 
         private bool AddQuickLink(Sprite icon, string name, string path)
@@ -1999,7 +1974,7 @@ namespace SimpleFileBrowser
             FileBrowserQuickLink quickLink = Instantiate(quickLinkPrefab, quickLinksContainer, false);
             quickLink.SetFileBrowser(this);
 
-            quickLink.SetQuickLink(icon ? icon : folderIcon, name, path);
+            quickLink.SetQuickLink(icon? icon : folderIcon, name, path);
 
             var anchoredPos = new Vector2(0f, -quickLinksContainer.sizeDelta.y);
 
@@ -2018,31 +1993,25 @@ namespace SimpleFileBrowser
             Vector2 canvasSize = rectTransform.sizeDelta;
             Vector2 windowSize = windowTR.sizeDelta;
 
-            if (windowSize.x < minWidth)
-                windowSize.x = minWidth;
-            if (windowSize.y < minHeight)
-                windowSize.y = minHeight;
+            if (windowSize.x < minWidth) windowSize.x = minWidth;
+            if (windowSize.y < minHeight) windowSize.y = minHeight;
 
-            if (windowSize.x > canvasSize.x)
-                windowSize.x = canvasSize.x;
-            if (windowSize.y > canvasSize.y)
-                windowSize.y = canvasSize.y;
+            if (windowSize.x > canvasSize.x) windowSize.x = canvasSize.x;
+            if (windowSize.y > canvasSize.y) windowSize.y = canvasSize.y;
 
             Vector2 windowPos = windowTR.anchoredPosition;
+            
             Vector2 canvasHalfSize = canvasSize * 0.5f;
             Vector2 windowHalfSize = windowSize * 0.5f;
+            
             Vector2 windowBottomLeft = windowPos - windowHalfSize + canvasHalfSize;
             Vector2 windowTopRight = windowPos + windowHalfSize + canvasHalfSize;
 
-            if (windowBottomLeft.x < 0f)
-                windowPos.x -= windowBottomLeft.x;
-            else if (windowTopRight.x > canvasSize.x)
-                windowPos.x -= windowTopRight.x - canvasSize.x;
+            if (windowBottomLeft.x < 0f) windowPos.x -= windowBottomLeft.x;
+            else if (windowTopRight.x > canvasSize.x) windowPos.x -= windowTopRight.x - canvasSize.x;
 
-            if (windowBottomLeft.y < 0f)
-                windowPos.y -= windowBottomLeft.y;
-            else if (windowTopRight.y > canvasSize.y)
-                windowPos.y -= windowTopRight.y - canvasSize.y;
+            if (windowBottomLeft.y < 0f) windowPos.y -= windowBottomLeft.y;
+            else if (windowTopRight.y > canvasSize.y) windowPos.y -= windowTopRight.y - canvasSize.y;
 
             windowTR.anchoredPosition = windowPos;
             windowTR.sizeDelta = windowSize;
@@ -2054,7 +2023,7 @@ namespace SimpleFileBrowser
             float windowWidth = size.x;
             float quickLinksWidth = Mathf.Min(middleViewQuickLinksOriginalSize.x, windowWidth * quickLinksMaxWidthPercentage);
 
-            if (Math.Abs(middleViewQuickLinks.sizeDelta.x - quickLinksWidth) > 0.01f)
+            if (middleViewQuickLinks.sizeDelta.x != quickLinksWidth)
             {
                 middleViewQuickLinks.sizeDelta = new Vector2(quickLinksWidth, middleViewQuickLinksOriginalSize.y);
                 middleViewFiles.anchoredPosition = new Vector2(quickLinksWidth, 0f);
@@ -2071,7 +2040,7 @@ namespace SimpleFileBrowser
             if (windowWidth >= narrowScreenWidth)
             {
                 if (pathInputField.transform.parent != pathInputFieldSlotBottom) return;
-
+                
                 pathInputField.transform.SetParent(pathInputFieldSlotTop, false);
 
                 middleView.anchoredPosition = middleViewOriginalPosition;
@@ -2085,7 +2054,7 @@ namespace SimpleFileBrowser
             else
             {
                 if (pathInputField.transform.parent != pathInputFieldSlotTop) return;
-
+                
                 pathInputField.transform.SetParent(pathInputFieldSlotBottom, false);
 
                 float topViewAdditionalHeight = topViewNarrowScreen.sizeDelta.y;
@@ -2144,32 +2113,30 @@ namespace SimpleFileBrowser
                 filenameContributingFileCount = selectedFileEntries.Count;
             else
             {
-                foreach (int fileEntry in selectedFileEntries.Where(fileEntry => !validFileEntries[fileEntry].IsDirectory))
+                foreach (int unused in selectedFileEntries.Where(fileEntry => !validFileEntries[fileEntry].IsDirectory))
                 {
                     filenameContributingFileCount++;
-
                     if (filenameContributingFileCount >= FILENAME_INPUT_FIELD_MAX_FILE_COUNT) break;
                 }
             }
 
             filenameInputField.interactable = selectedFileEntries.Count <= 1;
 
-            if (filenameContributingFileCount == 0)
-                filenameInputField.text = string.Empty;
+            if (filenameContributingFileCount == 0) filenameInputField.text = string.Empty;
             else
             {
                 if (filenameContributingFileCount > 1)
                 {
-                    if (multiSelectionFilenameBuilder == null)
-                        multiSelectionFilenameBuilder = new StringBuilder(75);
-                    else
-                        multiSelectionFilenameBuilder.Length = 0;
+                    if (multiSelectionFilenameBuilder == null) multiSelectionFilenameBuilder = new StringBuilder(75);
+                    else multiSelectionFilenameBuilder.Length = 0;
                 }
 
                 for (int i = 0, fileCount = 0; i < selectedFileEntries.Count; i++)
                 {
                     FileSystemEntry selectedFile = validFileEntries[selectedFileEntries[i]];
+                    
                     if (m_pickerMode == PickMode.Files && selectedFile.IsDirectory) continue;
+                    
                     if (filenameContributingFileCount == 1)
                     {
                         filenameInputField.text = selectedFile.Name;
@@ -2184,8 +2151,7 @@ namespace SimpleFileBrowser
                     break;
                 }
 
-                if (filenameContributingFileCount > 1)
-                    filenameInputField.text = multiSelectionFilenameBuilder.ToString();
+                if (filenameContributingFileCount > 1) filenameInputField.text = multiSelectionFilenameBuilder.ToString();
             }
         }
 
@@ -2243,7 +2209,7 @@ namespace SimpleFileBrowser
         // Checks if a substring of the input field points to an existing file
         private int FilenameInputToFileEntryIndex(string input, int startIndex, int length)
         {
-            for (int i = 0; i < validFileEntries.Count; i++)
+            for (var i = 0; i < validFileEntries.Count; i++)
             {
                 if (validFileEntries[i].Name.Length == length && input.IndexOf(validFileEntries[i].Name, startIndex, length, StringComparison.Ordinal) == startIndex)
                     return i;
@@ -2255,7 +2221,7 @@ namespace SimpleFileBrowser
         // Verifies that filename doesn't contain any invalid characters
         private bool VerifyFilenameInput(string input, int startIndex, int length)
         {
-            bool isWhitespace = true;
+            var isWhitespace = true;
             for (int i = startIndex, endIndex = startIndex + length; i < endIndex; i++)
             {
                 char ch = input[i];
@@ -2275,10 +2241,12 @@ namespace SimpleFileBrowser
             Font font = filterItemTemplate.font;
             font.RequestCharactersInTexture(str, filterItemTemplate.fontSize, filterItemTemplate.fontStyle);
 
-            int totalLength = 0;
-            foreach (char ch in str)
+            var totalLength = 0;
+            foreach (char character in str)
             {
-                if (!font.GetCharacterInfo(ch, out CharacterInfo characterInfo, filterItemTemplate.fontSize)) totalLength += 5;
+                if (!font.GetCharacterInfo(character, out CharacterInfo characterInfo, filterItemTemplate.fontSize))
+                    totalLength += 5;
+
                 totalLength += characterInfo.advance;
             }
 
@@ -2310,14 +2278,14 @@ namespace SimpleFileBrowser
         public static bool ShowSaveDialog(OnSuccess onSuccess, OnCancel onCancel,
             PickMode pickMode, bool allowMultiSelection = false,
             string initialPath = null, string initialFilename = null,
-            string title = "Save", string saveButtonText = "Save") 
-            => ShowDialogInternal(onSuccess, onCancel, pickMode, allowMultiSelection, pickMode != PickMode.Folders, initialPath, initialFilename, title, saveButtonText);
+            string title = "Save", string saveButtonText = "Save") =>
+            ShowDialogInternal(onSuccess, onCancel, pickMode, allowMultiSelection, pickMode != PickMode.Folders, initialPath, initialFilename, title, saveButtonText);
 
         public static bool ShowLoadDialog(OnSuccess onSuccess, OnCancel onCancel,
             PickMode pickMode, bool allowMultiSelection = false,
             string initialPath = null, string initialFilename = null,
-            string title = "Load", string loadButtonText = "Select") 
-            => ShowDialogInternal(onSuccess, onCancel, pickMode, allowMultiSelection, false, initialPath, initialFilename, title, loadButtonText);
+            string title = "Load", string loadButtonText = "Select") =>
+            ShowDialogInternal(onSuccess, onCancel, pickMode, allowMultiSelection, false, initialPath, initialFilename, title, loadButtonText);
 
         private static bool ShowDialogInternal(OnSuccess onSuccess, OnCancel onCancel,
             PickMode pickMode, bool allowMultiSelection, bool acceptNonExistingFilename,
@@ -2393,8 +2361,7 @@ namespace SimpleFileBrowser
 
             if (excludedExtensions == null) return;
             
-            foreach (string excludedExtension in excludedExtensions)
-                Instance.excludedExtensionsSet.Add(excludedExtension.ToLowerInvariant());
+            foreach (string excludedExtension in excludedExtensions) Instance.excludedExtensionsSet.Add(excludedExtension.ToLowerInvariant());
         }
 
         public static void SetFilters(bool showAllFilesFilter, IEnumerable<string> filters)
@@ -2405,8 +2372,7 @@ namespace SimpleFileBrowser
             {
                 foreach (string filter in filters)
                 {
-                    if (!string.IsNullOrEmpty(filter))
-                        Instance.filters.Add(new Filter(null, filter));
+                    if (!string.IsNullOrEmpty(filter)) Instance.filters.Add(new Filter(null, filter));
                 }
             }
 
@@ -2421,8 +2387,7 @@ namespace SimpleFileBrowser
             {
                 foreach (string filter in filters)
                 {
-                    if (!string.IsNullOrEmpty(filter))
-                        Instance.filters.Add(new Filter(null, filter));
+                    if (!string.IsNullOrEmpty(filter)) Instance.filters.Add(new Filter(null, filter));
                 }
             }
 
@@ -2453,8 +2418,7 @@ namespace SimpleFileBrowser
             {
                 foreach (Filter filter in filters)
                 {
-                    if (filter != null && filter.defaultExtension.Length > 0)
-                        Instance.filters.Add(filter);
+                    if (filter != null && filter.defaultExtension.Length > 0) Instance.filters.Add(filter);
                 }
             }
 
@@ -2467,8 +2431,7 @@ namespace SimpleFileBrowser
 
             Instance.filters.Clear();
 
-            if (showAllFilesFilter)
-                Instance.filters.Add(Instance.allFilesFilter);
+            if (showAllFilesFilter) Instance.filters.Add(Instance.allFilesFilter);
         }
 
         private static void SetFiltersPostProcessing()
@@ -2478,11 +2441,13 @@ namespace SimpleFileBrowser
             if (filters.Count == 0)
                 filters.Add(Instance.allFilesFilter);
 
-            int maxFilterStrLength = 100;
+            var maxFilterStrLength = 100;
             var dropdownValues = new List<string>(filters.Count);
+            
             foreach (string filterStr in filters.Select(filter => filter.ToString()))
             {
                 dropdownValues.Add(filterStr);
+
                 maxFilterStrLength = Mathf.Max(maxFilterStrLength, Instance.CalculateLengthOfDropdownText(filterStr));
             }
 
@@ -2510,16 +2475,16 @@ namespace SimpleFileBrowser
 
             defaultFilter = defaultFilter.ToLowerInvariant();
 
-            for (int i = 0; i < Instance.filters.Count; i++)
+            for (var i = 0; i < Instance.filters.Count; i++)
             {
                 HashSet<string> extensions = Instance.filters[i].extensions;
-                
-                if (extensions == null || !extensions.Contains(defaultFilter)) continue;
-                
-                Instance.filtersDropdown.value = i;
-                Instance.filtersDropdown.RefreshShownValue();
+                if (extensions != null && extensions.Contains(defaultFilter))
+                {
+                    Instance.filtersDropdown.value = i;
+                    Instance.filtersDropdown.RefreshShownValue();
 
-                return true;
+                    return true;
+                }
             }
 
             return false;

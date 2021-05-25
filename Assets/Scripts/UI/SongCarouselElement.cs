@@ -1,4 +1,3 @@
-using General;
 using Managers;
 using Plugins.UI;
 using ScriptableObjects;
@@ -30,7 +29,7 @@ namespace UI
                 case Song song:
                     songImage.sprite = song.songImage;
                     songName.text = song.soundMap.name;
-
+                    
                     void PlayMap()
                     {
                         // Show record screen

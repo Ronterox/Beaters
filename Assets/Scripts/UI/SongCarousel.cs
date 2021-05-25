@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using General;
 using Managers;
 using Plugins.Tools;
 using Plugins.UI;
@@ -24,7 +23,7 @@ namespace UI
             CreateElements(defaultSongs, true);
             CreateElements(songs);
 
-            if (!SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER))
+            if (SaveLoadManager.SaveFolderInGameDirectoryExists(SONG_FOLDER))
             {
                 SoundMap[] savedSoundMaps = SaveLoadManager.LoadMultipleJsonFromFolderInGameDirectory<SoundMap>(SONG_FOLDER).ToArray();
                 CreateElements(savedSoundMaps);
