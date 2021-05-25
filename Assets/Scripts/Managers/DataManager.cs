@@ -83,8 +83,8 @@ namespace Managers
 #endif
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }
-
-        private void OnApplicationQuit() => SaveData();
+        
+        private void OnDestroy() => SaveData();
 
         private void OnApplicationPause(bool pauseStatus) => SaveData();
 
