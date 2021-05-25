@@ -19,11 +19,28 @@ namespace Utilities
         [Space]
         public Image activeSkillImage;
         public Image passiveSkillImage;
+        
+        public HoldableButton characterButton;
+        public HoldableButton passiveButton;
+        public HoldableButton activeButton;
+        public PopUp activePopup;
+        public PopUp passivePopup;
+        public PopUp characterPopup;
 
         public TMP_Text activeSkillText, passiveSkillText;
         private int m_Index;
 
-        private void Start() => CheckAndSetObject();
+        private void Start()
+        {
+            characterButton.onButtonDown += characterPopup.Show;
+            characterButton.onButtonDown += () => print("hallow");
+            characterButton.onButtonUp += characterPopup.Hide;
+            passiveButton.onButtonDown += passivePopup.Show;
+            passiveButton.onButtonUp += passivePopup.Hide;
+            activeButton.onButtonDown += activePopup.Show;
+            activeButton.onButtonUp += activePopup.Hide;
+            CheckAndSetObject();
+         }
 
         private void CheckAndSetObject()
         {
