@@ -1741,6 +1741,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1911638628}
     - target: {fileID: 3826572633401589594, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
+      propertyPath: finishText
+      value: 
+      objectReference: {fileID: 8857276459189565686}
+    - target: {fileID: 3826572633401589594, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
       propertyPath: gameCanvas
       value: 
       objectReference: {fileID: 8857276459189565685}
@@ -2218,7 +2222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8857276460501430906, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8857276460501430907, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_Pivot.x

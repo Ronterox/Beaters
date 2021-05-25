@@ -14,6 +14,8 @@ using Random = UnityEngine.Random;
 namespace Managers
 {
     public enum HitType { Good = 3, Perfect = 5, TooSlow = 2, TooSoon = 2 }
+    
+    public enum GameMode { Hero, Push, Defender }
 
     public class GameplayManager : Singleton<GameplayManager>
     {
@@ -43,6 +45,7 @@ namespace Managers
 
         [Header("Song State")]
         public Timer songTimer;
+        public TMP_Text finishText;
 
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_Started, m_Ended, m_IsPaused;
@@ -152,7 +155,7 @@ namespace Managers
             SlowTime(2f, 0f, () =>
             {
                 mapScroller.StopMap();
-                ShowEndGameplayPanel(gameCanvas);
+                ShowEndGameplayPanel(gameCanvas, false);
                 SoundManager.Instance.backgroundAudioSource.Stop();
             });
 
@@ -312,14 +315,15 @@ namespace Managers
             m_Started = false;
             songTimer.onTimerStop -= StopMap;
 
-            ShowEndGameplayPanel(gameCanvas);
+            ShowEndGameplayPanel(gameCanvas, true);
         }
 
         /// <summary>
         /// Shows the end gameplay panel
         /// </summary>
         /// <param name="parentCanvas"></param>
-        private void ShowEndGameplayPanel(Transform parentCanvas)
+        /// <param name="win"></param>
+        private void ShowEndGameplayPanel(Transform parentCanvas, bool win)
         {
             CheckHighestCombo();
 
@@ -359,6 +363,15 @@ namespace Managers
             gameOverPanel.SetRewardsText(comboGain, accuracyGain);
 
             gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
+            
+            gameOverPanel.gameObject.SetActive(false);
+
+            Action activateEndScreen = () => gameOverPanel.gameObject.SetActive(true);
+            
+            finishText.text = win? "You WIN!" : "You LOSE!";
+            finishText.gameObject.SetActive(true);
+            
+            activateEndScreen.DelayAction(2);
 
             //Show prizes
 
