@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 namespace Managers
 {
     public enum HitType { Good = 3, Perfect = 5, TooSlow = 2, TooSoon = 2 }
-    
+
     public enum GameMode { Hero, Push, Defender }
 
     public class GameplayManager : Singleton<GameplayManager>
@@ -363,14 +363,14 @@ namespace Managers
             gameOverPanel.SetRewardsText(comboGain, accuracyGain);
 
             gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
-            
+
             gameOverPanel.gameObject.SetActive(false);
 
             Action activateEndScreen = () => gameOverPanel.gameObject.SetActive(true);
-            
-            finishText.text = win? "You WIN!" : "You LOSE!";
+
+            finishText.text = win ? "You WIN!" : "You LOSE!";
             finishText.gameObject.SetActive(true);
-            
+
             activateEndScreen.DelayAction(2);
 
             //Show prizes
@@ -382,9 +382,17 @@ namespace Managers
         }
 
         /// <summary>
+        /// Static caller for instance method
+        /// </summary>
+        public static void MissArrow()
+        {
+            if (m_Instance) m_Instance.MissArrowLogic();
+        }
+
+        /// <summary>
         /// Logic for missing an arrow without tapping
         /// </summary>
-        public void MissArrow()
+        private void MissArrowLogic()
         {
             // Can miss check in case of power
             if (!CanMiss) return;
@@ -415,10 +423,25 @@ namespace Managers
         /// <summary>
         /// Logic for missing an arrow by tapping
         /// </summary>
-        public void MissArrowTap()
+        public static void MissArrowTap()
         {
-            m_Taps++;
+            if (!m_Instance) return;
+            
+            m_Instance.m_Taps++;
             MissArrow();
+        }
+
+        /// <summary>
+        /// Static caller for hitting an arrow
+        /// </summary>
+        /// <param name="hitType"></param>
+        /// <param name="feedbackPosition"></param>
+        /// <param name="feedbackColor"></param>
+        /// <param name="isCombo"></param>
+        /// <param name="comboLength"></param>
+        public static void HitArrow(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo = false, int comboLength = 0)
+        {
+            if(m_Instance) m_Instance.HitArrowLogic(hitType, feedbackPosition, feedbackColor, isCombo, comboLength);
         }
 
         /// <summary>
@@ -429,7 +452,7 @@ namespace Managers
         /// <param name="feedbackColor"></param>
         /// <param name="isCombo"></param>
         /// <param name="comboLength"></param>
-        public void HitArrow(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo = false, int comboLength = 0)
+        private void HitArrowLogic(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo, int comboLength)
         {
             //Increment combo, taps, notes hit for player stats
             m_Taps++;
@@ -465,7 +488,7 @@ namespace Managers
                 bool completedCombo = ++m_ComboPrizeCounter >= comboLength;
 
                 float rng = Random.Range(m_MinMoneyGain, m_MaxMoneyGain);
-                
+
                 float totalGain = completedCombo ? rng * comboLength * .05f : rng * .05f;
 
                 skillBarSlider.value += totalGain;

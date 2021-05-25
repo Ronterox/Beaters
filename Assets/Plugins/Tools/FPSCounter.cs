@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.SceneManagement;
 
@@ -87,3 +88,4 @@ namespace Plugins.Tools
         }
     }
 }
+#endif
