@@ -20,7 +20,7 @@ namespace Managers
     }
 
     [System.Serializable]
-    public struct SerializableItem
+    public class SerializableItem
     {
         public ushort itemId;
         public int quantity;
@@ -35,14 +35,14 @@ namespace Managers
     }
 
     [System.Serializable]
-    public struct SerializableRune
+    public class SerializableRune
     {
         public ushort runeId;
         public int quantity;
     }
 
     [System.Serializable]
-    public struct SerializableSong
+    public class SerializableSong
     {
         public ushort songId;
 
@@ -62,7 +62,7 @@ namespace Managers
     }
 
     [System.Serializable]
-    public struct SerializableCharacter
+    public class SerializableCharacter
     {
         public ushort characterId;
         public int lvl, xp;
@@ -163,7 +163,9 @@ namespace Managers
 
         public static List<ushort> GetSongsIds() => m_Instance.playerData.unlockedSongs.Select(song => song.songId).ToList();
 
-        public static int GetItemQuantity(ushort id) => m_Instance.playerData.currentItems.FirstOrDefault(item => item.itemId == id).quantity;
+        public static int GetItemQuantity(ushort id) => m_Instance.GetItemQuantityWithCheck(id).GetValueOrDefault();
+
+        private int? GetItemQuantityWithCheck(ushort id) => m_Instance.playerData.currentItems.First(item => item.itemId == id).quantity;
 
         public static bool ContainsCharacter(ushort id) => m_Instance.playerData.unlockedCharacters.Any(character => character.characterId == id);
 

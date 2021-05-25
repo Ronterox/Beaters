@@ -279,7 +279,7 @@ namespace Managers
             songTimer.onTimerStop += StopMap;
 
             songTimeBar.maxValue = time;
-            scoreBar.maxValue = notes < 1 ? 0 : Mathf.Round(notes.FactorialSum() / 7f);
+            scoreBar.maxValue = notes < 1 ? 0 : Mathf.Abs(Mathf.RoundToInt(notes / 7f).FactorialSum());
         }
 
         /// <summary>
@@ -406,9 +406,7 @@ namespace Managers
 
             if (FreeTapsCount > ++m_MissedTaps) return;
 
-            Character character = currentCharacter;
-
-            if (CanLose && !character.IsDead) character.TakeDamage(MinimumDamage);
+            if (CanLose && !currentCharacter.IsDead) currentCharacter.TakeDamage(MinimumDamage);
         }
 
         /// <summary>
@@ -426,7 +424,7 @@ namespace Managers
         public static void MissArrowTap()
         {
             if (!m_Instance) return;
-            
+
             m_Instance.m_Taps++;
             MissArrow();
         }
@@ -441,7 +439,7 @@ namespace Managers
         /// <param name="comboLength"></param>
         public static void HitArrow(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo = false, int comboLength = 0)
         {
-            if(m_Instance) m_Instance.HitArrowLogic(hitType, feedbackPosition, feedbackColor, isCombo, comboLength);
+            if (m_Instance) m_Instance.HitArrowLogic(hitType, feedbackPosition, feedbackColor, isCombo, comboLength);
         }
 
         /// <summary>
@@ -462,21 +460,17 @@ namespace Managers
             skillGainTextPooler.ShowText($"+1", m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
-            int points = Mathf.RoundToInt((int)hitType * ++m_Combo * Multiplier);
+            const float divisionBy7 = .14284f;
+            int points = Mathf.RoundToInt((int)hitType * ++m_Combo * Multiplier * divisionBy7);
 
             scoreText.text = $"{m_Score += points}";
             comboText.text = $"x{m_Combo}";
 
-            Slider bar = scoreBar;
-
-            float newScoreValue = bar.value + points;
-            bar.value = newScoreValue % bar.maxValue;
+            float newScoreValue = scoreBar.value + points;
+            scoreBar.value = newScoreValue % scoreBar.maxValue;
 
             //Increment the start count if went upper the score limit
-            if (newScoreValue >= bar.maxValue)
-            {
-                starsCounter.text = $"{++m_StarsCount}";
-            }
+            if (newScoreValue >= scoreBar.maxValue) starsCounter.text = $"{++m_StarsCount}";
 
             if (EveryNoteGivesMoney) m_Data.money += (int)(Random.Range(m_MinMoneyGain, m_MaxMoneyGain) * .10f * MoneyMultiplier);
 
