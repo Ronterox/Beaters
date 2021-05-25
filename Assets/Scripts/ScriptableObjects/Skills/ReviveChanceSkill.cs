@@ -16,11 +16,7 @@ namespace ScriptableObjects.Skills
             character.onDie -= manager.Lose;
             character.onDie += () =>
             {
-                if (Random.Range(0f, 1f) <= reviveProbability)
-                {
-                    character.currentHp = 0;
-                    character.Heal(1);
-                }
+                if (Random.Range(0f, 1f) <= reviveProbability) character.Revive(1);
                 else manager.Lose();
             };
         }
