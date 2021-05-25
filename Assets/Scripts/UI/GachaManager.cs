@@ -51,7 +51,7 @@ namespace UI
 
         private PlayerData m_Data;
         private float m_Total, m_RandomNumber;
-        private int m_BannerIndex;
+        private int m_BannerIndex, m_ThrowMultiplier = 1;
 
         private bool m_AnimatingCoins, m_AnimatingTickets;
 
@@ -68,21 +68,38 @@ namespace UI
             const int requiredTickets = 1, requiredCoins = 100;
             const string coinName = "Coins", ticketName = "Tickets";
 
-            ticketText.text = GetRequiredItemString(ticketName, m_Data.tickets, requiredTickets);
-            moneyText.text = GetRequiredItemString(coinName, m_Data.money, requiredCoins);
+            void UpdateTexts()
+            {
+                ticketText.text = GetRequiredItemString(ticketName, m_Data.tickets, requiredTickets);
+                moneyText.text = GetRequiredItemString(coinName, m_Data.money, requiredCoins);
+            }
+            
+            UpdateTexts();
 
+            void IncrementThrowQuantity()
+            {
+                m_ThrowMultiplier.ChangeValueLimited(1, 11);
+                m_ThrowMultiplier = Mathf.Max(1, m_ThrowMultiplier);
+                UpdateTexts();
+            }
+            
             ticketButton.onButtonDown += ticketPopUp.Show;
             ticketButton.onButtonUp += ticketPopUp.Hide;
+            ticketButton.onClick.AddListener(IncrementThrowQuantity);
             
             moneyButton.onButtonDown += moneyPopUp.Show;
             moneyButton.onButtonUp += moneyPopUp.Hide;
+            moneyButton.onClick.AddListener(IncrementThrowQuantity);
 
             bannerButton.onClick.AddListener(() =>
             {
                 const float animationDuration = .8f, animationStrength = .5f;
                 const int animationVibrato = 7;
+
+                int requiredMoneyQty = requiredCoins * m_ThrowMultiplier,
+                    requiredTicketQty = requiredTickets * m_ThrowMultiplier;
                 
-                if (m_Data.money < requiredCoins)
+                if (m_Data.money < requiredMoneyQty)
                 {
                     if (!m_AnimatingCoins)
                     {
@@ -92,22 +109,21 @@ namespace UI
                 }
                 else
                 {
-                    m_Data.money -= requiredCoins;
+                    m_Data.money -= requiredMoneyQty;
                     GetPrizeAndSummon();
                     return;
                 }
 
-                if (m_Data.tickets < requiredTickets)
+                if (m_Data.tickets < requiredTicketQty)
                 {
-                    if (!m_AnimatingTickets)
-                    {
-                        m_AnimatingTickets = true;
-                        moneyButton.transform.DOShakeScale(animationDuration, animationStrength, animationVibrato).OnComplete(() => m_AnimatingTickets = false);
-                    }
+                    if (m_AnimatingTickets) return;
+                    
+                    m_AnimatingTickets = true;
+                    moneyButton.transform.DOShakeScale(animationDuration, animationStrength, animationVibrato).OnComplete(() => m_AnimatingTickets = false);
                 }
                 else
                 {
-                    m_Data.tickets -= requiredTickets;
+                    m_Data.tickets -= requiredTicketQty;
                     GetPrizeAndSummon();
                 }
             });
@@ -118,8 +134,12 @@ namespace UI
         public void GetPrizeAndSummon()
         {
             bannerButton.interactable = false;
-            
-            GameManager.PutPrize(RandomItem());
+
+            var prizes = new ScriptableObject[m_ThrowMultiplier];
+
+            for (var i = 0; i < prizes.Length; i++) prizes[i] = RandomItem();
+
+            GameManager.PutPrizes(prizes);
             LevelLoadManager.LoadSceneWithTransition(gachaScene, .5f);
         }
 
@@ -147,7 +167,7 @@ namespace UI
             return null;
         }
 
-        private string GetRequiredItemString(string itemName, int quantity, int requiredQuantity) => $"{itemName}\n{quantity}/{requiredQuantity}";
+        private string GetRequiredItemString(string itemName, int quantity, int requiredQuantity) => $"{itemName}\n{quantity}/{requiredQuantity * m_ThrowMultiplier}(x{m_ThrowMultiplier})";
 
         public void TravelBanners(int index)
         {

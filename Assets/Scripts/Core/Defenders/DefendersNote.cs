@@ -13,12 +13,12 @@ namespace Core.Defenders
         {
             if (other.CompareTag("NoteMisser"))
             {
-                GameplayManager.MissArrow();
+                GameplayManager.Instance.MissArrow();
                 gameObject.SetActive(false);
             }
             else if (other.CompareTag("Player"))
             {
-                GameplayManager.HitArrow(HitType.Good, transform.position, Color.white);
+                GameplayManager.Instance.HitArrow(HitType.Good, transform.position, Color.white);
                 gameObject.SetActive(false);
             }
         }

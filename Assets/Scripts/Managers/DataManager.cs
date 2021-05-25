@@ -86,7 +86,10 @@ namespace Managers
         
         private void OnDestroy() => SaveData();
 
-        private void OnApplicationPause(bool pauseStatus) => SaveData();
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if(pauseStatus) SaveData();
+        }
 
         public void SaveData()
         {
