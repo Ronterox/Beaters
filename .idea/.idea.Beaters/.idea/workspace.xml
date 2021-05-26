@@ -3,11 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/Game UI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/Game UI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/SlowTimeSkill.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/SlowTimeSkill.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Creepster/Creepster-Regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Creepster/Creepster-Regular SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJ Active.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scriptable Objects/Skills/DJ Active.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GUIManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Interface/DJ/DJ/ShareTech-Regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Interface/DJ/DJ/ShareTech-Regular SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gacha Reward.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gacha Reward.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,8 +103,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScrollerGeneral.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Song.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/SimpleFileBrowser/Android/FBPermissionCallbackAndroid.cs" />
@@ -139,17 +141,19 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/Character.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/ReviveChanceSkill.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/NoteObject.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/LockedSongScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/SlowTimeSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -238,7 +242,7 @@
       <workItem from="1621779109394" duration="10324000" />
       <workItem from="1621853725459" duration="10954000" />
       <workItem from="1621951890672" duration="164000" />
-      <workItem from="1622031605027" duration="3548000" />
+      <workItem from="1622031605027" duration="8237000" />
     </task>
     <servers />
   </component>
