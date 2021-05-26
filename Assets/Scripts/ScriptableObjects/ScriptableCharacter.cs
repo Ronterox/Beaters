@@ -23,7 +23,7 @@ namespace ScriptableObjects
         public Sprite[] sprites;
         [Space]
         public TMP_FontAsset font;
-        public Sprite playButton, gachaButton, mapCreator, exitButton;
+        public Sprite playButton, gachaButton, mapCreator, exitButton, gameplayBeat;
         public Sprite fullStar, emptyStar;
         public bool usePrimaryColorInButtons;
         [Space]

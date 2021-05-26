@@ -25,7 +25,7 @@ MonoBehaviour:
     mainColor: {r: 0.9245283, g: 0.745728, b: 0.8847949, a: 1}
     secondaryColor: {r: 1, g: 0.3160377, b: 0.9506963, a: 1}
     complementaryColor1: {r: 0.5990566, g: 1, b: 0.9565443, a: 1}
-    complementaryColor2: {r: 1, g: 0.514151, b: 0.514151, a: 0}
+    complementaryColor2: {r: 1, g: 0.514151, b: 0.514151, a: 1}
   sprites:
   - {fileID: 21300000, guid: 21d6d41a672b539478924cd1361623b7, type: 3}
   - {fileID: 21300000, guid: dbcfda3e6f96bef2b933d2ba23bf3f8e, type: 3}
@@ -37,8 +37,8 @@ MonoBehaviour:
   gachaButton: {fileID: 21300000, guid: ae6bdd1b5a40f9550839f296f3edef18, type: 3}
   mapCreator: {fileID: 21300000, guid: 1475b954eac4420a89b2454a992f5ad3, type: 3}
   exitButton: {fileID: 0}
+  gameplayBeat: {fileID: 21300000, guid: 19c5d65bdf7bbf1f88a7922b0da11583, type: 3}
   fullStar: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
   emptyStar: {fileID: 21300000, guid: f38d92cb132634aa781a286e39fc9c3a, type: 3}
-  buttonLayout: {fileID: 21300000, guid: 5d4802dd4b8a94e7ebdc8356540ff66e, type: 3}
   usePrimaryColorInButtons: 1
   bingoColor: 0

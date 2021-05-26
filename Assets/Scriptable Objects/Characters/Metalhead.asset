@@ -37,8 +37,8 @@ MonoBehaviour:
   gachaButton: {fileID: 21300000, guid: 985645e4509876aedbb3e72a027a9120, type: 3}
   mapCreator: {fileID: 21300000, guid: 1475b954eac4420a89b2454a992f5ad3, type: 3}
   exitButton: {fileID: 0}
+  gameplayBeat: {fileID: 21300000, guid: e2e7908e8b87be990a0c2c3370296425, type: 3}
   fullStar: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
   emptyStar: {fileID: 21300000, guid: f38d92cb132634aa781a286e39fc9c3a, type: 3}
-  buttonLayout: {fileID: 21300000, guid: 7fa8b60a517dd3fe39ffe58b855279df, type: 3}
   usePrimaryColorInButtons: 1
   bingoColor: 1
