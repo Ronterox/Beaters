@@ -26,7 +26,6 @@ namespace Managers
         public Image gachaLogo, mapCreator, exitGame;
         [Space]
         public TMP_Text[] textsOfTheUI;
-        public Image[] buttonsToChange;
 
         private void Start()
         {
@@ -61,8 +60,6 @@ namespace Managers
             else images.ForEach(image => image.image.color = Color.white);
 
             playButtons.ForEach(image => SetSprite(image, character.playButton));
-            
-            buttonsToChange.ForEach(button => button.sprite = character.buttonLayout);
             
             textsOfTheUI.ForEach(text => text.font = character.font);
         }
