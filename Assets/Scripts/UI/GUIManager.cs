@@ -58,8 +58,7 @@ namespace UI
             SetSprite(backgroundImage, character.backgroundImage);
             SetSprite(exitGame, character.exitButton);
 
-            if (character.usePrimaryColorInButtons) images.ForEach(image => image.image.color = palette.GetColor(image.paletteColor));
-            else images.ForEach(image => image.image.color = Color.white);
+            images.ForEach(image => image.image.color = palette.GetColor(image.paletteColor));
 
             playButtons.ForEach(image => SetSprite(image, character.playButton));
             

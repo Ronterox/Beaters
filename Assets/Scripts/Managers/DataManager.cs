@@ -165,7 +165,7 @@ namespace Managers
 
         public static int GetItemQuantity(ushort id) => m_Instance.GetItemQuantityWithCheck(id).GetValueOrDefault();
 
-        private int? GetItemQuantityWithCheck(ushort id) => m_Instance.playerData.currentItems.First(item => item.itemId == id).quantity;
+        private int? GetItemQuantityWithCheck(ushort id) => playerData.currentItems.FirstOrDefault(item => item.itemId == id)?.quantity;
 
         public static bool ContainsCharacter(ushort id) => m_Instance.playerData.unlockedCharacters.Any(character => character.characterId == id);
 

@@ -26,7 +26,6 @@ namespace ScriptableObjects
         public TMP_FontAsset font;
         public Sprite playButton, gachaButton, mapCreator, exitButton;
         public Sprite fullStar, emptyStar, buttonLayout;
-        public bool usePrimaryColorInButtons;
         [Space]
         public GUIImage.PaletteColor bingoColor;
         [Space]

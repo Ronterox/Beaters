@@ -248,5 +248,5 @@ MonoBehaviour:
       z: 0
   requiredItem1: {fileID: 11400000, guid: 46bd4372404e80642a494f2f1c6e03f7, type: 2}
   requiredItem2: {fileID: 11400000, guid: aaaa7a2cc3af499bb975e2e691e2e191, type: 2}
-  requiredQuantityItem1: 0
-  requiredQuantityItem2: 0
+  requiredQuantityItem1: 1
+  requiredQuantityItem2: 1
