@@ -1,4 +1,3 @@
-using System;
 using Managers;
 using Plugins.Tools;
 using UnityEngine;
@@ -14,9 +13,12 @@ namespace ScriptableObjects.Skills
         {
             manager.CanMiss = false;
 
-            Action canMissAgain = () => manager.CanMiss = true;
+            TimerUI timer = manager.skillsTimer;
 
-            canMissAgain.DelayAction(duration + manager.DurationIncrement);
+            timer.SetEvents(null, () => manager.CanMiss = true);
+            timer.timerTime = duration + manager.DurationIncrement;
+            
+            timer.StartTimer();
         }
     }
 }

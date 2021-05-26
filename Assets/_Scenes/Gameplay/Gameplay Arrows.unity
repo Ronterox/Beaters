@@ -1720,6 +1720,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1450943138284240348, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
+      propertyPath: fillImage
+      value: 
+      objectReference: {fileID: 8857276459189565689}
+    - target: {fileID: 1450943138284240348, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 8857276459189565688}
     - target: {fileID: 3826572633390337692, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
       propertyPath: parentCanvas
       value: 
@@ -1836,22 +1844,6 @@ PrefabInstance:
       propertyPath: parentCanvas
       value: 
       objectReference: {fileID: 8857276459189565685}
-    - target: {fileID: 7507109897699540335, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: defaultColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7507109897699540335, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: defaultColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7507109897699540335, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: defaultColor.g
-      value: 0.9800461
-      objectReference: {fileID: 0}
-    - target: {fileID: 7507109897699540335, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: defaultColor.r
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
 --- !u!114 &3826572633390337690 stripped

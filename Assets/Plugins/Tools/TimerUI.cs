@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Plugins.Tools
 {
@@ -10,6 +11,8 @@ namespace Plugins.Tools
         [Header("UI")]
         public TMP_Text timerText;
         public ShowType showType = ShowType.NoFormat;
+        [Space]
+        public Image fillImage;
 
         protected override void Update()
         {
@@ -21,7 +24,7 @@ namespace Plugins.Tools
         private void UpdateTimerText()
         {
             const float divisionBy60Approximation = 0.016665f;
-            
+
             string text = showType switch
             {
                 ShowType.ClockLike => $"{Mathf.Floor(m_Timer * divisionBy60Approximation) % 60:00}:{m_Timer % 60:00}",
@@ -29,8 +32,9 @@ namespace Plugins.Tools
                 ShowType.IntegerOnly => $"{Mathf.Floor(m_Timer)}",
                 _ => ""
             };
-            
-            timerText.text = text;
+
+            if (timerText) timerText.text = text;
+            if (fillImage) fillImage.fillAmount = m_Timer.GetPercentageValue(timerTime);
         }
     }
 }

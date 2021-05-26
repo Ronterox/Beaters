@@ -49,7 +49,9 @@ namespace Managers
         
         [Header("Timer Feedback")]
         public Image feedbackImage;
-        public TMP_Text timerText;
+        public TMP_Text skillText;
+        [Space]
+        public TimerUI skillsTimer;
 
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_Started, m_Ended, m_IsPaused;
@@ -238,7 +240,7 @@ namespace Managers
         public void UpdateTimerFeedback(float currentTime, float duration)
         {
             feedbackImage.fillAmount = currentTime.GetPercentageValue(duration);
-            timerText.text = $"{currentTime:N2}";
+            skillText.text = $"{currentTime:N2}";
         }
 
         /// <summary>

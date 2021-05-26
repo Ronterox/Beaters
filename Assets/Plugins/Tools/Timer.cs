@@ -96,6 +96,13 @@ namespace Plugins.Tools
             resetOnEnd = options.resetOnEnd;
         }
 
+        public void SetEvents(TimerEvent onStart, TimerEvent onStop = null, TimerEvent onEnd = null)
+        {
+            onTimerStart = onStart;
+            onTimerStop = onStop;
+            onTimerEnd = onEnd;
+        }
+
         public static Timer CreateTimerInstance(GameObject caller)
         {
             var timerGameObject = new GameObject { name = $"Timer_{caller.name}" };
