@@ -2,6 +2,7 @@ using General;
 using Managers;
 using UnityEngine;
 using TMPro;
+using UI;
 
 namespace ScriptableObjects
 {
@@ -28,6 +29,8 @@ namespace ScriptableObjects
         public bool usePrimaryColorInButtons;
         [Space]
         public GUIImage.PaletteColor bingoColor;
+        [Space]
+        public Sprite noteSprite;
     }
 
     [System.Serializable]

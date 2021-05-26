@@ -75,7 +75,7 @@ namespace Core.Arrow_Game
 
         private void CheckButton()
         {
-            if (!isNoteAbove) GameplayManager.Instance.MissArrowTap();
+            if (!isNoteAbove) GameplayManager.MissArrowTap();
             //Arrow animation with tween
             m_ClickAnimation.Restart();
             m_ClickAnimation.Play();

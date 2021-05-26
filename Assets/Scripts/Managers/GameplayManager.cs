@@ -15,6 +15,8 @@ namespace Managers
 {
     public enum HitType { Good = 3, Perfect = 5, TooSlow = 2, TooSoon = 2 }
 
+    public enum GameMode { Hero, Push, Defender }
+
     public class GameplayManager : Singleton<GameplayManager>
     {
         public MapScroller mapScroller;
@@ -43,6 +45,13 @@ namespace Managers
 
         [Header("Song State")]
         public Timer songTimer;
+        public TMP_Text finishText;
+        
+        [Header("Timer Feedback")]
+        public Image feedbackImage;
+        public TMP_Text skillText;
+        [Space]
+        public TimerUI skillsTimer;
 
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_Started, m_Ended, m_IsPaused;
@@ -87,7 +96,24 @@ namespace Managers
             m_StartTime = Time.realtimeSinceStartup;
         }
 
-        public void SetFreeTaps(int taps) => FreeTapsCount = m_MissedTaps + taps;
+        /// <summary>
+        /// Free taps
+        /// </summary>
+        /// <param name="taps"></param>
+        public void SetFreeTaps(int taps)
+        {
+            FreeTapsCount = m_MissedTaps + taps;
+            
+            UpdateFreeTapsText();
+            
+            feedbackImage.fillAmount = 1f;
+            feedbackImage.gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Updates the free taps skill text
+        /// </summary>
+        private void UpdateFreeTapsText() => skillText.text = $"{FreeTapsCount - m_MissedTaps}";
 
         /// <summary>
         /// Sets the gameplay values
@@ -110,6 +136,8 @@ namespace Managers
             if (rune) rune.ActivateRune(this);
 
             CanMiss = false;
+            
+            feedbackImage.gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -136,12 +164,11 @@ namespace Managers
 
             skillButton.onClick.AddListener(() =>
             {
-                if (skillBarSlider.value >= skillBarSlider.maxValue)
-                {
-                    //Use active only when available
-                    currentCharacter.UsePower(this);
-                    skillBarSlider.value = 0;
-                }
+                if (skillBarSlider.value < skillBarSlider.maxValue) return;
+
+                //Use active only when available
+                currentCharacter.UsePower(this);
+                skillBarSlider.value = 0;
             });
         }
 
@@ -149,10 +176,10 @@ namespace Managers
         /// Loses the game and calls everything related
         /// </summary>
         public void Lose() =>
-            SlowTime(2f, 0f, () =>
+            SlowTime(2f, () =>
             {
                 mapScroller.StopMap();
-                ShowEndGameplayPanel(gameCanvas);
+                ShowEndGameplayPanel(gameCanvas, false);
                 SoundManager.Instance.backgroundAudioSource.Stop();
             });
 
@@ -160,24 +187,30 @@ namespace Managers
         /// Slows the game time
         /// </summary>
         /// <param name="duration"></param>
-        /// <param name="objective"></param>
         /// <param name="afterSlowingTime"></param>
-        public void SlowTime(float duration, float objective, Action afterSlowingTime = null) => StartCoroutine(SlowTimeCoroutine(duration, objective, afterSlowingTime));
+        public void SlowTime(float duration, Action afterSlowingTime = null)
+        {
+            feedbackImage.gameObject.SetActive(false);
+            StartCoroutine(SlowTimeCoroutine(duration, afterSlowingTime));
+        }
+
+        public void SlowTimeReverse(float duration, Action afterSlowingTime = null) => StartCoroutine(SlowTimeReverseCoroutine(duration, afterSlowingTime));
 
         /// <summary>
         /// Slow time coroutine
         /// </summary>
         /// <param name="duration"></param>
-        /// <param name="objective"></param>
         /// <param name="afterSlowingTime"></param>
         /// <returns></returns>
-        public static IEnumerator SlowTimeCoroutine(float duration, float objective, Action afterSlowingTime)
+        private IEnumerator SlowTimeCoroutine(float duration, Action afterSlowingTime)
         {
             AudioSource sound = SoundManager.Instance.backgroundAudioSource;
 
             var currentTime = 0f;
             float startValue = Time.timeScale;
-            while (duration > currentTime)
+
+            const float objective = 0f;
+            while (currentTime < duration)
             {
                 sound.pitch = Time.timeScale = Mathf.Lerp(startValue, objective, currentTime / duration);
                 currentTime += Time.unscaledDeltaTime;
@@ -187,6 +220,44 @@ namespace Managers
             sound.pitch = Time.timeScale = 1f;
 
             afterSlowingTime?.Invoke();
+        }
+        
+        /// <summary>
+        /// Slow time coroutine
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="afterSlowingTime"></param>
+        /// <returns></returns>
+        private IEnumerator SlowTimeReverseCoroutine(float duration, Action afterSlowingTime)
+        {
+            AudioSource sound = SoundManager.Instance.backgroundAudioSource;
+
+            float currentTime = duration;
+            float startValue = Time.timeScale;
+
+            feedbackImage.gameObject.SetActive(true);
+
+            const float objective = 0f;
+            while (currentTime > 0)
+            {
+                sound.pitch = Time.timeScale = Mathf.Lerp(startValue, objective, currentTime / duration);
+                currentTime -= Time.unscaledDeltaTime;
+
+                UpdateTimerFeedback(currentTime, duration);
+                yield return null;
+            }
+            
+            feedbackImage.gameObject.SetActive(false);
+
+            sound.pitch = Time.timeScale = 1f;
+
+            afterSlowingTime?.Invoke();
+        }
+
+        public void UpdateTimerFeedback(float currentTime, float duration)
+        {
+            feedbackImage.fillAmount = currentTime.GetPercentageValue(duration);
+            skillText.text = $"{currentTime:N2}";
         }
 
         /// <summary>
@@ -276,7 +347,7 @@ namespace Managers
             songTimer.onTimerStop += StopMap;
 
             songTimeBar.maxValue = time;
-            scoreBar.maxValue = notes < 1 ? 0 : Mathf.Round(notes.FactorialSum() / 7f);
+            scoreBar.maxValue = notes < 1 ? 0 : Mathf.Abs(Mathf.RoundToInt(notes / 7f).FactorialSum());
         }
 
         /// <summary>
@@ -312,14 +383,15 @@ namespace Managers
             m_Started = false;
             songTimer.onTimerStop -= StopMap;
 
-            ShowEndGameplayPanel(gameCanvas);
+            ShowEndGameplayPanel(gameCanvas, true);
         }
 
         /// <summary>
         /// Shows the end gameplay panel
         /// </summary>
         /// <param name="parentCanvas"></param>
-        private void ShowEndGameplayPanel(Transform parentCanvas)
+        /// <param name="win"></param>
+        private void ShowEndGameplayPanel(Transform parentCanvas, bool win)
         {
             CheckHighestCombo();
 
@@ -360,6 +432,15 @@ namespace Managers
 
             gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
 
+            gameOverPanel.gameObject.SetActive(false);
+
+            Action activateEndScreen = () => gameOverPanel.gameObject.SetActive(true);
+
+            finishText.text = win ? "You WIN!" : "You LOSE!";
+            finishText.gameObject.SetActive(true);
+
+            activateEndScreen.DelayAction(2);
+
             //Show prizes
 
             if (m_Score <= oldHighScore) return;
@@ -369,9 +450,17 @@ namespace Managers
         }
 
         /// <summary>
+        /// Static caller for instance method
+        /// </summary>
+        public static void MissArrow()
+        {
+            if (m_Instance) m_Instance.MissArrowLogic();
+        }
+
+        /// <summary>
         /// Logic for missing an arrow without tapping
         /// </summary>
-        public void MissArrow()
+        private void MissArrowLogic()
         {
             // Can miss check in case of power
             if (!CanMiss) return;
@@ -383,11 +472,13 @@ namespace Managers
                 comboText.text = $"x{m_Combo = 0}";
             }
 
-            if (FreeTapsCount > ++m_MissedTaps) return;
+            if (FreeTapsCount > ++m_MissedTaps)
+            {
+                UpdateFreeTapsText();
+                return;
+            }
 
-            Character character = currentCharacter;
-
-            if (CanLose && !character.IsDead) character.TakeDamage(MinimumDamage);
+            if (CanLose && !currentCharacter.IsDead) currentCharacter.TakeDamage(MinimumDamage);
         }
 
         /// <summary>
@@ -402,10 +493,25 @@ namespace Managers
         /// <summary>
         /// Logic for missing an arrow by tapping
         /// </summary>
-        public void MissArrowTap()
+        public static void MissArrowTap()
         {
-            m_Taps++;
+            if (!m_Instance) return;
+
+            m_Instance.m_Taps++;
             MissArrow();
+        }
+
+        /// <summary>
+        /// Static caller for hitting an arrow
+        /// </summary>
+        /// <param name="hitType"></param>
+        /// <param name="feedbackPosition"></param>
+        /// <param name="feedbackColor"></param>
+        /// <param name="isCombo"></param>
+        /// <param name="comboLength"></param>
+        public static void HitArrow(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo = false, int comboLength = 0)
+        {
+            if (m_Instance) m_Instance.HitArrowLogic(hitType, feedbackPosition, feedbackColor, isCombo, comboLength);
         }
 
         /// <summary>
@@ -416,7 +522,7 @@ namespace Managers
         /// <param name="feedbackColor"></param>
         /// <param name="isCombo"></param>
         /// <param name="comboLength"></param>
-        public void HitArrow(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo = false, int comboLength = 0)
+        private void HitArrowLogic(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo, int comboLength)
         {
             //Increment combo, taps, notes hit for player stats
             m_Taps++;
@@ -426,21 +532,17 @@ namespace Managers
             skillGainTextPooler.ShowText($"+1", m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
-            int points = Mathf.RoundToInt((int)hitType * ++m_Combo * Multiplier);
+            const float divisionBy7 = .14284f;
+            int points = Mathf.RoundToInt((int)hitType * ++m_Combo * Multiplier * divisionBy7);
 
             scoreText.text = $"{m_Score += points}";
             comboText.text = $"x{m_Combo}";
 
-            Slider bar = scoreBar;
-
-            float newScoreValue = bar.value + points;
-            bar.value = newScoreValue % bar.maxValue;
+            float newScoreValue = scoreBar.value + points;
+            scoreBar.value = newScoreValue % scoreBar.maxValue;
 
             //Increment the start count if went upper the score limit
-            if (newScoreValue >= bar.maxValue)
-            {
-                starsCounter.text = $"{++m_StarsCount}";
-            }
+            if (newScoreValue >= scoreBar.maxValue) starsCounter.text = $"{++m_StarsCount}";
 
             if (EveryNoteGivesMoney) m_Data.money += (int)(Random.Range(m_MinMoneyGain, m_MaxMoneyGain) * .10f * MoneyMultiplier);
 
@@ -452,7 +554,7 @@ namespace Managers
                 bool completedCombo = ++m_ComboPrizeCounter >= comboLength;
 
                 float rng = Random.Range(m_MinMoneyGain, m_MaxMoneyGain);
-                
+
                 float totalGain = completedCombo ? rng * comboLength * .05f : rng * .05f;
 
                 skillBarSlider.value += totalGain;

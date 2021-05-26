@@ -50,7 +50,7 @@ namespace Core.Arrow_Game
 
             HitType hitType = GetHitType(buttonHeight);
 
-            GameplayManager.Instance.HitArrow(hitType, mainCamera.WorldToScreenPoint(transform.position), spriteRenderer.color, isCombo, comboLength);
+            GameplayManager.HitArrow(hitType, mainCamera.WorldToScreenPoint(transform.position), spriteRenderer.color, isCombo, comboLength);
 
             gameObject.SetActive(false);
 
@@ -102,7 +102,7 @@ namespace Core.Arrow_Game
         {
             if (!other.CompareTag(buttonTag) || m_WasPressed) return;
 
-            GameplayManager.Instance.MissArrow();
+            GameplayManager.MissArrow();
             gameObject.SetActive(false);
         }
     }

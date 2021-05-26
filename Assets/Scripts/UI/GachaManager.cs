@@ -146,6 +146,8 @@ namespace UI
         public ScriptableObject RandomItem()
         {
             LootOption[] table = banners[m_BannerIndex].lootTable;
+            
+            m_Total = 0;
             table.Shuffle();
 
             foreach (LootOption item in table) m_Total += item.probability;

@@ -1,11 +1,12 @@
 using System.Linq;
+using Managers;
 using Plugins.Tools;
 using ScriptableObjects;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-namespace Managers
+namespace UI
 {
     [System.Serializable]
     public struct GUIImage

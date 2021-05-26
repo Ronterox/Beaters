@@ -152,7 +152,6 @@
             <e p="ArchievementsManager.cs" t="Include" />
             <e p="CameraManager.cs" t="Include" />
             <e p="DataManager.cs" t="Include" />
-            <e p="GUIManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
             <e p="GameOverPanel.cs" t="Include" />
             <e p="GameplayManager.cs" t="Include" />
@@ -197,7 +196,9 @@
             <e p="Editor" t="Include">
               <e p="SongCarouselEditor.cs" t="Include" />
             </e>
+            <e p="GUIManager.cs" t="Include" />
             <e p="GachaManager.cs" t="Include" />
+            <e p="GameplayUIManager.cs" t="Include" />
             <e p="LockedSongScreen.cs" t="Include" />
             <e p="SelectableRune.cs" t="Include" />
             <e p="SliderValueToText.cs" t="Include" />

@@ -1,4 +1,3 @@
-using System;
 using Managers;
 using Plugins.Tools;
 using UnityEngine;
@@ -14,9 +13,12 @@ namespace ScriptableObjects.Skills
         {
             manager.EveryNoteGivesMoney = true;
             
-            Action deactivateMultiplier = () => manager.EveryNoteGivesMoney = false;
+            TimerUI timer = manager.skillsTimer;
+
+            timer.SetEvents(null, () => manager.EveryNoteGivesMoney = false);
+            timer.timerTime = duration + manager.DurationIncrement;
             
-            deactivateMultiplier.DelayAction(duration + manager.DurationIncrement);
+            timer.StartTimer();
         }
     }
 }

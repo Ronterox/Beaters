@@ -42,3 +42,4 @@ MonoBehaviour:
   buttonLayout: {fileID: 21300000, guid: 0a7ccdb6757de8cdfbe28774a636ffac, type: 3}
   usePrimaryColorInButtons: 1
   bingoColor: 1
+  noteSprite: {fileID: 7482667652216324306, guid: 7475979ed16de74cb90d856be80cd5df, type: 3}

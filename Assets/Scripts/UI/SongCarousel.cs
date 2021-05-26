@@ -45,7 +45,12 @@ namespace UI
             for (var i = 0; i < parameters.Length; i++)
             {
                 Song song = parameters[i];
-                bool isUnlock = unlock || songIds.Contains(song.ID);
+                
+                bool unlockedSong = songIds.Contains(song.ID);
+                bool isUnlock = unlock || unlockedSong;
+                
+                if(unlock && !unlockedSong) DataManager.AddSong(song);
+                
                 CreateElement(i, i == 0).Setup(song, isUnlock, songRecordScreen, isUnlock ? null : lockedSongScreen);
             }
         }
