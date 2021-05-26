@@ -46,6 +46,10 @@ namespace Managers
         [Header("Song State")]
         public Timer songTimer;
         public TMP_Text finishText;
+        
+        [Header("Timer Feedback")]
+        public Image feedbackImage;
+        public TMP_Text timerText;
 
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_Started, m_Ended, m_IsPaused;
@@ -113,6 +117,8 @@ namespace Managers
             if (rune) rune.ActivateRune(this);
 
             CanMiss = false;
+            
+            feedbackImage.gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -139,12 +145,11 @@ namespace Managers
 
             skillButton.onClick.AddListener(() =>
             {
-                if (skillBarSlider.value >= skillBarSlider.maxValue)
-                {
-                    //Use active only when available
-                    currentCharacter.UsePower(this);
-                    skillBarSlider.value = 0;
-                }
+                if (skillBarSlider.value < skillBarSlider.maxValue) return;
+
+                //Use active only when available
+                currentCharacter.UsePower(this);
+                skillBarSlider.value = 0;
             });
         }
 
@@ -152,7 +157,7 @@ namespace Managers
         /// Loses the game and calls everything related
         /// </summary>
         public void Lose() =>
-            SlowTime(2f, 0f, () =>
+            SlowTime(2f, () =>
             {
                 mapScroller.StopMap();
                 ShowEndGameplayPanel(gameCanvas, false);
@@ -163,24 +168,30 @@ namespace Managers
         /// Slows the game time
         /// </summary>
         /// <param name="duration"></param>
-        /// <param name="objective"></param>
         /// <param name="afterSlowingTime"></param>
-        public void SlowTime(float duration, float objective, Action afterSlowingTime = null) => StartCoroutine(SlowTimeCoroutine(duration, objective, afterSlowingTime));
+        public void SlowTime(float duration, Action afterSlowingTime = null)
+        {
+            feedbackImage.gameObject.SetActive(false);
+            StartCoroutine(SlowTimeCoroutine(duration, afterSlowingTime));
+        }
+
+        public void SlowTimeReverse(float duration, Action afterSlowingTime = null) => StartCoroutine(SlowTimeReverseCoroutine(duration, afterSlowingTime));
 
         /// <summary>
         /// Slow time coroutine
         /// </summary>
         /// <param name="duration"></param>
-        /// <param name="objective"></param>
         /// <param name="afterSlowingTime"></param>
         /// <returns></returns>
-        public static IEnumerator SlowTimeCoroutine(float duration, float objective, Action afterSlowingTime)
+        private IEnumerator SlowTimeCoroutine(float duration, Action afterSlowingTime)
         {
             AudioSource sound = SoundManager.Instance.backgroundAudioSource;
 
             var currentTime = 0f;
             float startValue = Time.timeScale;
-            while (duration > currentTime)
+
+            const float objective = 0f;
+            while (currentTime < duration)
             {
                 sound.pitch = Time.timeScale = Mathf.Lerp(startValue, objective, currentTime / duration);
                 currentTime += Time.unscaledDeltaTime;
@@ -190,6 +201,44 @@ namespace Managers
             sound.pitch = Time.timeScale = 1f;
 
             afterSlowingTime?.Invoke();
+        }
+        
+        /// <summary>
+        /// Slow time coroutine
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="afterSlowingTime"></param>
+        /// <returns></returns>
+        private IEnumerator SlowTimeReverseCoroutine(float duration, Action afterSlowingTime)
+        {
+            AudioSource sound = SoundManager.Instance.backgroundAudioSource;
+
+            float currentTime = duration;
+            float startValue = Time.timeScale;
+
+            feedbackImage.gameObject.SetActive(true);
+
+            const float objective = 0f;
+            while (currentTime > 0)
+            {
+                sound.pitch = Time.timeScale = Mathf.Lerp(startValue, objective, currentTime / duration);
+                currentTime -= Time.unscaledDeltaTime;
+
+                UpdateTimerFeedback(currentTime, duration);
+                yield return null;
+            }
+            
+            feedbackImage.gameObject.SetActive(false);
+
+            sound.pitch = Time.timeScale = 1f;
+
+            afterSlowingTime?.Invoke();
+        }
+
+        public void UpdateTimerFeedback(float currentTime, float duration)
+        {
+            feedbackImage.fillAmount = currentTime.GetPercentageValue(duration);
+            timerText.text = $"{currentTime:N2}";
         }
 
         /// <summary>

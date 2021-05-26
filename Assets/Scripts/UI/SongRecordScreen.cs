@@ -10,7 +10,6 @@ namespace UI
     public class SongRecordScreen : MonoBehaviour
     {
         public Image songRecordImage, characterImage;
-        
         [Space]
         public TMP_Text scoreText;
         public TMP_Text gradeText, comboText, accuracyText, songTimeText, modeText;
@@ -25,7 +24,7 @@ namespace UI
             LevelLoadManager.LoadArrowGameplayScene();
         });
         
-        public void ShowRecordScreen(Sprite sprite, int score, string grade, int combo, float accuracy, float time, TMP_FontAsset fontAsset, GameMode gameMode)
+        public void ShowRecordScreen(Sprite sprite, int score, string grade, int combo, float accuracy, float time, GameMode gameMode)
         {
             characterImage.sprite = sprite;
             scoreText.text = $"Highest Score: {score}";
@@ -34,8 +33,6 @@ namespace UI
             gradeText.text = $"Highest Grade: {grade}";
             songTimeText.text = $"Length: {Mathf.Floor(time * 0.016665f) % 60:00}:{time % 60:00}";
             modeText.text = $"Song Mode: {gameMode}";
-
-            scoreText.font = comboText.font = accuracyText.font = gradeText.font = songTimeText.font = modeText.font = fontAsset;
         }
 
         public void ShowRecordScreen(Song song)
@@ -46,12 +43,10 @@ namespace UI
 
             SerializableSong serializableSong = DataManager.GetSong(song.ID);
 
-            ScriptableCharacter character = GameManager.GetCharacter();
-            
-            ShowRecordScreen(character.sprites[0], serializableSong.highestScore, 
+            ShowRecordScreen(GameManager.GetCharacter().sprites[0], serializableSong.highestScore, 
                              "No Grade", 
                              serializableSong.highestCombo, 
-                             serializableSong.accuracy, song.soundMap.audioClip.length, character.font, GameMode.Hero);
+                             serializableSong.accuracy, song.soundMap.audioClip.length, GameMode.Hero);
             
             m_Song = song;
 
