@@ -96,7 +96,24 @@ namespace Managers
             m_StartTime = Time.realtimeSinceStartup;
         }
 
-        public void SetFreeTaps(int taps) => FreeTapsCount = m_MissedTaps + taps;
+        /// <summary>
+        /// Free taps
+        /// </summary>
+        /// <param name="taps"></param>
+        public void SetFreeTaps(int taps)
+        {
+            FreeTapsCount = m_MissedTaps + taps;
+            
+            UpdateFreeTapsText();
+            
+            feedbackImage.fillAmount = 1f;
+            feedbackImage.gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Updates the free taps skill text
+        /// </summary>
+        private void UpdateFreeTapsText() => skillText.text = $"{FreeTapsCount - m_MissedTaps}";
 
         /// <summary>
         /// Sets the gameplay values
@@ -455,7 +472,11 @@ namespace Managers
                 comboText.text = $"x{m_Combo = 0}";
             }
 
-            if (FreeTapsCount > ++m_MissedTaps) return;
+            if (FreeTapsCount > ++m_MissedTaps)
+            {
+                UpdateFreeTapsText();
+                return;
+            }
 
             if (CanLose && !currentCharacter.IsDead) currentCharacter.TakeDamage(MinimumDamage);
         }
