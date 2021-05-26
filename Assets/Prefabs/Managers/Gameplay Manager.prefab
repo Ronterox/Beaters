@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3826572633390337692}
   - component: {fileID: 7507109897699540335}
   - component: {fileID: 1450943138284240348}
+  - component: {fileID: 1526448104032277498}
   m_Layer: 0
   m_Name: Gameplay Manager
   m_TagString: Untagged
@@ -65,7 +66,7 @@ MonoBehaviour:
   songTimer: {fileID: 6925172793618570845}
   finishText: {fileID: 0}
   feedbackImage: {fileID: 0}
-  timerText: {fileID: 0}
+  skillText: {fileID: 0}
   skillsTimer: {fileID: 1450943138284240348}
 --- !u!114 &6925172793618570845
 MonoBehaviour:
@@ -134,3 +135,58 @@ MonoBehaviour:
   timerText: {fileID: 0}
   showType: 1
   fillImage: {fileID: 0}
+--- !u!114 &1526448104032277498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826572633401589595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6345f183e1d0b790b899bba16452c007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameplayUi:
+  - renderer: {fileID: 0}
+    color: 0
+    changeSprite: 1
+  - renderer: {fileID: 0}
+    color: 1
+    changeSprite: 1
+  - renderer: {fileID: 0}
+    color: 2
+    changeSprite: 1
+  - renderer: {fileID: 0}
+    color: 3
+    changeSprite: 1
+  - renderer: {fileID: 0}
+    color: 0
+    changeSprite: 0
+  - renderer: {fileID: 0}
+    color: 1
+    changeSprite: 0
+  - renderer: {fileID: 0}
+    color: 2
+    changeSprite: 0
+  - renderer: {fileID: 0}
+    color: 3
+    changeSprite: 0
+  - renderer: {fileID: 0}
+    color: 0
+    changeSprite: 1
+  - renderer: {fileID: 0}
+    color: 1
+    changeSprite: 1
+  - renderer: {fileID: 0}
+    color: 2
+    changeSprite: 1
+  - renderer: {fileID: 0}
+    color: 3
+    changeSprite: 1
+  skillImage: {fileID: 0}
+  texts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

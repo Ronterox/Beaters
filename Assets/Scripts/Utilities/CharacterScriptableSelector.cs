@@ -2,6 +2,7 @@ using Managers;
 using Plugins.Tools;
 using ScriptableObjects;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
