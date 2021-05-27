@@ -44,6 +44,7 @@ namespace UI
                     if (parameters[1] is bool isUnlock && isUnlock)
                     {
                         onClick.AddListener(PlayMap);
+                        lockImage.SetActive(false);
                     }
                     else
                     {
@@ -63,8 +64,7 @@ namespace UI
 
                         songImage.SetAlpha(.5f);
                         
-                        //TODO: remove if and fix when merge
-                        if(lockImage) lockImage.SetActive(true);
+                        lockImage.SetActive(true);
                     }
 
                     break;
