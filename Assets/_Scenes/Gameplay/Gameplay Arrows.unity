@@ -2273,37 +2273,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3826572633390337690}
     - target: {fileID: 7920826715592406191, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7920826715592406191, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7920826715592406191, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 3826572633390337690}
-    - target: {fileID: 7920826715592406191, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7920826715592406191, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: StartMap
-      objectReference: {fileID: 0}
-    - target: {fileID: 7920826715592406191, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: Managers.GameplayManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7920826715592406191, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7920826715592406191, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 8857276459449714278, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
