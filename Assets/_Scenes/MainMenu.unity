@@ -818,7 +818,6 @@ RectTransform:
   m_Children:
   - {fileID: 2547194281196459886}
   - {fileID: 783594301}
-  - {fileID: 1243534553}
   m_Father: {fileID: 1058471122}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1311,6 +1310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20038cba2dedfebb5b80d0ed57a7e130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialScene: Tutorial Arrow
   canvasGroups:
   - {fileID: 476340149}
   - {fileID: 1086043732}
@@ -1331,6 +1331,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 28936ee0352193041acb5672697a0cb7, type: 2}
   - {fileID: 11400000, guid: c55d69a3df050cb94ae1f9770e9aa08d, type: 2}
   - {fileID: 11400000, guid: 5f8b35bea7b34baaabac79370c64b7d2, type: 2}
+  - {fileID: 11400000, guid: 96261a4345ee26748894dc6f7354d160, type: 2}
+  - {fileID: 11400000, guid: 8739980ec76742246a6d52607e3008b6, type: 2}
+  - {fileID: 11400000, guid: 55be555531a03fd439422b17429fc77e, type: 2}
+  - {fileID: 11400000, guid: 76b420030109f6b45bf7510658db1b6c, type: 2}
 --- !u!1 &1086043730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1654,11 +1658,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204340880}
   m_CullTransparentMesh: 1
---- !u!224 &1243534553 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
-  m_PrefabInstance: {fileID: 1147158779}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1376621053
 GameObject:
   m_ObjectHideFlags: 0

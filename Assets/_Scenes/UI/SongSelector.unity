@@ -196,14 +196,14 @@ MonoBehaviour:
   scrollSpeed: 1
   scrollEase: 1
   songs:
-  - {fileID: 11400000, guid: 28936ee0352193041acb5672697a0cb7, type: 2}
   - {fileID: 11400000, guid: c55d69a3df050cb94ae1f9770e9aa08d, type: 2}
   - {fileID: 11400000, guid: 5f8b35bea7b34baaabac79370c64b7d2, type: 2}
-  defaultSongs:
-  - {fileID: 11400000, guid: 28936ee0352193041acb5672697a0cb7, type: 2}
   - {fileID: 11400000, guid: 96261a4345ee26748894dc6f7354d160, type: 2}
+  defaultSongs:
+  - {fileID: 11400000, guid: 8739980ec76742246a6d52607e3008b6, type: 2}
   - {fileID: 11400000, guid: 55be555531a03fd439422b17429fc77e, type: 2}
   - {fileID: 11400000, guid: 76b420030109f6b45bf7510658db1b6c, type: 2}
+  - {fileID: 11400000, guid: 28936ee0352193041acb5672697a0cb7, type: 2}
   songRecordScreen: {fileID: 2000834867}
   lockedSongScreen: {fileID: 837729626}
 --- !u!1 &80505898
@@ -1424,7 +1424,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 80505899}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4440,7 +4440,6 @@ GameObject:
   - component: {fileID: 7979172281588127240}
   - component: {fileID: 7979172281588127241}
   - component: {fileID: 7979172281588127242}
-  - component: {fileID: 7979172281588127243}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -4589,32 +4588,6 @@ MonoBehaviour:
     scene: Settings
   - button: {fileID: 1918723524}
     scene: MainMenu
---- !u!114 &7979172281588127243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7979172281588127239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32c441b6e2e429a2ba178d8104de6338, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  images: []
-  characters: []
-  backgroundImage: {fileID: 0}
-  playButtons: []
-  gachaLogo: {fileID: 0}
-  mapCreator: {fileID: 0}
-  exitGame: {fileID: 0}
-  textsOfTheUI:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!223 &7979172281588127256
 Canvas:
   m_ObjectHideFlags: 0

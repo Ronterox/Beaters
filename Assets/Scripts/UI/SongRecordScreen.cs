@@ -12,7 +12,7 @@ namespace UI
         public Image songRecordImage, characterImage;
         [Space]
         public TMP_Text scoreText;
-        public TMP_Text gradeText, comboText, accuracyText, songTimeText, modeText;
+        public TMP_Text gradeText, comboText, accuracyText, songTimeText;
         
         [Space]
         public Button playButton;
@@ -32,7 +32,6 @@ namespace UI
             accuracyText.text = $"Accuracy: {accuracy}%";
             gradeText.text = $"Highest Grade: {grade}";
             songTimeText.text = $"Length: {Mathf.Floor(time * 0.016665f) % 60:00}:{time % 60:00}";
-            modeText.text = $"Song Mode: {gameMode}";
         }
 
         public void ShowRecordScreen(Song song)

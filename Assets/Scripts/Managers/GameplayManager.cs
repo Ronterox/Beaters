@@ -3,6 +3,7 @@ using System.Collections;
 using Core.Arrow_Game;
 using General;
 using Plugins.Audio;
+using Plugins.Properties;
 using Plugins.Tools;
 using ScriptableObjects;
 using TMPro;
@@ -29,6 +30,7 @@ namespace Managers
         public GameObject endGamePanel;
         [Space]
         public Button pauseButton;
+        [Information("Prefab will not be instantiated, this has to be reference from the scene", InformationAttribute.InformationType.Info, false)]
         public GameObject pauseMenu;
 
         [Header("About Song")]
@@ -118,11 +120,9 @@ namespace Managers
         /// <summary>
         /// Sets the gameplay values
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             m_Data = DataManager.Instance.playerData;
-
-            scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
 
             m_SkillSliderPosition = skillBarSlider.transform.position;
 
@@ -143,7 +143,7 @@ namespace Managers
         /// <summary>
         /// Sets the Pause Button Click Listener
         /// </summary>
-        private void SetPauseButton() =>
+        protected void SetPauseButton() =>
             pauseButton.onClick.AddListener(() =>
             {
                 m_IsPaused = !m_IsPaused;
@@ -263,7 +263,7 @@ namespace Managers
         /// <summary>
         /// Resets all the values to 0, for a replay
         /// </summary>
-        private void ResetValues()
+        protected void ResetValues()
         {
             //Reset slider and private values to 0
             m_Ended = false;
@@ -366,11 +366,14 @@ namespace Managers
         /// </summary>
         public void ResumeMap()
         {
-            m_Started = true;
-            songTimer.UnpauseTimer();
-            mapScroller.ResumeMap();
+            if (m_IsPaused)
+            {
+                m_Started = true;
+                songTimer.UnpauseTimer();
+                mapScroller.ResumeMap();
+                m_IsPaused = false;
+            }
             pauseMenu.SetActive(false);
-            m_IsPaused = false;
         }
 
         /// <summary>
@@ -391,7 +394,7 @@ namespace Managers
         /// </summary>
         /// <param name="parentCanvas"></param>
         /// <param name="win"></param>
-        private void ShowEndGameplayPanel(Transform parentCanvas, bool win)
+        protected virtual void ShowEndGameplayPanel(Transform parentCanvas, bool win)
         {
             CheckHighestCombo();
 

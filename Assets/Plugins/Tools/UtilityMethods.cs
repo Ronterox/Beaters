@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Internal;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Plugins.Tools
@@ -418,6 +419,14 @@ namespace Plugins.Tools
                 if (condition(array[i])) return i;
             }
             return -1;
+        }
+
+        public static void SetAlpha(this Image image, float newAlpha)
+        {
+            Color transparentColor = image.color;
+            transparentColor.a = newAlpha;
+
+            image.color = transparentColor;
         }
     }
 }
