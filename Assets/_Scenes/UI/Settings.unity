@@ -3374,14 +3374,13 @@ MonoBehaviour:
   characters:
   - {fileID: 11400000, guid: 6423ecb5f44a39c2c8b54b127299268a, type: 2}
   - {fileID: 11400000, guid: ec62a1e74756cf5c68aba7a564653476, type: 2}
-  backgroundImage: {fileID: 0}
+  backgroundImage: {fileID: 1734737330}
   playButtons: []
   gachaLogo: {fileID: 0}
   mapCreator: {fileID: 0}
   exitGame: {fileID: 0}
   textsOfTheUI:
   - {fileID: 268259196}
-  buttonsToChange: []
 --- !u!114 &1248208840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3487,7 +3486,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1248208838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e98b93640f5c58ba28af14c7005f89b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 34b3163396811765eafe65ea6f0abadf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   generalVolume: {fileID: 1450984922}

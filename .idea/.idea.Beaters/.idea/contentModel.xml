@@ -53,7 +53,6 @@
             </e>
             <e p="PauseMenu.cs" t="Include" />
             <e p="SelectableButton.cs" t="Include" />
-            <e p="SettingsMenu.cs" t="Include" />
           </e>
           <e p="Properties" t="Include">
             <e p="ConditionalHideAttribute.cs" t="Include" />
@@ -208,6 +207,7 @@
             <e p="GameplayUIManager.cs" t="Include" />
             <e p="LockedSongScreen.cs" t="Include" />
             <e p="SelectableRune.cs" t="Include" />
+            <e p="SettingsMenu.cs" t="Include" />
             <e p="SliderValueToText.cs" t="Include" />
             <e p="SongCarousel.cs" t="Include" />
             <e p="SongCarouselElement.cs" t="Include" />

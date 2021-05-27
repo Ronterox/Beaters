@@ -48,7 +48,7 @@ namespace Managers
         [Header("Song State")]
         public Timer songTimer;
         public TMP_Text finishText;
-        
+
         [Header("Timer Feedback")]
         public Image feedbackImage;
         public TMP_Text skillText;
@@ -106,9 +106,9 @@ namespace Managers
         public void SetFreeTaps(int taps)
         {
             FreeTapsCount = m_MissedTaps + taps;
-            
+
             UpdateFreeTapsText();
-            
+
             feedbackImage.fillAmount = 1f;
             feedbackImage.gameObject.SetActive(true);
         }
@@ -137,7 +137,7 @@ namespace Managers
             if (rune) rune.ActivateRune(this);
 
             CanMiss = false;
-            
+
             feedbackImage.gameObject.SetActive(false);
         }
 
@@ -223,7 +223,7 @@ namespace Managers
 
             afterSlowingTime?.Invoke();
         }
-        
+
         /// <summary>
         /// Slow time coroutine
         /// </summary>
@@ -248,7 +248,7 @@ namespace Managers
                 UpdateTimerFeedback(currentTime, duration);
                 yield return null;
             }
-            
+
             feedbackImage.gameObject.SetActive(false);
 
             sound.pitch = Time.timeScale = 1f;
@@ -349,9 +349,9 @@ namespace Managers
             songTimer.onTimerStop += StopMap;
 
             songTimeBar.maxValue = time;
-            
+
             int songLog = Mathf.RoundToInt(Mathf.Log(notes));
-            
+
             scoreBar.maxValue = notes < 1 ? 0 : m_SongFactorialScore = songLog.FactorialSum();
             m_SongFactorialScore *= songLog;
         }
@@ -387,7 +387,7 @@ namespace Managers
         /// </summary>
         public void StopMap()
         {
-            m_Ended = true;
+            if (m_Ended) return;
 
             m_Started = false;
             songTimer.onTimerStop -= StopMap;
@@ -402,12 +402,14 @@ namespace Managers
         /// <param name="win"></param>
         protected virtual void ShowEndGameplayPanel(Transform parentCanvas, bool win)
         {
+            m_Ended = true;
+            
             CheckHighestCombo();
 
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
 
             float rng = Random.Range(m_MinMoneyGain, m_MaxMoneyGain);
-            const float percentageGainLimiter = .10f;
+            const float percentageGainLimiter = .50f;
 
             int accuracyGain = Mathf.RoundToInt((accuracy * percentageGainLimiter + rng) * MoneyMultiplier),
                 comboGain = Mathf.RoundToInt((m_HighestCombo * percentageGainLimiter + rng) * MoneyMultiplier);
