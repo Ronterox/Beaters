@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Beer
   m_EditorClassIdentifier: 
   itemName: Beer
-  itemSprite: {fileID: 21300000, guid: 05e18bb0a86cfdb4dbf887d382b69249, type: 3}
+  itemSprite: {fileID: 21300000, guid: 45515f64b5c14194681e9f3d5ba80892, type: 3}
