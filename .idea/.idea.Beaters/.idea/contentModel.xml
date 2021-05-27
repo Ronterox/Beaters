@@ -13,11 +13,27 @@
           <e p="Creepster" t="Include">
             <e p="OFL.txt" t="Include" />
           </e>
+          <e p="DJ" t="Include">
+            <e p="OFL.txt" t="Include" />
+          </e>
           <e p="Kpop" t="Include">
             <e p="OFL.txt" t="Include" />
           </e>
           <e p="Press_Start_2P" t="Include">
             <e p="OFL.txt" t="Include" />
+          </e>
+          <e p="Rapper" t="Include">
+            <e p="OFL.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Mobile Game GUI Vector Pack" t="Include">
+          <e p="DEMO_Scripts" t="Include">
+            <e p="DEMO_CreateWindowShareLink.cs" t="Include" />
+            <e p="DEMO_DestroyWindow.cs" t="Include" />
+            <e p="DEMO_GraphicsManager.cs" t="Include" />
+            <e p="DEMO_NavigationInformation.cs" t="Include" />
+            <e p="DEMO_SceneNavigation.cs" t="Include" />
+            <e p="DEMO_SoundManager.cs" t="Include" />
           </e>
         </e>
         <e p="Plugins" t="Include">
@@ -199,6 +215,7 @@
             <e p="GUIManager.cs" t="Include" />
             <e p="GachaManager.cs" t="Include" />
             <e p="GameplayUIManager.cs" t="Include" />
+            <e p="IngameGUIManager.cs" t="Include" />
             <e p="LockedSongScreen.cs" t="Include" />
             <e p="SelectableRune.cs" t="Include" />
             <e p="SliderValueToText.cs" t="Include" />
@@ -221,20 +238,6 @@
           <e p="Distortion Shader.shader" t="Include" />
           <e p="TrailShader.shader" t="Include" />
           <e p="TrailShader2.shader" t="Include" />
-        </e>
-        <e p="Sprites" t="Include">
-          <e p="Interface" t="Include">
-            <e p="DJ" t="Include">
-              <e p="DJ" t="Include">
-                <e p="OFL.txt" t="Include" />
-              </e>
-            </e>
-            <e p="Rapper" t="Include">
-              <e p="Rapper" t="Include">
-                <e p="OFL.txt" t="Include" />
-              </e>
-            </e>
-          </e>
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
