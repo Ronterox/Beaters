@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeec78bcd73df891aa253fe934daea68, type: 3}
   m_Name: Metalhead Passive
   m_EditorClassIdentifier: 
-  effectDescription: 'When HP is 0, HP is set to 1 50% probability. (Hold my beer
-    animation)
-
-'
+  effectDescription: "When HP is 0, HP is set to 1 50% probability. \n"
   rechargeQuantity: 100
   skillImage: {fileID: 21300000, guid: 60a2a3aea1d0a03a7a34d9754fd06e8a, type: 3}
   reviveProbability: 0.5
