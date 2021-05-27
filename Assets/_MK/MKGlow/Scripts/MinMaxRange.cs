@@ -6,8 +6,6 @@
 // Copyright © 2021 All rights reserved.            //
 //////////////////////////////////////////////////////
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace MK.Glow
 {

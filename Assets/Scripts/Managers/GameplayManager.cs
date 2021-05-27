@@ -59,6 +59,7 @@ namespace Managers
         private bool m_Started, m_Ended, m_IsPaused;
 
         private int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
+        private int m_SongFactorialScore;
 
         private PlayerData m_Data;
 
@@ -181,6 +182,7 @@ namespace Managers
                 mapScroller.StopMap();
                 ShowEndGameplayPanel(gameCanvas, false);
                 SoundManager.Instance.backgroundAudioSource.Stop();
+                mapScroller.gameObject.SetActive(false);
             });
 
         /// <summary>
@@ -309,7 +311,7 @@ namespace Managers
             float audioClipLength = soundMap.audioClip.length;
             int notesLength = soundMap.notes.Length;
 
-            const float short_song_length = 60, medium_song_length = 120;
+            const float short_song_length = 10, medium_song_length = 30;
 
             if (audioClipLength < short_song_length)
             {
@@ -347,7 +349,11 @@ namespace Managers
             songTimer.onTimerStop += StopMap;
 
             songTimeBar.maxValue = time;
-            scoreBar.maxValue = notes < 1 ? 0 : Mathf.Abs(Mathf.RoundToInt(notes / 7f).FactorialSum());
+            
+            int songLog = Mathf.RoundToInt(Mathf.Log(notes));
+            
+            scoreBar.maxValue = notes < 1 ? 0 : m_SongFactorialScore = songLog.FactorialSum();
+            m_SongFactorialScore *= songLog;
         }
 
         /// <summary>
@@ -535,8 +541,9 @@ namespace Managers
             skillGainTextPooler.ShowText($"+1", m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
-            const float divisionBy7 = .14284f;
-            int points = Mathf.RoundToInt((int)hitType * ++m_Combo * Multiplier * divisionBy7);
+            int points = Mathf.RoundToInt((int)hitType * ++m_Combo * Multiplier / m_SongFactorialScore);
+
+            //TODO: print increment on screen feedback
 
             scoreText.text = $"{m_Score += points}";
             comboText.text = $"x{m_Combo}";

@@ -6,11 +6,9 @@
 // Copyright © 2021 All rights reserved.            //
 //////////////////////////////////////////////////////
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using System.Linq;
 
 namespace MK.Glow
 {
@@ -28,7 +26,7 @@ namespace MK.Glow
         // Members
         /////////////////////////////////////////////////////////////////////////////////////////////
         //always needed parameters - static
-        private static MK.Glow.Resources _resources;
+        private static Resources _resources;
         private static readonly Vector2 _referenceResolution = new Vector2(3840, 2160);
         private static readonly float _referenceAspectRatio = 0.5625f;
         private static readonly Vector2 _selectiveWorkflowThreshold = new Vector2(0.1f, 10);
@@ -41,7 +39,7 @@ namespace MK.Glow
         private static readonly string _selectiveReplacementTag = "RenderType";
         private static readonly string _selectiveGlowCameraObjectName = "selectiveGlowCameraObject";
         private GameObject _selectiveGlowCameraObject;
-        private UnityEngine.Camera _selectiveGlowCamera;
+        private Camera _selectiveGlowCamera;
 
         //Compute Shader Feature Matrices
         //Copy variant is always 0
@@ -110,7 +108,7 @@ namespace MK.Glow
         private ComputeShaderVariants.KeywordState computeShaderFeatures = new ComputeShaderVariants.KeywordState(0, 0, 0, 0, 0, 0);
         private RenderContext[] _sourceContext, _renderContext;
         private RenderContext _selectiveRenderContext;
-        private UnityEngine.Camera _renderingCamera;
+        private Camera _renderingCamera;
         private CameraData _cameraData;
         private RenderPipeline _renderPipeline;
 
@@ -133,7 +131,7 @@ namespace MK.Glow
         //shaderoverwrites should both null or referenced
         internal void Enable(RenderPipeline renderPipeline, Shader shaderOverwrite = null, Shader shaderGeometryOverwrite = null)
         {
-            _resources = MK.Glow.Resources.LoadResourcesAsset();
+            _resources = Resources.LoadResourcesAsset();
 
             _renderTextureFormat = Compatibility.CheckSupportedRenderTextureFormat();
 
@@ -185,10 +183,10 @@ namespace MK.Glow
             _renderTargetsBundle.Clear();
             _renderKeywordsBundle.Clear();
 
-            MonoBehaviour.DestroyImmediate(_selectiveGlowCamera);
-            MonoBehaviour.DestroyImmediate(_selectiveGlowCameraObject);
-            MonoBehaviour.DestroyImmediate(_renderMaterialNoGeometry);
-            MonoBehaviour.DestroyImmediate(_renderMaterialGeometry);
+            Object.DestroyImmediate(_selectiveGlowCamera);
+            Object.DestroyImmediate(_selectiveGlowCameraObject);
+            Object.DestroyImmediate(_renderMaterialNoGeometry);
+            Object.DestroyImmediate(_renderMaterialGeometry);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -293,7 +291,7 @@ namespace MK.Glow
                 if(!_selectiveGlowCameraObject)
                 {
                     _selectiveGlowCameraObject = new GameObject(_selectiveGlowCameraObjectName);
-                    _selectiveGlowCameraObject.AddComponent<UnityEngine.Camera>();
+                    _selectiveGlowCameraObject.AddComponent<Camera>();
                     _selectiveGlowCameraObject.hideFlags = HideFlags.HideAndDontSave;
                 }
                 return _selectiveGlowCameraObject;
@@ -303,13 +301,13 @@ namespace MK.Glow
         /// <summary>
         /// selective replacement shader rendering camera forthe glow
         /// </summary>
-        private UnityEngine.Camera selectiveGlowCamera
+        private Camera selectiveGlowCamera
         {
             get
             {
                 if(_selectiveGlowCamera == null)
                 {
-                    _selectiveGlowCamera = selectiveGlowCameraObject.GetComponent<UnityEngine.Camera>();
+                    _selectiveGlowCamera = selectiveGlowCameraObject.GetComponent<Camera>();
                     _selectiveGlowCamera.hideFlags = HideFlags.HideAndDontSave;
                     _selectiveGlowCamera.enabled = false;
                 }
@@ -365,7 +363,6 @@ namespace MK.Glow
                 _useGeometryShaders = false;
 
             //Check for compute shader support
-            //TODO: if single pass stereo enabled compute shaders are turning off because UCG variables are not defined
             // -> more compute shader variants are needed
             //dont allow compute shaders to do lens flare on gles and glcore - dynamic for loop combined with compute shader seems not to work
             if(_settings.allowComputeShaders && Compatibility.CheckComputeShaderSupport() && !_cameraData.stereoEnabled)
@@ -407,7 +404,7 @@ namespace MK.Glow
         /// </summary>
         /// <param name="source"></param>
         /// <param name="destination"></param>
-        internal void Build(RenderTarget source, RenderTarget destination, Settings settings, CommandBuffer cmd, CameraData cameraData, UnityEngine.Camera renderingCamera = null, bool finalBlit = true)
+        internal void Build(RenderTarget source, RenderTarget destination, Settings settings, CommandBuffer cmd, CameraData cameraData, Camera renderingCamera = null, bool finalBlit = true)
         {
             _commandBuffer = cmd;
             _finalBlit = finalBlit;
@@ -454,13 +451,13 @@ namespace MK.Glow
         private void UpdateConstantBuffers()
         {      
             //Common
-            SetVector(PipelineProperties.ShaderProperties.screenSize, new Vector2(_cameraData.width, _cameraData.height), true);
-            SetFloat(PipelineProperties.ShaderProperties.singlePassStereoScale, PipelineProperties.singlePassStereoDoubleWideEnabled ? 2 : 1);
-            SetFloat(PipelineProperties.ShaderProperties.lumaScale, _settings.lumaScale);
-            SetFloat(PipelineProperties.ShaderProperties.blooming, _settings.blooming, true);
-            SetVector(PipelineProperties.ShaderProperties.resolutionScale, _resolutionScale);
-            SetVector(PipelineProperties.ShaderProperties.resolutionScale, _resolutionScale, true);
-            SetVector(PipelineProperties.ShaderProperties.renderTargetSize, new Vector2(_cameraData.width, _cameraData.height), true);
+            SetVector(ShaderProperties.screenSize, new Vector2(_cameraData.width, _cameraData.height), true);
+            SetFloat(ShaderProperties.singlePassStereoScale, PipelineProperties.singlePassStereoDoubleWideEnabled ? 2 : 1);
+            SetFloat(ShaderProperties.lumaScale, _settings.lumaScale);
+            SetFloat(ShaderProperties.blooming, _settings.blooming, true);
+            SetVector(ShaderProperties.resolutionScale, _resolutionScale);
+            SetVector(ShaderProperties.resolutionScale, _resolutionScale, true);
+            SetVector(ShaderProperties.renderTargetSize, new Vector2(_cameraData.width, _cameraData.height), true);
 
             Matrix4x4 viewMatrix = _cameraData.worldToCameraMatrix;
             //Setting 4x4 matrix via vector rows
@@ -477,23 +474,23 @@ namespace MK.Glow
             }
 
             //Bloom
-            SetFloat(PipelineProperties.ShaderProperties.bloomIntensity, ConvertGammaValue(_settings.bloomIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f)), true);
-            SetFloat(PipelineProperties.ShaderProperties.bloomSpread, bloomUpsampleSpread);
-            SetFloat(PipelineProperties.ShaderProperties.bloomSpread, bloomUpsampleSpread, true);
+            SetFloat(ShaderProperties.bloomIntensity, ConvertGammaValue(_settings.bloomIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f)), true);
+            SetFloat(ShaderProperties.bloomSpread, bloomUpsampleSpread);
+            SetFloat(ShaderProperties.bloomSpread, bloomUpsampleSpread, true);
 
-            SetVector(PipelineProperties.ShaderProperties.bloomThreshold, _settings.workflow == Workflow.Selective ? _selectiveWorkflowThreshold : new Vector2(ConvertGammaValue(_settings.bloomThreshold.minValue), ConvertGammaValue(_settings.bloomThreshold.maxValue)), _settings.debugView == DebugView.RawBloom ? true : false);
+            SetVector(ShaderProperties.bloomThreshold, _settings.workflow == Workflow.Selective ? _selectiveWorkflowThreshold : new Vector2(ConvertGammaValue(_settings.bloomThreshold.minValue), ConvertGammaValue(_settings.bloomThreshold.maxValue)), _settings.debugView == DebugView.RawBloom ? true : false);
 
             //LensSurface
             if(_useLensSurface)
             {
-                SetFloat(PipelineProperties.ShaderProperties.lensSurfaceDirtIntensity, ConvertGammaValue(_settings.lensSurfaceDirtIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f)), true);
-                SetFloat(PipelineProperties.ShaderProperties.lensSurfaceDiffractionIntensity, ConvertGammaValue(_settings.lensSurfaceDiffractionIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f)), true);
+                SetFloat(ShaderProperties.lensSurfaceDirtIntensity, ConvertGammaValue(_settings.lensSurfaceDirtIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f)), true);
+                SetFloat(ShaderProperties.lensSurfaceDiffractionIntensity, ConvertGammaValue(_settings.lensSurfaceDiffractionIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f)), true);
                 float dirtRatio = (float)(_settings.lensSurfaceDirtTexture ? _settings.lensSurfaceDirtTexture.width : _resources.lensSurfaceDirtTextureDefault.width) / 
                 (float)(_settings.lensSurfaceDirtTexture ? _settings.lensSurfaceDirtTexture.height : _resources.lensSurfaceDirtTextureDefault.height);
                 float dsRatio = _cameraData.aspect / dirtRatio;
                 float sdRatio = dirtRatio / _cameraData.aspect;
 
-                SetVector(PipelineProperties.ShaderProperties.lensSurfaceDirtTexST, dirtRatio > _cameraData.aspect ? 
+                SetVector(ShaderProperties.lensSurfaceDirtTexST, dirtRatio > _cameraData.aspect ? 
                           new Vector4(dsRatio, 1, (1f - dsRatio) * 0.5f, 0) :
                           new Vector4(1, sdRatio, 0, (1f - sdRatio) * 0.5f), true);
             }
@@ -501,20 +498,20 @@ namespace MK.Glow
             //LensFlare
             if(_useLensFlare)
             {
-                SetVector(PipelineProperties.ShaderProperties.lensFlareThreshold, _settings.workflow == Workflow.Selective ? _selectiveWorkflowThreshold : new Vector2(ConvertGammaValue(_settings.lensFlareThreshold.minValue), ConvertGammaValue(_settings.lensFlareThreshold.maxValue)), _settings.debugView == DebugView.RawLensFlare ? true : false);
-                SetVector(PipelineProperties.ShaderProperties.lensFlareGhostParams, new Vector4(_settings.lensFlareGhostCount, _settings.lensFlareGhostDispersal, _settings.lensFlareGhostFade, ConvertGammaValue(_settings.lensFlareGhostIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f))));
-                SetVector(PipelineProperties.ShaderProperties.lensFlareHaloParams, new Vector3(_settings.lensFlareHaloSize, _settings.lensFlareHaloFade, ConvertGammaValue(_settings.lensFlareHaloIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f))));
-                SetFloat(PipelineProperties.ShaderProperties.lensFlareSpread, _lensFlareUpsampleSpread);
-                SetFloat(PipelineProperties.ShaderProperties.lensFlareChromaticAberration, _settings.lensFlareChromaticAberration, true);
+                SetVector(ShaderProperties.lensFlareThreshold, _settings.workflow == Workflow.Selective ? _selectiveWorkflowThreshold : new Vector2(ConvertGammaValue(_settings.lensFlareThreshold.minValue), ConvertGammaValue(_settings.lensFlareThreshold.maxValue)), _settings.debugView == DebugView.RawLensFlare ? true : false);
+                SetVector(ShaderProperties.lensFlareGhostParams, new Vector4(_settings.lensFlareGhostCount, _settings.lensFlareGhostDispersal, _settings.lensFlareGhostFade, ConvertGammaValue(_settings.lensFlareGhostIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f))));
+                SetVector(ShaderProperties.lensFlareHaloParams, new Vector3(_settings.lensFlareHaloSize, _settings.lensFlareHaloFade, ConvertGammaValue(_settings.lensFlareHaloIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f))));
+                SetFloat(ShaderProperties.lensFlareSpread, _lensFlareUpsampleSpread);
+                SetFloat(ShaderProperties.lensFlareChromaticAberration, _settings.lensFlareChromaticAberration, true);
             }
 
             //Glare
             if(_useGlare)
             {
-                SetVector(PipelineProperties.ShaderProperties.glareThreshold, _settings.workflow == Workflow.Selective ? _selectiveWorkflowThreshold : new Vector2(ConvertGammaValue(_settings.glareThreshold.minValue), ConvertGammaValue(_settings.glareThreshold.maxValue)), _settings.debugView == DebugView.RawGlare ? true : false);
+                SetVector(ShaderProperties.glareThreshold, _settings.workflow == Workflow.Selective ? _selectiveWorkflowThreshold : new Vector2(ConvertGammaValue(_settings.glareThreshold.minValue), ConvertGammaValue(_settings.glareThreshold.maxValue)), _settings.debugView == DebugView.RawGlare ? true : false);
 
-                SetFloat(PipelineProperties.ShaderProperties.glareBlend, _settings.glareBlend, true);
-                SetVector(PipelineProperties.ShaderProperties.glareIntensity, ConvertGammaValue(new Vector4(_settings.glareSample0Intensity, _settings.glareSample1Intensity, _settings.glareSample2Intensity, _settings.glareSample3Intensity)), true);
+                SetFloat(ShaderProperties.glareBlend, _settings.glareBlend, true);
+                SetVector(ShaderProperties.glareIntensity, ConvertGammaValue(new Vector4(_settings.glareSample0Intensity, _settings.glareSample1Intensity, _settings.glareSample2Intensity, _settings.glareSample3Intensity)), true);
 
                 Vector4 Scattering = new Vector4(_settings.glareSample0Scattering * _glareScatteringMult * _settings.glareScattering, _settings.glareSample1Scattering * _glareScatteringMult * _settings.glareScattering, _settings.glareSample2Scattering * _glareScatteringMult * _settings.glareScattering, _settings.glareSample3Scattering * _glareScatteringMult * _settings.glareScattering);
                 glareAngles[0] = AngleToDirection(_settings.glareSample0Angle + _settings.glareAngle);
@@ -525,16 +522,16 @@ namespace MK.Glow
                 Vector4 direction02 = new Vector4(glareAngles[2].x, glareAngles[2].y, glareAngles[3].x, glareAngles[3].y);
                 Vector4 offset = new Vector4(_settings.glareSample0Offset, _settings.glareSample1Offset, _settings.glareSample2Offset, _settings.glareSample3Offset);
 
-                SetVector(PipelineProperties.ShaderProperties.glareScattering, Scattering);
-                SetVector(PipelineProperties.ShaderProperties.glareDirection01, direction01);
-                SetVector(PipelineProperties.ShaderProperties.glareDirection23, direction02);
-                SetVector(PipelineProperties.ShaderProperties.glareOffset, offset);
+                SetVector(ShaderProperties.glareScattering, Scattering);
+                SetVector(ShaderProperties.glareDirection01, direction01);
+                SetVector(ShaderProperties.glareDirection23, direction02);
+                SetVector(ShaderProperties.glareOffset, offset);
 
-                SetVector(PipelineProperties.ShaderProperties.glareScattering, Scattering, true);
-                SetVector(PipelineProperties.ShaderProperties.glareDirection01, direction01, true);
-                SetVector(PipelineProperties.ShaderProperties.glareDirection23, direction02, true);
-                SetVector(PipelineProperties.ShaderProperties.glareOffset, offset, true);
-                SetFloat(PipelineProperties.ShaderProperties.glareGlobalIntensity, ConvertGammaValue(_settings.glareIntensity) * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f), true);
+                SetVector(ShaderProperties.glareScattering, Scattering, true);
+                SetVector(ShaderProperties.glareDirection01, direction01, true);
+                SetVector(ShaderProperties.glareDirection23, direction02, true);
+                SetVector(ShaderProperties.glareOffset, offset, true);
+                SetFloat(ShaderProperties.glareGlobalIntensity, ConvertGammaValue(_settings.glareIntensity) * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f), true);
             }
 
             if(_useComputeShaders)
@@ -947,30 +944,30 @@ namespace MK.Glow
             );
 
             if(_useComputeShaders)
-                SetTexture(PipelineProperties.ShaderProperties.bloomTargetTex, _bloomDownsampleBuffer.renderTargets[0]);
+                SetTexture(ShaderProperties.bloomTargetTex, _bloomDownsampleBuffer.renderTargets[0]);
 
             if(_settings.workflow == Workflow.Selective)
-                SetTexture(PipelineProperties.ShaderProperties.sourceTex, _selectiveRenderTarget.renderTexture);
+                SetTexture(ShaderProperties.sourceTex, _selectiveRenderTarget.renderTexture);
             else
-                SetTexture(PipelineProperties.ShaderProperties.sourceTex, sourceFrameBuffer);
+                SetTexture(ShaderProperties.sourceTex, sourceFrameBuffer);
             
             //SetTexture(PipelineProperties.ShaderProperties.sourceTex, _settings.workflow == Workflow.Threshold ? sourceFrameBuffer : _selectiveRenderTarget);
 
             if(_useLensFlare)
             {
-                SetTexture(PipelineProperties.ShaderProperties.lensFlareColorRamp, _settings.lensFlareColorRamp ? _settings.lensFlareColorRamp : _resources.lensFlareColorRampDefault);
+                SetTexture(ShaderProperties.lensFlareColorRamp, _settings.lensFlareColorRamp ? _settings.lensFlareColorRamp : _resources.lensFlareColorRampDefault);
                 if(_useComputeShaders)
-                    SetTexture(PipelineProperties.ShaderProperties.lensFlareTargetTex, _lensFlareDownsampleBuffer.renderTargets[0]);
+                    SetTexture(ShaderProperties.lensFlareTargetTex, _lensFlareDownsampleBuffer.renderTargets[0]);
             }
 
             if(_useGlare)
             {
                 if(_useComputeShaders)
                 {
-                    SetTexture(PipelineProperties.ShaderProperties.glare0TargetTex, _glareDownsampleBuffer0.renderTargets[0]);
-                    SetTexture(PipelineProperties.ShaderProperties.glare1TargetTex, _glareDownsampleBuffer1.renderTargets[0]);
-                    SetTexture(PipelineProperties.ShaderProperties.glare2TargetTex, _glareDownsampleBuffer2.renderTargets[0]);
-                    SetTexture(PipelineProperties.ShaderProperties.glare3TargetTex, _glareDownsampleBuffer3.renderTargets[0]);
+                    SetTexture(ShaderProperties.glare0TargetTex, _glareDownsampleBuffer0.renderTargets[0]);
+                    SetTexture(ShaderProperties.glare1TargetTex, _glareDownsampleBuffer1.renderTargets[0]);
+                    SetTexture(ShaderProperties.glare2TargetTex, _glareDownsampleBuffer2.renderTargets[0]);
+                    SetTexture(ShaderProperties.glare3TargetTex, _glareDownsampleBuffer3.renderTargets[0]);
                 }
             }
             Draw(_renderContext[0].renderDimension);
@@ -1031,31 +1028,31 @@ namespace MK.Glow
                 if(enableBloom)
                 {
                     
-                    SetTexture(PipelineProperties.ShaderProperties.bloomTex, _bloomDownsampleBuffer.renderTargets[i]);
+                    SetTexture(ShaderProperties.bloomTex, _bloomDownsampleBuffer.renderTargets[i]);
                     if(_useComputeShaders)
-                        SetTexture(PipelineProperties.ShaderProperties.bloomTargetTex, _bloomDownsampleBuffer.renderTargets[i + 1]);
+                        SetTexture(ShaderProperties.bloomTargetTex, _bloomDownsampleBuffer.renderTargets[i + 1]);
                 }
 
                 if(enableLensFlare)
                 {
                     
-                    SetTexture(PipelineProperties.ShaderProperties.lensFlareTex, _lensFlareDownsampleBuffer.renderTargets[i]);
+                    SetTexture(ShaderProperties.lensFlareTex, _lensFlareDownsampleBuffer.renderTargets[i]);
                     if(_useComputeShaders)
-                        SetTexture(PipelineProperties.ShaderProperties.lensFlareTargetTex, _lensFlareDownsampleBuffer.renderTargets[i + 1]);
+                        SetTexture(ShaderProperties.lensFlareTargetTex, _lensFlareDownsampleBuffer.renderTargets[i + 1]);
                 }
 
                 if(enableGlare)
                 {
-                    SetTexture(PipelineProperties.ShaderProperties.glare0Tex, _glareDownsampleBuffer0.renderTargets[i]);
-                    SetTexture(PipelineProperties.ShaderProperties.glare1Tex, _glareDownsampleBuffer1.renderTargets[i]);
-                    SetTexture(PipelineProperties.ShaderProperties.glare2Tex, _glareDownsampleBuffer2.renderTargets[i]);
-                    SetTexture(PipelineProperties.ShaderProperties.glare3Tex, _glareDownsampleBuffer3.renderTargets[i]);
+                    SetTexture(ShaderProperties.glare0Tex, _glareDownsampleBuffer0.renderTargets[i]);
+                    SetTexture(ShaderProperties.glare1Tex, _glareDownsampleBuffer1.renderTargets[i]);
+                    SetTexture(ShaderProperties.glare2Tex, _glareDownsampleBuffer2.renderTargets[i]);
+                    SetTexture(ShaderProperties.glare3Tex, _glareDownsampleBuffer3.renderTargets[i]);
                     if(_useComputeShaders)
                     {
-                        SetTexture(PipelineProperties.ShaderProperties.glare0TargetTex, _glareDownsampleBuffer0.renderTargets[i + 1]);
-                        SetTexture(PipelineProperties.ShaderProperties.glare1TargetTex, _glareDownsampleBuffer1.renderTargets[i + 1]);
-                        SetTexture(PipelineProperties.ShaderProperties.glare2TargetTex, _glareDownsampleBuffer2.renderTargets[i + 1]);
-                        SetTexture(PipelineProperties.ShaderProperties.glare3TargetTex, _glareDownsampleBuffer3.renderTargets[i + 1]);
+                        SetTexture(ShaderProperties.glare0TargetTex, _glareDownsampleBuffer0.renderTargets[i + 1]);
+                        SetTexture(ShaderProperties.glare1TargetTex, _glareDownsampleBuffer1.renderTargets[i + 1]);
+                        SetTexture(ShaderProperties.glare2TargetTex, _glareDownsampleBuffer2.renderTargets[i + 1]);
+                        SetTexture(ShaderProperties.glare3TargetTex, _glareDownsampleBuffer3.renderTargets[i + 1]);
                     }
                 }
 
@@ -1126,40 +1123,40 @@ namespace MK.Glow
 
                 if(enableBloom)
                 {
-                    SetTexture(PipelineProperties.ShaderProperties.higherMipBloomTex, _bloomDownsampleBuffer.renderTargets[i - 1]);
-                    SetTexture(PipelineProperties.ShaderProperties.bloomTex, (i >= _bloomIterations) ? _bloomDownsampleBuffer.renderTargets[i] : _bloomUpsampleBuffer.renderTargets[i]);
+                    SetTexture(ShaderProperties.higherMipBloomTex, _bloomDownsampleBuffer.renderTargets[i - 1]);
+                    SetTexture(ShaderProperties.bloomTex, (i >= _bloomIterations) ? _bloomDownsampleBuffer.renderTargets[i] : _bloomUpsampleBuffer.renderTargets[i]);
                     if(_useComputeShaders)
-                        SetTexture(PipelineProperties.ShaderProperties.bloomTargetTex, _bloomUpsampleBuffer.renderTargets[i - 1]);
+                        SetTexture(ShaderProperties.bloomTargetTex, _bloomUpsampleBuffer.renderTargets[i - 1]);
                 }
 
                 if(enableLensFlare)
                 {
-                    SetTexture(PipelineProperties.ShaderProperties.lensFlareTex, (i >= _lensFlareIterations) ? _lensFlareDownsampleBuffer.renderTargets[i] : _lensFlareUpsampleBuffer.renderTargets[i]);
+                    SetTexture(ShaderProperties.lensFlareTex, (i >= _lensFlareIterations) ? _lensFlareDownsampleBuffer.renderTargets[i] : _lensFlareUpsampleBuffer.renderTargets[i]);
                     if(_useComputeShaders)
-                        SetTexture(PipelineProperties.ShaderProperties.lensFlareTargetTex, _lensFlareUpsampleBuffer.renderTargets[i - 1]);
+                        SetTexture(ShaderProperties.lensFlareTargetTex, _lensFlareUpsampleBuffer.renderTargets[i - 1]);
                 }
 
                 if(enableGlare)
                 {
                     if(_settings.glareStreaks >= 1)
-                        SetTexture(PipelineProperties.ShaderProperties.glare0Tex, (i >= _glareIterations) ? _glareDownsampleBuffer0.renderTargets[i] : _glareUpsampleBuffer0.renderTargets[i]);
+                        SetTexture(ShaderProperties.glare0Tex, (i >= _glareIterations) ? _glareDownsampleBuffer0.renderTargets[i] : _glareUpsampleBuffer0.renderTargets[i]);
                     if(_settings.glareStreaks >= 2)
-                        SetTexture(PipelineProperties.ShaderProperties.glare1Tex, (i >= _glareIterations) ? _glareDownsampleBuffer1.renderTargets[i] : _glareUpsampleBuffer1.renderTargets[i]);
+                        SetTexture(ShaderProperties.glare1Tex, (i >= _glareIterations) ? _glareDownsampleBuffer1.renderTargets[i] : _glareUpsampleBuffer1.renderTargets[i]);
                     if(_settings.glareStreaks >= 3)
-                        SetTexture(PipelineProperties.ShaderProperties.glare2Tex, (i >= _glareIterations) ? _glareDownsampleBuffer2.renderTargets[i] : _glareUpsampleBuffer2.renderTargets[i]);
+                        SetTexture(ShaderProperties.glare2Tex, (i >= _glareIterations) ? _glareDownsampleBuffer2.renderTargets[i] : _glareUpsampleBuffer2.renderTargets[i]);
                     if(_settings.glareStreaks >= 4)
-                        SetTexture(PipelineProperties.ShaderProperties.glare3Tex, (i >= _glareIterations) ? _glareDownsampleBuffer3.renderTargets[i] : _glareUpsampleBuffer3.renderTargets[i]);
+                        SetTexture(ShaderProperties.glare3Tex, (i >= _glareIterations) ? _glareDownsampleBuffer3.renderTargets[i] : _glareUpsampleBuffer3.renderTargets[i]);
 
                     if(_useComputeShaders)
                     {   
                         if(_settings.glareStreaks >= 1)
-                            SetTexture(PipelineProperties.ShaderProperties.glare0TargetTex, _glareUpsampleBuffer0.renderTargets[i - 1]);
+                            SetTexture(ShaderProperties.glare0TargetTex, _glareUpsampleBuffer0.renderTargets[i - 1]);
                         if(_settings.glareStreaks >= 2)
-                            SetTexture(PipelineProperties.ShaderProperties.glare1TargetTex, _glareUpsampleBuffer1.renderTargets[i - 1]);
+                            SetTexture(ShaderProperties.glare1TargetTex, _glareUpsampleBuffer1.renderTargets[i - 1]);
                         if(_settings.glareStreaks >= 3)
-                            SetTexture(PipelineProperties.ShaderProperties.glare2TargetTex, _glareUpsampleBuffer2.renderTargets[i - 1]);
+                            SetTexture(ShaderProperties.glare2TargetTex, _glareUpsampleBuffer2.renderTargets[i - 1]);
                         if(_settings.glareStreaks >= 4)
-                            SetTexture(PipelineProperties.ShaderProperties.glare3TargetTex, _glareUpsampleBuffer3.renderTargets[i - 1]);
+                            SetTexture(ShaderProperties.glare3TargetTex, _glareUpsampleBuffer3.renderTargets[i - 1]);
                     }
                 }
 
@@ -1311,34 +1308,34 @@ namespace MK.Glow
             );
 
             if(_settings.workflow == Workflow.Selective && (_settings.debugView == DebugView.RawBloom || _settings.debugView == DebugView.RawLensFlare || _settings.debugView == DebugView.RawGlare))
-                SetTexture(PipelineProperties.ShaderProperties.sourceTex, sourceFrameBuffer.renderTexture, true);
+                SetTexture(ShaderProperties.sourceTex, sourceFrameBuffer.renderTexture, true);
             else
             {
-                SetTexture(PipelineProperties.ShaderProperties.sourceTex, _sourceFrameBuffer, true);
-                SetTexture(PipelineProperties.ShaderProperties.bloomTex, _bloomUpsampleBuffer.renderTargets[0], true);
+                SetTexture(ShaderProperties.sourceTex, _sourceFrameBuffer, true);
+                SetTexture(ShaderProperties.bloomTex, _bloomUpsampleBuffer.renderTargets[0], true);
             }
 
             if(_useLensSurface)
             {
-                SetTexture(PipelineProperties.ShaderProperties.lensSurfaceDirtTex, _settings.lensSurfaceDirtTexture ? _settings.lensSurfaceDirtTexture : _resources.lensSurfaceDirtTextureDefault, true);
-                SetTexture(PipelineProperties.ShaderProperties.lensSurfaceDiffractionTex, _settings.lensSurfaceDiffractionTexture ? _settings.lensSurfaceDiffractionTexture : _resources.lensSurfaceDiffractionTextureDefault, true);
+                SetTexture(ShaderProperties.lensSurfaceDirtTex, _settings.lensSurfaceDirtTexture ? _settings.lensSurfaceDirtTexture : _resources.lensSurfaceDirtTextureDefault, true);
+                SetTexture(ShaderProperties.lensSurfaceDiffractionTex, _settings.lensSurfaceDiffractionTexture ? _settings.lensSurfaceDiffractionTexture : _resources.lensSurfaceDiffractionTextureDefault, true);
             }
 
             if(_useLensFlare)
             {
-                SetTexture(PipelineProperties.ShaderProperties.lensFlareTex, _lensFlareUpsampleBuffer.renderTargets[0], true);
+                SetTexture(ShaderProperties.lensFlareTex, _lensFlareUpsampleBuffer.renderTargets[0], true);
             }
 
             if(_useGlare)
             {
                 if(_settings.glareStreaks >= 1)
-                    SetTexture(PipelineProperties.ShaderProperties.glare0Tex, _glareUpsampleBuffer0.renderTargets[0], true);
+                    SetTexture(ShaderProperties.glare0Tex, _glareUpsampleBuffer0.renderTargets[0], true);
                 if(_settings.glareStreaks >= 2)
-                    SetTexture(PipelineProperties.ShaderProperties.glare1Tex, _glareUpsampleBuffer1.renderTargets[0], true);
+                    SetTexture(ShaderProperties.glare1Tex, _glareUpsampleBuffer1.renderTargets[0], true);
                 if(_settings.glareStreaks >= 3)
-                    SetTexture(PipelineProperties.ShaderProperties.glare2Tex, _glareUpsampleBuffer2.renderTargets[0], true);
+                    SetTexture(ShaderProperties.glare2Tex, _glareUpsampleBuffer2.renderTargets[0], true);
                 if(_settings.glareStreaks >= 4)
-                    SetTexture(PipelineProperties.ShaderProperties.glare3Tex, _glareUpsampleBuffer3.renderTargets[0], true);
+                    SetTexture(ShaderProperties.glare3Tex, _glareUpsampleBuffer3.renderTargets[0], true);
             }
 
             //Dont draw when using legacy render pipeline
