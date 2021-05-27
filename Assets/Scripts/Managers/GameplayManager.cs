@@ -366,11 +366,14 @@ namespace Managers
         /// </summary>
         public void ResumeMap()
         {
-            m_Started = true;
-            songTimer.UnpauseTimer();
-            mapScroller.ResumeMap();
+            if (m_IsPaused)
+            {
+                m_Started = true;
+                songTimer.UnpauseTimer();
+                mapScroller.ResumeMap();
+                m_IsPaused = false;
+            }
             pauseMenu.SetActive(false);
-            m_IsPaused = false;
         }
 
         /// <summary>
