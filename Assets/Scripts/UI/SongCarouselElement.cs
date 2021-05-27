@@ -13,7 +13,9 @@ namespace UI
     {
         public Image songImage;
         public TMP_Text songName;
+        [Space]
         public GameObject lockImage;
+        public Sprite customSongSprite;
 
         public override UICarouselElement Setup(params object[] parameters)
         {
@@ -21,6 +23,7 @@ namespace UI
             switch (value)
             {
                 case SoundMap soundMap:
+                    songImage.sprite = customSongSprite;
                     songName.text = soundMap.name;
                     onClick.AddListener(() =>
                     {
@@ -60,7 +63,8 @@ namespace UI
 
                         songImage.SetAlpha(.5f);
                         
-                        lockImage.SetActive(true);
+                        //TODO: remove if and fix when merge
+                        if(lockImage) lockImage.SetActive(true);
                     }
 
                     break;

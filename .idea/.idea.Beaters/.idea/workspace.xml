@@ -3,7 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Properties/Editor/InformationDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Properties/Editor/InformationDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Properties/InformationAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Properties/InformationAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/Game UI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Screens/Game UI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Tutorial Arrow.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Tutorial Arrow.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +49,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/c3/237882a8/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MinimumComboSkill.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/614AB30E-1E27-47D4-9486-2A0A21F990BE/81/7cdd0037/PropertyAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/IdentifiedScriptable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/StartSoundManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3E204661-03FC-4B9C-8A19-6E0AC83D3B12/41/6d29f023/EditorGUILayout.cs" root0="SKIP_HIGHLIGHTING" />
@@ -99,8 +107,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/SimpleFeedbackObjectPooler.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/Editor/SelectableButtonEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SelectableButton.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/HoldableButton.cs" />
@@ -130,7 +136,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/SlowTimeSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongRecordScreen.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/FPSCounter.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/Timer.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/InmunitySkill.cs" />
@@ -141,15 +146,18 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/FreeTapSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/ScriptableCharacter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GUIManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SongMapMaker.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/General/TutorialButtons.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Editor/SongCarouselEditor.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarousel.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Properties/InformationAttribute.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Properties/Editor/InformationDrawer.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SongCarouselElement.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -239,7 +247,7 @@
       <workItem from="1621853725459" duration="10954000" />
       <workItem from="1621951890672" duration="164000" />
       <workItem from="1622031605027" duration="19181000" />
-      <workItem from="1622115669224" duration="3429000" />
+      <workItem from="1622115669224" duration="5770000" />
     </task>
     <servers />
   </component>

@@ -1,10 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-#if UNITY_EDITOR
-
-#endif
-
 namespace Plugins.Properties
 {
     public class InformationAttribute : PropertyAttribute
@@ -15,6 +11,8 @@ namespace Plugins.Properties
         public string message;
         public MessageType type;
         public bool messageAfterProperty;
+
+        public const string SHOW_INFORMATION_EDITOR_PREF_KEY = "MMShowHelpInInspectors";
 
         public InformationAttribute(string message, InformationType type, bool messageAfterProperty)
         {

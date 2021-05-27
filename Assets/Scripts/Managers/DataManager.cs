@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Plugins.Properties;
 using Plugins.Tools;
 using UnityEngine;
 using ScriptableObjects;
+using UnityEditor;
 
 namespace Managers
 {
@@ -80,6 +82,7 @@ namespace Managers
             if (m_Instance != this) return;
 #if UNITY_EDITOR
             PlayerPrefs.DeleteAll();
+            if(!EditorPrefs.HasKey(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY)) EditorPrefs.SetBool(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY, true);
 #endif
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }

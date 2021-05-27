@@ -1943,7 +1943,7 @@ GameObject:
   - component: {fileID: 8857276459933918275}
   - component: {fileID: 8857276459933918272}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Skill Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
