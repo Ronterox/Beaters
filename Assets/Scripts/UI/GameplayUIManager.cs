@@ -1,4 +1,5 @@
 using Managers;
+using Plugins.Properties;
 using Plugins.Tools;
 using ScriptableObjects;
 using TMPro;
@@ -13,10 +14,15 @@ namespace UI
         public SpriteRenderer renderer;
         public GUIImage.PaletteColor color;
         public bool changeSprite;
+        [Space]
+        public bool changeAlpha;
+        [ConditionalHide("changeAlpha")]
+        public float newAlpha;
     }
-    
+
     public class GameplayUIManager : MonoBehaviour
     {
+        public GUIImage[] images;
         public GameplayBeatUI[] gameplayUi;
         public Image skillImage;
         [Space]
@@ -29,10 +35,13 @@ namespace UI
 
             gameplayUi.ForEach(ui =>
             {
-                if(ui.changeSprite) ui.renderer.sprite = character.noteSprite;
                 ui.renderer.color = palette.GetColor(ui.color);
+                if (ui.changeSprite) ui.renderer.sprite = character.noteSprite;
+                if (ui.changeAlpha) ui.renderer.SetAlpha(ui.newAlpha);
             });
-            
+
+            images.ForEach(image => image.SetColor(palette));
+
             texts.ForEach(text => text.font = character.font);
 
             skillImage.sprite = character.activeSkill.skillImage;

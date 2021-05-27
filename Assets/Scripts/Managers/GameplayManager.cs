@@ -424,7 +424,7 @@ namespace Managers
             gameOverPanel.SetCharacterBonus(character.characterGenre, soundMap.genre);
 
             gameOverPanel.SetScore(songData.highestScore, m_Score);
-            gameOverPanel.SetStars(m_StarsCount, character);
+            gameOverPanel.SetStars(m_StarsCount, character.fullStar, character.emptyStar);
             gameOverPanel.SetAccuracy(soundMap.notes.Length, m_NotesHit, accuracy);
 
             gameOverPanel.SetMapMaker(soundMap.mapCreator);

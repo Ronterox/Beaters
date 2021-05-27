@@ -1337,7 +1337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6477798288745861398, guid: 7cedaeebf0fe91bdea438c6c5adcd365, type: 3}
       propertyPath: m_text
-      value: Can be obtain while playing
+      value: Can be obtained while playing
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cedaeebf0fe91bdea438c6c5adcd365, type: 3}
@@ -3083,7 +3083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6477798288745861398, guid: 7cedaeebf0fe91bdea438c6c5adcd365, type: 3}
       propertyPath: m_text
-      value: Can be obtain on special events
+      value: Can be obtained on special events
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cedaeebf0fe91bdea438c6c5adcd365, type: 3}

@@ -1763,74 +1763,6 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 8857276459189565688}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: skillImage
-      value: 
-      objectReference: {fileID: 8857276459189565690}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: texts.Array.data[0]
-      value: 
-      objectReference: {fileID: 8857276459189565686}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: texts.Array.data[1]
-      value: 
-      objectReference: {fileID: 622184593}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: texts.Array.data[2]
-      value: 
-      objectReference: {fileID: 1911638628}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: texts.Array.data[3]
-      value: 
-      objectReference: {fileID: 1890568976}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[0].renderer
-      value: 
-      objectReference: {fileID: 2506527363200844669}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[1].renderer
-      value: 
-      objectReference: {fileID: 374985429}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[2].renderer
-      value: 
-      objectReference: {fileID: 734782885}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[3].renderer
-      value: 
-      objectReference: {fileID: 1223981043}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[4].renderer
-      value: 
-      objectReference: {fileID: 5737738900278228800}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[5].renderer
-      value: 
-      objectReference: {fileID: 255839674}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[6].renderer
-      value: 
-      objectReference: {fileID: 173976521}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[7].renderer
-      value: 
-      objectReference: {fileID: 470813646}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[8].renderer
-      value: 
-      objectReference: {fileID: 386350565}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[9].renderer
-      value: 
-      objectReference: {fileID: 1464852860}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[10].renderer
-      value: 
-      objectReference: {fileID: 640780352}
-    - target: {fileID: 1526448104032277498, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
-      propertyPath: gameplayUi.Array.data[11].renderer
-      value: 
-      objectReference: {fileID: 201781342}
     - target: {fileID: 3826572633390337692, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
       propertyPath: parentCanvas
       value: 
@@ -2276,6 +2208,54 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 3826572633390337690}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 2506527363200844669}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[1].renderer
+      value: 
+      objectReference: {fileID: 374985429}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[2].renderer
+      value: 
+      objectReference: {fileID: 734782885}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[3].renderer
+      value: 
+      objectReference: {fileID: 1223981043}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[4].renderer
+      value: 
+      objectReference: {fileID: 5737738900278228800}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[5].renderer
+      value: 
+      objectReference: {fileID: 255839674}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[6].renderer
+      value: 
+      objectReference: {fileID: 173976521}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[7].renderer
+      value: 
+      objectReference: {fileID: 470813646}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[8].renderer
+      value: 
+      objectReference: {fileID: 386350565}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[9].renderer
+      value: 
+      objectReference: {fileID: 1464852860}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[10].renderer
+      value: 
+      objectReference: {fileID: 640780352}
+    - target: {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: gameplayUi.Array.data[11].renderer
+      value: 
+      objectReference: {fileID: 201781342}
     - target: {fileID: 8857276459449714278, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2299,10 +2279,6 @@ PrefabInstance:
     - target: {fileID: 8857276460501430903, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_Name
       value: Game UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8857276460501430906, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8857276460501430907, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_Pivot.x
@@ -2463,17 +2439,6 @@ MonoBehaviour:
 --- !u!114 &8857276459189565689 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1858460595750967299, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-  m_PrefabInstance: {fileID: 8857276459189565682}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8857276459189565690 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8266979561437230445, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
   m_PrefabInstance: {fileID: 8857276459189565682}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

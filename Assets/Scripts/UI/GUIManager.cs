@@ -15,6 +15,7 @@ namespace UI
 
         public Image image;
         public PaletteColor paletteColor;
+        public void SetColor(Palette palette) => image.color = palette.GetColor(paletteColor);
     }
     public class GUIManager : MonoBehaviour
     {
@@ -57,7 +58,7 @@ namespace UI
             SetSprite(backgroundImage, character.backgroundImage);
             SetSprite(exitGame, character.exitButton);
 
-            images.ForEach(image => image.image.color = palette.GetColor(image.paletteColor));
+            images.ForEach(image => image.SetColor(palette));
 
             playButtons.ForEach(image => SetSprite(image, character.playButton));
 

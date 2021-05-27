@@ -40,4 +40,4 @@ MonoBehaviour:
   fullStar: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
   emptyStar: {fileID: 21300000, guid: f38d92cb132634aa781a286e39fc9c3a, type: 3}
   bingoColor: 1
-  noteSprite: {fileID: 7482667652216324306, guid: 7475979ed16de74cb90d856be80cd5df, type: 3}
+  noteSprite: {fileID: 21300000, guid: e2e7908e8b87be990a0c2c3370296425, type: 3}

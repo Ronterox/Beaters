@@ -1655,17 +1655,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 181505924823698837, guid: cc478c1f7d8b8ae979d7fe87e0dfae25, type: 3}
   m_PrefabInstance: {fileID: 1223056172}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1223056174 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5454703129060100583, guid: cc478c1f7d8b8ae979d7fe87e0dfae25, type: 3}
-  m_PrefabInstance: {fileID: 1223056172}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1252642879 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 452297428598159083, guid: de417af22bee0a1d7bb918db81fb378d, type: 3}
@@ -3467,10 +3456,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 199043730516417285, guid: 54e018ea8e502dac5befa768109ad9fc, type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 1223056174}
     - target: {fileID: 199043730740961848, guid: 54e018ea8e502dac5befa768109ad9fc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4508,11 +4493,11 @@ MonoBehaviour:
   - image: {fileID: 199043730516417280}
     paletteColor: 0
   - image: {fileID: 199043730516417279}
-    paletteColor: 0
+    paletteColor: 2
   - image: {fileID: 199043730516417278}
-    paletteColor: 0
+    paletteColor: 1
   - image: {fileID: 199043730516417277}
-    paletteColor: 0
+    paletteColor: 3
   - image: {fileID: 2000834868}
     paletteColor: 1
   - image: {fileID: 2000834873}

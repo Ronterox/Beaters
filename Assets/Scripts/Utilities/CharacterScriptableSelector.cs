@@ -20,13 +20,14 @@ namespace Utilities
         [Space]
         public Image activeSkillImage;
         public Image passiveSkillImage;
-        
+
+        [Header("Buttons Feedback")]
         public HoldableButton characterButton;
-        public HoldableButton passiveButton;
-        public HoldableButton activeButton;
+        public HoldableButton passiveButton, activeButton;
+        
+        [Header("Pop ups")]
         public PopUp activePopup;
-        public PopUp passivePopup;
-        public PopUp characterPopup;
+        public PopUp passivePopup, characterPopup;
 
         public TMP_Text activeSkillText, passiveSkillText;
         private int m_Index;
@@ -34,22 +35,24 @@ namespace Utilities
         private void Start()
         {
             characterButton.onButtonDown += characterPopup.Show;
-            characterButton.onButtonDown += () => print("hallow");
             characterButton.onButtonUp += characterPopup.Hide;
+
             passiveButton.onButtonDown += passivePopup.Show;
             passiveButton.onButtonUp += passivePopup.Hide;
+
             activeButton.onButtonDown += activePopup.Show;
             activeButton.onButtonUp += activePopup.Hide;
+
             CheckAndSetObject();
-         }
+        }
 
         private void CheckAndSetObject()
         {
-            if(objectList.Length < 1) return;
+            if (objectList.Length < 1) return;
             SetStartIndex();
             SetObject();
         }
-        
+
         public void TravelObjects(int index)
         {
             m_Index.ChangeValueLoop(index, objectList.Length);

@@ -421,7 +421,25 @@ namespace Plugins.Tools
             return -1;
         }
 
+        /// <summary>
+        /// Changes the alpha of the image
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="newAlpha"></param>
         public static void SetAlpha(this Image image, float newAlpha)
+        {
+            Color transparentColor = image.color;
+            transparentColor.a = newAlpha;
+
+            image.color = transparentColor;
+        }
+        
+        /// <summary>
+        /// Changes the alpha of the spriteRenderer
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="newAlpha"></param>
+        public static void SetAlpha(this SpriteRenderer image, float newAlpha)
         {
             Color transparentColor = image.color;
             transparentColor.a = newAlpha;
