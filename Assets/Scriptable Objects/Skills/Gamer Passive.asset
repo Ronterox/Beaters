@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Gamer Passive
   m_EditorClassIdentifier: 
   effectDescription: You received 50% les damage
-  rechargeQuantity: 50
+  rechargeQuantity: 25
   skillImage: {fileID: 21300000, guid: 6f2273fe364a456dba1aa90928729330, type: 3}
   reduceDamage: 0.5
