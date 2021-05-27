@@ -142,6 +142,23 @@ namespace Managers
         }
 
         /// <summary>
+        /// Sets the skill timer with feedback for it
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="onStop"></param>
+        public void SetSkillTimer(float duration, Timer.TimerEvent onStop)
+        {
+            feedbackImage.gameObject.SetActive(true);
+
+            onStop += () => feedbackImage.gameObject.SetActive(false);
+            
+            skillsTimer.SetEvents(null, onStop);
+            skillsTimer.timerTime = duration + DurationIncrement;
+            
+            skillsTimer.StartTimer();
+        }
+
+        /// <summary>
         /// Sets the Pause Button Click Listener
         /// </summary>
         protected void SetPauseButton() =>
@@ -483,7 +500,7 @@ namespace Managers
                 comboText.text = $"x{m_Combo = 0}";
             }
 
-            if (FreeTapsCount > ++m_MissedTaps)
+            if (FreeTapsCount >= ++m_MissedTaps)
             {
                 UpdateFreeTapsText();
                 return;

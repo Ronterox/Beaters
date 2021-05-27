@@ -12,13 +12,7 @@ namespace ScriptableObjects.Skills
         public override void UseSkill(GameplayManager manager)
         {
             manager.CanMiss = false;
-
-            TimerUI timer = manager.skillsTimer;
-
-            timer.SetEvents(null, () => manager.CanMiss = true);
-            timer.timerTime = duration + manager.DurationIncrement;
-            
-            timer.StartTimer();
+            manager.SetSkillTimer(duration, () => manager.CanMiss = true);
         }
     }
 }

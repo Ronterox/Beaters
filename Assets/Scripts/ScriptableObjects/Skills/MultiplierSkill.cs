@@ -12,13 +12,7 @@ namespace ScriptableObjects.Skills
         public override void UseSkill(GameplayManager manager)
         {
             manager.Multiplier += multiplierValue;
-
-            TimerUI timer = manager.skillsTimer;
-            
-            timer.SetEvents(null, () => manager.Multiplier -= multiplierValue);
-            timer.timerTime = duration + manager.DurationIncrement;
-            
-            timer.StartTimer();
+            manager.SetSkillTimer(duration, () => manager.Multiplier -= multiplierValue);
         }
     }
 }
