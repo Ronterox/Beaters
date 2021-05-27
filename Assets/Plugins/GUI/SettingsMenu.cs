@@ -22,7 +22,6 @@ namespace Plugins.GUI
     {
         [ReadOnly, SerializeField]
         private Settings m_Settings = new Settings();
-        [ReadOnly]
         private Resolution[] m_Resolutions;
 
         public Slider generalVolume, sfxVolume, musicVolume;
@@ -38,7 +37,7 @@ namespace Plugins.GUI
         public AudioClip metronomeAudioClip;
 
         public const string SAVED_FILENAME = "settings.cfg";
-        private Stopwatch m_Stopwatch = new Stopwatch();
+        private readonly Stopwatch m_Stopwatch = new Stopwatch();
 
         private void Start()
         {
@@ -46,8 +45,11 @@ namespace Plugins.GUI
             SetOldSettings();
 
             fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
+#if UNITY_IPHONE || UNITY_ANDROID
+            resolutionDropdown.gameObject.SetActive(false);
+#else
             resolutionDropdown.onValueChanged.AddListener(SetResolution);
-
+#endif
             generalVolume.onValueChanged.AddListener(SetGeneralVolume);
             sfxVolume.onValueChanged.AddListener(SetSFXVolume);
             musicVolume.onValueChanged.AddListener(SetMusicVolume);
@@ -89,7 +91,9 @@ namespace Plugins.GUI
             SetMusicVolume(musicVolume.value = m_Settings.musicVolume);
             SetSFXVolume(sfxVolume.value = m_Settings.sfxVolume);
 
+#if !UNITY_IPHONE && !UNITY_ANDROID
             if (m_Settings.resolution > -1) SetResolution(resolutionDropdown.value = m_Settings.resolution);
+#endif
         }
 
         /// <summary>
@@ -130,6 +134,7 @@ namespace Plugins.GUI
         /// <param name="volume"></param>
         public void SetSFXVolume(float volume) => SoundManager.Instance.SetSFXVolume(m_Settings.sfxVolume = volume);
 
+#if !UNITY_IPHONE && !UNITY_ANDROID
         /// <summary>
         /// Sets the resolution available at the specific position on the array of m_Resolutions
         /// </summary>
@@ -140,6 +145,7 @@ namespace Plugins.GUI
             m_Settings.resolution = resolutionIndex;
             Screen.SetResolution(currentResolution.width, currentResolution.height, Screen.fullScreen);
         }
+#endif
 
         /// <summary>
         /// Sets the application to fullscreen or not fullscreen
