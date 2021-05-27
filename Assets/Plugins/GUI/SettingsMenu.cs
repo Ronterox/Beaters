@@ -12,15 +12,15 @@ namespace Plugins.GUI
     [System.Serializable]
     public class Settings
     {
-        public float generalVolume, sfxVolume, musicVolume;
+        public float generalVolume = 1, sfxVolume = 1, musicVolume = 1;
 
-        public bool fullScreen;
-        public int resolution, tapOffset;
+        public bool fullScreen = true;
+        public int resolution = -1, tapOffset;
     }
 
     public class SettingsMenu : MonoBehaviour
     {
-        [ReadOnly]
+        [ReadOnly, SerializeField]
         private Settings m_Settings = new Settings();
         [ReadOnly]
         private Resolution[] m_Resolutions;
@@ -40,13 +40,10 @@ namespace Plugins.GUI
         public const string SAVED_FILENAME = "settings.cfg";
         private Stopwatch m_Stopwatch = new Stopwatch();
 
-        private void Awake() => SetOldSettings();
-
         private void Start()
         {
             SetSystemResolutions();
-
-            generalVolume.value = sfxVolume.value = musicVolume.value = generalVolume.maxValue;
+            SetOldSettings();
 
             fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
             resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -85,6 +82,14 @@ namespace Plugins.GUI
         private void SetOldSettings()
         {
             if (SaveLoadManager.SaveExists(SAVED_FILENAME)) m_Settings = SaveLoadManager.Load<Settings>(SAVED_FILENAME);
+
+            SetFullscreen(fullscreenToggle.isOn = m_Settings.fullScreen);
+
+            SetGeneralVolume(generalVolume.value = m_Settings.generalVolume);
+            SetMusicVolume(musicVolume.value = m_Settings.musicVolume);
+            SetSFXVolume(sfxVolume.value = m_Settings.sfxVolume);
+
+            if (m_Settings.resolution > -1) SetResolution(resolutionDropdown.value = m_Settings.resolution);
         }
 
         /// <summary>

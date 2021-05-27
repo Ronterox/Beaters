@@ -1,4 +1,5 @@
 using Managers;
+using Plugins.Tools;
 using Plugins.UI;
 using ScriptableObjects;
 using TMPro;
@@ -12,6 +13,7 @@ namespace UI
     {
         public Image songImage;
         public TMP_Text songName;
+        public GameObject lockImage;
 
         public override UICarouselElement Setup(params object[] parameters)
         {
@@ -56,10 +58,9 @@ namespace UI
 
                         onClick.AddListener(ShowUnlockPanel);
 
-                        Color transparentColor = songImage.color;
-                        transparentColor.a = .5f;
-
-                        songImage.color = transparentColor;
+                        songImage.SetAlpha(.5f);
+                        
+                        lockImage.SetActive(true);
                     }
 
                     break;

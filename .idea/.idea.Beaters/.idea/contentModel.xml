@@ -156,6 +156,7 @@
             <e p="GameOverPanel.cs" t="Include" />
             <e p="GameplayManager.cs" t="Include" />
             <e p="LevelLoadManager.cs" t="Include" />
+            <e p="Tutorial.cs" t="Include" />
           </e>
           <e p="Osu" t="Include">
             <e p="CircleSpawner.cs" t="Include" />
