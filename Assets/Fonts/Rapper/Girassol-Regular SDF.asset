@@ -1805,6 +1805,30 @@ MonoBehaviour:
     m_Y: 299
     m_Width: 200
     m_Height: 724
+  - m_X: 0
+    m_Y: 282
+    m_Width: 175
+    m_Height: 741
+  - m_X: 52
+    m_Y: 272
+    m_Width: 123
+    m_Height: 751
+  - m_X: 233
+    m_Y: 248
+    m_Width: 3
+    m_Height: 775
+  - m_X: 116
+    m_Y: 265
+    m_Width: 59
+    m_Height: 758
+  - m_X: 0
+    m_Y: 356
+    m_Width: 850
+    m_Height: 667
+  - m_X: 363
+    m_Y: 338
+    m_Width: 487
+    m_Height: 685
   - m_X: 303
     m_Y: 245
     m_Width: 2
