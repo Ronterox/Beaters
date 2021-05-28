@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
   m_Name: KTL
   m_EditorClassIdentifier: 
-  songImage: {fileID: 0}
+  songImage: {fileID: 21300000, guid: 4f6068e89df94c2438a76e04d4414901, type: 3}
   soundMap:
     name: KTL
-    mapCreator: 
+    mapCreator: Rebecca
     bpm: 132
-    genre: 5
-    audioClip: {fileID: 0}
+    genre: 0
+    audioClip: {fileID: 8300000, guid: 1ee556e58cd149c488f99abf9583a7f2, type: 3}
     audioPath: "/dades/dades/Rebecca/ProjecteFinal/Beaters/beaters/Assets/Audio/SongsSongsBLACKPINK
       - Kill This Love (Color Coded Lyrics Eng-Rom-Han-\uAC00\uC0AC) (320 kbps).mp3"
     notes:
@@ -278,7 +278,7 @@ MonoBehaviour:
       x: -1
       y: 98
       z: 0
-  requiredItem1: {fileID: 0}
-  requiredItem2: {fileID: 0}
+  requiredItem1: {fileID: 11400000, guid: 46bd4372404e80642a494f2f1c6e03f7, type: 2}
+  requiredItem2: {fileID: 11400000, guid: 1ce0ba3e289b79c889465534fdb2f3e8, type: 2}
   requiredQuantityItem1: 0
   requiredQuantityItem2: 0
