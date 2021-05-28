@@ -15,6 +15,7 @@ namespace General
             
             SoundManager soundManager = SoundManager.Instance;
             if (!soundManager.IsPlaying) soundManager.PlayBackgroundMusicNoFade(songs.GetRandom().soundMap.audioClip);
+            soundManager.StopAllSfx();
         }
     }
 }

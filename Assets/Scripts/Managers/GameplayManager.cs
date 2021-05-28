@@ -57,6 +57,10 @@ namespace Managers
         [Header("Combo Feedback")]
         public MKGlow mkGlow;
 
+        [Header("Sfx")]
+        public AudioClip missSfx;
+        public AudioClip winSfx, loseSfx;
+
         protected int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_OnGoing, m_Ended, m_IsPaused, m_Started;
 
@@ -64,6 +68,7 @@ namespace Managers
         private int m_SongFactorialScore, m_FactorialCombo = 1;
 
         protected PlayerData m_Data;
+        protected SoundManager m_SoundManager;
 
         private float m_StartTime;
         protected Vector3 m_SkillSliderPosition;
@@ -117,6 +122,7 @@ namespace Managers
         protected virtual void Start()
         {
             m_Data = DataManager.Instance.playerData;
+            m_SoundManager = SoundManager.Instance;
 
             m_SkillSliderPosition = skillBarSlider.transform.position;
 
@@ -467,7 +473,11 @@ namespace Managers
             gameOverPanel.SetHighestCombo(m_HighestCombo);
             gameOverPanel.SetRewardsText(comboGain, accuracyGain);
 
-            gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
+            gameOverPanel.replaySongButton.onClick.AddListener(() =>
+            {
+                m_SoundManager.StopAllSfx();
+                LevelLoadManager.LoadArrowGameplayScene();
+            });
 
             gameOverPanel.gameObject.SetActive(false);
 
@@ -477,6 +487,8 @@ namespace Managers
             finishText.gameObject.SetActive(true);
 
             activateEndScreen.DelayAction(2);
+            
+            m_SoundManager.PlayNonDiegeticSound(win? winSfx : loseSfx);
 
             //Show prizes
 
@@ -516,6 +528,8 @@ namespace Managers
             }
 
             if (CanLose && !currentCharacter.IsDead) currentCharacter.TakeDamage(MinimumDamage);
+            
+            m_SoundManager.PlayNonDiegeticRandomPitchSound(missSfx);
         }
 
         /// <summary>

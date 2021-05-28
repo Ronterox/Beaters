@@ -3611,6 +3611,7 @@ MonoBehaviour:
   menuButtons:
   - button: {fileID: 268259198}
     scene: MainMenu
+  buttonSfx: {fileID: 8300000, guid: 3e9e4a0be2c271112b8e3394f3ba3fb0, type: 3}
 --- !u!114 &1248208845
 MonoBehaviour:
   m_ObjectHideFlags: 0

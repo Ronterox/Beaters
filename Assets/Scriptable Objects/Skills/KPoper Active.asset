@@ -15,4 +15,5 @@ MonoBehaviour:
   effectDescription: 'Get 5 seconds of inmunity '
   rechargeQuantity: 25
   skillImage: {fileID: 21300000, guid: 50973ada1cc519b30b4d861d76d34762, type: 3}
+  sfx: {fileID: 8300000, guid: 8330bddfdcab285dc821745f78bb426c, type: 3}
   duration: 5

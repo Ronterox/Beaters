@@ -1,5 +1,6 @@
 using System;
 using General;
+using Plugins.Audio;
 using Plugins.Tools;
 using ScriptableObjects;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Managers
             GameManager.PutSoundMap(tutorialSong);
 
             m_Data = DataManager.Instance.playerData;
+            m_SoundManager = SoundManager.Instance;
 
             m_SkillSliderPosition = skillBarSlider.transform.position;
             

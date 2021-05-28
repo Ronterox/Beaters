@@ -15,4 +15,5 @@ MonoBehaviour:
   effectDescription: "When HP is 0, HP is set to 1 50% probability. \n"
   rechargeQuantity: 100
   skillImage: {fileID: 21300000, guid: 60a2a3aea1d0a03a7a34d9754fd06e8a, type: 3}
+  sfx: {fileID: 8300000, guid: 034cc1f8b7a019aae8abab89372086c6, type: 3}
   reviveProbability: 0.5

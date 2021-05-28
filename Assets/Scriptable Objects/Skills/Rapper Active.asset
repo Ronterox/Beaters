@@ -15,4 +15,5 @@ MonoBehaviour:
   effectDescription: Notes give you money for 5s.
   rechargeQuantity: 25
   skillImage: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  sfx: {fileID: 8300000, guid: a867c3504866cd72bb2cbfa6d0e2ca64, type: 3}
   duration: 5

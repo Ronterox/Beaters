@@ -15,4 +15,5 @@ MonoBehaviour:
   effectDescription: ' (Videogames HP references animation)'
   rechargeQuantity: 25
   skillImage: {fileID: 21300000, guid: 4b28f08c363d216ef8efff6439e84f0e, type: 3}
+  sfx: {fileID: 8300000, guid: 6bc4873f6c3037964aa727bd54636615, type: 3}
   freeTaps: 3

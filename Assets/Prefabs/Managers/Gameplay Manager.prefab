@@ -67,6 +67,9 @@ MonoBehaviour:
   feedbackImage: {fileID: 0}
   skillText: {fileID: 0}
   mkGlow: {fileID: 0}
+  missSfx: {fileID: 8300000, guid: 32dda406fdf86d19b946d39d7e5b989b, type: 3}
+  winSfx: {fileID: 8300000, guid: f5d1223e22141e4c4998c8b28a5253e5, type: 3}
+  loseSfx: {fileID: 8300000, guid: 0ab45259dbc418d28b29113682525ec5, type: 3}
 --- !u!114 &6925172793618570845
 MonoBehaviour:
   m_ObjectHideFlags: 0

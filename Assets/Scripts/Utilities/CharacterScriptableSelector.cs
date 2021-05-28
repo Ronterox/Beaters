@@ -1,4 +1,5 @@
 using Managers;
+using Plugins.Audio;
 using Plugins.Tools;
 using ScriptableObjects;
 using TMPro;
@@ -28,8 +29,13 @@ namespace Utilities
         [Header("Pop ups")]
         public PopUp activePopup;
         public PopUp passivePopup, characterPopup;
+        [Space]
+        public TMP_Text activeSkillText;
+        public TMP_Text passiveSkillText;
 
-        public TMP_Text activeSkillText, passiveSkillText;
+        [Header("Sfx")]
+        public AudioClip changeClickSfx;
+
         private int m_Index;
 
         private void Start()
@@ -77,9 +83,15 @@ namespace Utilities
                 objectImage.sprite = character.sprites[0];
                 GameManager.PutCharacter(character);
                 guiManager.SetCharacterGUI(character);
+
+                AudioClip characterSound = character.activeSkill.sfx;
+                SoundManager.Instance.PlayNonDiegeticSound(characterSound? characterSound : character.passiveSkill.sfx);
             }
             else
+            {
                 objectImage.sprite = character.gachaButton;
+                SoundManager.Instance.PlayNonDiegeticSound(changeClickSfx);
+            }
         }
 
         private void SetStartIndex() => m_Index = objectList.FindIndex(character => character.ID == GameManager.GetCharacter().ID);
