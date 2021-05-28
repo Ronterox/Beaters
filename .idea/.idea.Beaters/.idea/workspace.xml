@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/SwipeDetector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/SwipeDetector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SettingsMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SettingsMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Tutorial Arrow.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Tutorial Arrow.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/UI/Settings.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/UI/Settings.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docchi" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +136,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GameplayUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SettingsMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MultiplierSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/InmunitySkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MoneySkill.cs" />
@@ -150,12 +153,13 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/General/TutorialButtons.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GachaManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersNote.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/DefendersMapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Defenders/TrailChanger.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/SwipeDetector.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SettingsMenu.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />
@@ -247,7 +251,7 @@
       <workItem from="1622031605027" duration="19181000" />
       <workItem from="1622115669224" duration="5770000" />
       <workItem from="1622168477338" duration="200000" />
-      <workItem from="1622201448251" duration="3606000" />
+      <workItem from="1622201448251" duration="4468000" />
     </task>
     <servers />
   </component>
