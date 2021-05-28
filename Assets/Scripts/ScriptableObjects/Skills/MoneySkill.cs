@@ -1,5 +1,4 @@
 using Managers;
-using Plugins.Tools;
 using UnityEngine;
 
 namespace ScriptableObjects.Skills
@@ -12,13 +11,7 @@ namespace ScriptableObjects.Skills
         public override void UseSkill(GameplayManager manager)
         {
             manager.EveryNoteGivesMoney = true;
-            
-            TimerUI timer = manager.skillsTimer;
-
-            timer.SetEvents(null, () => manager.EveryNoteGivesMoney = false);
-            timer.timerTime = duration + manager.DurationIncrement;
-            
-            timer.StartTimer();
+            manager.SetSkillTimer(duration,() => manager.EveryNoteGivesMoney = false);
         }
     }
 }

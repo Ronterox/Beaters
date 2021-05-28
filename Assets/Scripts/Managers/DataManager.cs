@@ -4,7 +4,9 @@ using Plugins.Properties;
 using Plugins.Tools;
 using UnityEngine;
 using ScriptableObjects;
+using UI;
 using UnityEditor;
+using Settings = UI.Settings;
 
 namespace Managers
 {
@@ -75,23 +77,35 @@ namespace Managers
         private const string PLAYER_FILE = "player.data";
 
         public PlayerData playerData;
+        [ReadOnly]
+        public Settings playerSettings = new Settings();
+
         public int CharacterCount => playerData.unlockedCharacters.Count;
+#if UNITY_EDITOR
+        public bool resetPlayerPrefs;
+#endif
 
         private void Start()
         {
             if (m_Instance != this) return;
+
+            if (SaveLoadManager.SaveExists(SettingsMenu.SAVED_FILENAME))
+            {
+                SettingsMenu.SetSettings(playerSettings = SaveLoadManager.Load<Settings>(SettingsMenu.SAVED_FILENAME));
+            }
+
 #if UNITY_EDITOR
-            PlayerPrefs.DeleteAll();
-            if(!EditorPrefs.HasKey(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY)) EditorPrefs.SetBool(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY, true);
+            if (resetPlayerPrefs) PlayerPrefs.DeleteAll();
+            if (!EditorPrefs.HasKey(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY)) EditorPrefs.SetBool(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY, true);
 #endif
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }
-        
+
         private void OnDestroy() => SaveData();
 
         private void OnApplicationPause(bool pauseStatus)
         {
-            if(pauseStatus) SaveData();
+            if (pauseStatus) SaveData();
         }
 
         public void SaveData()

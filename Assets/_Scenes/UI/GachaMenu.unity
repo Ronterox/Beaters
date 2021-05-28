@@ -1337,7 +1337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6477798288745861398, guid: 7cedaeebf0fe91bdea438c6c5adcd365, type: 3}
       propertyPath: m_text
-      value: Can be obtain while playing
+      value: Can be obtained while playing
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cedaeebf0fe91bdea438c6c5adcd365, type: 3}
@@ -1682,7 +1682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1973,7 +1973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -2862,17 +2862,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7979172281555303169}
     m_Modifications:
+    - target: {fileID: 1222091119, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222091119, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222091119, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1589711680}
+    - target: {fileID: 1222091119, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222091119, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: GetPrizeAndSummon
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222091119, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UI.GachaManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222091119, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1740480761, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
       propertyPath: playerPrefKey
       value: First Time Gacha
       objectReference: {fileID: 0}
+    - target: {fileID: 7443447173941443431, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
+      propertyPath: m_text
+      value: This is the Gacha screen! \n\nHere you can try your luck and get new
+        items, runes or characters.\n\nLET'S TRY YOUR LUCK RIGHT NOW!
+      objectReference: {fileID: 0}
     - target: {fileID: 8171220030494800822, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
       propertyPath: m_Name
       value: DialogPopUp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8171220030494800822, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8651973319670332311, guid: 883fb013f332cb340a3ea59b3154a03e, type: 3}
       propertyPath: m_Pivot.x
@@ -3083,7 +3112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6477798288745861398, guid: 7cedaeebf0fe91bdea438c6c5adcd365, type: 3}
       propertyPath: m_text
-      value: Can be obtain on special events
+      value: Can be obtained on special events
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cedaeebf0fe91bdea438c6c5adcd365, type: 3}
@@ -3394,7 +3423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}

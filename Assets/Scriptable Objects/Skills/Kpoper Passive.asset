@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Kpoper Passive
   m_EditorClassIdentifier: 
   effectDescription: 10% more score
-  rechargeQuantity: 50
+  rechargeQuantity: 25
   skillImage: {fileID: 21300000, guid: 5f313d15411a030ec8ea943112e411ef, type: 3}
   scoreMultiplierValue: 0.1
