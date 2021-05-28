@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using Managers;
+using Plugins.Audio;
 using Plugins.Properties;
 using ScriptableObjects;
 using UnityEngine.Playables;
@@ -26,6 +27,9 @@ namespace Gacha
         public float fadeDuration;
         public float moveScaleDuration;
 
+        [Header("Sfx")]
+        public AudioClip gachaThrowSoundEffect;
+        
         private bool m_CanClick, m_SawPrize;
 
         private void Start()
@@ -60,6 +64,8 @@ namespace Gacha
 
             canvasGroup.alpha = 1;
             canvasGroup.DOFade(0f, fadeDuration).OnComplete(timeline.Play);
+            
+            SoundManager.Instance.PlayNonDiegeticSound(gachaThrowSoundEffect);
         }
 
         private void SetRewardObject()

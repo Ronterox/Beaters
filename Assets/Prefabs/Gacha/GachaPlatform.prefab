@@ -116,7 +116,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -179,7 +179,7 @@ ParticleSystem:
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 0
-  useRigidbodyForVelocity: 1
+  useRigidbodyForVelocity: 0
   startDelay:
     serializedVersion: 2
     minMaxState: 0
@@ -1453,7 +1453,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
+    enabled: 1
     mode: 0
     timeMode: 0
     fps: 30
@@ -5172,13 +5172,25 @@ MonoBehaviour:
   boxTransform: {fileID: 543450653626167389}
   timeline: {fileID: 1154796573}
   canvasGroup: {fileID: 0}
-  rewardSpriteRenderer: {fileID: 0}
+  rewardTransform: {fileID: 0}
+  sprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   position: {x: 1.5, y: -3, z: 2.65}
   positionReward: {x: 1.5, y: 10, z: 2.65}
   scale: {x: 25, y: 25, z: 25}
   scaleReward: {x: 1, y: 1, z: 1}
   fadeDuration: 0.25
   moveScaleDuration: 3.5
+  gachaThrowSoundEffect: {fileID: 8300000, guid: 350bf8c90b9815430b585f2e24069c47, type: 3}
 --- !u!1 &8826243081942739309
 GameObject:
   m_ObjectHideFlags: 0
@@ -5247,31 +5259,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9939702
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.020291403
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.002199335
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.10773398
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 2.339
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -12.372
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 452b48525dbe77e4fbbb620181a64e2a, type: 3}
       propertyPath: m_Name

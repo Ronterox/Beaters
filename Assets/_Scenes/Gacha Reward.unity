@@ -1160,54 +1160,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1154796572, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: table.Array.data[0].obj
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1154796572, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: table.Array.data[1].obj
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1154796572, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: table.Array.data[2].obj
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1154796573, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
       propertyPath: m_SceneBindings.Array.data[0].value
       value: 
       objectReference: {fileID: 1485281143}
     - target: {fileID: 1154796574, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: reward
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1154796574, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
       propertyPath: canvasGroup
       value: 
       objectReference: {fileID: 2146346265}
     - target: {fileID: 1154796574, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: itemGameObject
-      value: 
-      objectReference: {fileID: 1059878284}
-    - target: {fileID: 1154796574, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: runeGameObject
-      value: 
-      objectReference: {fileID: 1059878284}
-    - target: {fileID: 1154796574, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
       propertyPath: rewardTransform
       value: 
       objectReference: {fileID: 1059878285}
-    - target: {fileID: 1154796574, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: sprites.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1154796574, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: characterGameObject
-      value: 
-      objectReference: {fileID: 1059878284}
-    - target: {fileID: 1154796574, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: rewardSpriteRenderer
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1154796574, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
       propertyPath: sprites.Array.data[0]
       value: 
@@ -1248,42 +1212,6 @@ PrefabInstance:
       propertyPath: sprites.Array.data[9]
       value: 
       objectReference: {fileID: 984703800}
-    - target: {fileID: 543450653626167389, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 543450653626167389, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 543450653626167389, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 543450653626167389, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 543450653626167389, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 543450653626167389, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 543450653626167389, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701516496269886081, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: UVModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701516496269886081, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: useRigidbodyForVelocity
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8822733279488847629, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1328,20 +1256,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8826243079701884501, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8826243079909436771, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
       propertyPath: m_Name
       value: GachaPlatform
       objectReference: {fileID: 0}
-    - target: {fileID: 8863402515870999305, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
-      propertyPath: m_Lightmapping
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1154796572, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a99e3cfb9415e241927943ab4dcadec, type: 3}
 --- !u!1 &1282528190
 GameObject:
