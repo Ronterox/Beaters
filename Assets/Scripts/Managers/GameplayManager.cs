@@ -498,7 +498,7 @@ namespace Managers
         private void MissArrowLogic()
         {
             // Can miss check in case of power
-            if (!CanMiss) return;
+            if (!CanMiss || m_IsPaused) return;
 
             if (m_Combo > MinimumCombo)
             {
