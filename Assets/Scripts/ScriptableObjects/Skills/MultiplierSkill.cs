@@ -11,7 +11,8 @@ namespace ScriptableObjects.Skills
         public override void UseSkill(GameplayManager manager)
         {
             manager.Multiplier += multiplierValue;
-            manager.SetSkillTimer(duration, () => manager.Multiplier -= multiplierValue);
+
+            manager.PlayAnimationPrefab(skillAnimationPrefab, sfx, () => manager.SetSkillTimer(duration, () => manager.Multiplier -= multiplierValue));
         }
     }
 }

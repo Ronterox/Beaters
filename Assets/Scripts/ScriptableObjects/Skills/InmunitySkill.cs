@@ -7,11 +7,12 @@ namespace ScriptableObjects.Skills
     public class InmunitySkill : ScriptableSkill
     {
         public float duration;
-        
-        public override void UseSkill(GameplayManager manager)
-        {
-            manager.CanMiss = false;
-            manager.SetSkillTimer(duration, () => manager.CanMiss = true);
-        }
+
+        public override void UseSkill(GameplayManager manager) =>
+            manager.PlayAnimationPrefab(skillAnimationPrefab, sfx, () =>
+            {
+                manager.CanMiss = false;
+                manager.SetSkillTimer(duration, () => manager.CanMiss = true);
+            });
     }
 }

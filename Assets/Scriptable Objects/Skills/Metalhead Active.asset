@@ -15,5 +15,7 @@ MonoBehaviour:
   effectDescription: 'Get x2 score for 5 secs '
   rechargeQuantity: 25
   skillImage: {fileID: 21300000, guid: 063e412365cfecf3c85e537fe07007fd, type: 3}
+  sfx: {fileID: 8300000, guid: 4a0a4d8ee3db2c9468b647df06eb43c3, type: 3}
+  skillAnimationPrefab: {fileID: 3081478508424082176, guid: 572f70562eff783f4b0627144ece73bc, type: 3}
   multiplierValue: 2
   duration: 5

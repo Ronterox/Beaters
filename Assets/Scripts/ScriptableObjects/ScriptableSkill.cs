@@ -11,8 +11,9 @@ namespace ScriptableObjects
         public int rechargeQuantity;
         [Space]
         public Sprite skillImage;
-        [Space]
         public AudioClip sfx;
+        [Space]
+        public GameObject skillAnimationPrefab;
 
         public virtual void UseSkill(GameplayManager manager) => Debug.Log($"Not implemented the skill {name}");
     }

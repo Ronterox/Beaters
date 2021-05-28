@@ -1,5 +1,6 @@
 using General;
 using Managers;
+using Plugins.Audio;
 using UnityEngine;
 
 namespace ScriptableObjects.Skills
@@ -16,7 +17,11 @@ namespace ScriptableObjects.Skills
             character.onDie -= manager.Lose;
             character.onDie += () =>
             {
-                if (Random.Range(0f, 1f) <= reviveProbability) character.Revive(1);
+                if (Random.Range(0f, 1f) <= reviveProbability)
+                {
+                    character.Revive(10);
+                    manager.PlayAnimationPrefab(skillAnimationPrefab, sfx);
+                }
                 else manager.Lose();
             };
         }

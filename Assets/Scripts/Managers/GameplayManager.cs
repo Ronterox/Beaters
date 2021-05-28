@@ -53,7 +53,7 @@ namespace Managers
         [Header("Timer Feedback")]
         public Image feedbackImage;
         public TMP_Text skillText;
-        
+
         [Header("Combo Feedback")]
         public MKGlow mkGlow;
 
@@ -72,6 +72,8 @@ namespace Managers
 
         private float m_StartTime;
         protected Vector3 m_SkillSliderPosition;
+
+        private GameObject m_AnimationPrefab;
 
         private int Combo
         {
@@ -391,12 +393,12 @@ namespace Managers
         /// <summary>
         /// Pauses gameplay and song timer but not time
         /// </summary>
-        public void PauseMap()
+        public void PauseMap(bool showMenu = true)
         {
             m_OnGoing = false;
             songTimer.PauseTimer();
             mapScroller.StopMap();
-            pauseMenu.SetActive(true);
+            pauseMenu.SetActive(showMenu);
         }
 
         /// <summary>
@@ -487,8 +489,8 @@ namespace Managers
             finishText.gameObject.SetActive(true);
 
             activateEndScreen.DelayAction(2);
-            
-            m_SoundManager.PlayNonDiegeticSound(win? winSfx : loseSfx);
+
+            m_SoundManager.PlayNonDiegeticSound(win ? winSfx : loseSfx);
 
             //Show prizes
 
@@ -528,7 +530,7 @@ namespace Managers
             }
 
             if (CanLose && !currentCharacter.IsDead) currentCharacter.TakeDamage(MinimumDamage);
-            
+
             m_SoundManager.PlayNonDiegeticRandomPitchSound(missSfx);
         }
 
@@ -618,6 +620,35 @@ namespace Managers
 
             //Hit Feedback
             feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
+        }
+
+        /// <summary>
+        /// Sets and plays the character animation prefab
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <param name="animationSound"></param>
+        /// <param name="onAnimationEnd"></param>
+        public void PlayAnimationPrefab(GameObject prefab, AudioClip animationSound, Action onAnimationEnd = null)
+        {
+            if (!m_AnimationPrefab || !prefab.name.Equals(m_AnimationPrefab.name))
+            {
+                m_AnimationPrefab = Instantiate(prefab, gameCanvas);
+                m_AnimationPrefab.name = prefab.name;
+            }
+
+            m_AnimationPrefab.SetActive(true);
+            PauseMap(false);
+
+            Action deactivateAnimation = () =>
+            {
+                m_AnimationPrefab.SetActive(false);
+                ResumeMap();
+                onAnimationEnd?.Invoke();
+            };
+
+            m_SoundManager.PlayNonDiegeticSound(animationSound);
+
+            deactivateAnimation.DelayAction(1f);
         }
     }
 }

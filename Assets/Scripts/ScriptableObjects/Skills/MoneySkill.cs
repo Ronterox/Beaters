@@ -8,10 +8,11 @@ namespace ScriptableObjects.Skills
     {
         public float duration;
 
-        public override void UseSkill(GameplayManager manager)
-        {
-            manager.EveryNoteGivesMoney = true;
-            manager.SetSkillTimer(duration,() => manager.EveryNoteGivesMoney = false);
-        }
+        public override void UseSkill(GameplayManager manager) =>
+            manager.PlayAnimationPrefab(skillAnimationPrefab, sfx,() =>
+            {
+                manager.EveryNoteGivesMoney = true;
+                manager.SetSkillTimer(duration,() => manager.EveryNoteGivesMoney = false);
+            });
     }
 }
