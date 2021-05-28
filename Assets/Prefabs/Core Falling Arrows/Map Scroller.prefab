@@ -46,7 +46,9 @@ MonoBehaviour:
   generateCombos: 1
   m_SoundMap:
     name: 
+    mapCreator: 
     bpm: 0
+    genre: 5
     audioClip: {fileID: 0}
     audioPath: 
     notes: []
@@ -86,3 +88,6 @@ MonoBehaviour:
   - {fileID: 0}
   targetScale: {x: 2.5, y: 20, z: 1}
   defaultScale: {x: 2, y: 20, z: 1}
+  timerText: {fileID: 0}
+  characterAnimator: {fileID: 0}
+  startSfx: {fileID: 8300000, guid: c03c85400a0a8d05186cd5619e3a2e5d, type: 3}

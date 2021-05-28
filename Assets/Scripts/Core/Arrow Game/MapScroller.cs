@@ -55,6 +55,9 @@ namespace Core.Arrow_Game
         public TMP_Text timerText;
         [Space]
         public Animator characterAnimator;
+        
+        [Header("Sfx")]
+        public AudioClip startSfx;
 
         public bool IsStarted { get; private set; }
         private float m_bps;
@@ -98,6 +101,8 @@ namespace Core.Arrow_Game
             timerText.text = "Ready?";
             timerText.gameObject.SetActive(true);
 
+            SoundManager soundManager = SoundManager.Instance;
+
             Action activateTimer = () =>
             {
                 timerText.text = "Go!";
@@ -105,10 +110,12 @@ namespace Core.Arrow_Game
                 Action deactivate = () => timerText.gameObject.SetActive(false);
                 deactivate.DelayAction(.5f);
                 
-                SoundManager.Instance.PlayBackgroundMusicNoFade(m_CurrentSong, false);
+                soundManager.PlayBackgroundMusicNoFade(m_CurrentSong, false);
             };
 
             activateTimer.DelayAction(1f);
+            
+            soundManager.PlayNonDiegeticSound(startSfx);
             //__________________
 
             if (characterAnimator) characterAnimator.speed = m_bps * .5f;
