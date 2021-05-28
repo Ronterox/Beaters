@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Plugins.Audio;
 using Plugins.Properties;
 using Plugins.Tools;
 using UnityEngine;
@@ -13,6 +14,9 @@ namespace Managers
         [Scene]
         public string arrowGameplayScene, mainMenuScene;
         public CanvasGroup transitionPanel;
+
+        [Header("Sfx")]
+        public AudioClip loadSfx;
 
         private void Start() => OpenTransition(transitionDuration);
 
@@ -35,7 +39,11 @@ namespace Managers
 
         public static void CloseTransition(float duration, Action onEnd) => FadeTransitionPanel(1f, duration, onEnd);
 
-        public static void LoadSceneWithTransition(string scene, float duration) => CloseTransition(duration, () => SceneManager.LoadScene(scene));
+        public static void LoadSceneWithTransition(string scene, float duration) => CloseTransition(duration, () =>
+        {
+            SoundManager.Instance.PlayNonDiegeticRandomPitchSound(m_Instance.loadSfx);
+            SceneManager.LoadScene(scene);
+        });
 
         public static void LoadArrowGameplayScene() => LoadSceneWithTransition(m_Instance.arrowGameplayScene, m_Instance.transitionDuration);
 

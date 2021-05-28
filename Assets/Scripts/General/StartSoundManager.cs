@@ -1,3 +1,4 @@
+using Managers;
 using Plugins.Audio;
 using Plugins.Tools;
 using ScriptableObjects;
@@ -10,11 +11,11 @@ namespace General
         public Song[] songs;
         private void Start()
         {
+            if (DataManager.Instance.CharacterCount < 1) return;
+            
             SoundManager soundManager = SoundManager.Instance;
-            if (!soundManager.IsPlaying)
-            {
-                soundManager.PlayBackgroundMusicNoFade(songs.GetRandom().soundMap.audioClip);
-            }
+            if (!soundManager.IsPlaying) soundManager.PlayBackgroundMusicNoFade(songs.GetRandom().soundMap.audioClip);
+            soundManager.StopAllSfx();
         }
     }
 }

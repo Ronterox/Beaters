@@ -8,6 +8,7 @@ using System.Linq;
 using Core.Arrow_Game;
 using DG.Tweening;
 using Managers;
+using Plugins.Audio;
 using Plugins.Tools;
 using SimpleFileBrowser;
 #if UNITY_EDITOR && !FORCE_JSON
@@ -136,6 +137,9 @@ namespace Utilities
         [Space]
         public TMP_Text stateText, songNameText;
         public TMP_Dropdown songListDropdown;
+        [Header("Sfx")]
+        public AudioClip destroySfx;
+        public AudioClip putSfx;
 
         [Header("My Maps")]
         public List<SoundMap> soundMaps;
@@ -277,6 +281,8 @@ namespace Utilities
                         m_SelectedGameObject.transform.rotation,
                         m_CurrentMapGameObject.transform)
                 .GetComponent<NoteObject>().MakerId = m_SelectedId;
+
+            SoundManager.Instance.PlayNonDiegeticSound(putSfx);
         }
 
         /// <summary>
@@ -287,7 +293,11 @@ namespace Utilities
         private void CheckNoteAndDestroy(Vector3 mousePosition, float castRange)
         {
             RaycastHit2D result = Physics2D.CircleCast(mousePosition, castRange, Vector2.zero, 0, mapScroller.notesLayer.value);
-            if (result) Destroy(result.collider.gameObject);
+            
+            if (!result) return;
+            
+            Destroy(result.collider.gameObject);
+            SoundManager.Instance.PlayNonDiegeticSound(destroySfx);
         }
 
         /// <summary>

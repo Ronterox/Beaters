@@ -1,4 +1,5 @@
 using Managers;
+using Plugins.Tools;
 using Plugins.UI;
 using ScriptableObjects;
 using TMPro;
@@ -12,6 +13,9 @@ namespace UI
     {
         public Image songImage;
         public TMP_Text songName;
+        [Space]
+        public GameObject lockImage;
+        public Sprite customSongSprite;
 
         public override UICarouselElement Setup(params object[] parameters)
         {
@@ -19,6 +23,7 @@ namespace UI
             switch (value)
             {
                 case SoundMap soundMap:
+                    songImage.sprite = customSongSprite;
                     songName.text = soundMap.name;
                     onClick.AddListener(() =>
                     {
@@ -39,6 +44,7 @@ namespace UI
                     if (parameters[1] is bool isUnlock && isUnlock)
                     {
                         onClick.AddListener(PlayMap);
+                        lockImage.SetActive(false);
                     }
                     else
                     {
@@ -56,10 +62,9 @@ namespace UI
 
                         onClick.AddListener(ShowUnlockPanel);
 
-                        Color transparentColor = songImage.color;
-                        transparentColor.a = .5f;
-
-                        songImage.color = transparentColor;
+                        songImage.SetAlpha(.5f);
+                        
+                        lockImage.SetActive(true);
                     }
 
                     break;

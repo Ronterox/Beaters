@@ -16,7 +16,7 @@ namespace Gacha
         public GameObject[] bingoBoxes;
         public Button redeemReward;
 
-        private const int OPEN_BINGO_GACHA = 6578;
+        public const int OPEN_BINGO_GACHA = 6578;
 
         private void Start()
         {
@@ -25,22 +25,24 @@ namespace Gacha
             for (var i = 0; i < userBoxes; i++) bingoBoxes[i].SetActive(true);
 
             redeemReward.onClick.AddListener(TaskOnClick);
-            redeemReward.interactable = userBoxes >= bingoBoxes.Length;
 
             if (GameManager.GetValue() is int value && value == OPEN_BINGO_GACHA)
             {
                 panelBingo.SetActive(true);
                 GameManager.PutValue(null);
 
-                if (!redeemReward.interactable)
+                if (userBoxes < bingoBoxes.Length)
                 {
                     int box = DataManager.Instance.playerData.bingoBoxes++;
+                    
                     if (box < bingoBoxes.Length) bingoBoxes[box].SetActive(true);
-                    else redeemReward.interactable = true;
                 }
             }
+            
+            redeemReward.interactable = DataManager.Instance.playerData.bingoBoxes >= bingoBoxes.Length;
 
-            SetCharacterGUI(GameManager.GetCharacter());
+            ScriptableCharacter character = GameManager.GetCharacter();
+            if(character) SetCharacterGUI(character);
         }
 
         public void SetCharacterGUI(ScriptableCharacter character)

@@ -27,7 +27,7 @@ namespace UI
 
         private void Start()
         {
-            if (revealOnStart) ShowButton();
+            if (revealOnStart) ShowHideButtons();
         }
 
         public void ShowHideButtons()

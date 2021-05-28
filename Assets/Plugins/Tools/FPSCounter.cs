@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +8,7 @@ namespace Plugins.Tools
     [AddComponentMenu("Penguins Mafia/Tools/FPS Counter")]
     public class FPSCounter : MonoBehaviour
     {
+//#if UNITY_EDITOR
         public float updateInterval = 0.5f;
         public Vector2 screenPosOffset = Vector2.zero;
         private float m_TimeLeft; // Left time for current interval
@@ -72,18 +74,18 @@ namespace Plugins.Tools
                 UnityEngine.GUI.Label(frameBox, $"{m_Fps:F2}", style);
             }
 
-            if (seeMemoryUsage)
-            {
-                style.fontSize = (int)(fontSize * .5f);
-                var frameBox2 = new Rect(Screen.width - (width + screenPosOffset.x), height + 30 + screenPosOffset.y, width, height + 10);
-                UnityEngine.GUI.Box(frameBox2, "Memory", labelStyle);
-                UnityEngine.GUI.Label(frameBox2, $"TotalAllocatedMemory : {Profiler.GetTotalAllocatedMemoryLong() / 1048576}mb"
-                                                 + $"\nTotalReservedMemory : {Profiler.GetTotalReservedMemoryLong() / 1048576}mb"
-                                                 + $"\nTotalUnusedReservedMemory : {Profiler.GetTotalUnusedReservedMemoryLong() / 1048576}mb", style);
+            if (!seeMemoryUsage) return;
+            
+            style.fontSize = (int)(fontSize * .5f);
+            var frameBox2 = new Rect(Screen.width - (width + screenPosOffset.x), height + 30 + screenPosOffset.y, width, height + 10);
+            UnityEngine.GUI.Box(frameBox2, "Memory", labelStyle);
+            UnityEngine.GUI.Label(frameBox2, $"TotalAllocatedMemory : {Profiler.GetTotalAllocatedMemoryLong() / 1048576}mb"
+                                             + $"\nTotalReservedMemory : {Profiler.GetTotalReservedMemoryLong() / 1048576}mb"
+                                             + $"\nTotalUnusedReservedMemory : {Profiler.GetTotalUnusedReservedMemoryLong() / 1048576}mb", style);
 
-                var frameBox3 = new Rect(Screen.width - 150, 30 + height * 2, 300 - m_SafeZone, height);
-                UnityEngine.GUI.Label(frameBox3, $"Room : {SceneManager.GetActiveScene().name}");
-            }
+            var frameBox3 = new Rect(Screen.width - 150, 30 + height * 2, 300 - m_SafeZone, height);
+            UnityEngine.GUI.Label(frameBox3, $"Room : {SceneManager.GetActiveScene().name}");
         }
+//#endif
     }
 }

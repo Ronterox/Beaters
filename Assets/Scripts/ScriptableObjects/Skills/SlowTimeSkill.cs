@@ -7,7 +7,8 @@ namespace ScriptableObjects.Skills
     public class SlowTimeSkill : ScriptableSkill
     {
         public float duration;
-        
-        public override void UseSkill(GameplayManager manager) => manager.SlowTime(duration, 0f);
+
+        public override void UseSkill(GameplayManager manager) =>
+            manager.PlayAnimationPrefab(skillAnimationPrefab, sfx, () => manager.SlowTimeReverse(duration + manager.DurationIncrement));
     }
 }

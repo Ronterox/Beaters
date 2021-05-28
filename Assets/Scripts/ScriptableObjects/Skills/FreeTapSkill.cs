@@ -7,6 +7,10 @@ namespace ScriptableObjects.Skills
     public class FreeTapSkill : ScriptableSkill
     {
         public int freeTaps;
-        public override void UseSkill(GameplayManager manager) => manager.SetFreeTaps(freeTaps);
+        public override void UseSkill(GameplayManager manager)
+        {
+            manager.SetFreeTaps(freeTaps);
+            manager.PlayAnimationPrefab(skillAnimationPrefab, sfx);
+        }
     }
 }

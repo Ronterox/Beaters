@@ -129,7 +129,7 @@ MonoBehaviour:
       x: 1
       y: 38
       z: 0
-  requiredItem1: {fileID: 11400000, guid: 46bd4372404e80642a494f2f1c6e03f7, type: 2}
-  requiredItem2: {fileID: 11400000, guid: 1ce0ba3e289b79c889465534fdb2f3e8, type: 2}
+  requiredItem1: {fileID: 11400000, guid: aa2a1a70bd2a5c744a3a6297d584f3d6, type: 2}
+  requiredItem2: {fileID: 11400000, guid: 907ee08c50a09ed45ac50b91c600ec3e, type: 2}
   requiredQuantityItem1: 1
   requiredQuantityItem2: 1

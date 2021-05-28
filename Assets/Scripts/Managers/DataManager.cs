@@ -1,8 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using Plugins.Properties;
 using Plugins.Tools;
 using UnityEngine;
 using ScriptableObjects;
+using UI;
+using UnityEditor;
+using Settings = UI.Settings;
 
 namespace Managers
 {
@@ -20,7 +24,7 @@ namespace Managers
     }
 
     [System.Serializable]
-    public struct SerializableItem
+    public class SerializableItem
     {
         public ushort itemId;
         public int quantity;
@@ -35,14 +39,14 @@ namespace Managers
     }
 
     [System.Serializable]
-    public struct SerializableRune
+    public class SerializableRune
     {
         public ushort runeId;
         public int quantity;
     }
 
     [System.Serializable]
-    public struct SerializableSong
+    public class SerializableSong
     {
         public ushort songId;
 
@@ -62,7 +66,7 @@ namespace Managers
     }
 
     [System.Serializable]
-    public struct SerializableCharacter
+    public class SerializableCharacter
     {
         public ushort characterId;
         public int lvl, xp;
@@ -70,18 +74,41 @@ namespace Managers
 
     public class DataManager : PersistentSingleton<DataManager>
     {
-        private const string PLAYER_FILE = "player.data";
+        public const string PLAYER_FILE = "player.data";
 
         public PlayerData playerData;
+        [ReadOnly]
+        public Settings playerSettings = new Settings();
+
         public int CharacterCount => playerData.unlockedCharacters.Count;
+#if UNITY_EDITOR
+        public bool resetPlayerPrefs;
+#endif
 
         private void Start()
         {
             if (m_Instance != this) return;
+
+            if (SaveLoadManager.SaveExists(SettingsMenu.SETTINGS_FILE))
+            {
+                SettingsMenu.SetSettings(playerSettings = SaveLoadManager.Load<Settings>(SettingsMenu.SETTINGS_FILE));
+            }
+
+#if UNITY_EDITOR
+            if (resetPlayerPrefs) PlayerPrefs.DeleteAll();
+            if (!EditorPrefs.HasKey(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY)) EditorPrefs.SetBool(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY, true);
+#endif
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }
 
-        private void OnApplicationQuit()
+        private void OnDestroy() => SaveData();
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus) SaveData();
+        }
+
+        public void SaveData()
         {
             if (m_Instance == this) SaveLoadManager.Save(playerData, PLAYER_FILE);
         }
@@ -153,7 +180,9 @@ namespace Managers
 
         public static List<ushort> GetSongsIds() => m_Instance.playerData.unlockedSongs.Select(song => song.songId).ToList();
 
-        public static int GetItemQuantity(ushort id) => m_Instance.playerData.currentItems.FirstOrDefault(item => item.itemId == id).quantity;
+        public static int GetItemQuantity(ushort id) => m_Instance.GetItemQuantityWithCheck(id).GetValueOrDefault();
+
+        private int? GetItemQuantityWithCheck(ushort id) => playerData.currentItems.FirstOrDefault(item => item.itemId == id)?.quantity;
 
         public static bool ContainsCharacter(ushort id) => m_Instance.playerData.unlockedCharacters.Any(character => character.characterId == id);
 

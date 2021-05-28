@@ -1,5 +1,6 @@
 using General;
 using Managers;
+using Plugins.Audio;
 using UnityEngine;
 
 namespace ScriptableObjects.Skills
@@ -18,8 +19,8 @@ namespace ScriptableObjects.Skills
             {
                 if (Random.Range(0f, 1f) <= reviveProbability)
                 {
-                    character.currentHp = 0;
-                    character.Heal(1);
+                    character.Revive(10);
+                    manager.PlayAnimationPrefab(skillAnimationPrefab, sfx);
                 }
                 else manager.Lose();
             };

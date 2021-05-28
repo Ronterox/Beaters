@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace Plugins.Properties.Editor
 {
-    [CustomPropertyDrawer(typeof(InformationAttribute))]
     /// <summary>
     /// This class allows the display of a message box (warning, info, error...) next to a property (before or after)
     /// </summary>
+    [CustomPropertyDrawer(typeof(InformationAttribute))]
     public class InformationAttributeDrawer : PropertyDrawer
     {
         // determines the space after the help box, the space before the text box, and the width of the help box icon
@@ -80,18 +80,7 @@ namespace Plugins.Properties.Editor
         /// Checks the editor prefs to see if help is enabled or not
         /// </summary>
         /// <returns><c>true</c>, if enabled was helped, <c>false</c> otherwise.</returns>
-        protected virtual bool HelpEnabled()
-        {
-            var helpEnabled = false;
-            if (EditorPrefs.HasKey("MMShowHelpInInspectors"))
-            {
-                if (EditorPrefs.GetBool("MMShowHelpInInspectors"))
-                {
-                    helpEnabled = true;
-                }
-            }
-            return helpEnabled;
-        }
+        protected virtual bool HelpEnabled() => EditorPrefs.HasKey(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY) && EditorPrefs.GetBool(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY);
 
         /// <summary>
         /// Determines the height of the textbox.

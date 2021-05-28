@@ -3,8 +3,6 @@ using Managers;
 
 namespace Core.Defenders
 {
-    public enum Direction { Up, Down, Right, Left }
-
     public class DefendersNote : MonoBehaviour
     {
         public ushort id;

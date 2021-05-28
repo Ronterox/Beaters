@@ -12,61 +12,241 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
   m_Name: Zavodilla
   m_EditorClassIdentifier: 
-  songImage: {fileID: 21300000, guid: b7e73b010fd3db7b1b0bea3fe5600cb0, type: 3}
+  songImage: {fileID: 21300000, guid: 3496f74feb2c77ccf9ddab1dac91925b, type: 3}
   soundMap:
     name: Zavodilla
     mapCreator: Aaron
     bpm: 130
     genre: 2
     audioClip: {fileID: 8300000, guid: efd21f4ae044a13fe9fec09d871e3e26, type: 3}
-    audioPath: /home/rontero/Documents/Unity Projects/Beaters/Assets/Audio/Songs/Zavodila
+    audioPath: /home/rontero/Documents/Unity Projects/Beaters/Assets/Audio/SongsSongsZavodila
       (Vs Whitty Remix).mp3
     notes:
     - id: 1
       x: -1
-      y: 21.434608
+      y: -2
       z: 0
     - id: 1
       x: -1
-      y: 23.821272
+      y: 0
       z: 0
     - id: 3
       x: 1
-      y: 24.821272
-      z: 0
-    - id: 2
-      x: 3
-      y: 25.821272
-      z: 0
-    - id: 2
-      x: 3
-      y: 27.821272
-      z: 0
-    - id: 1
-      x: -1
-      y: 29.821272
-      z: 0
-    - id: 3
-      x: 1
-      y: 31.821272
+      y: 3
       z: 0
     - id: 0
       x: -3
-      y: 32.821274
-      z: 0
-    - id: 1
-      x: -1
-      y: 34.821274
+      y: 6
       z: 0
     - id: 2
       x: 3
-      y: 35.821274
+      y: 2
+      z: 0
+    - id: 1
+      x: -1
+      y: 8
       z: 0
     - id: 3
       x: 1
-      y: 37.821274
+      y: 10
+      z: 0
+    - id: 1
+      x: -1
+      y: 11
+      z: 0
+    - id: 3
+      x: 1
+      y: 14
+      z: 0
+    - id: 0
+      x: -3
+      y: 17
+      z: 0
+    - id: 1
+      x: -1
+      y: 21.186495
+      z: 0
+    - id: 1
+      x: -1
+      y: 23.186495
+      z: 0
+    - id: 2
+      x: 3
+      y: 25.186495
+      z: 0
+    - id: 3
+      x: 1
+      y: 26.186495
+      z: 0
+    - id: 0
+      x: -3
+      y: 29.151882
+      z: 0
+    - id: 2
+      x: 3
+      y: 13
+      z: 0
+    - id: 2
+      x: 3
+      y: 19
+      z: 0
+    - id: 2
+      x: 3
+      y: 31
+      z: 0
+    - id: 1
+      x: -1
+      y: 32
+      z: 0
+    - id: 0
+      x: -3
+      y: 33
+      z: 0
+    - id: 1
+      x: -1
+      y: 34
+      z: 0
+    - id: 3
+      x: 1
+      y: 36
+      z: 0
+    - id: 3
+      x: 1
+      y: 38
+      z: 0
+    - id: 3
+      x: 1
+      y: 40
+      z: 0
+    - id: 0
+      x: -3
+      y: 43
+      z: 0
+    - id: 1
+      x: -1
+      y: 45
+      z: 0
+    - id: 1
+      x: -1
+      y: 47
+      z: 0
+    - id: 2
+      x: 3
+      y: 49
+      z: 0
+    - id: 3
+      x: 1
+      y: 50
+      z: 0
+    - id: 1
+      x: -1
+      y: 55
+      z: 0
+    - id: 1
+      x: -1
+      y: 58
+      z: 0
+    - id: 3
+      x: 1
+      y: 57
+      z: 0
+    - id: 2
+      x: 3
+      y: 60
+      z: 0
+    - id: 3
+      x: 1
+      y: 61
+      z: 0
+    - id: 0
+      x: -3
+      y: 64
+      z: 0
+    - id: 0
+      x: -3
+      y: 53
+      z: 0
+    - id: 1
+      x: -1
+      y: 69
+      z: 0
+    - id: 1
+      x: -1
+      y: 68
+      z: 0
+    - id: 2
+      x: 3
+      y: 74
+      z: 0
+    - id: 3
+      x: 1
+      y: 71
+      z: 0
+    - id: 3
+      x: 1
+      y: 72
+      z: 0
+    - id: 1
+      x: -1
+      y: 77
+      z: 0
+    - id: 1
+      x: -1
+      y: 78
+      z: 0
+    - id: 0
+      x: -3
+      y: 80
+      z: 0
+    - id: 0
+      x: -3
+      y: 81
+      z: 0
+    - id: 3
+      x: 1
+      y: 84
+      z: 0
+    - id: 1
+      x: -1
+      y: 70
+      z: 0
+    - id: 1
+      x: -1
+      y: 79
+      z: 0
+    - id: 3
+      x: 1
+      y: 73
+      z: 0
+    - id: 3
+      x: 1
+      y: 76
+      z: 0
+    - id: 3
+      x: 1
+      y: 85
+      z: 0
+    - id: 2
+      x: 3
+      y: 89
+      z: 0
+    - id: 2
+      x: 3
+      y: 86
+      z: 0
+    - id: 2
+      x: 3
+      y: 75
+      z: 0
+    - id: 0
+      x: -3
+      y: 82
+      z: 0
+    - id: 1
+      x: -1
+      y: 83
       z: 0
   requiredItem1: {fileID: 11400000, guid: aaaa7a2cc3af499bb975e2e691e2e191, type: 2}
-  requiredItem2: {fileID: 11400000, guid: 46bd4372404e80642a494f2f1c6e03f7, type: 2}
+  requiredItem2: {fileID: 11400000, guid: 461dd88055619d14db2433bab6d4fba0, type: 2}
   requiredQuantityItem1: 1
   requiredQuantityItem2: 1

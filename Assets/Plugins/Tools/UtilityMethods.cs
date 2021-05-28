@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Internal;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Plugins.Tools
@@ -94,6 +95,14 @@ namespace Plugins.Tools
         /// <param name="maxValue"></param>
         /// <returns></returns>
         public static float GetPercentageValue(this float value, float maxValue) => value / maxValue;
+
+        /// <summary>
+        /// Returns the float, as a percentage of the max value, from 0 to 1;
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
+        public static float GetPercentageValue(this int value, int maxValue) => (float)value / maxValue;
 
         /// <summary>
         /// Returns a random vector2 with points between the values passed
@@ -418,6 +427,32 @@ namespace Plugins.Tools
                 if (condition(array[i])) return i;
             }
             return -1;
+        }
+
+        /// <summary>
+        /// Changes the alpha of the image
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="newAlpha"></param>
+        public static void SetAlpha(this Image image, float newAlpha)
+        {
+            Color transparentColor = image.color;
+            transparentColor.a = newAlpha;
+
+            image.color = transparentColor;
+        }
+
+        /// <summary>
+        /// Changes the alpha of the spriteRenderer
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="newAlpha"></param>
+        public static void SetAlpha(this SpriteRenderer image, float newAlpha)
+        {
+            Color transparentColor = image.color;
+            transparentColor.a = newAlpha;
+
+            image.color = transparentColor;
         }
     }
 }

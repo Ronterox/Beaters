@@ -1,6 +1,8 @@
+using Plugins.Tools;
 using UnityEngine;
 using TMPro;
 using ScriptableObjects;
+using UI;
 using UnityEngine.UI;
 
 namespace Managers
@@ -27,20 +29,21 @@ namespace Managers
 
         [Space]
         public Image[] stars;
+        public GUIImage[] buttons;
         public Image panel;
 
         public Button replaySongButton, randomSong;
 
-        public void SetStars(int starsNumber, ScriptableCharacter character)
+        public void SetStars(int starsNumber, Sprite fullStar, Sprite emptyStar)
         {
             starsNumber = Mathf.Min(stars.Length, starsNumber);
             int i;
 
-            for (i = 0; i < starsNumber; i++) stars[i].sprite = character.fullStar;
+            for (i = 0; i < starsNumber; i++) stars[i].sprite = fullStar;
 
             if (starsNumber >= stars.Length) return;
 
-            for (int k = i; k < stars.Length; k++) stars[k].sprite = character.emptyStar;
+            for (int k = i; k < stars.Length; k++) stars[k].sprite = emptyStar;
         }
 
         public void SetCharacterVisuals(ScriptableCharacter character)
@@ -51,6 +54,9 @@ namespace Managers
                         = backToMenuButtonText.font = replayButton.font = randomSongButtonText.font = character.font;
 
             panel.sprite = character.backgroundImage;
+
+            Palette palette = character.colorPalette;
+            buttons.ForEach(image => image.SetColor(palette));
         }
 
         public void SetScore(int oldScore, int newScore)
@@ -75,7 +81,7 @@ namespace Managers
             characterBonus.text = $"Character Bonus: ({charGenre} {bonusText} multiplier)";
         }
 
-        public void SetAccuracy(int totalBeats, int hitBeats, float acc) => accuracy.text = $"{hitBeats} / {totalBeats} ({acc:N2}%)";
+        public void SetAccuracy(int totalBeats, int hitBeats, float acc) => accuracy.text = $"Accuracy: {hitBeats} / {totalBeats} ({acc:N2}%)";
 
         public void SetHighestCombo(int combo) => highestCombo.text = "Highest Combo: " + combo;
 

@@ -13,9 +13,7 @@ namespace Plugins.Tools
         /// Singleton design pattern
         /// </summary>
         /// <value>The Instance.</value>
-        
-        public static T Instance => !m_Instance? 
-            m_Instance = FindObjectOfType<T>()? m_Instance : m_Instance = new GameObject().AddComponent<T>() : m_Instance;
+        public static T Instance => !m_Instance? m_Instance = FindObjectOfType<T>()? m_Instance : m_Instance = new GameObject().AddComponent<T>() : m_Instance;
 
         /// <summary>
         /// On awake, we initialize our Instance. Make sure to call base.Awake() in override if you need awake.
@@ -25,7 +23,11 @@ namespace Plugins.Tools
             if (!Application.isPlaying) return;
 
             if (!m_Instance) m_Instance = this as T;
-            else if (m_Instance != this) { Debug.Log($"There is another {m_Instance.name} script on the scene!!!"); }
+            else if (m_Instance != this)
+            {
+                Destroy(gameObject);
+                Debug.Log($"There is another {m_Instance.name} script on the scene!!!");
+            }
         }
     }
 
@@ -37,8 +39,7 @@ namespace Plugins.Tools
         /// Singleton design pattern
         /// </summary>
         /// <value>The Instance.</value>
-        public static T Instance => !m_Instance? 
-            m_Instance = FindObjectOfType<T>()? m_Instance : m_Instance = new GameObject().AddComponent<T>() : m_Instance;
+        public static T Instance => !m_Instance? m_Instance = FindObjectOfType<T>()? m_Instance : m_Instance = new GameObject().AddComponent<T>() : m_Instance;
 
         /// <summary>
         /// On awake, we check if there's already a copy of the object in the scene. If there's one, we destroy it.

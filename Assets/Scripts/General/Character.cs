@@ -85,6 +85,13 @@ namespace General
             currentHp += (int)percentage;
         }
 
+        public void Revive(int health)
+        {
+            currentHp = health;
+            IsDead = false;
+            Heal(1);
+        }
+
         private void UpdateText()
         {
             if (currentHp > maxHp * .75f) hpBarFill.color = Color.green;

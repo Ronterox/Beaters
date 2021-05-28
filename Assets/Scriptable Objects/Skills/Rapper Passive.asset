@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Rapper Passive
   m_EditorClassIdentifier: 
   effectDescription: Yellow notes heal 3% hp
-  rechargeQuantity: 50
+  rechargeQuantity: 25
   skillImage: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
   healingValue: 0.03

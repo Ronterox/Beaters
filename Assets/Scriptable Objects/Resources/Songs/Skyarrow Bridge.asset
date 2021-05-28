@@ -1,0 +1,363 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
+  m_Name: Skyarrow Bridge
+  m_EditorClassIdentifier: 
+  songImage: {fileID: 21300000, guid: fd15bd3dcbfb55d4faafb4f10ab305ba, type: 3}
+  soundMap:
+    name: Skyarrow Bridge
+    mapCreator: Aaron
+    bpm: 120
+    genre: 3
+    audioClip: {fileID: 8300000, guid: c7f758d8c55d454469be4c10f868ff6b, type: 3}
+    audioPath: C:/Users/Marcel/Desktop/beaters/Assets/Audio/SongsSkyarrowBridge.mp3
+    notes:
+    - id: 2
+      x: 3
+      y: 0
+      z: 0
+    - id: 2
+      x: 3
+      y: 9
+      z: 0
+    - id: 1
+      x: -1
+      y: 12
+      z: 0
+    - id: 0
+      x: -3
+      y: 15
+      z: 0
+    - id: 2
+      x: 3
+      y: 17.791964
+      z: 0
+    - id: 3
+      x: 1
+      y: 20.791964
+      z: 0
+    - id: 0
+      x: -3
+      y: 24.367905
+      z: 0
+    - id: 2
+      x: 3
+      y: 25.879879
+      z: 0
+    - id: 3
+      x: 1
+      y: 27.41594
+      z: 0
+    - id: 0
+      x: -3
+      y: 29.48793
+      z: 0
+    - id: 1
+      x: -1
+      y: 31.48793
+      z: 0
+    - id: 3
+      x: 1
+      y: 33.48793
+      z: 0
+    - id: 2
+      x: 3
+      y: 34.919918
+      z: 0
+    - id: 1
+      x: -1
+      y: 36.656002
+      z: 0
+    - id: 3
+      x: 1
+      y: 40.21602
+      z: 0
+    - id: 2
+      x: 3
+      y: 41.21602
+      z: 0
+    - id: 0
+      x: -3
+      y: 42.21602
+      z: 0
+    - id: 2
+      x: 3
+      y: 48.711975
+      z: 0
+    - id: 3
+      x: 1
+      y: 49.711975
+      z: 0
+    - id: 0
+      x: -3
+      y: 50.711975
+      z: 0
+    - id: 1
+      x: -1
+      y: 51.711975
+      z: 0
+    - id: 2
+      x: 3
+      y: 53.936066
+      z: 0
+    - id: 3
+      x: 1
+      y: 55.936066
+      z: 0
+    - id: 3
+      x: 1
+      y: 57.936066
+      z: 0
+    - id: 1
+      x: -1
+      y: 59.48805
+      z: 0
+    - id: 0
+      x: -3
+      y: 62.48805
+      z: 0
+    - id: 3
+      x: 1
+      y: 69.48805
+      z: 0
+    - id: 2
+      x: 3
+      y: 63.432137
+      z: 0
+    - id: 3
+      x: 1
+      y: 68.32017
+      z: 0
+    - id: 1
+      x: -1
+      y: 70.55215
+      z: 0
+    - id: 1
+      x: -1
+      y: 75.592155
+      z: 0
+    - id: 3
+      x: 1
+      y: 78.592155
+      z: 0
+    - id: 2
+      x: 3
+      y: 79.592155
+      z: 0
+    - id: 0
+      x: -3
+      y: 81.592155
+      z: 0
+    - id: 2
+      x: 3
+      y: 85.600075
+      z: 0
+    - id: 3
+      x: 1
+      y: 88.41613
+      z: 0
+    - id: 1
+      x: -1
+      y: 91.74402
+      z: 0
+    - id: 0
+      x: -3
+      y: 92.74402
+      z: 0
+    - id: 3
+      x: 1
+      y: 94.303955
+      z: 0
+    - id: 0
+      x: -3
+      y: 99.29596
+      z: 0
+    - id: 1
+      x: -1
+      y: 100.29596
+      z: 0
+    - id: 0
+      x: -3
+      y: 101.29596
+      z: 0
+    - id: 1
+      x: -1
+      y: 102.29596
+      z: 0
+    - id: 2
+      x: 3
+      y: 103.75194
+      z: 0
+    - id: 3
+      x: 1
+      y: 104.75194
+      z: 0
+    - id: 3
+      x: 1
+      y: 106.56778
+      z: 0
+    - id: 1
+      x: -1
+      y: 110.55965
+      z: 0
+    - id: 2
+      x: 3
+      y: 112.86366
+      z: 0
+    - id: 0
+      x: -3
+      y: 118.64746
+      z: 0
+    - id: 1
+      x: -1
+      y: 119.64746
+      z: 0
+    - id: 3
+      x: 1
+      y: 120.64746
+      z: 0
+    - id: 0
+      x: -3
+      y: 114.11958
+      z: 0
+    - id: 0
+      x: -3
+      y: 125.53534
+      z: 0
+    - id: 1
+      x: -1
+      y: 126.63931
+      z: 0
+    - id: 1
+      x: -1
+      y: 129.43138
+      z: 0
+    - id: 2
+      x: 3
+      y: 129.7914
+      z: 0
+    - id: 3
+      x: 1
+      y: 127.7914
+      z: 0
+    - id: 1
+      x: -1
+      y: 132.27129
+      z: 0
+    - id: 3
+      x: 1
+      y: 133.27129
+      z: 0
+    - id: 0
+      x: -3
+      y: 135.27129
+      z: 0
+    - id: 1
+      x: -1
+      y: 137.75117
+      z: 0
+    - id: 3
+      x: 1
+      y: 139.75117
+      z: 0
+    - id: 2
+      x: 3
+      y: 141.75117
+      z: 0
+    - id: 1
+      x: -1
+      y: 142.75117
+      z: 0
+    - id: 3
+      x: 1
+      y: 143.75117
+      z: 0
+    - id: 0
+      x: -3
+      y: 146.75117
+      z: 0
+    - id: 1
+      x: -1
+      y: 147.01486
+      z: 0
+    - id: 3
+      x: 1
+      y: 148.01486
+      z: 0
+    - id: 0
+      x: -3
+      y: 149.01486
+      z: 0
+    - id: 3
+      x: 1
+      y: 3
+      z: 0
+    - id: 1
+      x: -1
+      y: 151.77472
+      z: 0
+    - id: 2
+      x: 3
+      y: 159.77472
+      z: 0
+    - id: 3
+      x: 1
+      y: 152.62279
+      z: 0
+    - id: 2
+      x: 3
+      y: 154.62279
+      z: 0
+    - id: 3
+      x: 1
+      y: 155.62279
+      z: 0
+    - id: 3
+      x: 1
+      y: 158.62279
+      z: 0
+    - id: 1
+      x: -1
+      y: 160.62279
+      z: 0
+    - id: 1
+      x: -1
+      y: 5.215914
+      z: 0
+    - id: 0
+      x: -3
+      y: 164.94258
+      z: 0
+    - id: 0
+      x: -3
+      y: 156.63855
+      z: 0
+    - id: 0
+      x: -3
+      y: 163.14238
+      z: 0
+    - id: 3
+      x: 1
+      y: 166.34232
+      z: 0
+    - id: 2
+      x: 3
+      y: 168.34232
+      z: 0
+    - id: 0
+      x: -3
+      y: 170.34232
+      z: 0
+  requiredItem1: {fileID: 11400000, guid: aa2a1a70bd2a5c744a3a6297d584f3d6, type: 2}
+  requiredItem2: {fileID: 11400000, guid: 34f3804b6ce795e4d93ba31427823ac8, type: 2}
+  requiredQuantityItem1: 0
+  requiredQuantityItem2: 0

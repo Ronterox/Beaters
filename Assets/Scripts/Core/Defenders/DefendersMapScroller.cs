@@ -1,5 +1,6 @@
 using UnityEngine;
 using Plugins.Audio;
+using Utilities;
 
 namespace Core.Defenders
 {
@@ -19,16 +20,16 @@ namespace Core.Defenders
         {
             switch (direction)
             {
-                case Direction.Left:
+                case Direction.West:
                     transform.position -= new Vector3(bps * SoundManager.songDeltaTime, 0f, 0f);
                     break;
-                case Direction.Right:
+                case Direction.East:
                     transform.position += new Vector3(bps * SoundManager.songDeltaTime, 0f, 0f);
                     break;
-                case Direction.Up:
+                case Direction.North:
                     transform.position += new Vector3(0f, bps * SoundManager.songDeltaTime, 0f);
                     break;
-                case Direction.Down:
+                case Direction.South:
                     transform.position -= new Vector3(0f, bps * SoundManager.songDeltaTime, 0f);
                     break;
             }

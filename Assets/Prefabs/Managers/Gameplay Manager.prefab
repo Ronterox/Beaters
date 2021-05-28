@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6925172793618570845}
   - component: {fileID: 3826572633390337692}
   - component: {fileID: 7507109897699540335}
+  - component: {fileID: 1450943138284240348}
   m_Layer: 0
   m_Name: Gameplay Manager
   m_TagString: Untagged
@@ -52,16 +53,23 @@ MonoBehaviour:
   skillGainTextPooler: {fileID: 7507109897699540335}
   gameCanvas: {fileID: 0}
   endGamePanel: {fileID: 4994941090046625560, guid: e7b70cb13ff7cc2118996196e5c8ca2a, type: 3}
-  pauseButton: {fileID: 0}
   pauseMenu: {fileID: 0}
   songTimeBar: {fileID: 0}
   starsCounter: {fileID: 0}
   scoreBar: {fileID: 0}
   comboText: {fileID: 0}
   scoreText: {fileID: 0}
-  skillButton: {fileID: 0}
+  swipeDetector: {fileID: 0}
   skillBarSlider: {fileID: 0}
+  skillsTimer: {fileID: 1450943138284240348}
   songTimer: {fileID: 6925172793618570845}
+  finishText: {fileID: 0}
+  feedbackImage: {fileID: 0}
+  skillText: {fileID: 0}
+  mkGlow: {fileID: 0}
+  missSfx: {fileID: 8300000, guid: 32dda406fdf86d19b946d39d7e5b989b, type: 3}
+  winSfx: {fileID: 8300000, guid: f5d1223e22141e4c4998c8b28a5253e5, type: 3}
+  loseSfx: {fileID: 8300000, guid: 0ab45259dbc418d28b29113682525ec5, type: 3}
 --- !u!114 &6925172793618570845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +101,7 @@ MonoBehaviour:
   parentCanvas: {fileID: 0}
   prefab: {fileID: 5699414670821785157, guid: 697f6a57536aa95f7b3b858b6b630436, type: 3}
   size: 3
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &7507109897699540335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,3 +117,23 @@ MonoBehaviour:
   parentCanvas: {fileID: 0}
   prefab: {fileID: 5699414670821785157, guid: 697f6a57536aa95f7b3b858b6b630436, type: 3}
   size: 2
+  defaultColor: {r: 1, g: 0.9800461, b: 0, a: 1}
+--- !u!114 &1450943138284240348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826572633401589595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c024ad85576cbf0d90735c705052e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  timerTime: 0
+  resetOnEnd: 0
+  startTime: 0
+  timerText: {fileID: 0}
+  showType: 1
+  fillImage: {fileID: 0}

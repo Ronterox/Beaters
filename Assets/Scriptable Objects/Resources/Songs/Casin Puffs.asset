@@ -1,0 +1,443 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
+  m_Name: Casin Puffs
+  m_EditorClassIdentifier: 
+  songImage: {fileID: 21300000, guid: 566608490b86d654fb5bf54335069241, type: 3}
+  soundMap:
+    name: Casin Puffs
+    mapCreator: Aaron
+    bpm: 190
+    genre: 4
+    audioClip: {fileID: 8300000, guid: d637fe47015e69b41a49306448fc7d67, type: 3}
+    audioPath: C:/Users/Marcel/Desktop/beaters/Assets/Audio/SongsCassinPuffs.mp3
+    notes:
+    - id: 3
+      x: 1
+      y: -2
+      z: 0
+    - id: 1
+      x: -1
+      y: 1
+      z: 0
+    - id: 3
+      x: 1
+      y: 4
+      z: 0
+    - id: 2
+      x: 3
+      y: 7
+      z: 0
+    - id: 3
+      x: 1
+      y: 10
+      z: 0
+    - id: 1
+      x: -1
+      y: 13
+      z: 0
+    - id: 0
+      x: -3
+      y: 16
+      z: 0
+    - id: 3
+      x: 1
+      y: 19
+      z: 0
+    - id: 2
+      x: 3
+      y: 22
+      z: 0
+    - id: 0
+      x: -3
+      y: 24
+      z: 0
+    - id: 1
+      x: -1
+      y: 27
+      z: 0
+    - id: 3
+      x: 1
+      y: 30
+      z: 0
+    - id: 2
+      x: 3
+      y: 33
+      z: 0
+    - id: 0
+      x: -3
+      y: 35
+      z: 0
+    - id: 1
+      x: -1
+      y: 38
+      z: 0
+    - id: 2
+      x: 3
+      y: 40
+      z: 0
+    - id: 3
+      x: 1
+      y: 44
+      z: 0
+    - id: 1
+      x: -1
+      y: 46
+      z: 0
+    - id: 2
+      x: 3
+      y: 48
+      z: 0
+    - id: 0
+      x: -3
+      y: 50
+      z: 0
+    - id: 2
+      x: 3
+      y: 53.706356
+      z: 0
+    - id: 3
+      x: 1
+      y: 55.706356
+      z: 0
+    - id: 1
+      x: -1
+      y: 58.002346
+      z: 0
+    - id: 3
+      x: 1
+      y: 62.663795
+      z: 0
+    - id: 2
+      x: 3
+      y: 63.663795
+      z: 0
+    - id: 1
+      x: -1
+      y: 64.663795
+      z: 0
+    - id: 1
+      x: -1
+      y: 68.730484
+      z: 0
+    - id: 0
+      x: -3
+      y: 69.730484
+      z: 0
+    - id: 3
+      x: 1
+      y: 70.730484
+      z: 0
+    - id: 3
+      x: 1
+      y: 74.85295
+      z: 0
+    - id: 2
+      x: 3
+      y: 75.85295
+      z: 0
+    - id: 1
+      x: -1
+      y: 76.85295
+      z: 0
+    - id: 1
+      x: -1
+      y: 80.85295
+      z: 0
+    - id: 0
+      x: -3
+      y: 81.85295
+      z: 0
+    - id: 3
+      x: 1
+      y: 82.85295
+      z: 0
+    - id: 1
+      x: -1
+      y: 89.99711
+      z: 0
+    - id: 3
+      x: 1
+      y: 92.99711
+      z: 0
+    - id: 1
+      x: -1
+      y: 95.99711
+      z: 0
+    - id: 2
+      x: 3
+      y: 99
+      z: 0
+    - id: 0
+      x: -3
+      y: 102
+      z: 0
+    - id: 3
+      x: 1
+      y: 106
+      z: 0
+    - id: 1
+      x: -1
+      y: 107
+      z: 0
+    - id: 0
+      x: -3
+      y: 108
+      z: 0
+    - id: 0
+      x: -3
+      y: 112
+      z: 0
+    - id: 1
+      x: -1
+      y: 113
+      z: 0
+    - id: 3
+      x: 1
+      y: 114
+      z: 0
+    - id: 3
+      x: 1
+      y: 118
+      z: 0
+    - id: 2
+      x: 3
+      y: 119
+      z: 0
+    - id: 3
+      x: 1
+      y: 120
+      z: 0
+    - id: 3
+      x: 1
+      y: 124
+      z: 0
+    - id: 1
+      x: -1
+      y: 125
+      z: 0
+    - id: 0
+      x: -3
+      y: 126
+      z: 0
+    - id: 3
+      x: 1
+      y: 132.98894
+      z: 0
+    - id: 2
+      x: 3
+      y: 135.98894
+      z: 0
+    - id: 1
+      x: -1
+      y: 138.98894
+      z: 0
+    - id: 0
+      x: -3
+      y: 141.98894
+      z: 0
+    - id: 3
+      x: 1
+      y: 144.98894
+      z: 0
+    - id: 2
+      x: 3
+      y: 147.98894
+      z: 0
+    - id: 0
+      x: -3
+      y: 154.66132
+      z: 0
+    - id: 2
+      x: 3
+      y: 157.66132
+      z: 0
+    - id: 1
+      x: -1
+      y: 160.66132
+      z: 0
+    - id: 3
+      x: 1
+      y: 163.66132
+      z: 0
+    - id: 1
+      x: -1
+      y: 166.89854
+      z: 0
+    - id: 0
+      x: -3
+      y: 169.89854
+      z: 0
+    - id: 1
+      x: -1
+      y: 178.38705
+      z: 0
+    - id: 3
+      x: 1
+      y: 181.38705
+      z: 0
+    - id: 3
+      x: 1
+      y: 184.38705
+      z: 0
+    - id: 1
+      x: -1
+      y: 187.38705
+      z: 0
+    - id: 0
+      x: -3
+      y: 190.38705
+      z: 0
+    - id: 2
+      x: 3
+      y: 191.97948
+      z: 0
+    - id: 0
+      x: -3
+      y: 197.64087
+      z: 0
+    - id: 1
+      x: -1
+      y: 199.64087
+      z: 0
+    - id: 0
+      x: -3
+      y: 202.64087
+      z: 0
+    - id: 3
+      x: 1
+      y: 205.64087
+      z: 0
+    - id: 2
+      x: 3
+      y: 207.99048
+      z: 0
+    - id: 1
+      x: -1
+      y: 210.99048
+      z: 0
+    - id: 0
+      x: -3
+      y: 213.99048
+      z: 0
+    - id: 1
+      x: -1
+      y: 218.51616
+      z: 0
+    - id: 3
+      x: 1
+      y: 221.51616
+      z: 0
+    - id: 2
+      x: 3
+      y: 224.51616
+      z: 0
+    - id: 3
+      x: 1
+      y: 227.51616
+      z: 0
+    - id: 1
+      x: -1
+      y: 230.51616
+      z: 0
+    - id: 0
+      x: -3
+      y: 233.51616
+      z: 0
+    - id: 0
+      x: -3
+      y: 239.1885
+      z: 0
+    - id: 3
+      x: 1
+      y: 253.1885
+      z: 0
+    - id: 3
+      x: 1
+      y: 246.44461
+      z: 0
+    - id: 1
+      x: -1
+      y: 249.09259
+      z: 0
+    - id: 2
+      x: 3
+      y: 243.44463
+      z: 0
+    - id: 1
+      x: -1
+      y: 251.97023
+      z: 0
+    - id: 1
+      x: -1
+      y: 240.20186
+      z: 0
+    - id: 0
+      x: -3
+      y: 261.07672
+      z: 0
+    - id: 1
+      x: -1
+      y: 264.07672
+      z: 0
+    - id: 3
+      x: 1
+      y: 267.07672
+      z: 0
+    - id: 2
+      x: 3
+      y: 270.07672
+      z: 0
+    - id: 3
+      x: 1
+      y: 273.07672
+      z: 0
+    - id: 1
+      x: -1
+      y: 276.07672
+      z: 0
+    - id: 0
+      x: -3
+      y: 281.95074
+      z: 0
+    - id: 2
+      x: 3
+      y: 284.95074
+      z: 0
+    - id: 1
+      x: -1
+      y: 287.95074
+      z: 0
+    - id: 3
+      x: 1
+      y: 290.95074
+      z: 0
+    - id: 2
+      x: 3
+      y: 295.71854
+      z: 0
+    - id: 1
+      x: -1
+      y: 298.71854
+      z: 0
+    - id: 0
+      x: -3
+      y: 301.71854
+      z: 0
+    - id: 3
+      x: 1
+      y: 304.71854
+      z: 0
+  requiredItem1: {fileID: 11400000, guid: 9ad8f16e4114cdd47a29af2f233b020a, type: 2}
+  requiredItem2: {fileID: 11400000, guid: 907ee08c50a09ed45ac50b91c600ec3e, type: 2}
+  requiredQuantityItem1: 0
+  requiredQuantityItem2: 0

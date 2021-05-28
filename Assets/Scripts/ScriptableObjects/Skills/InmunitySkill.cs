@@ -1,6 +1,4 @@
-using System;
 using Managers;
-using Plugins.Tools;
 using UnityEngine;
 
 namespace ScriptableObjects.Skills
@@ -9,14 +7,12 @@ namespace ScriptableObjects.Skills
     public class InmunitySkill : ScriptableSkill
     {
         public float duration;
-        
-        public override void UseSkill(GameplayManager manager)
-        {
-            manager.CanMiss = false;
 
-            Action canMissAgain = () => manager.CanMiss = true;
-
-            canMissAgain.DelayAction(duration + manager.DurationIncrement);
-        }
+        public override void UseSkill(GameplayManager manager) =>
+            manager.PlayAnimationPrefab(skillAnimationPrefab, sfx, () =>
+            {
+                manager.CanMiss = false;
+                manager.SetSkillTimer(duration, () => manager.CanMiss = true);
+            });
     }
 }

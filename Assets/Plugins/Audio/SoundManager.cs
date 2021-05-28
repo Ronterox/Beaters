@@ -371,7 +371,7 @@ namespace Plugins.Audio
         public void StopAllSfx()
         {
             m_SoundsPool.Stop();
-            m_CurrentInGamePooler.Stop();
+            if(m_CurrentInGamePooler) m_CurrentInGamePooler.Stop();
         }
 
         /// <summary>

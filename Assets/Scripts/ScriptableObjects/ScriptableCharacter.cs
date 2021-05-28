@@ -2,6 +2,7 @@ using General;
 using Managers;
 using UnityEngine;
 using TMPro;
+using UI;
 
 namespace ScriptableObjects
 {
@@ -24,10 +25,11 @@ namespace ScriptableObjects
         [Space]
         public TMP_FontAsset font;
         public Sprite playButton, gachaButton, mapCreator, exitButton;
-        public Sprite fullStar, emptyStar, buttonLayout;
-        public bool usePrimaryColorInButtons;
+        public Sprite fullStar, emptyStar;
         [Space]
         public GUIImage.PaletteColor bingoColor;
+        [Space]
+        public Sprite noteSprite;
     }
 
     [System.Serializable]

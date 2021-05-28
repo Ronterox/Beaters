@@ -13,10 +13,16 @@
           <e p="Creepster" t="Include">
             <e p="OFL.txt" t="Include" />
           </e>
+          <e p="DJ" t="Include">
+            <e p="OFL.txt" t="Include" />
+          </e>
           <e p="Kpop" t="Include">
             <e p="OFL.txt" t="Include" />
           </e>
           <e p="Press_Start_2P" t="Include">
+            <e p="OFL.txt" t="Include" />
+          </e>
+          <e p="Rapper" t="Include">
             <e p="OFL.txt" t="Include" />
           </e>
         </e>
@@ -47,7 +53,6 @@
             </e>
             <e p="PauseMenu.cs" t="Include" />
             <e p="SelectableButton.cs" t="Include" />
-            <e p="SettingsMenu.cs" t="Include" />
           </e>
           <e p="Properties" t="Include">
             <e p="ConditionalHideAttribute.cs" t="Include" />
@@ -152,11 +157,11 @@
             <e p="ArchievementsManager.cs" t="Include" />
             <e p="CameraManager.cs" t="Include" />
             <e p="DataManager.cs" t="Include" />
-            <e p="GUIManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
             <e p="GameOverPanel.cs" t="Include" />
             <e p="GameplayManager.cs" t="Include" />
             <e p="LevelLoadManager.cs" t="Include" />
+            <e p="Tutorial.cs" t="Include" />
           </e>
           <e p="Osu" t="Include">
             <e p="CircleSpawner.cs" t="Include" />
@@ -193,24 +198,31 @@
           <e p="UI" t="Include">
             <e p="ButtonBrancher.cs" t="Include" />
             <e p="ButtonManager.cs" t="Include" />
+            <e p="DialogPopUp.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="SongCarouselEditor.cs" t="Include" />
             </e>
+            <e p="GUIManager.cs" t="Include" />
             <e p="GachaManager.cs" t="Include" />
+            <e p="GameplayUIManager.cs" t="Include" />
             <e p="LockedSongScreen.cs" t="Include" />
             <e p="SelectableRune.cs" t="Include" />
+            <e p="SettingsMenu.cs" t="Include" />
+            <e p="SliderValueToText.cs" t="Include" />
             <e p="SongCarousel.cs" t="Include" />
             <e p="SongCarouselElement.cs" t="Include" />
             <e p="SongRecordScreen.cs" t="Include" />
           </e>
           <e p="Utilities" t="Include">
             <e p="CharacterScriptableSelector.cs" t="Include" />
+            <e p="DialoguesMessage.cs" t="Include" />
             <e p="HoldableButton.cs" t="Include" />
             <e p="PopUp.cs" t="Include" />
             <e p="Rotation.cs" t="Include" />
             <e p="RuneScriptableSelector.cs" t="Include" />
             <e p="SongMapMaker.cs" t="Include" />
             <e p="StateEventCaller.cs" t="Include" />
+            <e p="SwipeDetector.cs" t="Include" />
             <e p="Turbulence.cs" t="Include" />
           </e>
         </e>
@@ -218,20 +230,6 @@
           <e p="Distortion Shader.shader" t="Include" />
           <e p="TrailShader.shader" t="Include" />
           <e p="TrailShader2.shader" t="Include" />
-        </e>
-        <e p="Sprites" t="Include">
-          <e p="Interface" t="Include">
-            <e p="DJ" t="Include">
-              <e p="DJ" t="Include">
-                <e p="OFL.txt" t="Include" />
-              </e>
-            </e>
-            <e p="Rapper" t="Include">
-              <e p="Rapper" t="Include">
-                <e p="OFL.txt" t="Include" />
-              </e>
-            </e>
-          </e>
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
@@ -262,6 +260,135 @@
           </e>
           <e p="Sprites" t="Include">
             <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+        <e p="_MK" t="Include">
+          <e p="MKGlow" t="Include">
+            <e p="Components" t="Include">
+              <e p="Legacy" t="Include">
+                <e p="CameraDataLegacy.cs" t="Include" />
+                <e p="Editor" t="Include">
+                  <e p="MKGlowEditor.cs" t="Include" />
+                  <e p="MinMaxRangeDrawer.cs" t="Include" />
+                </e>
+                <e p="MKGlow.cs" t="Include" />
+                <e p="SettingsLegacy.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Editor" t="Include">
+              <e p="Common.cs" t="Include" />
+              <e p="Configuration.cs" t="Include" />
+              <e p="EditorHelper.EditorStyles.cs" t="Include" />
+              <e p="EditorHelper.EditorUIContent.cs" t="Include" />
+              <e p="EditorHelper.cs" t="Include" />
+              <e p="InstallWizard.cs" t="Include" />
+              <e p="SelectiveStandardShaderGUI.cs" t="Include" />
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="CameraData.cs" t="Include" />
+              <e p="Common.cs" t="Include" />
+              <e p="Compatibility.cs" t="Include" />
+              <e p="ComputeShaderVariants.cs" t="Include" />
+              <e p="Effect.cs" t="Include" />
+              <e p="IDimension.cs" t="Include" />
+              <e p="MinMaxRange.cs" t="Include" />
+              <e p="MipBuffer.cs" t="Include" />
+              <e p="PipelineExtensions.cs" t="Include" />
+              <e p="PipelineProperties.cs" t="Include" />
+              <e p="RenderContext.cs" t="Include" />
+              <e p="RenderTarget.cs" t="Include" />
+              <e p="RenderTargetContext.cs" t="Include" />
+              <e p="Resources.cs" t="Include" />
+              <e p="Settings.cs" t="Include" />
+            </e>
+            <e p="Shaders" t="Include">
+              <e p="Effect" t="Include">
+                <e p="MKGlowSM20.shader" t="Include" />
+                <e p="MKGlowSM25.shader" t="Include" />
+                <e p="MKGlowSM30.shader" t="Include" />
+                <e p="MKGlowSM35.shader" t="Include" />
+                <e p="MKGlowSM40.shader" t="Include" />
+                <e p="MKGlowSelectiveRender.shader" t="Include" />
+              </e>
+              <e p="Inc" t="Include">
+                <e p="Common.hlsl" t="Include" />
+                <e p="Composite.hlsl" t="Include" />
+                <e p="CompositeSample.hlsl" t="Include" />
+                <e p="Copy.hlsl" t="Include" />
+                <e p="Debug.hlsl" t="Include" />
+                <e p="Downsample.hlsl" t="Include" />
+                <e p="Presample.hlsl" t="Include" />
+                <e p="Sprite.hlsl" t="Include" />
+                <e p="UI.hlsl" t="Include" />
+                <e p="Upsample.hlsl" t="Include" />
+              </e>
+              <e p="Sprites" t="Include">
+                <e p="Sprites-Default.shader" t="Include" />
+                <e p="Sprites-Diffuse.shader" t="Include" />
+              </e>
+              <e p="UI" t="Include">
+                <e p="UI-Default.shader" t="Include" />
+                <e p="UI-DefaultETC1.shader" t="Include" />
+                <e p="UI-DefaultFont.shader" t="Include" />
+                <e p="UI-Lit-Bumped.shader" t="Include" />
+                <e p="UI-Lit-Detail.shader" t="Include" />
+                <e p="UI-Lit-Refraction.shader" t="Include" />
+                <e p="UI-Lit-RefractionDetail.shader" t="Include" />
+                <e p="UI-Lit-Transparent.shader" t="Include" />
+                <e p="UI-Unlit-Detail.shader" t="Include" />
+                <e p="UI-Unlit-Text.shader" t="Include" />
+                <e p="UI-Unlit-TextDetail.shader" t="Include" />
+                <e p="UI-Unlit-Transparent.shader" t="Include" />
+              </e>
+              <e p="VariantsSelective" t="Include">
+                <e p="Legacy" t="Include">
+                  <e p="Cutout" t="Include">
+                    <e p="MK_Cutout-Diffuse.shader" t="Include" />
+                    <e p="MK_Cutout-DiffuseBumpSpec.shader" t="Include" />
+                    <e p="MK_Cutout-DiffuseBumped.shader" t="Include" />
+                    <e p="MK_Cutout-Glossy.shader" t="Include" />
+                  </e>
+                  <e p="Illumin" t="Include">
+                    <e p="MK_Illumin-Diffuse.shader" t="Include" />
+                    <e p="MK_Illumin-DiffuseBumpSpec.shader" t="Include" />
+                    <e p="MK_Illumin-DiffuseBumped.shader" t="Include" />
+                    <e p="MK_Illumin-Glossy.shader" t="Include" />
+                  </e>
+                  <e p="MKGlowStandard.shader" t="Include" />
+                  <e p="MKGlowStandardSpecular.shader" t="Include" />
+                  <e p="Normal" t="Include">
+                    <e p="MK_Normal-Diffuse.shader" t="Include" />
+                    <e p="MK_Normal-DiffuseBumpSpec.shader" t="Include" />
+                    <e p="MK_Normal-DiffuseBumped.shader" t="Include" />
+                    <e p="MK_Normal-Glossy.shader" t="Include" />
+                  </e>
+                  <e p="Other" t="Include">
+                    <e p="MK_Illumin-Diffuse.shader" t="Include" />
+                    <e p="MK_Mobile-Diffuse.shader" t="Include" />
+                    <e p="MK_Unlit-Normal.shader" t="Include" />
+                  </e>
+                  <e p="Particle" t="Include">
+                    <e p="MK_Particle Add.shader" t="Include" />
+                    <e p="MK_Particle AddMultiply.shader" t="Include" />
+                    <e p="MK_Particle Alpha Blend.shader" t="Include" />
+                    <e p="MK_Particle Multiply.shader" t="Include" />
+                  </e>
+                  <e p="Transparent" t="Include">
+                    <e p="MK_Transparent-Diffuse.shader" t="Include" />
+                    <e p="MK_Transparent-DiffuseBumpSpec.shader" t="Include" />
+                    <e p="MK_Transparent-DiffuseBumped.shader" t="Include" />
+                    <e p="MK_Transparent-Glossy.shader" t="Include" />
+                  </e>
+                </e>
+                <e p="Sprites" t="Include">
+                  <e p="Sprites-Default.shader" t="Include" />
+                  <e p="Sprites-Diffuse.shader" t="Include" />
+                </e>
+                <e p="UI" t="Include">
+                  <e p="UI-Default.shader" t="Include" />
+                </e>
+              </e>
+            </e>
           </e>
         </e>
       </e>

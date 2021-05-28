@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using Core.Arrow_Game;
 using General;
+using MK.Glow.Legacy;
 using Plugins.Audio;
+using Plugins.Properties;
 using Plugins.Tools;
 using ScriptableObjects;
 using TMPro;
@@ -15,6 +17,8 @@ namespace Managers
 {
     public enum HitType { Good = 3, Perfect = 5, TooSlow = 2, TooSoon = 2 }
 
+    public enum GameMode { Hero, Push, Defender }
+
     public class GameplayManager : Singleton<GameplayManager>
     {
         public MapScroller mapScroller;
@@ -25,8 +29,7 @@ namespace Managers
         [Space]
         public Transform gameCanvas;
         public GameObject endGamePanel;
-        [Space]
-        public Button pauseButton;
+        [Information("Prefab will not be instantiated, this has to be reference from the scene", InformationAttribute.InformationType.Info, false)]
         public GameObject pauseMenu;
 
         [Header("About Song")]
@@ -38,23 +41,53 @@ namespace Managers
         public TMP_Text comboText, scoreText;
 
         [Header("Skill feedback")]
-        public Button skillButton;
+        public SwipeDetector swipeDetector;
         public Slider skillBarSlider;
+        [Space]
+        public TimerUI skillsTimer;
 
         [Header("Song State")]
         public Timer songTimer;
+        public TMP_Text finishText;
 
-        private int m_Combo, m_Score, m_StarsCount, m_Taps;
-        private bool m_Started, m_Ended, m_IsPaused;
+        [Header("Timer Feedback")]
+        public Image feedbackImage;
+        public TMP_Text skillText;
 
-        private int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
+        [Header("Combo Feedback")]
+        public MKGlow mkGlow;
 
-        private PlayerData m_Data;
+        [Header("Sfx")]
+        public AudioClip missSfx;
+        public AudioClip winSfx, loseSfx;
+
+        protected int m_Combo, m_Score, m_StarsCount, m_Taps;
+        private bool m_OnGoing, m_Ended, m_IsPaused, m_Started;
+
+        protected int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
+        private int m_SongFactorialScore, m_FactorialCombo = 1;
+
+        protected PlayerData m_Data;
+        protected SoundManager m_SoundManager;
 
         private float m_StartTime;
-        private Vector3 m_SkillSliderPosition;
+        protected Vector3 m_SkillSliderPosition;
+
+        private GameObject m_AnimationPrefab;
+
+        private int Combo
+        {
+            get => m_Combo;
+            set
+            {
+                float bloom = (m_Combo = value) * .3f / m_FactorialCombo;
+                mkGlow.bloomIntensity = Mathf.Max(.1f, bloom);
+            }
+        }
 
         public bool CanLose { get; set; } = true;
+
+        protected int m_MaxMoneyGain, m_MinMoneyGain;
 
         //POWERS RELATED VARIABLES
         public bool CanMiss { get; set; } = true;
@@ -85,20 +118,15 @@ namespace Managers
             m_StartTime = Time.realtimeSinceStartup;
         }
 
-        public void SetFreeTaps(int taps) => FreeTapsCount = m_MissedTaps + taps;
-
         /// <summary>
         /// Sets the gameplay values
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             m_Data = DataManager.Instance.playerData;
-
-            scoreBar.minValue = songTimeBar.minValue = skillBarSlider.minValue = 0;
+            m_SoundManager = SoundManager.Instance;
 
             m_SkillSliderPosition = skillBarSlider.transform.position;
-
-            SetPauseButton();
 
             SetGameplayCharacter();
 
@@ -107,100 +135,7 @@ namespace Managers
             ScriptableRune rune = GameManager.GetRune();
             if (rune) rune.ActivateRune(this);
 
-            CanMiss = false;
-        }
-
-        /// <summary>
-        /// Sets the Pause Button Click Listener
-        /// </summary>
-        private void SetPauseButton() =>
-            pauseButton.onClick.AddListener(() =>
-            {
-                m_IsPaused = !m_IsPaused;
-                if (m_IsPaused) PauseMap();
-                else ResumeMap();
-            });
-
-        /// <summary>
-        /// Activates the passive and sets the active skill
-        /// </summary>
-        private void SetGameplayCharacter()
-        {
-            currentCharacter.onDie += Lose;
-
-            currentCharacter.SetCharacter(GameManager.GetCharacter(), this);
-
-            skillBarSlider.maxValue = currentCharacter.character.activeSkill.rechargeQuantity;
-
-            skillButton.onClick.AddListener(() =>
-            {
-                if (skillBarSlider.value >= skillBarSlider.maxValue)
-                {
-                    //Use active only when available
-                    currentCharacter.UsePower(this);
-                    skillBarSlider.value = 0;
-                }
-            });
-        }
-
-        /// <summary>
-        /// Loses the game and calls everything related
-        /// </summary>
-        public void Lose() =>
-            SlowTime(2f, 0f, () =>
-            {
-                mapScroller.StopMap();
-                ShowEndGameplayPanel(gameCanvas);
-                SoundManager.Instance.backgroundAudioSource.Stop();
-            });
-
-        /// <summary>
-        /// Slows the game time
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="objective"></param>
-        /// <param name="afterSlowingTime"></param>
-        public void SlowTime(float duration, float objective, Action afterSlowingTime = null) => StartCoroutine(SlowTimeCoroutine(duration, objective, afterSlowingTime));
-
-        /// <summary>
-        /// Slow time coroutine
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="objective"></param>
-        /// <param name="afterSlowingTime"></param>
-        /// <returns></returns>
-        public static IEnumerator SlowTimeCoroutine(float duration, float objective, Action afterSlowingTime)
-        {
-            AudioSource sound = SoundManager.Instance.backgroundAudioSource;
-            
-            var currentTime = 0f;
-            float startValue = Time.timeScale;
-            while (duration > currentTime)
-            {
-                sound.pitch = Time.timeScale = Mathf.Lerp(startValue, objective, currentTime / duration);
-                currentTime += Time.unscaledDeltaTime;
-                yield return null;
-            }
-
-            sound.pitch = Time.timeScale = 1f;
-
-            afterSlowingTime?.Invoke();
-        }
-
-        /// <summary>
-        /// Resets all the values to 0, for a replay
-        /// </summary>
-        private void ResetValues()
-        {
-            //Reset slider and private values to 0
-            m_Ended = false;
-
-            m_Combo = m_Score = m_StarsCount = m_Taps = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
-            scoreBar.value = songTimeBar.value = skillBarSlider.value = 0;
-
-            starsCounter.text = "0";
-            comboText.text = "x0";
-            scoreText.text = "0";
+            feedbackImage.gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -219,25 +154,218 @@ namespace Managers
         /// </summary>
         private void Update()
         {
-            if (!m_Started) return;
+            if (!m_OnGoing) return;
             songTimeBar.value = songTimer.CurrentTime;
         }
 
         /// <summary>
         /// Starts the whole gameplay
         /// </summary>
-        public void StartMap()
+        public virtual void StartMap()
         {
             m_Ended = false;
-            m_Started = CanMiss = true;
+            m_OnGoing = CanMiss = m_Started = true;
 
             SoundMap soundMap = GameManager.GetSoundMap();
 
-            SetSongValues(soundMap.audioClip.length, soundMap.notes.Length);
+            float audioClipLength = soundMap.audioClip.length;
+            int notesLength = soundMap.notes.Length;
+
+            const float short_song_length = 10, medium_song_length = 30;
+
+            if (audioClipLength < short_song_length)
+            {
+                m_MaxMoneyGain = 34;
+                m_MinMoneyGain = 17;
+            }
+            else if (audioClipLength < medium_song_length)
+            {
+                m_MaxMoneyGain = 50;
+                m_MinMoneyGain = 25;
+            }
+            else
+            {
+                m_MaxMoneyGain = 100;
+                m_MinMoneyGain = 50;
+            }
+
+            SetSongValues(audioClipLength, notesLength);
             songTimer.StartTimer();
 
             mapScroller.SetSoundMap(soundMap, true);
             mapScroller.StartMap();
+        }
+
+        /// <summary>
+        /// Free taps
+        /// </summary>
+        /// <param name="taps"></param>
+        public void SetFreeTaps(int taps)
+        {
+            FreeTapsCount = m_MissedTaps + taps;
+
+            UpdateFreeTapsText();
+
+            feedbackImage.fillAmount = 1f;
+            feedbackImage.gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Updates the free taps skill text
+        /// </summary>
+        private void UpdateFreeTapsText() => skillText.text = $"{FreeTapsCount - m_MissedTaps}";
+
+        /// <summary>
+        /// Sets the skill timer with feedback for it
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="onStop"></param>
+        public void SetSkillTimer(float duration, Timer.TimerEvent onStop)
+        {
+            feedbackImage.gameObject.SetActive(true);
+
+            onStop += () => feedbackImage.gameObject.SetActive(false);
+
+            skillsTimer.SetEvents(null, onStop);
+            skillsTimer.timerTime = duration + DurationIncrement;
+
+            skillsTimer.StartTimer();
+        }
+
+        /// <summary>
+        /// Alternates between pause and unpause
+        /// </summary>
+        public void PauseUnpausePress()
+        {
+            m_IsPaused = !m_IsPaused;
+            if (m_IsPaused) PauseMap();
+            else ResumeMap();
+        }
+
+        /// <summary>
+        /// Activates the passive and sets the active skill
+        /// </summary>
+        private void SetGameplayCharacter()
+        {
+            currentCharacter.onDie += Lose;
+
+            currentCharacter.SetCharacter(GameManager.GetCharacter(), this);
+
+            skillBarSlider.maxValue = currentCharacter.character.activeSkill.rechargeQuantity;
+
+            swipeDetector.onSwipe += swipe =>
+            {
+                if (skillBarSlider.value < skillBarSlider.maxValue) return;
+
+                //Use active only when available
+                currentCharacter.UsePower(this);
+                skillBarSlider.value = 0;
+            };
+        }
+
+        /// <summary>
+        /// Loses the game and calls everything related
+        /// </summary>
+        public void Lose() =>
+            SlowTime(2f, () =>
+            {
+                mapScroller.StopMap();
+                ShowEndGameplayPanel(gameCanvas, false);
+                SoundManager.Instance.backgroundAudioSource.Stop();
+                mapScroller.gameObject.SetActive(false);
+            });
+
+        /// <summary>
+        /// Slows the game time
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="afterSlowingTime"></param>
+        public void SlowTime(float duration, Action afterSlowingTime = null)
+        {
+            feedbackImage.gameObject.SetActive(false);
+            StartCoroutine(SlowTimeCoroutine(duration, afterSlowingTime));
+        }
+
+        public void SlowTimeReverse(float duration, Action afterSlowingTime = null) => StartCoroutine(SlowTimeReverseCoroutine(duration, afterSlowingTime));
+
+        /// <summary>
+        /// Slow time coroutine
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="afterSlowingTime"></param>
+        /// <returns></returns>
+        private IEnumerator SlowTimeCoroutine(float duration, Action afterSlowingTime)
+        {
+            AudioSource sound = SoundManager.Instance.backgroundAudioSource;
+
+            var currentTime = 0f;
+            float startValue = Time.timeScale;
+
+            const float objective = 0f;
+            while (currentTime < duration)
+            {
+                sound.pitch = Time.timeScale = Mathf.Lerp(startValue, objective, currentTime / duration);
+                currentTime += Time.unscaledDeltaTime;
+                yield return null;
+            }
+
+            sound.pitch = Time.timeScale = 1f;
+
+            afterSlowingTime?.Invoke();
+        }
+
+        /// <summary>
+        /// Slow time coroutine
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="afterSlowingTime"></param>
+        /// <returns></returns>
+        private IEnumerator SlowTimeReverseCoroutine(float duration, Action afterSlowingTime)
+        {
+            AudioSource sound = SoundManager.Instance.backgroundAudioSource;
+
+            float currentTime = duration;
+            float startValue = Time.timeScale;
+
+            feedbackImage.gameObject.SetActive(true);
+
+            const float objective = 0f;
+            while (currentTime > 0)
+            {
+                sound.pitch = Time.timeScale = Mathf.Lerp(startValue, objective, currentTime / duration);
+                currentTime -= Time.unscaledDeltaTime;
+
+                UpdateTimerFeedback(currentTime, duration);
+                yield return null;
+            }
+
+            feedbackImage.gameObject.SetActive(false);
+
+            sound.pitch = Time.timeScale = 1f;
+
+            afterSlowingTime?.Invoke();
+        }
+
+        public void UpdateTimerFeedback(float currentTime, float duration)
+        {
+            feedbackImage.fillAmount = currentTime.GetPercentageValue(duration);
+            skillText.text = $"{currentTime:N2}";
+        }
+
+        /// <summary>
+        /// Resets all the values to 0, for a replay
+        /// </summary>
+        protected void ResetValues()
+        {
+            //Reset slider and private values to 0
+            m_Ended = m_Started = m_OnGoing = CanMiss = false;
+
+            Combo = m_Score = m_StarsCount = m_Taps = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
+            scoreBar.value = songTimeBar.value = skillBarSlider.value = 0;
+
+            starsCounter.text = "0";
+            comboText.text = "x0";
+            scoreText.text = "0";
         }
 
         /// <summary>
@@ -253,18 +381,24 @@ namespace Managers
             songTimer.onTimerStop += StopMap;
 
             songTimeBar.maxValue = time;
-            scoreBar.maxValue = notes < 1 ? 0 : Mathf.Round(notes.FactorialSum() / 7f);
+
+            int songLog = Mathf.RoundToInt(Mathf.Log(notes));
+
+            m_FactorialCombo = notes;
+
+            scoreBar.maxValue = notes < 1 ? 0 : m_SongFactorialScore = songLog.FactorialSum();
+            m_SongFactorialScore *= songLog;
         }
 
         /// <summary>
         /// Pauses gameplay and song timer but not time
         /// </summary>
-        public void PauseMap()
+        public void PauseMap(bool showMenu = true)
         {
-            m_Started = false;
+            m_OnGoing = false;
             songTimer.PauseTimer();
             mapScroller.StopMap();
-            pauseMenu.SetActive(true);
+            pauseMenu.SetActive(showMenu);
         }
 
         /// <summary>
@@ -272,11 +406,14 @@ namespace Managers
         /// </summary>
         public void ResumeMap()
         {
-            m_Started = true;
-            songTimer.UnpauseTimer();
-            mapScroller.ResumeMap();
-            pauseMenu.SetActive(false);
+            if (m_Started)
+            {
+                m_OnGoing = true;
+                songTimer.UnpauseTimer();
+                mapScroller.ResumeMap();
+            }
             m_IsPaused = false;
+            pauseMenu.SetActive(false);
         }
 
         /// <summary>
@@ -284,26 +421,34 @@ namespace Managers
         /// </summary>
         public void StopMap()
         {
-            m_Ended = true;
+            if (m_Ended) return;
 
-            m_Started = false;
+            m_OnGoing = false;
             songTimer.onTimerStop -= StopMap;
 
-            ShowEndGameplayPanel(gameCanvas);
+            ShowEndGameplayPanel(gameCanvas, true);
         }
 
         /// <summary>
         /// Shows the end gameplay panel
         /// </summary>
         /// <param name="parentCanvas"></param>
-        private void ShowEndGameplayPanel(Transform parentCanvas)
+        /// <param name="win"></param>
+        protected virtual void ShowEndGameplayPanel(Transform parentCanvas, bool win)
         {
+            m_Ended = true;
+
+            mkGlow.bloomIntensity = .1f;
+
             CheckHighestCombo();
 
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
 
-            var accuracyGain = (int)Mathf.Round(accuracy * MoneyMultiplier);
-            var comboGain = (int)Mathf.Round(m_HighestCombo * MoneyMultiplier);
+            float rng = Random.Range(m_MinMoneyGain, m_MaxMoneyGain);
+            const float percentageGainLimiter = .50f;
+
+            int accuracyGain = Mathf.RoundToInt((accuracy * percentageGainLimiter + rng) * MoneyMultiplier),
+                comboGain = Mathf.RoundToInt((m_HighestCombo * percentageGainLimiter + rng) * MoneyMultiplier);
 
             m_Data.money += accuracyGain + comboGain;
             m_Data.tapsDone += m_Taps;
@@ -323,7 +468,7 @@ namespace Managers
             gameOverPanel.SetCharacterBonus(character.characterGenre, soundMap.genre);
 
             gameOverPanel.SetScore(songData.highestScore, m_Score);
-            gameOverPanel.SetStars(m_StarsCount, character);
+            gameOverPanel.SetStars(m_StarsCount, character.fullStar, character.emptyStar);
             gameOverPanel.SetAccuracy(soundMap.notes.Length, m_NotesHit, accuracy);
 
             gameOverPanel.SetMapMaker(soundMap.mapCreator);
@@ -332,7 +477,22 @@ namespace Managers
             gameOverPanel.SetHighestCombo(m_HighestCombo);
             gameOverPanel.SetRewardsText(comboGain, accuracyGain);
 
-            gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
+            gameOverPanel.replaySongButton.onClick.AddListener(() =>
+            {
+                m_SoundManager.StopAllSfx();
+                LevelLoadManager.LoadArrowGameplayScene();
+            });
+
+            gameOverPanel.gameObject.SetActive(false);
+
+            Action activateEndScreen = () => gameOverPanel.gameObject.SetActive(true);
+
+            finishText.text = win ? "You WIN!" : "You LOSE!";
+            finishText.gameObject.SetActive(true);
+
+            activateEndScreen.DelayAction(2);
+
+            m_SoundManager.PlayNonDiegeticSound(win ? winSfx : loseSfx);
 
             //Show prizes
 
@@ -343,34 +503,46 @@ namespace Managers
         }
 
         /// <summary>
-        /// Logic for missing an arrow without tapping
+        /// Static caller for instance method
         /// </summary>
         public static void MissArrow()
         {
-            // Can miss check in case of power
-            if (!m_Instance || !m_Instance.CanMiss) return;
+            if (m_Instance) m_Instance.MissArrowLogic();
+        }
 
-            if (m_Instance.m_Combo > m_Instance.MinimumCombo)
+        /// <summary>
+        /// Logic for missing an arrow without tapping
+        /// </summary>
+        private void MissArrowLogic()
+        {
+            // Can miss check in case of power
+            if (!CanMiss || m_IsPaused) return;
+
+            if (m_Combo > MinimumCombo)
             {
                 CheckHighestCombo();
                 //Reset combo to 0
-                m_Instance.comboText.text = $"x{m_Instance.m_Combo = 0}";
+                comboText.text = $"x{Combo = 0}";
             }
 
-            if (m_Instance.FreeTapsCount > ++m_Instance.m_MissedTaps) return;
+            if (FreeTapsCount >= ++m_MissedTaps)
+            {
+                UpdateFreeTapsText();
+                return;
+            }
 
-            Character character = m_Instance.currentCharacter;
+            if (CanLose && !currentCharacter.IsDead) currentCharacter.TakeDamage(MinimumDamage);
 
-            if (m_Instance.CanLose && !character.IsDead) character.TakeDamage(m_Instance.MinimumDamage);
+            m_SoundManager.PlayNonDiegeticRandomPitchSound(missSfx);
         }
 
         /// <summary>
         /// Saves highest combo
         /// </summary>
-        private static void CheckHighestCombo()
+        protected void CheckHighestCombo()
         {
-            int combo = m_Instance.m_Combo;
-            if (combo > m_Instance.m_HighestCombo) m_Instance.m_HighestCombo = combo;
+            int combo = m_Combo;
+            if (combo > m_HighestCombo) m_HighestCombo = combo;
         }
 
         /// <summary>
@@ -385,7 +557,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// Logic for hitting an arrow correctly
+        /// Static caller for hitting an arrow
         /// </summary>
         /// <param name="hitType"></param>
         /// <param name="feedbackPosition"></param>
@@ -394,60 +566,91 @@ namespace Managers
         /// <param name="comboLength"></param>
         public static void HitArrow(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo = false, int comboLength = 0)
         {
-            if (!m_Instance) return;
+            if (m_Instance) m_Instance.HitArrowLogic(hitType, feedbackPosition, feedbackColor, isCombo, comboLength);
+        }
 
+        /// <summary>
+        /// Logic for hitting an arrow correctly
+        /// </summary>
+        /// <param name="hitType"></param>
+        /// <param name="feedbackPosition"></param>
+        /// <param name="feedbackColor"></param>
+        /// <param name="isCombo"></param>
+        /// <param name="comboLength"></param>
+        private void HitArrowLogic(HitType hitType, Vector3 feedbackPosition, Color feedbackColor, bool isCombo, int comboLength)
+        {
             //Increment combo, taps, notes hit for player stats
-            m_Instance.m_Taps++;
-            m_Instance.m_NotesHit++;
-            m_Instance.skillBarSlider.value++;
+            m_Taps++;
+            m_NotesHit++;
+            skillBarSlider.value++;
 
-            m_Instance.skillGainTextPooler.ShowText($"+1", m_Instance.m_SkillSliderPosition);
+            skillGainTextPooler.ShowText($"+1", m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
-            int points = Mathf.RoundToInt((int)hitType * ++m_Instance.m_Combo * m_Instance.Multiplier);
+            int points = Mathf.RoundToInt((int)hitType * ++Combo * Multiplier / m_SongFactorialScore);
 
-            m_Instance.scoreText.text = $"{m_Instance.m_Score += points}";
-            m_Instance.comboText.text = $"x{m_Instance.m_Combo}";
+            //TODO: print increment on screen feedback
 
-            Slider bar = m_Instance.scoreBar;
+            scoreText.text = $"{m_Score += points}";
+            comboText.text = $"x{m_Combo}";
 
-            float newScoreValue = bar.value + points;
-            bar.value = newScoreValue % bar.maxValue;
+            float newScoreValue = scoreBar.value + points;
+            scoreBar.value = newScoreValue % scoreBar.maxValue;
 
             //Increment the start count if went upper the score limit
-            if (newScoreValue >= bar.maxValue)
-            {
-                m_Instance.starsCounter.text = $"{++m_Instance.m_StarsCount}";
-            }
+            if (newScoreValue >= scoreBar.maxValue) starsCounter.text = $"{++m_StarsCount}";
 
-            if (m_Instance.EveryNoteGivesMoney) GiveMoney();
+            if (EveryNoteGivesMoney) m_Data.money += (int)(Random.Range(m_MinMoneyGain, m_MaxMoneyGain) * .10f * MoneyMultiplier);
 
             //Check if is combo or if is in middle of a combo and give prize
             if (isCombo)
             {
-                if (m_Instance.ComboTimeHeal) m_Instance.currentCharacter.Heal(m_Instance.HealingValueComboTime);
-                //TODO: Responsive money gain, damage done and skill gain
-                const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
+                if (ComboTimeHeal) currentCharacter.Heal(HealingValueComboTime);
 
-                bool completedCombo = ++m_Instance.m_ComboPrizeCounter >= comboLength;
-                m_Instance.skillBarSlider.value += completedCombo ? (maxMoneyGain + minMoneyGain) * comboLength : maxMoneyGain + minMoneyGain;
+                bool completedCombo = ++m_ComboPrizeCounter >= comboLength;
 
-                m_Instance.skillGainTextPooler.ShowText($"+{maxMoneyGain + minMoneyGain}", m_Instance.m_SkillSliderPosition);
+                float rng = Random.Range(m_MinMoneyGain, m_MaxMoneyGain);
 
-                GiveMoney();
+                float totalGain = completedCombo ? rng * comboLength * .05f : rng * .05f;
+
+                skillBarSlider.value += totalGain;
+
+                skillGainTextPooler.ShowText($"+{totalGain}", m_SkillSliderPosition);
             }
             else
-                m_Instance.m_ComboPrizeCounter = 0;
+                m_ComboPrizeCounter = 0;
 
             //Hit Feedback
-            m_Instance.feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
+            feedbackTextPooler.ShowText(hitType.ToString(), feedbackColor, feedbackPosition);
         }
 
-        private static void GiveMoney()
+        /// <summary>
+        /// Sets and plays the character animation prefab
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <param name="animationSound"></param>
+        /// <param name="onAnimationEnd"></param>
+        public void PlayAnimationPrefab(GameObject prefab, AudioClip animationSound, Action onAnimationEnd = null)
         {
-            const int maxMoneyGain = 5 + 1, minMoneyGain = 3;
+            if (!m_AnimationPrefab || !prefab.name.Equals(m_AnimationPrefab.name))
+            {
+                m_AnimationPrefab = Instantiate(prefab, gameCanvas);
+                m_AnimationPrefab.name = prefab.name;
+            }
 
-            m_Instance.m_Data.money += Random.Range(minMoneyGain, maxMoneyGain);
+            m_AnimationPrefab.SetActive(true);
+            PauseMap(false);
+
+            Action deactivateAnimation = () =>
+            {
+                m_AnimationPrefab.SetActive(false);
+                ResumeMap();
+                onAnimationEnd?.Invoke();
+            };
+
+            m_SoundManager.PlayNonDiegeticSound(animationSound);
+
+            deactivateAnimation.DelayAction(1f);
         }
     }
 }

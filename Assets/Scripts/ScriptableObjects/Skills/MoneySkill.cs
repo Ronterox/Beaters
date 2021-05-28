@@ -1,6 +1,4 @@
-using System;
 using Managers;
-using Plugins.Tools;
 using UnityEngine;
 
 namespace ScriptableObjects.Skills
@@ -10,13 +8,11 @@ namespace ScriptableObjects.Skills
     {
         public float duration;
 
-        public override void UseSkill(GameplayManager manager)
-        {
-            manager.EveryNoteGivesMoney = true;
-            
-            Action deactivateMultiplier = () => manager.EveryNoteGivesMoney = false;
-            
-            deactivateMultiplier.DelayAction(duration + manager.DurationIncrement);
-        }
+        public override void UseSkill(GameplayManager manager) =>
+            manager.PlayAnimationPrefab(skillAnimationPrefab, sfx,() =>
+            {
+                manager.EveryNoteGivesMoney = true;
+                manager.SetSkillTimer(duration,() => manager.EveryNoteGivesMoney = false);
+            });
     }
 }

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e42f0383944beb60fb93d33253581f5d, type: 3}
   m_Name: Rapper Active
   m_EditorClassIdentifier: 
-  effectDescription: Notes give you money for 5s (Drop the mic animation)
-  rechargeQuantity: 50
+  effectDescription: Notes give you money for 5s.
+  rechargeQuantity: 25
   skillImage: {fileID: 21300000, guid: a7eda91fd6b51328c911c8c342381b7f, type: 3}
+  sfx: {fileID: 8300000, guid: a867c3504866cd72bb2cbfa6d0e2ca64, type: 3}
+  skillAnimationPrefab: {fileID: 256058326829331673, guid: 50edcff131dd8408dbd5dec3a457da18, type: 3}
   duration: 5

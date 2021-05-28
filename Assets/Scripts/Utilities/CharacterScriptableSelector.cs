@@ -1,7 +1,9 @@
 using Managers;
+using Plugins.Audio;
 using Plugins.Tools;
 using ScriptableObjects;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,18 +22,43 @@ namespace Utilities
         public Image activeSkillImage;
         public Image passiveSkillImage;
 
-        public TMP_Text activeSkillText, passiveSkillText;
+        [Header("Buttons Feedback")]
+        public HoldableButton characterButton;
+        public HoldableButton passiveButton, activeButton;
+        
+        [Header("Pop ups")]
+        public PopUp activePopup;
+        public PopUp passivePopup, characterPopup;
+        [Space]
+        public TMP_Text activeSkillText;
+        public TMP_Text passiveSkillText;
+
+        [Header("Sfx")]
+        public AudioClip changeClickSfx;
+
         private int m_Index;
 
-        private void Start() => CheckAndSetObject();
+        private void Start()
+        {
+            characterButton.onButtonDown += characterPopup.Show;
+            characterButton.onButtonUp += characterPopup.Hide;
+
+            passiveButton.onButtonDown += passivePopup.Show;
+            passiveButton.onButtonUp += passivePopup.Hide;
+
+            activeButton.onButtonDown += activePopup.Show;
+            activeButton.onButtonUp += activePopup.Hide;
+
+            CheckAndSetObject();
+        }
 
         private void CheckAndSetObject()
         {
-            if(objectList.Length < 1) return;
+            if (objectList.Length < 1) return;
             SetStartIndex();
             SetObject();
         }
-        
+
         public void TravelObjects(int index)
         {
             m_Index.ChangeValueLoop(index, objectList.Length);
@@ -56,9 +83,15 @@ namespace Utilities
                 objectImage.sprite = character.sprites[0];
                 GameManager.PutCharacter(character);
                 guiManager.SetCharacterGUI(character);
+
+                AudioClip characterSound = character.activeSkill.sfx;
+                SoundManager.Instance.PlayNonDiegeticSound(characterSound? characterSound : character.passiveSkill.sfx);
             }
             else
+            {
                 objectImage.sprite = character.gachaButton;
+                SoundManager.Instance.PlayNonDiegeticSound(changeClickSfx);
+            }
         }
 
         private void SetStartIndex() => m_Index = objectList.FindIndex(character => character.ID == GameManager.GetCharacter().ID);

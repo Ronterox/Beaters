@@ -236,3 +236,4 @@ MonoBehaviour:
   arrowGameplayScene: Gameplay Arrows
   mainMenuScene: MainMenu
   transitionPanel: {fileID: 6607651528312588466}
+  loadSfx: {fileID: 8300000, guid: 3e9e4a0be2c271112b8e3394f3ba3fb0, type: 3}

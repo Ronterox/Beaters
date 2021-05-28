@@ -1,6 +1,4 @@
-using System;
 using Managers;
-using Plugins.Tools;
 using UnityEngine;
 
 namespace ScriptableObjects.Skills
@@ -13,10 +11,8 @@ namespace ScriptableObjects.Skills
         public override void UseSkill(GameplayManager manager)
         {
             manager.Multiplier += multiplierValue;
-            
-            Action deactivateMultiplier = () => manager.Multiplier -= multiplierValue;
-            
-            deactivateMultiplier.DelayAction(duration + manager.DurationIncrement);
+
+            manager.PlayAnimationPrefab(skillAnimationPrefab, sfx, () => manager.SetSkillTimer(duration, () => manager.Multiplier -= multiplierValue));
         }
     }
 }

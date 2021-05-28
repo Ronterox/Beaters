@@ -14,8 +14,6 @@ namespace Utilities
         {
             m_ShowAnimation = canvasGroup.DOFade(1f, duration).OnPlay(() => m_HideAnimation.Pause()).SetAutoKill(false);
             m_HideAnimation = canvasGroup.DOFade(0f, duration).OnPlay(() => m_ShowAnimation.Pause()).OnComplete(() => gameObject.SetActive(false)).SetAutoKill(false);
-            
-            gameObject.SetActive(false);
         }
 
         public void Show()

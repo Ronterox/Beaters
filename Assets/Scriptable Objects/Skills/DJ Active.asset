@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb6d784d2cb08df687d07ae04e0a968, type: 3}
   m_Name: DJ Active
   m_EditorClassIdentifier: 
-  effectDescription: Slowdown the song for 5 secs (DJ Scratch animation)
-  rechargeQuantity: 50
+  effectDescription: Slowdown the song for 5 secs
+  rechargeQuantity: 25
   skillImage: {fileID: 21300000, guid: 5e65958c9cf613ef48c4f903313b6c1a, type: 3}
+  sfx: {fileID: 8300000, guid: 8b2a3c3efd837532b8f9b4ee6c9f05d0, type: 3}
+  skillAnimationPrefab: {fileID: 3614057929638243071, guid: 9404943ba3b45192f9302f6dfddd1bea, type: 3}
   duration: 5
