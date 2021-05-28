@@ -97,6 +97,14 @@ namespace Plugins.Tools
         public static float GetPercentageValue(this float value, float maxValue) => value / maxValue;
 
         /// <summary>
+        /// Returns the float, as a percentage of the max value, from 0 to 1;
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
+        public static float GetPercentageValue(this int value, int maxValue) => (float)value / maxValue;
+
+        /// <summary>
         /// Returns a random vector2 with points between the values passed
         /// </summary>
         /// <param name="minValueX"></param>
@@ -433,7 +441,7 @@ namespace Plugins.Tools
 
             image.color = transparentColor;
         }
-        
+
         /// <summary>
         /// Changes the alpha of the spriteRenderer
         /// </summary>

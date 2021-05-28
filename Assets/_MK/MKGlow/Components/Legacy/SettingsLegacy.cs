@@ -6,57 +6,55 @@
 // Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace MK.Glow.Legacy
 {
-    internal sealed class SettingsLegacy : MK.Glow.Settings
+    internal sealed class SettingsLegacy : Settings
     {
-        public static implicit operator SettingsLegacy(MK.Glow.Legacy.MKGlow input)
+        public static implicit operator SettingsLegacy(MKGlow input)
         {
-            SettingsLegacy settings = new SettingsLegacy();
-            
+            var settings = new SettingsLegacy
+            {
+                allowComputeShaders = false,
+                allowGeometryShaders = false,
+                renderPriority = input.renderPriority,
+                debugView = input.debugView,
+                quality = input.quality,
+                antiFlickerMode = input.antiFlickerMode,
+                workflow = input.workflow,
+                selectiveRenderLayerMask = input.selectiveRenderLayerMask,
+                anamorphicRatio = input.anamorphicRatio,
+                lumaScale = input.lumaScale,
+                bloomThreshold = input.bloomThreshold,
+                bloomScattering = input.bloomScattering,
+                bloomIntensity = input.bloomIntensity,
+                blooming = input.blooming,
+                allowLensSurface = input.allowLensSurface,
+                lensSurfaceDirtTexture = input.lensSurfaceDirtTexture,
+                lensSurfaceDirtIntensity = input.lensSurfaceDirtIntensity,
+                lensSurfaceDiffractionTexture = input.lensSurfaceDiffractionTexture,
+                lensSurfaceDiffractionIntensity = input.lensSurfaceDiffractionIntensity,
+                allowLensFlare = input.allowLensFlare,
+                lensFlareStyle = input.lensFlareStyle,
+                lensFlareGhostFade = input.lensFlareGhostFade,
+                lensFlareGhostIntensity = input.lensFlareGhostIntensity,
+                lensFlareThreshold = input.lensFlareThreshold,
+                lensFlareScattering = input.lensFlareScattering,
+                lensFlareColorRamp = input.lensFlareColorRamp,
+                lensFlareChromaticAberration = input.lensFlareChromaticAberration,
+                lensFlareGhostCount = input.lensFlareGhostCount,
+                lensFlareGhostDispersal = input.lensFlareGhostDispersal,
+                lensFlareHaloFade = input.lensFlareHaloFade,
+                lensFlareHaloIntensity = input.lensFlareHaloIntensity,
+                lensFlareHaloSize = input.lensFlareHaloSize
+            };
+
             //Main
-            settings.allowComputeShaders = false;
-            settings.allowGeometryShaders = false;
-            settings.renderPriority = input.renderPriority;
-            settings.debugView = input.debugView;
-            settings.quality = input.quality;
-            settings.antiFlickerMode = input.antiFlickerMode;
-            settings.workflow = input.workflow;
-            settings.selectiveRenderLayerMask = input.selectiveRenderLayerMask;
-            settings.anamorphicRatio = input.anamorphicRatio;
-            settings.lumaScale = input.lumaScale;
 
             //Bloom
-            settings.bloomThreshold = input.bloomThreshold;
-            settings.bloomScattering = input.bloomScattering;
-            settings.bloomIntensity = input.bloomIntensity;
-            settings.blooming = input.blooming;
 
             //LensSurface
-            settings.allowLensSurface = input.allowLensSurface;
-            settings.lensSurfaceDirtTexture = input.lensSurfaceDirtTexture;
-            settings.lensSurfaceDirtIntensity = input.lensSurfaceDirtIntensity;
-            settings.lensSurfaceDiffractionTexture = input.lensSurfaceDiffractionTexture;
-            settings.lensSurfaceDiffractionIntensity = input.lensSurfaceDiffractionIntensity;
 
             //LensFlare
-            settings.allowLensFlare = input.allowLensFlare;
-            settings.lensFlareStyle = input.lensFlareStyle;
-            settings.lensFlareGhostFade = input.lensFlareGhostFade;
-            settings.lensFlareGhostIntensity = input.lensFlareGhostIntensity;
-            settings.lensFlareThreshold = input.lensFlareThreshold;
-            settings.lensFlareScattering = input.lensFlareScattering;
-            settings.lensFlareColorRamp = input.lensFlareColorRamp;
-            settings.lensFlareChromaticAberration = input.lensFlareChromaticAberration;
-            settings.lensFlareGhostCount = input.lensFlareGhostCount;
-            settings.lensFlareGhostDispersal = input.lensFlareGhostDispersal;
-            settings.lensFlareHaloFade = input.lensFlareHaloFade;
-            settings.lensFlareHaloIntensity = input.lensFlareHaloIntensity;
-            settings.lensFlareHaloSize = input.lensFlareHaloSize;
 
             settings.SetLensFlarePreset(input.lensFlareStyle);
 

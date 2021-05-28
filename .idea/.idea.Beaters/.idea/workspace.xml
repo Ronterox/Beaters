@@ -3,10 +3,27 @@
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Managers/Main Camera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Managers/Main Camera.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/InmunitySkill.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/InmunitySkill.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MoneySkill.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MoneySkill.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MultiplierSkill.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MultiplierSkill.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/CameraDataLegacy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/CameraDataLegacy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/Editor/MKGlowEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/Editor/MKGlowEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/Editor/MinMaxRangeDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/Editor/MinMaxRangeDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/MKGlow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/MKGlow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/SettingsLegacy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/SettingsLegacy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/ExamplesBuiltinLegacy.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/ExamplesHDRP.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/ExamplesHDRP_2020_2_and_newer.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/ExamplesInc.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/ExamplesPostprocessingStackV2.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/ExamplesURP.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKGlow/Scripts/Effect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_MK/MKGlow/Scripts/Effect.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,11 +123,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/ExtraScoreSkill.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SliderValueToText.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Audio/Pooler.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Audio/SoundManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpSong.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpCreator.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpGacha.cs" />
@@ -145,10 +157,8 @@
       <option value="$PROJECT_DIR$/Assets/Plugins/Tools/SingleInstance.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameOverPanel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/GameplayUIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/BingoManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Scripts/Effect.cs" />
       <option value="$PROJECT_DIR$/Assets/Plugins/GUI/SettingsMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" />
@@ -156,6 +166,13 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MultiplierSkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/InmunitySkill.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Skills/MoneySkill.cs" />
+      <option value="$PROJECT_DIR$/Assets/Plugins/Tools/UtilityMethods.cs" />
+      <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/MKGlow.cs" />
+      <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/SettingsLegacy.cs" />
+      <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Scripts/Effect.cs" />
+      <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/CameraDataLegacy.cs" />
+      <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/Editor/MinMaxRangeDrawer.cs" />
+      <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/Editor/MKGlowEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
     </changedPaths>
   </component>

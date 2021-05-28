@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Core.Arrow_Game;
 using General;
+using MK.Glow.Legacy;
 using Plugins.Audio;
 using Plugins.Properties;
 using Plugins.Tools;
@@ -54,17 +55,28 @@ namespace Managers
         public TMP_Text skillText;
         [Space]
         public TimerUI skillsTimer;
+        public MKGlow mkGlow;
 
         private int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_Started, m_Ended, m_IsPaused;
 
         private int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
-        private int m_SongFactorialScore;
+        private int m_SongFactorialScore, m_FactorialCombo = 1;
 
         private PlayerData m_Data;
 
         private float m_StartTime;
         private Vector3 m_SkillSliderPosition;
+
+        private int Combo
+        {
+            get => m_Combo;
+            set
+            {
+                float bloom = (m_Combo = value).GetPercentageValue(m_FactorialCombo);
+                mkGlow.bloomIntensity = bloom < .1f ? .1f : bloom;
+            }
+        }
 
         public bool CanLose { get; set; } = true;
 
@@ -100,25 +112,6 @@ namespace Managers
         }
 
         /// <summary>
-        /// Free taps
-        /// </summary>
-        /// <param name="taps"></param>
-        public void SetFreeTaps(int taps)
-        {
-            FreeTapsCount = m_MissedTaps + taps;
-
-            UpdateFreeTapsText();
-
-            feedbackImage.fillAmount = 1f;
-            feedbackImage.gameObject.SetActive(true);
-        }
-
-        /// <summary>
-        /// Updates the free taps skill text
-        /// </summary>
-        private void UpdateFreeTapsText() => skillText.text = $"{FreeTapsCount - m_MissedTaps}";
-
-        /// <summary>
         /// Sets the gameplay values
         /// </summary>
         protected virtual void Start()
@@ -140,6 +133,83 @@ namespace Managers
 
             feedbackImage.gameObject.SetActive(false);
         }
+        
+        /// <summary>
+        /// Saves the time played on the scene and the taps done, if not ended
+        /// </summary>
+        private void OnDestroy()
+        {
+            //Save the time played
+            m_Data.timePlayedInGame += Time.realtimeSinceStartup - m_StartTime;
+            //If it didn't see the final screen then save the tapsDone
+            if (!m_Ended) m_Data.tapsDone += m_Taps;
+        }
+
+        /// <summary>
+        /// Updates the song time ui
+        /// </summary>
+        private void Update()
+        {
+            if (!m_Started) return;
+            songTimeBar.value = songTimer.CurrentTime;
+        }
+
+        /// <summary>
+        /// Starts the whole gameplay
+        /// </summary>
+        public void StartMap()
+        {
+            m_Ended = false;
+            m_Started = CanMiss = true;
+
+            SoundMap soundMap = GameManager.GetSoundMap();
+
+            float audioClipLength = soundMap.audioClip.length;
+            int notesLength = soundMap.notes.Length;
+
+            const float short_song_length = 10, medium_song_length = 30;
+
+            if (audioClipLength < short_song_length)
+            {
+                m_MaxMoneyGain = 34;
+                m_MinMoneyGain = 17;
+            }
+            else if (audioClipLength < medium_song_length)
+            {
+                m_MaxMoneyGain = 50;
+                m_MinMoneyGain = 25;
+            }
+            else
+            {
+                m_MaxMoneyGain = 100;
+                m_MinMoneyGain = 50;
+            }
+
+            SetSongValues(audioClipLength, notesLength);
+            songTimer.StartTimer();
+
+            mapScroller.SetSoundMap(soundMap, true);
+            mapScroller.StartMap();
+        }
+
+        /// <summary>
+        /// Free taps
+        /// </summary>
+        /// <param name="taps"></param>
+        public void SetFreeTaps(int taps)
+        {
+            FreeTapsCount = m_MissedTaps + taps;
+
+            UpdateFreeTapsText();
+
+            feedbackImage.fillAmount = 1f;
+            feedbackImage.gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Updates the free taps skill text
+        /// </summary>
+        private void UpdateFreeTapsText() => skillText.text = $"{FreeTapsCount - m_MissedTaps}";
 
         /// <summary>
         /// Sets the skill timer with feedback for it
@@ -151,10 +221,10 @@ namespace Managers
             feedbackImage.gameObject.SetActive(true);
 
             onStop += () => feedbackImage.gameObject.SetActive(false);
-            
+
             skillsTimer.SetEvents(null, onStop);
             skillsTimer.timerTime = duration + DurationIncrement;
-            
+
             skillsTimer.StartTimer();
         }
 
@@ -287,70 +357,12 @@ namespace Managers
             //Reset slider and private values to 0
             m_Ended = false;
 
-            m_Combo = m_Score = m_StarsCount = m_Taps = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
+            Combo = m_Score = m_StarsCount = m_Taps = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
             scoreBar.value = songTimeBar.value = skillBarSlider.value = 0;
 
             starsCounter.text = "0";
             comboText.text = "x0";
             scoreText.text = "0";
-        }
-
-        /// <summary>
-        /// Saves the time played on the scene and the taps done, if not ended
-        /// </summary>
-        private void OnDestroy()
-        {
-            //Save the time played
-            m_Data.timePlayedInGame += Time.realtimeSinceStartup - m_StartTime;
-            //If it didn't see the final screen then save the tapsDone
-            if (!m_Ended) m_Data.tapsDone += m_Taps;
-        }
-
-        /// <summary>
-        /// Updates the song time ui
-        /// </summary>
-        private void Update()
-        {
-            if (!m_Started) return;
-            songTimeBar.value = songTimer.CurrentTime;
-        }
-
-        /// <summary>
-        /// Starts the whole gameplay
-        /// </summary>
-        public void StartMap()
-        {
-            m_Ended = false;
-            m_Started = CanMiss = true;
-
-            SoundMap soundMap = GameManager.GetSoundMap();
-
-            float audioClipLength = soundMap.audioClip.length;
-            int notesLength = soundMap.notes.Length;
-
-            const float short_song_length = 10, medium_song_length = 30;
-
-            if (audioClipLength < short_song_length)
-            {
-                m_MaxMoneyGain = 34;
-                m_MinMoneyGain = 17;
-            }
-            else if (audioClipLength < medium_song_length)
-            {
-                m_MaxMoneyGain = 50;
-                m_MinMoneyGain = 25;
-            }
-            else
-            {
-                m_MaxMoneyGain = 100;
-                m_MinMoneyGain = 50;
-            }
-
-            SetSongValues(audioClipLength, notesLength);
-            songTimer.StartTimer();
-
-            mapScroller.SetSoundMap(soundMap, true);
-            mapScroller.StartMap();
         }
 
         /// <summary>
@@ -368,6 +380,8 @@ namespace Managers
             songTimeBar.maxValue = time;
 
             int songLog = Mathf.RoundToInt(Mathf.Log(notes));
+
+            m_FactorialCombo = notes;
 
             scoreBar.maxValue = notes < 1 ? 0 : m_SongFactorialScore = songLog.FactorialSum();
             m_SongFactorialScore *= songLog;
@@ -420,7 +434,7 @@ namespace Managers
         protected virtual void ShowEndGameplayPanel(Transform parentCanvas, bool win)
         {
             m_Ended = true;
-            
+
             CheckHighestCombo();
 
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
@@ -497,7 +511,7 @@ namespace Managers
             {
                 CheckHighestCombo();
                 //Reset combo to 0
-                comboText.text = $"x{m_Combo = 0}";
+                comboText.text = $"x{Combo = 0}";
             }
 
             if (FreeTapsCount >= ++m_MissedTaps)
@@ -560,7 +574,7 @@ namespace Managers
             skillGainTextPooler.ShowText($"+1", m_SkillSliderPosition);
 
             //Get the points multiply by the combo and multiplier and finally rounded
-            int points = Mathf.RoundToInt((int)hitType * ++m_Combo * Multiplier / m_SongFactorialScore);
+            int points = Mathf.RoundToInt((int)hitType * ++Combo * Multiplier / m_SongFactorialScore);
 
             //TODO: print increment on screen feedback
 

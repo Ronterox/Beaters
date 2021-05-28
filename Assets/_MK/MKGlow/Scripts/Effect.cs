@@ -28,16 +28,16 @@ namespace MK.Glow
         //always needed parameters - static
         private static Resources _resources;
         private static readonly Vector2 _referenceResolution = new Vector2(3840, 2160);
-        private static readonly float _referenceAspectRatio = 0.5625f;
+        private const float _referenceAspectRatio = 0.5625f;
         private static readonly Vector2 _selectiveWorkflowThreshold = new Vector2(0.1f, 10);
-        private static readonly int _cArgBufferSize = 66;
-        private static readonly int _glareIterationsBase = 3;
+        private const int _cArgBufferSize = 66;
+        private const int _glareIterationsBase = 3;
         private static readonly RenderDimension _directComputeSize = new RenderDimension(8, 7);
-        private static readonly float naturalIntensityMult = 0.1f;
+        private const float naturalIntensityMult = 0.1f;
 
         //Selective rendering objects
-        private static readonly string _selectiveReplacementTag = "RenderType";
-        private static readonly string _selectiveGlowCameraObjectName = "selectiveGlowCameraObject";
+        private const string _selectiveReplacementTag = "RenderType";
+        private const string _selectiveGlowCameraObjectName = "selectiveGlowCameraObject";
         private GameObject _selectiveGlowCameraObject;
         private Camera _selectiveGlowCamera;
 
@@ -52,21 +52,15 @@ namespace MK.Glow
         private CommandBuffer _commandBuffer;
         private bool _finalBlit = true;
         private RenderTarget _selectiveRenderTarget;
-		private MipBuffer _bloomDownsampleBuffer, _bloomUpsampleBuffer;
+        private MipBuffer _bloomDownsampleBuffer, _bloomUpsampleBuffer;
         private MipBuffer _lensFlareDownsampleBuffer, _lensFlareUpsampleBuffer;
         private MipBuffer _glareDownsampleBuffer0, _glareDownsampleBuffer1, _glareDownsampleBuffer2, _glareDownsampleBuffer3, _glareUpsampleBuffer0, _glareUpsampleBuffer1, _glareUpsampleBuffer2, _glareUpsampleBuffer3;
 
         private RenderTarget _sourceFrameBuffer, _destinationFrameBuffer;
-        private RenderTarget sourceFrameBuffer
-        {
-            get 
-            {
-                return _settings.workflow == Workflow.Selective && _settings.debugView != DebugView.None ? _selectiveRenderTarget : _sourceFrameBuffer;
-            }
-        }
+        private RenderTarget sourceFrameBuffer => _settings.workflow == Workflow.Selective && _settings.debugView != DebugView.None ? _selectiveRenderTarget : _sourceFrameBuffer;
 
         //Runtime needed
-        private Keyword[] _shaderKeywords = new Keyword[] 
+        private Keyword[] _shaderKeywords =
         {
             new Keyword("_NORMALMAP", false),
             new Keyword("_ALPHATEST_ON", false),
@@ -99,12 +93,12 @@ namespace MK.Glow
 
         //Rendering dependent
         private int _bloomIterations, _lensFlareIterations, _minIterations, _glareIterations, _currentRenderIndex;
-        internal int currentRenderIndex { get { return _currentRenderIndex; }}
+        internal int currentRenderIndex => _currentRenderIndex;
         private float bloomUpsampleSpread, _lensFlareUpsampleSpread, _glareScatteringMult;
         private Vector2 _resolutionScale;
         private Vector2[] glareAngles = new Vector2[4];
-        private RenderTextureFormat _renderTextureFormat;
-        internal RenderTextureFormat renderTextureFormat { get{ return _renderTextureFormat; } }
+
+        internal RenderTextureFormat renderTextureFormat { get; private set; }
         private ComputeShaderVariants.KeywordState computeShaderFeatures = new ComputeShaderVariants.KeywordState(0, 0, 0, 0, 0, 0);
         private RenderContext[] _sourceContext, _renderContext;
         private RenderContext _selectiveRenderContext;
@@ -114,13 +108,13 @@ namespace MK.Glow
 
         //Materials
         private Material _renderMaterialNoGeometry;
-        internal Material renderMaterialNoGeometry { get { return _renderMaterialNoGeometry; } }
+        internal Material renderMaterialNoGeometry => _renderMaterialNoGeometry;
         private Material _renderMaterialGeometry;
 
         //Direct compute dependent
         private float[] _cArgArray = new float[_cArgBufferSize];
         private ComputeBuffer _cArgsComputeBuffer;
-        private RenderDimension _computeThreadGroups = new RenderDimension();
+        private RenderDimension _computeThreadGroups;
 
         //Settings
         private Settings _settings;
@@ -133,16 +127,16 @@ namespace MK.Glow
         {
             _resources = Resources.LoadResourcesAsset();
 
-            _renderTextureFormat = Compatibility.CheckSupportedRenderTextureFormat();
+            renderTextureFormat = Compatibility.CheckSupportedRenderTextureFormat();
 
             _renderPipeline = renderPipeline;
-            _sourceContext = new RenderContext[1]{new RenderContext()};
+            _sourceContext = new RenderContext[1] { new RenderContext() };
             _renderContext = new RenderContext[PipelineProperties.renderBufferSize];
-            for(int i = 0; i < PipelineProperties.renderBufferSize; i++)
+            for (int i = 0; i < PipelineProperties.renderBufferSize; i++)
                 _renderContext[i] = new RenderContext();
             _selectiveRenderContext = new RenderContext();
 
-            if(shaderOverwrite == null)
+            if (shaderOverwrite == null)
             {
                 _renderMaterialNoGeometry = new Material(_resources.sm40Shader) { hideFlags = HideFlags.HideAndDontSave };
                 _renderMaterialGeometry = new Material(_resources.sm40Shader) { hideFlags = HideFlags.HideAndDontSave };
@@ -152,7 +146,7 @@ namespace MK.Glow
                 _renderMaterialNoGeometry = new Material(shaderOverwrite) { hideFlags = HideFlags.HideAndDontSave };
                 _renderMaterialGeometry = new Material(shaderOverwrite) { hideFlags = HideFlags.HideAndDontSave };
             }
-            
+
             _renderTargetsBundle = new List<RenderTarget>();
             _renderKeywordsBundle = new List<MaterialKeywords>();
 
@@ -171,14 +165,12 @@ namespace MK.Glow
             _glareUpsampleBuffer3 = new MipBuffer(PipelineProperties.CommandBufferProperties.glareUpsampleBuffer3, _renderPipeline);
         }
 
-        ~Effect()
-        {
+        ~Effect() =>
             //_cArgsComputeBuffer.Release();
             _cArgsComputeBuffer = null;
-        }
 
         internal void Disable()
-        {            
+        {
             _currentRenderIndex = 0;
             _renderTargetsBundle.Clear();
             _renderKeywordsBundle.Clear();
@@ -199,7 +191,7 @@ namespace MK.Glow
         /// <param name="scale"></param>
         /// <param name="iterations"></param>
         /// <param name="spread"></param>
-        private void PrepareScattering(float Scattering, float scale, ref int iterations, ref float spread)
+        private static void PrepareScattering(float Scattering, float scale, ref int iterations, ref float spread)
         {
             /*
             float lit = Mathf.Log(scale, 2f) + Mathf.Min(Scattering, 10f) - 10f;
@@ -207,11 +199,10 @@ namespace MK.Glow
             iterations = Mathf.Clamp(litF, 1, 15);
             spread = 0.5f + lit - litF;
             */
-            
+
             float scaledIterations = scale + Mathf.Clamp(Scattering, 1f, 10.0f) - 10.0f;
             iterations = Mathf.Max(Mathf.FloorToInt(scaledIterations), 1);
             spread = scaledIterations > 1 ? 0.5f + scaledIterations - iterations : 0.5f;
-            
         }
 
         /// <summary>
@@ -219,27 +210,27 @@ namespace MK.Glow
         /// </summary>
         private void UpdateRenderBuffers()
         {
-            RenderDimension renderDimension = new RenderDimension(_cameraData.width, _cameraData.height);
-            _sourceContext[0].UpdateRenderContext(_cameraData, _renderTextureFormat, 0, _useComputeShaders, renderDimension);
+            var renderDimension = new RenderDimension(_cameraData.width, _cameraData.height);
+            _sourceContext[0].UpdateRenderContext(_cameraData, renderTextureFormat, 0, _useComputeShaders, renderDimension);
             _sourceContext[0].SinglePassStereoAdjustWidth(_cameraData.stereoEnabled);
-            Vector2 anamorphic = new Vector2(_settings.anamorphicRatio < 0 ? -_settings.anamorphicRatio : 0f, _settings.anamorphicRatio > 0 ?  _settings.anamorphicRatio : 0f);
-            switch(_settings.quality)
+            var anamorphic = new Vector2(_settings.anamorphicRatio < 0 ? -_settings.anamorphicRatio : 0f, _settings.anamorphicRatio > 0 ? _settings.anamorphicRatio : 0f);
+            switch (_settings.quality)
             {
                 case Quality.Ultra:
                     anamorphic *= 0.5f;
-                break;
+                    break;
                 case Quality.High:
                     //anamorphic *= 1.0f;
-                break;
+                    break;
                 case Quality.Medium:
                     anamorphic *= 2.0f;
-                break;
+                    break;
                 case Quality.Low:
                     anamorphic *= 4.0f;
-                break;
+                    break;
                 case Quality.VeryLow:
                     anamorphic *= 6.0f;
-                break;
+                    break;
             }
             renderDimension = new RenderDimension(Mathf.CeilToInt(_sourceContext[0].width / ((float)_settings.quality - anamorphic.x)), Mathf.CeilToInt(_sourceContext[0].height / ((float)_settings.quality - anamorphic.y)));
 
@@ -248,34 +239,34 @@ namespace MK.Glow
 
             PrepareScattering(_settings.bloomScattering, sizeScale, ref _bloomIterations, ref bloomUpsampleSpread);
             _minIterations = _bloomIterations;
-            
-            if(_useLensFlare)
+
+            if (_useLensFlare)
             {
                 PrepareScattering(_settings.lensFlareScattering, sizeScale, ref _lensFlareIterations, ref _lensFlareUpsampleSpread);
-                if(_lensFlareIterations > _minIterations)
+                if (_lensFlareIterations > _minIterations)
                     _minIterations = _lensFlareIterations;
             }
 
-            if(_useGlare)
+            if (_useGlare)
             {
-                 switch(_settings.quality)
+                switch (_settings.quality)
                 {
                     case Quality.High:
                     case Quality.Medium:
                     case Quality.Low:
                         _glareIterations = _glareIterationsBase;
                         _glareScatteringMult = 1;
-                    break;
+                        break;
                     default:
                         _glareIterations = _glareIterationsBase;
                         _glareScatteringMult = 1;
-                    break;
+                        break;
                 }
-                if(_glareIterations > _minIterations)
+                if (_glareIterations > _minIterations)
                     _minIterations = _glareIterations;
             }
 
-            _cameraData.UpdateMipRenderContext(_renderContext, renderDimension, _minIterations + 1, _renderTextureFormat, 0, _useComputeShaders);
+            _cameraData.UpdateMipRenderContext(_renderContext, renderDimension, _minIterations + 1, renderTextureFormat, 0, _useComputeShaders);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,7 +279,7 @@ namespace MK.Glow
         {
             get
             {
-                if(!_selectiveGlowCameraObject)
+                if (!_selectiveGlowCameraObject)
                 {
                     _selectiveGlowCameraObject = new GameObject(_selectiveGlowCameraObjectName);
                     _selectiveGlowCameraObject.AddComponent<Camera>();
@@ -305,7 +296,7 @@ namespace MK.Glow
         {
             get
             {
-                if(_selectiveGlowCamera == null)
+                if (_selectiveGlowCamera == null)
                 {
                     _selectiveGlowCamera = selectiveGlowCameraObject.GetComponent<Camera>();
                     _selectiveGlowCamera.hideFlags = HideFlags.HideAndDontSave;
@@ -323,7 +314,7 @@ namespace MK.Glow
             selectiveGlowCamera.CopyFrom(_renderingCamera);
             selectiveGlowCamera.targetTexture = _selectiveRenderTarget.renderTexture;
             selectiveGlowCamera.clearFlags = CameraClearFlags.SolidColor;
-            selectiveGlowCamera.rect = new Rect(0,0, 1,1);
+            selectiveGlowCamera.rect = new Rect(0, 0, 1, 1);
             selectiveGlowCamera.backgroundColor = new Color(0, 0, 0, 1);
             selectiveGlowCamera.cullingMask = _settings.selectiveRenderLayerMask;
             selectiveGlowCamera.renderingPath = RenderingPath.VertexLit;
@@ -337,23 +328,14 @@ namespace MK.Glow
         /// </summary>
         private void CheckFeatureSupport()
         {
-            //Check iflens surface is set
-            if(_settings.allowLensSurface)
-                _useLensSurface = true;
-            else
-                _useLensSurface = false;
-            
-            //Check ifLensFlare is supported
-            if(_settings.allowLensFlare && Compatibility.CheckLensFlareFeatureSupport() && (int)_settings.quality <= 4)
-                _useLensFlare = true;
-            else
-                _useLensFlare = false;
-            
+            //Check if lens surface is set
+            _useLensSurface = _settings.allowLensSurface;
+
+            //Check if LensFlare is supported
+            _useLensFlare = _settings.allowLensFlare && Compatibility.CheckLensFlareFeatureSupport() && (int)_settings.quality <= 4;
+
             //Check if Glare is supported
-            if(_settings.allowGlare && Compatibility.CheckGlareFeatureSupport() && (int)_settings.quality <= 4)
-                _useGlare = true;
-            else
-                _useGlare = false;
+            _useGlare = _settings.allowGlare && Compatibility.CheckGlareFeatureSupport() && (int)_settings.quality <= 4;
 
             /*
             //Check for geometry shader support
@@ -372,27 +354,27 @@ namespace MK.Glow
             */
 
             //If any debug view without depending feature is enabled fallback to default rendering
-            if(_settings.debugView != DebugView.None)
+            if (_settings.debugView != DebugView.None)
             {
-                if(!_useLensFlare && (_settings.debugView == DebugView.LensFlare || _settings.debugView == DebugView.RawLensFlare) ||
-                   !_useGlare &&(_settings.debugView == DebugView.Glare || _settings.debugView == DebugView.RawGlare))
+                if (!_useLensFlare && (_settings.debugView == DebugView.LensFlare || _settings.debugView == DebugView.RawLensFlare) ||
+                    !_useGlare && (_settings.debugView == DebugView.Glare || _settings.debugView == DebugView.RawGlare))
                     _settings.debugView = DebugView.None;
             }
-            
+
             _useComputeShaders = false;
             _useGeometryShaders = false;
         }
 
         private void BeginProfileSample(string text)
         {
-            if(_renderPipeline == RenderPipeline.SRP)
+            if (_renderPipeline == RenderPipeline.SRP)
                 _commandBuffer.BeginSample(text);
             else
                 UnityEngine.Profiling.Profiler.BeginSample(text);
         }
         private void EndProfileSample(string text)
         {
-            if(_renderPipeline == RenderPipeline.SRP)
+            if (_renderPipeline == RenderPipeline.SRP)
                 _commandBuffer.EndSample(text);
             else
                 UnityEngine.Profiling.Profiler.EndSample();
@@ -413,7 +395,7 @@ namespace MK.Glow
             _cameraData = cameraData;
 
             BeginProfileSample(PipelineProperties.CommandBufferProperties.samplePrepare);
-            
+
             CheckFeatureSupport();
 
             _sourceFrameBuffer = source;
@@ -423,12 +405,12 @@ namespace MK.Glow
             EndProfileSample(PipelineProperties.CommandBufferProperties.samplePrepare);
 
             //Prepare for selective glow
-            if(_settings.workflow == Workflow.Selective)
+            if (_settings.workflow == Workflow.Selective)
             {
                 BeginProfileSample(PipelineProperties.CommandBufferProperties.sampleReplacement);
-                _selectiveRenderContext.UpdateRenderContext(_cameraData, _renderTextureFormat, 16, false, _sourceContext[0].renderDimension);
+                _selectiveRenderContext.UpdateRenderContext(_cameraData, renderTextureFormat, 16, false, _sourceContext[0].renderDimension);
                 //The allowVerticallyFlip flag seems to break sometimes orientation of the rendered glow map, therefore force the old way.
-                _selectiveRenderTarget.renderTexture = RenderTexture.GetTemporary(_cameraData.width / (int)_settings.quality, _cameraData.height / (int)_settings.quality, 16, _renderTextureFormat, RenderTextureReadWrite.Default, 1);//PipelineExtensions.GetTemporary(_selectiveRenderContext, _renderTextureFormat);
+                _selectiveRenderTarget.renderTexture = RenderTexture.GetTemporary(_cameraData.width / (int)_settings.quality, _cameraData.height / (int)_settings.quality, 16, renderTextureFormat, RenderTextureReadWrite.Default, 1); //PipelineExtensions.GetTemporary(_selectiveRenderContext, _renderTextureFormat);
                 SetupSelectiveGlowCamera();
                 selectiveGlowCamera.RenderWithShader(_resources.selectiveRenderShader, _selectiveReplacementTag);
                 EndProfileSample(PipelineProperties.CommandBufferProperties.sampleReplacement);
@@ -449,7 +431,7 @@ namespace MK.Glow
         /// Update the profile based on the user input
         /// </summary>
         private void UpdateConstantBuffers()
-        {      
+        {
             //Common
             SetVector(ShaderProperties.screenSize, new Vector2(_cameraData.width, _cameraData.height), true);
             SetFloat(ShaderProperties.singlePassStereoScale, PipelineProperties.singlePassStereoDoubleWideEnabled ? 2 : 1);
@@ -461,7 +443,7 @@ namespace MK.Glow
 
             Matrix4x4 viewMatrix = _cameraData.worldToCameraMatrix;
             //Setting 4x4 matrix via vector rows
-            if(_useComputeShaders)
+            if (_useComputeShaders)
             {
                 SetVector(ShaderProperties.viewMatrix, viewMatrix.GetRow(0), true);
                 SetVector(ShaderProperties.viewMatrix, viewMatrix.GetRow(1), true);
@@ -481,22 +463,22 @@ namespace MK.Glow
             SetVector(ShaderProperties.bloomThreshold, _settings.workflow == Workflow.Selective ? _selectiveWorkflowThreshold : new Vector2(ConvertGammaValue(_settings.bloomThreshold.minValue), ConvertGammaValue(_settings.bloomThreshold.maxValue)), _settings.debugView == DebugView.RawBloom ? true : false);
 
             //LensSurface
-            if(_useLensSurface)
+            if (_useLensSurface)
             {
                 SetFloat(ShaderProperties.lensSurfaceDirtIntensity, ConvertGammaValue(_settings.lensSurfaceDirtIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f)), true);
                 SetFloat(ShaderProperties.lensSurfaceDiffractionIntensity, ConvertGammaValue(_settings.lensSurfaceDiffractionIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f)), true);
-                float dirtRatio = (float)(_settings.lensSurfaceDirtTexture ? _settings.lensSurfaceDirtTexture.width : _resources.lensSurfaceDirtTextureDefault.width) / 
-                (float)(_settings.lensSurfaceDirtTexture ? _settings.lensSurfaceDirtTexture.height : _resources.lensSurfaceDirtTextureDefault.height);
+                float dirtRatio = (float)(_settings.lensSurfaceDirtTexture ? _settings.lensSurfaceDirtTexture.width : _resources.lensSurfaceDirtTextureDefault.width) /
+                                  (float)(_settings.lensSurfaceDirtTexture ? _settings.lensSurfaceDirtTexture.height : _resources.lensSurfaceDirtTextureDefault.height);
                 float dsRatio = _cameraData.aspect / dirtRatio;
                 float sdRatio = dirtRatio / _cameraData.aspect;
 
-                SetVector(ShaderProperties.lensSurfaceDirtTexST, dirtRatio > _cameraData.aspect ? 
-                          new Vector4(dsRatio, 1, (1f - dsRatio) * 0.5f, 0) :
-                          new Vector4(1, sdRatio, 0, (1f - sdRatio) * 0.5f), true);
+                SetVector(ShaderProperties.lensSurfaceDirtTexST, dirtRatio > _cameraData.aspect ?
+                              new Vector4(dsRatio, 1, (1f - dsRatio) * 0.5f, 0) :
+                              new Vector4(1, sdRatio, 0, (1f - sdRatio) * 0.5f), true);
             }
 
             //LensFlare
-            if(_useLensFlare)
+            if (_useLensFlare)
             {
                 SetVector(ShaderProperties.lensFlareThreshold, _settings.workflow == Workflow.Selective ? _selectiveWorkflowThreshold : new Vector2(ConvertGammaValue(_settings.lensFlareThreshold.minValue), ConvertGammaValue(_settings.lensFlareThreshold.maxValue)), _settings.debugView == DebugView.RawLensFlare ? true : false);
                 SetVector(ShaderProperties.lensFlareGhostParams, new Vector4(_settings.lensFlareGhostCount, _settings.lensFlareGhostDispersal, _settings.lensFlareGhostFade, ConvertGammaValue(_settings.lensFlareGhostIntensity * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f))));
@@ -506,21 +488,21 @@ namespace MK.Glow
             }
 
             //Glare
-            if(_useGlare)
+            if (_useGlare)
             {
                 SetVector(ShaderProperties.glareThreshold, _settings.workflow == Workflow.Selective ? _selectiveWorkflowThreshold : new Vector2(ConvertGammaValue(_settings.glareThreshold.minValue), ConvertGammaValue(_settings.glareThreshold.maxValue)), _settings.debugView == DebugView.RawGlare ? true : false);
 
                 SetFloat(ShaderProperties.glareBlend, _settings.glareBlend, true);
                 SetVector(ShaderProperties.glareIntensity, ConvertGammaValue(new Vector4(_settings.glareSample0Intensity, _settings.glareSample1Intensity, _settings.glareSample2Intensity, _settings.glareSample3Intensity)), true);
 
-                Vector4 Scattering = new Vector4(_settings.glareSample0Scattering * _glareScatteringMult * _settings.glareScattering, _settings.glareSample1Scattering * _glareScatteringMult * _settings.glareScattering, _settings.glareSample2Scattering * _glareScatteringMult * _settings.glareScattering, _settings.glareSample3Scattering * _glareScatteringMult * _settings.glareScattering);
+                var Scattering = new Vector4(_settings.glareSample0Scattering * _glareScatteringMult * _settings.glareScattering, _settings.glareSample1Scattering * _glareScatteringMult * _settings.glareScattering, _settings.glareSample2Scattering * _glareScatteringMult * _settings.glareScattering, _settings.glareSample3Scattering * _glareScatteringMult * _settings.glareScattering);
                 glareAngles[0] = AngleToDirection(_settings.glareSample0Angle + _settings.glareAngle);
                 glareAngles[1] = AngleToDirection(_settings.glareSample1Angle + _settings.glareAngle);
                 glareAngles[2] = AngleToDirection(_settings.glareSample2Angle + _settings.glareAngle);
                 glareAngles[3] = AngleToDirection(_settings.glareSample3Angle + _settings.glareAngle);
-                Vector4 direction01 = new Vector4(glareAngles[0].x, glareAngles[0].y, glareAngles[1].x, glareAngles[1].y);
-                Vector4 direction02 = new Vector4(glareAngles[2].x, glareAngles[2].y, glareAngles[3].x, glareAngles[3].y);
-                Vector4 offset = new Vector4(_settings.glareSample0Offset, _settings.glareSample1Offset, _settings.glareSample2Offset, _settings.glareSample3Offset);
+                var direction01 = new Vector4(glareAngles[0].x, glareAngles[0].y, glareAngles[1].x, glareAngles[1].y);
+                var direction02 = new Vector4(glareAngles[2].x, glareAngles[2].y, glareAngles[3].x, glareAngles[3].y);
+                var offset = new Vector4(_settings.glareSample0Offset, _settings.glareSample1Offset, _settings.glareSample2Offset, _settings.glareSample3Offset);
 
                 SetVector(ShaderProperties.glareScattering, Scattering);
                 SetVector(ShaderProperties.glareDirection01, direction01);
@@ -534,7 +516,7 @@ namespace MK.Glow
                 SetFloat(ShaderProperties.glareGlobalIntensity, ConvertGammaValue(_settings.glareIntensity) * (_settings.workflow == Workflow.Natural ? naturalIntensityMult : 1f), true);
             }
 
-            if(_useComputeShaders)
+            if (_useComputeShaders)
                 _cArgsComputeBuffer.SetData(_cArgArray);
         }
 
@@ -552,7 +534,7 @@ namespace MK.Glow
             //to make sure the cmd is always correctly setuped
             //if(_shaderKeywords[(int)keyword].enabled != enable)
             {
-                if(_renderPipeline == RenderPipeline.SRP)
+                if (_renderPipeline == RenderPipeline.SRP)
                     _commandBuffer.SetKeyword(_shaderKeywords[(int)keyword].name, enable);
                 else
                     PipelineExtensions.SetKeyword(_shaderKeywords[(int)keyword].name, enable);
@@ -564,39 +546,26 @@ namespace MK.Glow
         /// Convert an angle (degree) to a Vector2 direction
         /// </summary>
         /// <returns></returns>
-        private Vector2 AngleToDirection(float angleDegree)
-        {
-            return new Vector2(Mathf.Sin(angleDegree * Mathf.Deg2Rad), Mathf.Cos(angleDegree * Mathf.Deg2Rad));
-        }
+        private Vector2 AngleToDirection(float angleDegree) => new Vector2(Mathf.Sin(angleDegree * Mathf.Deg2Rad), Mathf.Cos(angleDegree * Mathf.Deg2Rad));
 
         /// <summary>
         /// get a threshold value based on current color space
         /// </summary>
-        private float ConvertGammaValue(float gammaSpacedValue)
-        {
-            if(QualitySettings.activeColorSpace == ColorSpace.Linear)
-            {
-                return Mathf.GammaToLinearSpace(gammaSpacedValue);
-            }
-            else
-                return gammaSpacedValue;
-        }
+        private float ConvertGammaValue(float gammaSpacedValue) => QualitySettings.activeColorSpace == ColorSpace.Linear ? Mathf.GammaToLinearSpace(gammaSpacedValue) : gammaSpacedValue;
 
         /// <summary>
         /// get a threshold value based on current color space
         /// </summary>
         private Vector4 ConvertGammaValue(Vector4 gammaSpacedVector)
         {
-            if(QualitySettings.activeColorSpace == ColorSpace.Linear)
+            if (QualitySettings.activeColorSpace == ColorSpace.Linear)
             {
                 gammaSpacedVector.x = ConvertGammaValue(gammaSpacedVector.x);
                 gammaSpacedVector.y = ConvertGammaValue(gammaSpacedVector.y);
                 gammaSpacedVector.z = ConvertGammaValue(gammaSpacedVector.z);
                 gammaSpacedVector.w = ConvertGammaValue(gammaSpacedVector.w);
-                return gammaSpacedVector;
             }
-            else
-                return gammaSpacedVector;
+            return gammaSpacedVector;
         }
 
         /// <summary>
@@ -609,32 +578,26 @@ namespace MK.Glow
             _computeThreadGroups.width = Mathf.Max(1, Mathf.FloorToInt((renderDimension.width + _directComputeSize.height) / _directComputeSize.width));
             _computeThreadGroups.height = Mathf.Max(1, Mathf.FloorToInt((renderDimension.height + _directComputeSize.height) / _directComputeSize.width));
         }
-        
+
         /// <summary>
         /// Update the renderindex (pass) forthe next Draw
         /// </summary>
         /// <param name="v"></param>
-        private void UpdateRenderIndex(int v)
-        {
-            _currentRenderIndex = v;
-        }
+        private void UpdateRenderIndex(int v) => _currentRenderIndex = v;
 
         /// <summary>
         /// Update the renderindex (compute kernel) for the next Draw
         /// </summary>
         /// <param name="variants"></param>
         /// <param name="features"></param>
-        private void UpdateRenderIndex(ComputeShaderVariants variants, ComputeShaderVariants.KeywordState features)
-        {
-            variants.GetVariantNumber(features, out _currentRenderIndex);
-        }
+        private void UpdateRenderIndex(ComputeShaderVariants variants, ComputeShaderVariants.KeywordState features) => variants.GetVariantNumber(features, out _currentRenderIndex);
 
         /// <summary>
         /// Attach CArgs to currently used kernel
         /// </summary>
         private void AttachCArgBufferToComputeKernel()
         {
-            if(_renderPipeline == RenderPipeline.SRP)
+            if (_renderPipeline == RenderPipeline.SRP)
                 _commandBuffer.SetComputeBufferParam(_resources.computeShader, _currentRenderIndex, ShaderProperties.cArgBuffer.id, _cArgsComputeBuffer);
             else
                 _resources.computeShader.SetBuffer(_currentRenderIndex, ShaderProperties.cArgBuffer.id, _cArgsComputeBuffer);
@@ -647,13 +610,12 @@ namespace MK.Glow
         /// <param name="value"></param>
         private void SetFloat(ShaderProperties.CBufferProperty property, float value, bool forcePixelShader = false)
         {
-            if(_useComputeShaders && !forcePixelShader)
+            if (_useComputeShaders && !forcePixelShader)
                 _cArgArray[property.index] = value;
+            else if (_renderPipeline == RenderPipeline.SRP)
+                _commandBuffer.SetGlobalFloat(property.id, value);
             else
-                if(_renderPipeline == RenderPipeline.SRP)
-                    _commandBuffer.SetGlobalFloat(property.id, value);
-                else
-                    Shader.SetGlobalFloat(property.id, value);
+                Shader.SetGlobalFloat(property.id, value);
         }
 
         /// <summary>
@@ -663,18 +625,17 @@ namespace MK.Glow
         /// <param name="value"></param>
         private void SetVector(ShaderProperties.CBufferProperty property, Vector4 value, bool forcePixelShader = false)
         {
-            if(_useComputeShaders && !forcePixelShader)
+            if (_useComputeShaders && !forcePixelShader)
             {
                 _cArgArray[property.index] = value.x;
                 _cArgArray[property.index + 1] = value.y;
                 _cArgArray[property.index + 2] = value.z;
                 _cArgArray[property.index + 3] = value.w;
             }
+            else if (_renderPipeline == RenderPipeline.SRP)
+                _commandBuffer.SetGlobalVector(property.id, value);
             else
-                if(_renderPipeline == RenderPipeline.SRP)
-                    _commandBuffer.SetGlobalVector(property.id, value);
-                else
-                    Shader.SetGlobalVector(property.id, value);
+                Shader.SetGlobalVector(property.id, value);
         }
 
         /// <summary>
@@ -684,17 +645,16 @@ namespace MK.Glow
         /// <param name="value"></param>
         private void SetVector(ShaderProperties.CBufferProperty property, Vector3 value, bool forcePixelShader = false)
         {
-            if(_useComputeShaders && !forcePixelShader)
+            if (_useComputeShaders && !forcePixelShader)
             {
                 _cArgArray[property.index] = value.x;
                 _cArgArray[property.index + 1] = value.y;
                 _cArgArray[property.index + 2] = value.z;
             }
+            else if (_renderPipeline == RenderPipeline.SRP)
+                _commandBuffer.SetGlobalVector(property.id, value);
             else
-                if(_renderPipeline == RenderPipeline.SRP)
-                    _commandBuffer.SetGlobalVector(property.id, value);
-                else
-                    Shader.SetGlobalVector(property.id, value);
+                Shader.SetGlobalVector(property.id, value);
         }
 
         /// <summary>
@@ -704,16 +664,15 @@ namespace MK.Glow
         /// <param name="value"></param>
         private void SetVector(ShaderProperties.CBufferProperty property, Vector2 value, bool forcePixelShader = false)
         {
-            if(_useComputeShaders && !forcePixelShader)
+            if (_useComputeShaders && !forcePixelShader)
             {
                 _cArgArray[property.index] = value.x;
                 _cArgArray[property.index + 1] = value.y;
             }
+            else if (_renderPipeline == RenderPipeline.SRP)
+                _commandBuffer.SetGlobalVector(property.id, value);
             else
-                if(_renderPipeline == RenderPipeline.SRP)
-                    _commandBuffer.SetGlobalVector(property.id, value);
-                else
-                    Shader.SetGlobalVector(property.id, value);
+                Shader.SetGlobalVector(property.id, value);
         }
 
         /// <summary>
@@ -725,31 +684,29 @@ namespace MK.Glow
         /// <param name="forcePixelShader"></param>
         private void SetTexture(ShaderProperties.DefaultProperty property, RenderTarget rt, bool forcePixelShader = false)
         {
-            if(_useComputeShaders && !forcePixelShader)
-                if(_renderPipeline == RenderPipeline.SRP)
+            if (_useComputeShaders && !forcePixelShader)
+                if (_renderPipeline == RenderPipeline.SRP)
                     _commandBuffer.SetComputeTextureParam(_resources.computeShader, _currentRenderIndex, property.id, rt.renderTargetIdentifier);
                 else
                     _resources.computeShader.SetTexture(_currentRenderIndex, property.id, rt.renderTexture);
+            else if (_renderPipeline == RenderPipeline.SRP)
+                _commandBuffer.SetGlobalTexture(property.id, rt.renderTargetIdentifier);
             else
-                if(_renderPipeline == RenderPipeline.SRP)
-                    _commandBuffer.SetGlobalTexture(property.id, rt.renderTargetIdentifier);
-                else
-                    Shader.SetGlobalTexture(property.id, rt.renderTexture);
+                Shader.SetGlobalTexture(property.id, rt.renderTexture);
         }
         private void SetTexture(ShaderProperties.DefaultProperty property, Texture tex, bool forcePixelShader = false)
         {
-            if(_useComputeShaders && !forcePixelShader)
-                if(_renderPipeline == RenderPipeline.SRP)
+            if (_useComputeShaders && !forcePixelShader)
+                if (_renderPipeline == RenderPipeline.SRP)
                     _commandBuffer.SetComputeTextureParam(_resources.computeShader, _currentRenderIndex, property.id, tex);
                 else
                     _resources.computeShader.SetTexture(_currentRenderIndex, property.id, tex);
+            else if (_renderPipeline == RenderPipeline.SRP)
+                _commandBuffer.SetGlobalTexture(property.id, tex);
             else
-                if(_renderPipeline == RenderPipeline.SRP)
-                    _commandBuffer.SetGlobalTexture(property.id, tex);
-                else
-                    Shader.SetGlobalTexture(property.id, tex);
+                Shader.SetGlobalTexture(property.id, tex);
         }
-        
+
         /// <summary>
         /// Setup for the next draw command
         /// </summary>
@@ -758,7 +715,7 @@ namespace MK.Glow
         /// <param name="forcePixelShader"></param>
         private void PrepareDraw(int variant, RenderDimension renderDimension, bool forcePixelShader = false)
         {
-            if(_useComputeShaders && !forcePixelShader)
+            if (_useComputeShaders && !forcePixelShader)
             {
                 UpdateRenderIndex(variant);
                 AttachCArgBufferToComputeKernel();
@@ -769,7 +726,7 @@ namespace MK.Glow
                 SetRenderPriority();
                 UpdateRenderIndex(variant);
                 DisableRenderKeywords();
-                foreach(MaterialKeywords kw in _renderKeywordsBundle)
+                foreach (MaterialKeywords kw in _renderKeywordsBundle)
                     SetKeyword(kw, true);
                 _renderKeywordsBundle.Clear();
             }
@@ -784,7 +741,7 @@ namespace MK.Glow
         /// <param name="renderDimension"></param>
         private void PrepareDraw(int materialPass, ComputeShaderVariants variants, bool enableBloom, bool enableLensflare, bool enableGlare, RenderDimension renderDimension)
         {
-            if(_useComputeShaders)
+            if (_useComputeShaders)
             {
                 computeShaderFeatures.bloom = enableBloom ? 1 : 0;
                 computeShaderFeatures.lensSurface = _settings.allowLensSurface ? 1 : 0;
@@ -802,7 +759,7 @@ namespace MK.Glow
                 SetRenderPriority();
                 UpdateRenderIndex(materialPass);
                 DisableRenderKeywords();
-                foreach(MaterialKeywords kw in _renderKeywordsBundle)
+                foreach (MaterialKeywords kw in _renderKeywordsBundle)
                     SetKeyword(kw, true);
                 _renderKeywordsBundle.Clear();
             }
@@ -815,30 +772,30 @@ namespace MK.Glow
         /// <param name="forcePixelShader"></param>
         private void Draw(RenderDimension dimension, bool forcePixelShader = false)
         {
-            if(_renderPipeline == RenderPipeline.SRP)
+            if (_renderPipeline == RenderPipeline.SRP)
             {
-                if(_useComputeShaders && !forcePixelShader)
+                if (_useComputeShaders && !forcePixelShader)
                     _commandBuffer.Draw(_renderTargetsBundle, _resources.computeShader, _currentRenderIndex, _computeThreadGroups);
                 else
                     _commandBuffer.Draw(_renderTargetsBundle, _useGeometryShaders ? _renderMaterialGeometry : _renderMaterialNoGeometry, _useGeometryShaders, _currentRenderIndex, new Rect(0, 0, dimension.width, dimension.height));
             }
             else
             {
-                if(_useComputeShaders && !forcePixelShader)
+                if (_useComputeShaders && !forcePixelShader)
                     PipelineExtensions.Draw(_renderTargetsBundle, _resources.computeShader, _currentRenderIndex, _computeThreadGroups);
                 else
                     PipelineExtensions.Draw(_renderTargetsBundle, _useGeometryShaders ? _renderMaterialGeometry : _renderMaterialNoGeometry, _useGeometryShaders, _currentRenderIndex);
             }
             _renderTargetsBundle.Clear();
-        } 
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
         // Sampling
         /////////////////////////////////////////////////////////////////////////////////////////////
-         
+
         private MaterialKeywords GetGlareKeyword(int streaks)
         {
-            switch(streaks)
+            switch (streaks)
             {
                 case 1:
                     return MaterialKeywords.Glare1;
@@ -887,20 +844,17 @@ namespace MK.Glow
 
         private void SetRenderPriority()
         {
-            if(_settings.renderPriority == RenderPriority.Quality)
+            switch (_settings.renderPriority)
             {
-                _renderKeywordsBundle.Add(MaterialKeywords.RenderPriorityQuality);
-            }
-            else if(_settings.renderPriority == RenderPriority.Balanced)
-            {
-                _renderKeywordsBundle.Add(MaterialKeywords.RenderPriorityBalanced);
-            }
-            else
-            {
-                
+                case RenderPriority.Quality:
+                    _renderKeywordsBundle.Add(MaterialKeywords.RenderPriorityQuality);
+                    break;
+                case RenderPriority.Balanced:
+                    _renderKeywordsBundle.Add(MaterialKeywords.RenderPriorityBalanced);
+                    break;
             }
         }
-        
+
         /// <summary>
         /// Pre sample the glow map
         /// </summary>
@@ -908,26 +862,26 @@ namespace MK.Glow
         {
             BeginProfileSample(PipelineProperties.CommandBufferProperties.samplePreSample);
 
-            _bloomDownsampleBuffer.CreateTemporary(_renderContext, 0, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
-            if(_settings.antiFlickerMode == AntiFlickerMode.Strong)
+            _bloomDownsampleBuffer.CreateTemporary(_renderContext, 0, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
+            if (_settings.antiFlickerMode == AntiFlickerMode.Strong)
                 _renderKeywordsBundle.Add(MaterialKeywords.HQAntiFlickerFilter);
             _renderKeywordsBundle.Add(MaterialKeywords.Bloom);
-            if(_settings.workflow == Workflow.Natural)
+            if (_settings.workflow == Workflow.Natural)
                 _renderKeywordsBundle.Add(MaterialKeywords.Natural);
             _renderTargetsBundle.Add(_bloomDownsampleBuffer.renderTargets[0]);
-            
-            if(_useLensFlare)
+
+            if (_useLensFlare)
             {
-                _lensFlareDownsampleBuffer.CreateTemporary(_renderContext, 0, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                _lensFlareDownsampleBuffer.CreateTemporary(_renderContext, 0, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                 _renderKeywordsBundle.Add(MaterialKeywords.LensFlare);
                 _renderTargetsBundle.Add(_lensFlareDownsampleBuffer.renderTargets[0]);
             }
-            if(_useGlare)
+            if (_useGlare)
             {
-                _glareDownsampleBuffer0.CreateTemporary(_renderContext, 0, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
-                _glareDownsampleBuffer1.CreateTemporary(_renderContext, 0, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
-                _glareDownsampleBuffer2.CreateTemporary(_renderContext, 0, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
-                _glareDownsampleBuffer3.CreateTemporary(_renderContext, 0, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                _glareDownsampleBuffer0.CreateTemporary(_renderContext, 0, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
+                _glareDownsampleBuffer1.CreateTemporary(_renderContext, 0, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
+                _glareDownsampleBuffer2.CreateTemporary(_renderContext, 0, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
+                _glareDownsampleBuffer3.CreateTemporary(_renderContext, 0, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                 _renderKeywordsBundle.Add(GetGlareKeyword(_settings.glareStreaks));
                 _renderTargetsBundle.Add(_glareDownsampleBuffer0.renderTargets[0]);
                 _renderTargetsBundle.Add(_glareDownsampleBuffer1.renderTargets[0]);
@@ -936,33 +890,33 @@ namespace MK.Glow
             }
 
             PrepareDraw
-            (   
+            (
                 (int)ShaderRenderPass.Presample,
-                _presampleComputeVariants, 
+                _presampleComputeVariants,
                 true, _useLensFlare, _useGlare,
                 _renderContext[0].renderDimension
             );
 
-            if(_useComputeShaders)
+            if (_useComputeShaders)
                 SetTexture(ShaderProperties.bloomTargetTex, _bloomDownsampleBuffer.renderTargets[0]);
 
-            if(_settings.workflow == Workflow.Selective)
+            if (_settings.workflow == Workflow.Selective)
                 SetTexture(ShaderProperties.sourceTex, _selectiveRenderTarget.renderTexture);
             else
                 SetTexture(ShaderProperties.sourceTex, sourceFrameBuffer);
-            
+
             //SetTexture(PipelineProperties.ShaderProperties.sourceTex, _settings.workflow == Workflow.Threshold ? sourceFrameBuffer : _selectiveRenderTarget);
 
-            if(_useLensFlare)
+            if (_useLensFlare)
             {
                 SetTexture(ShaderProperties.lensFlareColorRamp, _settings.lensFlareColorRamp ? _settings.lensFlareColorRamp : _resources.lensFlareColorRampDefault);
-                if(_useComputeShaders)
+                if (_useComputeShaders)
                     SetTexture(ShaderProperties.lensFlareTargetTex, _lensFlareDownsampleBuffer.renderTargets[0]);
             }
 
-            if(_useGlare)
+            if (_useGlare)
             {
-                if(_useComputeShaders)
+                if (_useComputeShaders)
                 {
                     SetTexture(ShaderProperties.glare0TargetTex, _glareDownsampleBuffer0.renderTargets[0]);
                     SetTexture(ShaderProperties.glare1TargetTex, _glareDownsampleBuffer1.renderTargets[0]);
@@ -972,7 +926,7 @@ namespace MK.Glow
             }
             Draw(_renderContext[0].renderDimension);
 
-            if(_settings.workflow == Workflow.Selective)
+            if (_settings.workflow == Workflow.Selective)
                 RenderTexture.ReleaseTemporary(_selectiveRenderTarget.renderTexture);
 
             EndProfileSample(PipelineProperties.CommandBufferProperties.samplePreSample);
@@ -985,31 +939,30 @@ namespace MK.Glow
         {
             BeginProfileSample(PipelineProperties.CommandBufferProperties.sampleDownsample);
 
-            bool enableBloom, enableLensFlare, enableGlare;
-            for(int i = 0; i < _minIterations; i++)
+            for (var i = 0; i < _minIterations; i++)
             {
-                enableBloom = i < _bloomIterations;
-                enableLensFlare = _useLensFlare && i < _lensFlareIterations;
-                enableGlare = _useGlare && i < _glareIterations;
+                bool enableBloom = i < _bloomIterations;
+                bool enableLensFlare = _useLensFlare && i < _lensFlareIterations;
+                bool enableGlare = _useGlare && i < _glareIterations;
 
-                if(enableBloom)
+                if (enableBloom)
                 {
-                    _bloomDownsampleBuffer.CreateTemporary(_renderContext, i + 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                    _bloomDownsampleBuffer.CreateTemporary(_renderContext, i + 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                     _renderKeywordsBundle.Add(MaterialKeywords.Bloom);
                     _renderTargetsBundle.Add(_bloomDownsampleBuffer.renderTargets[i + 1]);
                 }
-                if(enableLensFlare)
+                if (enableLensFlare)
                 {
-                    _lensFlareDownsampleBuffer.CreateTemporary(_renderContext, i + 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                    _lensFlareDownsampleBuffer.CreateTemporary(_renderContext, i + 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                     _renderKeywordsBundle.Add(MaterialKeywords.LensFlare);
                     _renderTargetsBundle.Add(_lensFlareDownsampleBuffer.renderTargets[i + 1]);
                 }
-                if(enableGlare)
+                if (enableGlare)
                 {
-                    _glareDownsampleBuffer0.CreateTemporary(_renderContext, i + 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
-                    _glareDownsampleBuffer1.CreateTemporary(_renderContext, i + 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
-                    _glareDownsampleBuffer2.CreateTemporary(_renderContext, i + 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
-                    _glareDownsampleBuffer3.CreateTemporary(_renderContext, i + 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                    _glareDownsampleBuffer0.CreateTemporary(_renderContext, i + 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
+                    _glareDownsampleBuffer1.CreateTemporary(_renderContext, i + 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
+                    _glareDownsampleBuffer2.CreateTemporary(_renderContext, i + 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
+                    _glareDownsampleBuffer3.CreateTemporary(_renderContext, i + 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                     _renderKeywordsBundle.Add(GetGlareKeyword(_settings.glareStreaks));
                     _renderTargetsBundle.Add(_glareDownsampleBuffer0.renderTargets[i + 1]);
                     _renderTargetsBundle.Add(_glareDownsampleBuffer1.renderTargets[i + 1]);
@@ -1018,36 +971,34 @@ namespace MK.Glow
                 }
 
                 PrepareDraw
-                (   
+                (
                     (int)ShaderRenderPass.Downsample,
                     _downsampleComputeVariants,
-                    enableBloom, enableLensFlare, enableGlare, 
+                    enableBloom, enableLensFlare, enableGlare,
                     _renderContext[i + 1].renderDimension
                 );
-                    
-                if(enableBloom)
+
+                if (enableBloom)
                 {
-                    
                     SetTexture(ShaderProperties.bloomTex, _bloomDownsampleBuffer.renderTargets[i]);
-                    if(_useComputeShaders)
+                    if (_useComputeShaders)
                         SetTexture(ShaderProperties.bloomTargetTex, _bloomDownsampleBuffer.renderTargets[i + 1]);
                 }
 
-                if(enableLensFlare)
+                if (enableLensFlare)
                 {
-                    
                     SetTexture(ShaderProperties.lensFlareTex, _lensFlareDownsampleBuffer.renderTargets[i]);
-                    if(_useComputeShaders)
+                    if (_useComputeShaders)
                         SetTexture(ShaderProperties.lensFlareTargetTex, _lensFlareDownsampleBuffer.renderTargets[i + 1]);
                 }
 
-                if(enableGlare)
+                if (enableGlare)
                 {
                     SetTexture(ShaderProperties.glare0Tex, _glareDownsampleBuffer0.renderTargets[i]);
                     SetTexture(ShaderProperties.glare1Tex, _glareDownsampleBuffer1.renderTargets[i]);
                     SetTexture(ShaderProperties.glare2Tex, _glareDownsampleBuffer2.renderTargets[i]);
                     SetTexture(ShaderProperties.glare3Tex, _glareDownsampleBuffer3.renderTargets[i]);
-                    if(_useComputeShaders)
+                    if (_useComputeShaders)
                     {
                         SetTexture(ShaderProperties.glare0TargetTex, _glareDownsampleBuffer0.renderTargets[i + 1]);
                         SetTexture(ShaderProperties.glare1TargetTex, _glareDownsampleBuffer1.renderTargets[i + 1]);
@@ -1069,102 +1020,101 @@ namespace MK.Glow
         {
             BeginProfileSample(PipelineProperties.CommandBufferProperties.sampleUpsample);
 
-            bool enableBloom, enableLensFlare, enableGlare;
-            for(int i = _minIterations; i > 0; i--)
-            {   
-                enableBloom = i <= _bloomIterations;
-                enableLensFlare = _useLensFlare && i <= _lensFlareIterations;
-                enableGlare = _useGlare && i <= _glareIterations;
+            for (int i = _minIterations; i > 0; i--)
+            {
+                bool enableBloom = i <= _bloomIterations;
+                bool enableLensFlare = _useLensFlare && i <= _lensFlareIterations;
+                bool enableGlare = _useGlare && i <= _glareIterations;
 
-                if(enableBloom)
+                if (enableBloom)
                 {
-                    _bloomUpsampleBuffer.CreateTemporary(_renderContext, i - 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                    _bloomUpsampleBuffer.CreateTemporary(_renderContext, i - 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                     _renderKeywordsBundle.Add(MaterialKeywords.Bloom);
                     _renderTargetsBundle.Add(_bloomUpsampleBuffer.renderTargets[i - 1]);
                 }
-                if(enableLensFlare)
+                if (enableLensFlare)
                 {
-                    _lensFlareUpsampleBuffer.CreateTemporary(_renderContext, i - 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                    _lensFlareUpsampleBuffer.CreateTemporary(_renderContext, i - 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                     _renderKeywordsBundle.Add(MaterialKeywords.LensFlare);
                     _renderTargetsBundle.Add(_lensFlareUpsampleBuffer.renderTargets[i - 1]);
                 }
-                if(enableGlare)
+                if (enableGlare)
                 {
-                    if(_settings.glareStreaks >= 1)
+                    if (_settings.glareStreaks >= 1)
                     {
-                        _glareUpsampleBuffer0.CreateTemporary(_renderContext, i - 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                        _glareUpsampleBuffer0.CreateTemporary(_renderContext, i - 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                         _renderTargetsBundle.Add(_glareUpsampleBuffer0.renderTargets[i - 1]);
                     }
-                    if(_settings.glareStreaks >= 2)
+                    if (_settings.glareStreaks >= 2)
                     {
-                        _glareUpsampleBuffer1.CreateTemporary(_renderContext, i - 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                        _glareUpsampleBuffer1.CreateTemporary(_renderContext, i - 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                         _renderTargetsBundle.Add(_glareUpsampleBuffer1.renderTargets[i - 1]);
                     }
-                    if(_settings.glareStreaks >= 3)
+                    if (_settings.glareStreaks >= 3)
                     {
-                        _glareUpsampleBuffer2.CreateTemporary(_renderContext, i - 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                        _glareUpsampleBuffer2.CreateTemporary(_renderContext, i - 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                         _renderTargetsBundle.Add(_glareUpsampleBuffer2.renderTargets[i - 1]);
                     }
-                    if(_settings.glareStreaks >= 4)
+                    if (_settings.glareStreaks >= 4)
                     {
-                        _glareUpsampleBuffer3.CreateTemporary(_renderContext, i - 1, _commandBuffer, _renderTextureFormat, _useComputeShaders, _renderPipeline);
+                        _glareUpsampleBuffer3.CreateTemporary(_renderContext, i - 1, _commandBuffer, renderTextureFormat, _useComputeShaders, _renderPipeline);
                         _renderTargetsBundle.Add(_glareUpsampleBuffer3.renderTargets[i - 1]);
                     }
                     _renderKeywordsBundle.Add(GetGlareKeyword(_settings.glareStreaks));
                 }
 
                 PrepareDraw
-                (   
-                    (int)ShaderRenderPass.Upsample, 
-                    _upsampleComputeVariants, 
-                    enableBloom, enableLensFlare, enableGlare, 
+                (
+                    (int)ShaderRenderPass.Upsample,
+                    _upsampleComputeVariants,
+                    enableBloom, enableLensFlare, enableGlare,
                     _renderContext[i - 1].renderDimension
                 );
 
-                if(enableBloom)
+                if (enableBloom)
                 {
                     SetTexture(ShaderProperties.higherMipBloomTex, _bloomDownsampleBuffer.renderTargets[i - 1]);
                     SetTexture(ShaderProperties.bloomTex, (i >= _bloomIterations) ? _bloomDownsampleBuffer.renderTargets[i] : _bloomUpsampleBuffer.renderTargets[i]);
-                    if(_useComputeShaders)
+                    if (_useComputeShaders)
                         SetTexture(ShaderProperties.bloomTargetTex, _bloomUpsampleBuffer.renderTargets[i - 1]);
                 }
 
-                if(enableLensFlare)
+                if (enableLensFlare)
                 {
                     SetTexture(ShaderProperties.lensFlareTex, (i >= _lensFlareIterations) ? _lensFlareDownsampleBuffer.renderTargets[i] : _lensFlareUpsampleBuffer.renderTargets[i]);
-                    if(_useComputeShaders)
+                    if (_useComputeShaders)
                         SetTexture(ShaderProperties.lensFlareTargetTex, _lensFlareUpsampleBuffer.renderTargets[i - 1]);
                 }
 
-                if(enableGlare)
+                if (enableGlare)
                 {
-                    if(_settings.glareStreaks >= 1)
+                    if (_settings.glareStreaks >= 1)
                         SetTexture(ShaderProperties.glare0Tex, (i >= _glareIterations) ? _glareDownsampleBuffer0.renderTargets[i] : _glareUpsampleBuffer0.renderTargets[i]);
-                    if(_settings.glareStreaks >= 2)
+                    if (_settings.glareStreaks >= 2)
                         SetTexture(ShaderProperties.glare1Tex, (i >= _glareIterations) ? _glareDownsampleBuffer1.renderTargets[i] : _glareUpsampleBuffer1.renderTargets[i]);
-                    if(_settings.glareStreaks >= 3)
+                    if (_settings.glareStreaks >= 3)
                         SetTexture(ShaderProperties.glare2Tex, (i >= _glareIterations) ? _glareDownsampleBuffer2.renderTargets[i] : _glareUpsampleBuffer2.renderTargets[i]);
-                    if(_settings.glareStreaks >= 4)
+                    if (_settings.glareStreaks >= 4)
                         SetTexture(ShaderProperties.glare3Tex, (i >= _glareIterations) ? _glareDownsampleBuffer3.renderTargets[i] : _glareUpsampleBuffer3.renderTargets[i]);
 
-                    if(_useComputeShaders)
-                    {   
-                        if(_settings.glareStreaks >= 1)
+                    if (_useComputeShaders)
+                    {
+                        if (_settings.glareStreaks >= 1)
                             SetTexture(ShaderProperties.glare0TargetTex, _glareUpsampleBuffer0.renderTargets[i - 1]);
-                        if(_settings.glareStreaks >= 2)
+                        if (_settings.glareStreaks >= 2)
                             SetTexture(ShaderProperties.glare1TargetTex, _glareUpsampleBuffer1.renderTargets[i - 1]);
-                        if(_settings.glareStreaks >= 3)
+                        if (_settings.glareStreaks >= 3)
                             SetTexture(ShaderProperties.glare2TargetTex, _glareUpsampleBuffer2.renderTargets[i - 1]);
-                        if(_settings.glareStreaks >= 4)
+                        if (_settings.glareStreaks >= 4)
                             SetTexture(ShaderProperties.glare3TargetTex, _glareUpsampleBuffer3.renderTargets[i - 1]);
                     }
                 }
 
                 Draw(_renderContext[i - 1].renderDimension);
 
-                if(enableBloom)
+                if (enableBloom)
                 {
-                    if(i >= _bloomIterations)
+                    if (i >= _bloomIterations)
                         _bloomDownsampleBuffer.ClearTemporary(_commandBuffer, i, _renderPipeline);
                     else
                     {
@@ -1172,9 +1122,9 @@ namespace MK.Glow
                         _bloomUpsampleBuffer.ClearTemporary(_commandBuffer, i, _renderPipeline);
                     }
                 }
-                if(enableLensFlare)
+                if (enableLensFlare)
                 {
-                    if(i >= _lensFlareIterations)
+                    if (i >= _lensFlareIterations)
                         _lensFlareDownsampleBuffer.ClearTemporary(_commandBuffer, i, _renderPipeline);
                     else
                     {
@@ -1182,38 +1132,38 @@ namespace MK.Glow
                         _lensFlareUpsampleBuffer.ClearTemporary(_commandBuffer, i, _renderPipeline);
                     }
                 }
-                if(enableGlare)
-                {
-                    if(i >= _glareIterations)
-                    {
-                        _glareDownsampleBuffer0.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                        _glareDownsampleBuffer1.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                        _glareDownsampleBuffer2.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                        _glareDownsampleBuffer3.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                    }
-                    else
-                    {
-                        _glareDownsampleBuffer0.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                        _glareDownsampleBuffer1.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                        _glareDownsampleBuffer2.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                        _glareDownsampleBuffer3.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                
+                if (!enableGlare) continue;
 
-                        if(_settings.glareStreaks >= 1)
-                            _glareUpsampleBuffer0.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                        if(_settings.glareStreaks >= 2)
-                            _glareUpsampleBuffer1.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                        if(_settings.glareStreaks >= 3)
-                            _glareUpsampleBuffer2.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                        if(_settings.glareStreaks >= 4)
-                            _glareUpsampleBuffer3.ClearTemporary(_commandBuffer, i, _renderPipeline);
-                    }
+                if (i >= _glareIterations)
+                {
+                    _glareDownsampleBuffer0.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                    _glareDownsampleBuffer1.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                    _glareDownsampleBuffer2.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                    _glareDownsampleBuffer3.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                }
+                else
+                {
+                    _glareDownsampleBuffer0.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                    _glareDownsampleBuffer1.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                    _glareDownsampleBuffer2.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                    _glareDownsampleBuffer3.ClearTemporary(_commandBuffer, i, _renderPipeline);
+
+                    if (_settings.glareStreaks >= 1)
+                        _glareUpsampleBuffer0.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                    if (_settings.glareStreaks >= 2)
+                        _glareUpsampleBuffer1.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                    if (_settings.glareStreaks >= 3)
+                        _glareUpsampleBuffer2.ClearTemporary(_commandBuffer, i, _renderPipeline);
+                    if (_settings.glareStreaks >= 4)
+                        _glareUpsampleBuffer3.ClearTemporary(_commandBuffer, i, _renderPipeline);
                 }
             }
 
             _bloomDownsampleBuffer.ClearTemporary(_commandBuffer, 0, _renderPipeline);
-            if(_useLensFlare)
+            if (_useLensFlare)
                 _lensFlareDownsampleBuffer.ClearTemporary(_commandBuffer, 0, _renderPipeline);
-            if(_useGlare)
+            if (_useGlare)
             {
                 _glareDownsampleBuffer0.ClearTemporary(_commandBuffer, 0, _renderPipeline);
                 _glareDownsampleBuffer1.ClearTemporary(_commandBuffer, 0, _renderPipeline);
@@ -1232,82 +1182,82 @@ namespace MK.Glow
             BeginProfileSample(PipelineProperties.CommandBufferProperties.sampleComposite);
 
             int renderpass;
-            
-            switch(_settings.debugView)
+
+            switch (_settings.debugView)
             {
                 case DebugView.RawBloom:
                     _renderKeywordsBundle.Add(MaterialKeywords.DebugRawBloom);
                     renderpass = (int)ShaderRenderPass.Debug;
-                break;
+                    break;
                 case DebugView.RawLensFlare:
                     _renderKeywordsBundle.Add(MaterialKeywords.DebugRawLensFlare);
                     renderpass = (int)ShaderRenderPass.Debug;
-                break;
+                    break;
                 case DebugView.RawGlare:
                     _renderKeywordsBundle.Add(MaterialKeywords.DebugRawGlare);
                     renderpass = (int)ShaderRenderPass.Debug;
-                break;
+                    break;
                 case DebugView.Bloom:
                     _renderKeywordsBundle.Add(MaterialKeywords.DebugBloom);
                     renderpass = (int)ShaderRenderPass.Debug;
-                break;
+                    break;
                 case DebugView.LensFlare:
                     _renderKeywordsBundle.Add(MaterialKeywords.DebugLensFlare);
                     renderpass = (int)ShaderRenderPass.Debug;
-                break;
+                    break;
                 case DebugView.Glare:
                     _renderKeywordsBundle.Add(MaterialKeywords.DebugGlare);
                     _renderKeywordsBundle.Add(GetGlareKeyword(_settings.glareStreaks));
                     renderpass = (int)ShaderRenderPass.Debug;
-                break;
+                    break;
                 case DebugView.Composite:
-                    if(_settings.workflow == Workflow.Natural)
+                    if (_settings.workflow == Workflow.Natural)
                         _renderKeywordsBundle.Add(MaterialKeywords.Natural);
-                    if(_useLensSurface)
+                    if (_useLensSurface)
                     {
                         _renderKeywordsBundle.Add(MaterialKeywords.LensSurface);
                     }
-                    if(_useLensFlare)
+                    if (_useLensFlare)
                     {
                         _renderKeywordsBundle.Add(MaterialKeywords.LensFlare);
                     }
-                    if(_useGlare)
+                    if (_useGlare)
                     {
                         _renderKeywordsBundle.Add(GetGlareKeyword(_settings.glareStreaks));
                     }
                     _renderKeywordsBundle.Add(MaterialKeywords.DebugComposite);
                     renderpass = (int)ShaderRenderPass.Debug;
-                break;
+                    break;
                 default:
-                    if(_settings.workflow == Workflow.Natural)
+                    if (_settings.workflow == Workflow.Natural)
                         _renderKeywordsBundle.Add(MaterialKeywords.Natural);
-                    if(_useLensSurface)
+                    if (_useLensSurface)
                     {
                         _renderKeywordsBundle.Add(MaterialKeywords.LensSurface);
                     }
-                    if(_useLensFlare)
+                    if (_useLensFlare)
                     {
                         _renderKeywordsBundle.Add(MaterialKeywords.LensFlare);
                     }
-                    if(_useGlare)
+                    if (_useGlare)
                     {
                         _renderKeywordsBundle.Add(GetGlareKeyword(_settings.glareStreaks));
                     }
                     renderpass = (int)ShaderRenderPass.Composite;
-                break;
+                    break;
             }
 
-            if(_settings.workflow == Workflow.Natural)
+            if (_settings.workflow == Workflow.Natural)
                 _renderKeywordsBundle.Add(MaterialKeywords.Natural);
 
             PrepareDraw
-            (   
+            (
                 renderpass,
                 _sourceContext[0].renderDimension,
                 true
             );
 
-            if(_settings.workflow == Workflow.Selective && (_settings.debugView == DebugView.RawBloom || _settings.debugView == DebugView.RawLensFlare || _settings.debugView == DebugView.RawGlare))
+            if (_settings.workflow == Workflow.Selective && (_settings.debugView == DebugView.RawBloom || _settings.debugView == DebugView.RawLensFlare || _settings.debugView == DebugView.RawGlare))
                 SetTexture(ShaderProperties.sourceTex, sourceFrameBuffer.renderTexture, true);
             else
             {
@@ -1315,31 +1265,31 @@ namespace MK.Glow
                 SetTexture(ShaderProperties.bloomTex, _bloomUpsampleBuffer.renderTargets[0], true);
             }
 
-            if(_useLensSurface)
+            if (_useLensSurface)
             {
                 SetTexture(ShaderProperties.lensSurfaceDirtTex, _settings.lensSurfaceDirtTexture ? _settings.lensSurfaceDirtTexture : _resources.lensSurfaceDirtTextureDefault, true);
                 SetTexture(ShaderProperties.lensSurfaceDiffractionTex, _settings.lensSurfaceDiffractionTexture ? _settings.lensSurfaceDiffractionTexture : _resources.lensSurfaceDiffractionTextureDefault, true);
             }
 
-            if(_useLensFlare)
+            if (_useLensFlare)
             {
                 SetTexture(ShaderProperties.lensFlareTex, _lensFlareUpsampleBuffer.renderTargets[0], true);
             }
 
-            if(_useGlare)
+            if (_useGlare)
             {
-                if(_settings.glareStreaks >= 1)
+                if (_settings.glareStreaks >= 1)
                     SetTexture(ShaderProperties.glare0Tex, _glareUpsampleBuffer0.renderTargets[0], true);
-                if(_settings.glareStreaks >= 2)
+                if (_settings.glareStreaks >= 2)
                     SetTexture(ShaderProperties.glare1Tex, _glareUpsampleBuffer1.renderTargets[0], true);
-                if(_settings.glareStreaks >= 3)
+                if (_settings.glareStreaks >= 3)
                     SetTexture(ShaderProperties.glare2Tex, _glareUpsampleBuffer2.renderTargets[0], true);
-                if(_settings.glareStreaks >= 4)
+                if (_settings.glareStreaks >= 4)
                     SetTexture(ShaderProperties.glare3Tex, _glareUpsampleBuffer3.renderTargets[0], true);
             }
 
             //Dont draw when using legacy render pipeline
-            if(_finalBlit)
+            if (_finalBlit)
             {
                 _renderTargetsBundle.Add(_destinationFrameBuffer);
                 Draw(_sourceContext[0].renderDimension, true);
@@ -1360,24 +1310,24 @@ namespace MK.Glow
         internal void AfterCompositeCleanup()
         {
             _bloomUpsampleBuffer.ClearTemporary(_commandBuffer, 0, _renderPipeline);
-            if(_useLensFlare)
+            if (_useLensFlare)
                 _lensFlareUpsampleBuffer.ClearTemporary(_commandBuffer, 0, _renderPipeline);
-            if(_useGlare)
+            if (_useGlare)
             {
-                if(_settings.glareStreaks >= 1)
+                if (_settings.glareStreaks >= 1)
                     _glareUpsampleBuffer0.ClearTemporary(_commandBuffer, 0, _renderPipeline);
-                if(_settings.glareStreaks >= 2)
+                if (_settings.glareStreaks >= 2)
                     _glareUpsampleBuffer1.ClearTemporary(_commandBuffer, 0, _renderPipeline);
-                if(_settings.glareStreaks >= 3)
+                if (_settings.glareStreaks >= 3)
                     _glareUpsampleBuffer2.ClearTemporary(_commandBuffer, 0, _renderPipeline);
-                if(_settings.glareStreaks >= 4)
+                if (_settings.glareStreaks >= 4)
                     _glareUpsampleBuffer3.ClearTemporary(_commandBuffer, 0, _renderPipeline);
             }
 
             DisableDebugKeywords();
             DisableRenderKeywords();
 
-            if(_renderPipeline == RenderPipeline.Legacy)
+            if (_renderPipeline == RenderPipeline.Legacy)
                 PipelineExtensions.SetKeyword(_shaderKeywords[(int)MaterialKeywords.LegacyBlit].name, false);
         }
 
@@ -1424,7 +1374,7 @@ namespace MK.Glow
             RenderPriorityBalanced = 18,
             HQAntiFlickerFilter = 19
         }
-        
+
         /// <summary>
         /// Keyword represented as with state
         /// </summary>

@@ -1715,6 +1715,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3790687837816191672, guid: 768c10c794040290cbabbf7007f66293, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790687837816191672, guid: 768c10c794040290cbabbf7007f66293, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0
       objectReference: {fileID: 0}
@@ -1770,8 +1774,8 @@ MonoBehaviour:
   showEditorLensSurfaceBehavior: 0
   showEditorLensFlareBehavior: 0
   showEditorGlareBehavior: 0
-  allowGeometryShaders: 1
-  allowComputeShaders: 1
+  allowGeometryShaders: 0
+  allowComputeShaders: 0
   renderPriority: 1
   debugView: 0
   quality: 2
@@ -1781,13 +1785,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   anamorphicRatio: -1
-  lumaScale: 0.5
+  lumaScale: 0.3
   blooming: 1
   bloomThreshold:
-    minValue: 0.45045042
-    maxValue: 9.200451
-  bloomScattering: 7
-  bloomIntensity: 1
+    minValue: 0
+    maxValue: 8.75
+  bloomScattering: 4
+  bloomIntensity: 0.1
   allowLensSurface: 0
   lensSurfaceDirtTexture: {fileID: 0}
   lensSurfaceDirtIntensity: 2.5
@@ -1854,6 +1858,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8857276459189565685}
     - target: {fileID: 3826572633401589594, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
+      propertyPath: mkGlow
+      value: 
+      objectReference: {fileID: 3790687837986800331}
+    - target: {fileID: 3826572633401589594, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
       propertyPath: scoreBar
       value: 
       objectReference: {fileID: 641672938}
@@ -1881,6 +1889,10 @@ PrefabInstance:
       propertyPath: gameCanvas
       value: 
       objectReference: {fileID: 8857276459189565685}
+    - target: {fileID: 3826572633401589594, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
+      propertyPath: bloomShader
+      value: 
+      objectReference: {fileID: 3790687837986800331}
     - target: {fileID: 3826572633401589594, guid: c8a2e503bd1b813d6b9b0ee5b859e209, type: 3}
       propertyPath: mapScroller
       value: 
