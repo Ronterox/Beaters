@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: DJ
   description: Lives in a constant party and euphorya status. Flows around beats
-    and was the first recorded person to have a LSD (Loud Sound Dose) overdose
+    and was the first recorded person to have a LSD (Loud Sound Dose) overdose. His
+    glasses flow with the beats.
   characterGenre: 2
   hp: 90
   multiplier: 1
