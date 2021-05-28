@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace Utilities
@@ -7,14 +8,21 @@ namespace Utilities
     public class SwipeDetector : MonoBehaviour
     {
         public float swipeThreshold = 50f, timeThreshold = 0.3f;
-        public LineRenderer lineRenderer;
+
+        [Header("Feedback")]
+        public Camera mainCamera;
+        public TrailRenderer trailRenderer;
+        public float animationDuration;
 
         private Vector2 m_FingerDown, m_FingerUp;
         private float m_FingerDownTime, m_FingerUpTime;
-
         public delegate void SwipeEvent(Direction direction);
-
         public event SwipeEvent onSwipe;
+
+        private void Start()
+        {
+            if(!mainCamera) mainCamera = Camera.main;
+        }
 
         private void Update()
         {
@@ -70,7 +78,7 @@ namespace Utilities
                 if (deltaY > 0) verticalDirection = Direction.North;
                 else if (deltaY < 0) verticalDirection = Direction.South;
             }
-            
+
             Direction swipeDirection = MergeDirections(horizontalDirection, verticalDirection);
             if (swipeDirection != Direction.None)
             {
@@ -83,8 +91,16 @@ namespace Utilities
 
         private void ShowSwipeFeedback()
         {
-            lineRenderer.SetPosition(0, m_FingerDown);
-            lineRenderer.SetPosition(1, m_FingerUp);
+            if (!trailRenderer) return;
+            
+            Transform trailRendererTransform = trailRenderer.transform;
+
+            Vector3 startPos = mainCamera.ScreenToWorldPoint(m_FingerDown), endPos =  mainCamera.ScreenToWorldPoint(m_FingerUp);
+            
+            startPos.z = endPos.z = 0;
+
+            trailRendererTransform.position = startPos;
+            trailRendererTransform.DOMove(endPos, animationDuration);
         }
 
         /// <summary>
