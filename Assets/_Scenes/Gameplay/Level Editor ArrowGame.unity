@@ -1419,6 +1419,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FPS COUNTER
       objectReference: {fileID: 0}
+    - target: {fileID: 1381207061768413195, guid: 27716fceeac98c8c5899c79c97a96bcb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27716fceeac98c8c5899c79c97a96bcb, type: 3}
 --- !u!1001 &1408603658576063745
@@ -1924,7 +1928,7 @@ PrefabInstance:
       objectReference: {fileID: 628024640}
     - target: {fileID: 3509099684056107859, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000011444092
+      value: 0.000019073486
       objectReference: {fileID: 0}
     - target: {fileID: 3752711401267594225, guid: 431cd8ec3ff3c6ad1a319d90a938d380, type: 3}
       propertyPath: m_AnchorMax.x

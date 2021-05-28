@@ -37,6 +37,8 @@ namespace Managers
         {
             CheckHighestCombo();
 
+            mkGlow.bloomIntensity = .1f;
+
             float accuracy = m_NotesHit * 100f / mapScroller.MapNotesQuantity;
 
             float rng = Random.Range(m_MinMoneyGain, m_MaxMoneyGain);

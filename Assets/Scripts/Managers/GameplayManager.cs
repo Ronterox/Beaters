@@ -80,8 +80,8 @@ namespace Managers
             get => m_Combo;
             set
             {
-                float bloom = (m_Combo = value).GetPercentageValue(m_FactorialCombo);
-                mkGlow.bloomIntensity = bloom < .1f ? .1f : bloom;
+                float bloom = (m_Combo = value) * m_FactorialCombo * 3.333f;
+                mkGlow.bloomIntensity = Mathf.Max(.1f, bloom);
             }
         }
 
@@ -437,6 +437,8 @@ namespace Managers
         protected virtual void ShowEndGameplayPanel(Transform parentCanvas, bool win)
         {
             m_Ended = true;
+
+            mkGlow.bloomIntensity = .1f;
 
             CheckHighestCombo();
 

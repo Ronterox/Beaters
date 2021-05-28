@@ -424,6 +424,9 @@ MonoBehaviour:
   feedbackImage: {fileID: 8857276459189565689}
   skillText: {fileID: 8857276459189565688}
   mkGlow: {fileID: 3790687837986800330}
+  missSfx: {fileID: 0}
+  winSfx: {fileID: 0}
+  loseSfx: {fileID: 0}
   tutorialSong: {fileID: 11400000, guid: 8739980ec76742246a6d52607e3008b6, type: 2}
 --- !u!114 &368907104 stripped
 MonoBehaviour:
@@ -1794,6 +1797,10 @@ PrefabInstance:
     - target: {fileID: 1381207061768413195, guid: 27716fceeac98c8c5899c79c97a96bcb, type: 3}
       propertyPath: m_Name
       value: FPS COUNTER
+      objectReference: {fileID: 0}
+    - target: {fileID: 1381207061768413195, guid: 27716fceeac98c8c5899c79c97a96bcb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27716fceeac98c8c5899c79c97a96bcb, type: 3}
