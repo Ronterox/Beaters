@@ -72,8 +72,12 @@ namespace UI
         public void ResetAllData()
         {
             PlayerPrefs.DeleteAll();
+            
             if (SaveLoadManager.SaveExists(DataManager.PLAYER_FILE)) SaveLoadManager.DeleteSave(DataManager.PLAYER_FILE);
             if (SaveLoadManager.SaveExists(SETTINGS_FILE)) SaveLoadManager.DeleteSave(SETTINGS_FILE);
+            
+            DataManager.Instance.playerData = new PlayerData();
+            LevelLoadManager.LoadMainMenu();
         }
 
         private void CalculateOffSet()
