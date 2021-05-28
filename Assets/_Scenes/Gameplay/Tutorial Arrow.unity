@@ -419,7 +419,7 @@ MonoBehaviour:
   skillButton: {fileID: 1378900827}
   skillBarSlider: {fileID: 749083826}
   songTimer: {fileID: 368907107}
-  finishText: {fileID: 8857276459189565688}
+  finishText: {fileID: 8857276459189565686}
   feedbackImage: {fileID: 8857276459189565689}
   skillText: {fileID: 8857276459189565688}
   skillsTimer: {fileID: 368907104}
@@ -1082,6 +1082,139 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1104769934
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8857276459189565685}
+    m_Modifications:
+    - target: {fileID: 6123632354546489044, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6123632354546489044, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: dialogues.Array.data[0]
+      value: Welcome To Beaters\n\n A Simple Rythm with cool characters!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6123632354546489044, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: dialogues.Array.data[1]
+      value: To play simply press the buttons below at the rythm of the song
+      objectReference: {fileID: 0}
+    - target: {fileID: 6123632354546489044, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: dialogues.Array.data[2]
+      value: You can adjust the view and the camera of the game however you like
+      objectReference: {fileID: 0}
+    - target: {fileID: 6123632354546489044, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: dialogues.Array.data[3]
+      value: Once you are ready press the character on the middle!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6123632354546489044, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: dialogues.Array.data[4]
+      value: Have Fun!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6960738808565414993, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_Name
+      value: DialogPopUp Info
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633172176018390128, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553441280221904000, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_text
+      value: Once you are ready press the character on the middle!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553441280221904000, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553441280221904000, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
 --- !u!1 &1182345515 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4592200981720037182, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}

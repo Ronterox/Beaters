@@ -48,8 +48,7 @@ namespace Managers
 
             SoundMap soundMap = mapScroller.SoundMap;
 
-            SerializableSong songData = DataManager.GetSong(soundMap.ID);
-            if (songData.songId == 0) songData.SetId(soundMap.ID);
+            SerializableSong songData = DataManager.GetSong(soundMap.ID) ?? new SerializableSong { songId = soundMap.ID };
 
             int oldHighScore = songData.highestScore;
 

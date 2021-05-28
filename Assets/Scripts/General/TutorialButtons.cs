@@ -25,7 +25,7 @@ namespace General
                 return;
             }
 
-            if (DataManager.Instance.CharacterCount >= 0) return;
+            if (DataManager.Instance.CharacterCount > 0) return;
 
             Instantiate(popUp).GetComponent<ImageText>().tmpText.text = "Congratulations, now you now how to play, you will have to get a new character"
                                                                + "\nTry going to the gacha screen to get a new character!";

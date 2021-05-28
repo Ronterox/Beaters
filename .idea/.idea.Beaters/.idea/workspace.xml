@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b992407a-ef9c-4b63-bece-d045b3bbabfa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/DialoguesMessage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Beaters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/DialogPopUp ImageText.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/DialogPopUp ImageText.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/DJ/ShareTech-Regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/DJ/ShareTech-Regular SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/DialogPopUp ImageText.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/DialogPopUp ImageText.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/DialogPopUp.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Elements/DialogPopUp.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/TutorialButtons.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/General/TutorialButtons.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Gameplay Arrows.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Tutorial Arrow.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Gameplay/Tutorial Arrow.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,6 +32,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/General/SimpleFeedbackObjectPooler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/DialoguesMessage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/ArrowButton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Plugins/UI/UICarousel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/LevelLoadManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -107,8 +112,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpCreator.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUpGacha.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogPopUp.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Gacha/GachaBox.cs" />
@@ -154,10 +157,12 @@
       <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/CameraDataLegacy.cs" />
       <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/Editor/MinMaxRangeDrawer.cs" />
       <option value="$PROJECT_DIR$/Assets/_MK/MKGlow/Components/Legacy/Editor/MKGlowEditor.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/General/TutorialButtons.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/Arrow Game/MapScroller.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameplayManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/General/TutorialButtons.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/Tutorial.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Dialogue.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/DialoguesMessage.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s2tauyM0I69eoLPaQGbI7GUK64" />

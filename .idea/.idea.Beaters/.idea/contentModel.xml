@@ -215,6 +215,7 @@
           </e>
           <e p="Utilities" t="Include">
             <e p="CharacterScriptableSelector.cs" t="Include" />
+            <e p="DialoguesMessage.cs" t="Include" />
             <e p="HoldableButton.cs" t="Include" />
             <e p="PopUp.cs" t="Include" />
             <e p="Rotation.cs" t="Include" />
