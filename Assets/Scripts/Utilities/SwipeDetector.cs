@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics;
 using UnityEngine;
 
 namespace Utilities
@@ -9,6 +7,7 @@ namespace Utilities
     public class SwipeDetector : MonoBehaviour
     {
         public float swipeThreshold = 50f, timeThreshold = 0.3f;
+        public LineRenderer lineRenderer;
 
         private Vector2 m_FingerDown, m_FingerUp;
         private float m_FingerDownTime, m_FingerUpTime;
@@ -16,11 +15,6 @@ namespace Utilities
         public delegate void SwipeEvent(Direction direction);
 
         public event SwipeEvent onSwipe;
-
-        private void Start()
-        {
-            onSwipe += x => print(x.ToString());
-        }
 
         private void Update()
         {
@@ -76,11 +70,21 @@ namespace Utilities
                 if (deltaY > 0) verticalDirection = Direction.North;
                 else if (deltaY < 0) verticalDirection = Direction.South;
             }
+            
+            Direction swipeDirection = MergeDirections(horizontalDirection, verticalDirection);
+            if (swipeDirection != Direction.None)
+            {
+                ShowSwipeFeedback();
+                onSwipe?.Invoke(swipeDirection);
+            }
 
             m_FingerUp = m_FingerDown;
+        }
 
-            Direction swipeDirection = MergeDirections(horizontalDirection, verticalDirection);
-            if(swipeDirection != Direction.None) onSwipe?.Invoke(swipeDirection);
+        private void ShowSwipeFeedback()
+        {
+            lineRenderer.SetPosition(0, m_FingerDown);
+            lineRenderer.SetPosition(1, m_FingerUp);
         }
 
         /// <summary>
@@ -94,13 +98,13 @@ namespace Utilities
             {
                 Direction.North => horizontal switch
                 {
-                    Direction.East => Direction.NorthEast, 
-                    Direction.West => Direction.NorthWest, 
+                    Direction.East => Direction.NorthEast,
+                    Direction.West => Direction.NorthWest,
                     _ => Direction.North
                 },
                 Direction.South => horizontal switch
                 {
-                    Direction.East => Direction.SouthEast, 
+                    Direction.East => Direction.SouthEast,
                     Direction.West => Direction.SouthWest,
                     _ => Direction.South
                 },
