@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093e5028dd3a501c5953a972420f3f39, type: 3}
   m_Name: Gamer Active
   m_EditorClassIdentifier: 
-  effectDescription: You can miss up to 3 notes without losing HP / combo (Videogames
-    HP references animation)
+  effectDescription: ' (Videogames HP references animation)'
   rechargeQuantity: 15
   skillImage: {fileID: 21300000, guid: 4b28f08c363d216ef8efff6439e84f0e, type: 3}
   freeTaps: 3

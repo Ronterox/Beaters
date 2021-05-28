@@ -1,0 +1,284 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ad4c8e57d6206aa8a2b52eb8cd83c6, type: 3}
+  m_Name: KTL
+  m_EditorClassIdentifier: 
+  songImage: {fileID: 0}
+  soundMap:
+    name: KTL
+    mapCreator: 
+    bpm: 132
+    genre: 5
+    audioClip: {fileID: 0}
+    audioPath: "/dades/dades/Rebecca/ProjecteFinal/Beaters/beaters/Assets/Audio/SongsSongsBLACKPINK
+      - Kill This Love (Color Coded Lyrics Eng-Rom-Han-\uAC00\uC0AC) (320 kbps).mp3"
+    notes:
+    - id: 1
+      x: -1
+      y: 1
+      z: 0
+    - id: 3
+      x: 1
+      y: 5
+      z: 0
+    - id: 3
+      x: 1
+      y: 6
+      z: 0
+    - id: 3
+      x: 1
+      y: 10
+      z: 0
+    - id: 3
+      x: 1
+      y: 11
+      z: 0
+    - id: 3
+      x: 1
+      y: 12
+      z: 0
+    - id: 3
+      x: 1
+      y: 16
+      z: 0
+    - id: 3
+      x: 1
+      y: 17
+      z: 0
+    - id: 1
+      x: -1
+      y: 19
+      z: 0
+    - id: 3
+      x: 1
+      y: 20
+      z: 0
+    - id: 2
+      x: 3
+      y: 21
+      z: 0
+    - id: 1
+      x: -1
+      y: 23
+      z: 0
+    - id: 2
+      x: 3
+      y: 25
+      z: 0
+    - id: 3
+      x: 1
+      y: 24
+      z: 0
+    - id: 0
+      x: -3
+      y: 1
+      z: 0
+    - id: 3
+      x: 1
+      y: 30
+      z: 0
+    - id: 3
+      x: 1
+      y: 31
+      z: 0
+    - id: 3
+      x: 1
+      y: 32
+      z: 0
+    - id: 3
+      x: 1
+      y: 36
+      z: 0
+    - id: 3
+      x: 1
+      y: 37
+      z: 0
+    - id: 3
+      x: 1
+      y: 38
+      z: 0
+    - id: 3
+      x: 1
+      y: 41
+      z: 0
+    - id: 3
+      x: 1
+      y: 42
+      z: 0
+    - id: 1
+      x: -1
+      y: 44
+      z: 0
+    - id: 3
+      x: 1
+      y: 45
+      z: 0
+    - id: 2
+      x: 3
+      y: 46
+      z: 0
+    - id: 1
+      x: -1
+      y: 47
+      z: 0
+    - id: 3
+      x: 1
+      y: 48
+      z: 0
+    - id: 2
+      x: 3
+      y: 49
+      z: 0
+    - id: 0
+      x: -3
+      y: 26
+      z: 0
+    - id: 1
+      x: -1
+      y: 26
+      z: 0
+    - id: 0
+      x: -3
+      y: 50
+      z: 0
+    - id: 1
+      x: -1
+      y: 50
+      z: 0
+    - id: 3
+      x: 1
+      y: 53
+      z: 0
+    - id: 3
+      x: 1
+      y: 54
+      z: 0
+    - id: 3
+      x: 1
+      y: 59
+      z: 0
+    - id: 3
+      x: 1
+      y: 60
+      z: 0
+    - id: 3
+      x: 1
+      y: 61
+      z: 0
+    - id: 3
+      x: 1
+      y: 65
+      z: 0
+    - id: 3
+      x: 1
+      y: 64
+      z: 0
+    - id: 1
+      x: -1
+      y: 67
+      z: 0
+    - id: 3
+      x: 1
+      y: 68
+      z: 0
+    - id: 2
+      x: 3
+      y: 69
+      z: 0
+    - id: 1
+      x: -1
+      y: 70
+      z: 0
+    - id: 3
+      x: 1
+      y: 71
+      z: 0
+    - id: 2
+      x: 3
+      y: 72
+      z: 0
+    - id: 0
+      x: -3
+      y: 73
+      z: 0
+    - id: 1
+      x: -1
+      y: 73
+      z: 0
+    - id: 3
+      x: 1
+      y: 76
+      z: 0
+    - id: 3
+      x: 1
+      y: 77
+      z: 0
+    - id: 3
+      x: 1
+      y: 78
+      z: 0
+    - id: 3
+      x: 1
+      y: 82
+      z: 0
+    - id: 3
+      x: 1
+      y: 83
+      z: 0
+    - id: 3
+      x: 1
+      y: 84
+      z: 0
+    - id: 3
+      x: 1
+      y: 88
+      z: 0
+    - id: 3
+      x: 1
+      y: 87
+      z: 0
+    - id: 3
+      x: 1
+      y: 91
+      z: 0
+    - id: 1
+      x: -1
+      y: 92
+      z: 0
+    - id: 0
+      x: -3
+      y: 93
+      z: 0
+    - id: 3
+      x: 1
+      y: 94
+      z: 0
+    - id: 1
+      x: -1
+      y: 95
+      z: 0
+    - id: 0
+      x: -3
+      y: 96
+      z: 0
+    - id: 0
+      x: -3
+      y: 98
+      z: 0
+    - id: 1
+      x: -1
+      y: 98
+      z: 0
+  requiredItem1: {fileID: 0}
+  requiredItem2: {fileID: 0}
+  requiredQuantityItem1: 0
+  requiredQuantityItem2: 0

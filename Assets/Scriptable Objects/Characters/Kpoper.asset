@@ -22,10 +22,10 @@ MonoBehaviour:
   passiveSkill: {fileID: 11400000, guid: e6c9e700ddd337c70b5be58061756b48, type: 2}
   backgroundImage: {fileID: 21300000, guid: e31e9ecf0498199c19a2c08d215e8d63, type: 3}
   colorPalette:
-    mainColor: {r: 0.9245283, g: 0.745728, b: 0.8847949, a: 1}
-    secondaryColor: {r: 1, g: 0.3160377, b: 0.9506963, a: 1}
-    complementaryColor1: {r: 0.5990566, g: 1, b: 0.9565443, a: 1}
-    complementaryColor2: {r: 1, g: 0.514151, b: 0.514151, a: 1}
+    mainColor: {r: 0.99607843, g: 0.78039217, b: 0.90588236, a: 1}
+    secondaryColor: {r: 0.78039217, g: 0.80784315, b: 1, a: 1}
+    complementaryColor1: {r: 0.17254902, g: 0.3372549, b: 0.3137255, a: 1}
+    complementaryColor2: {r: 0.6784314, g: 0.6666667, b: 0.32156864, a: 1}
   sprites:
   - {fileID: 21300000, guid: 21d6d41a672b539478924cd1361623b7, type: 3}
   - {fileID: 21300000, guid: dbcfda3e6f96bef2b933d2ba23bf3f8e, type: 3}
