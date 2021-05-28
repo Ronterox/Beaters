@@ -34,7 +34,7 @@ namespace UI
         [Space]
         public AudioClip metronomeAudioClip;
 
-        public const string SAVED_FILENAME = "settings.cfg";
+        public const string SETTINGS_FILE = "settings.cfg";
         private readonly Stopwatch m_Stopwatch = new Stopwatch();
 
         private Settings m_Settings;
@@ -64,6 +64,20 @@ namespace UI
         private void Update()
         {
             if (m_Stopwatch.IsRunning && Input.GetMouseButtonDown(0)) CalculateOffSet();
+        }
+
+        /// <summary>
+        /// Loses all your data hehe
+        /// </summary>
+        public void ResetAllData()
+        {
+            PlayerPrefs.DeleteAll();
+            
+            if (SaveLoadManager.SaveExists(DataManager.PLAYER_FILE)) SaveLoadManager.DeleteSave(DataManager.PLAYER_FILE);
+            if (SaveLoadManager.SaveExists(SETTINGS_FILE)) SaveLoadManager.DeleteSave(SETTINGS_FILE);
+            
+            DataManager.Instance.playerData = new PlayerData();
+            LevelLoadManager.LoadMainMenu();
         }
 
         private void CalculateOffSet()
@@ -194,7 +208,7 @@ namespace UI
 
             m_Settings.tapOffset = (int)tapOffsetSlider.value;
 
-            SaveLoadManager.Save(m_Settings, SAVED_FILENAME);
+            SaveLoadManager.Save(m_Settings, SETTINGS_FILE);
         }
     }
 

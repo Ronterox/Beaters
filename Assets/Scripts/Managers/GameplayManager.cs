@@ -41,8 +41,10 @@ namespace Managers
         public TMP_Text comboText, scoreText;
 
         [Header("Skill feedback")]
-        public Button skillButton;
+        public SwipeDetector swipeDetector;
         public Slider skillBarSlider;
+        [Space]
+        public TimerUI skillsTimer;
 
         [Header("Song State")]
         public Timer songTimer;
@@ -51,8 +53,8 @@ namespace Managers
         [Header("Timer Feedback")]
         public Image feedbackImage;
         public TMP_Text skillText;
-        [Space]
-        public TimerUI skillsTimer;
+        
+        [Header("Combo Feedback")]
         public MKGlow mkGlow;
 
         protected int m_Combo, m_Score, m_StarsCount, m_Taps;
@@ -243,14 +245,14 @@ namespace Managers
 
             skillBarSlider.maxValue = currentCharacter.character.activeSkill.rechargeQuantity;
 
-            skillButton.onClick.AddListener(() =>
+            swipeDetector.onSwipe += swipe =>
             {
                 if (skillBarSlider.value < skillBarSlider.maxValue) return;
 
                 //Use active only when available
                 currentCharacter.UsePower(this);
                 skillBarSlider.value = 0;
-            });
+            };
         }
 
         /// <summary>

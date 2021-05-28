@@ -74,7 +74,7 @@ namespace Managers
 
     public class DataManager : PersistentSingleton<DataManager>
     {
-        private const string PLAYER_FILE = "player.data";
+        public const string PLAYER_FILE = "player.data";
 
         public PlayerData playerData;
         [ReadOnly]
@@ -89,9 +89,9 @@ namespace Managers
         {
             if (m_Instance != this) return;
 
-            if (SaveLoadManager.SaveExists(SettingsMenu.SAVED_FILENAME))
+            if (SaveLoadManager.SaveExists(SettingsMenu.SETTINGS_FILE))
             {
-                SettingsMenu.SetSettings(playerSettings = SaveLoadManager.Load<Settings>(SettingsMenu.SAVED_FILENAME));
+                SettingsMenu.SetSettings(playerSettings = SaveLoadManager.Load<Settings>(SettingsMenu.SETTINGS_FILE));
             }
 
 #if UNITY_EDITOR
