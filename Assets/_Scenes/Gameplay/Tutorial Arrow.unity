@@ -424,6 +424,7 @@ MonoBehaviour:
   feedbackImage: {fileID: 8857276459189565689}
   skillText: {fileID: 8857276459189565688}
   skillsTimer: {fileID: 368907104}
+  mkGlow: {fileID: 3790687837986800330}
   tutorialSong: {fileID: 11400000, guid: 8739980ec76742246a6d52607e3008b6, type: 2}
 --- !u!114 &368907104 stripped
 MonoBehaviour:
@@ -1830,6 +1831,17 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 3790687837816191672, guid: 768c10c794040290cbabbf7007f66293, type: 3}
   m_PrefabInstance: {fileID: 3790687837986800327}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3790687837986800330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3790687837986800331, guid: 768c10c794040290cbabbf7007f66293, type: 3}
+  m_PrefabInstance: {fileID: 3790687837986800327}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9441d5450817c342a45e4b8dd66de6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3826572633390337689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2333,9 +2345,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2833094611948531699, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4596103609293889446, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5473563277043251475, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2391,10 +2407,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8857276460039481795, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8857276460039481795, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857276460497118123, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8857276460501430903, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
@@ -2495,17 +2515,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8939048763923130470, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8939048763923130470, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8995412093067742892, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1869940147}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8857276459189565696, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
 --- !u!114 &8857276459189565683 stripped
 MonoBehaviour:

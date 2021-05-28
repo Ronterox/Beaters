@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/_Scenes/MainMenu.unity
     guid: fd19a6e94e216b978b5cd49acd1e558b
   - enabled: 1
-    path: Assets/_Scenes/Tutorial Arrow.unity
+    path: Assets/_Scenes/Gameplay/Tutorial Arrow.unity
     guid: 163298faae3fd7c99aa522a45192073d
   - enabled: 1
     path: Assets/_Scenes/UI/Settings.unity

@@ -57,16 +57,16 @@ namespace Managers
         public TimerUI skillsTimer;
         public MKGlow mkGlow;
 
-        private int m_Combo, m_Score, m_StarsCount, m_Taps;
+        protected int m_Combo, m_Score, m_StarsCount, m_Taps;
         private bool m_Started, m_Ended, m_IsPaused;
 
-        private int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
+        protected int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
         private int m_SongFactorialScore, m_FactorialCombo = 1;
 
-        private PlayerData m_Data;
+        protected PlayerData m_Data;
 
         private float m_StartTime;
-        private Vector3 m_SkillSliderPosition;
+        protected Vector3 m_SkillSliderPosition;
 
         private int Combo
         {
@@ -80,7 +80,7 @@ namespace Managers
 
         public bool CanLose { get; set; } = true;
 
-        private int m_MaxMoneyGain, m_MinMoneyGain;
+        protected int m_MaxMoneyGain, m_MinMoneyGain;
 
         //POWERS RELATED VARIABLES
         public bool CanMiss { get; set; } = true;
@@ -157,7 +157,7 @@ namespace Managers
         /// <summary>
         /// Starts the whole gameplay
         /// </summary>
-        public void StartMap()
+        public virtual void StartMap()
         {
             m_Ended = false;
             m_Started = CanMiss = true;
@@ -526,7 +526,7 @@ namespace Managers
         /// <summary>
         /// Saves highest combo
         /// </summary>
-        private void CheckHighestCombo()
+        protected void CheckHighestCombo()
         {
             int combo = m_Combo;
             if (combo > m_HighestCombo) m_HighestCombo = combo;

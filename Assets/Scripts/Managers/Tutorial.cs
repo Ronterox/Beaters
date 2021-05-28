@@ -1,4 +1,10 @@
+using System;
+using General;
+using Plugins.Tools;
 using ScriptableObjects;
+using UnityEngine;
+using Utilities;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -8,6 +14,10 @@ namespace Managers
         protected override void Start()
         {
             GameManager.PutSoundMap(tutorialSong);
+
+            m_Data = DataManager.Instance.playerData;
+
+            m_SkillSliderPosition = skillBarSlider.transform.position;
             
             skillBarSlider.gameObject.SetActive(false);
             feedbackImage.gameObject.SetActive(false);
@@ -19,7 +29,13 @@ namespace Managers
             CanMiss = false;
         }
 
-        /*protected override void ShowEndGameplayPanel(Transform parentCanvas, bool win)
+        public override void StartMap()
+        {
+            base.StartMap();
+            CanMiss = false;
+        }
+
+        protected override void ShowEndGameplayPanel(Transform parentCanvas, bool win)
         {
             CheckHighestCombo();
 
@@ -35,39 +51,22 @@ namespace Managers
             m_Data.tapsDone += m_Taps;
 
             SoundMap soundMap = mapScroller.SoundMap;
-            ScriptableCharacter character = GameManager.GetCharacter();
 
             SerializableSong songData = DataManager.GetSong(soundMap.ID);
             if (songData.songId == 0) songData.SetId(soundMap.ID);
 
             int oldHighScore = songData.highestScore;
 
-            var gameOverPanel = Instantiate(endGamePanel, parentCanvas).GetComponent<GameOverPanel>();
-            //Set end panel values
-            gameOverPanel.SetSongName(soundMap.name);
-            gameOverPanel.SetCharacterVisuals(character);
-            gameOverPanel.SetCharacterBonus(character.characterGenre, soundMap.genre);
+            Action endTutorial = () =>
+            {
+                LevelLoadManager.LoadMainMenu();
+                PlayerPrefs.SetInt(TutorialButtons.FIRST_TIME_KEY, 1);
+            };
 
-            gameOverPanel.SetScore(songData.highestScore, m_Score);
-            gameOverPanel.SetStars(m_StarsCount, character);
-            gameOverPanel.SetAccuracy(soundMap.notes.Length, m_NotesHit, accuracy);
-
-            gameOverPanel.SetMapMaker(soundMap.mapCreator);
-            gameOverPanel.SetGroupName(soundMap.genre);
-
-            gameOverPanel.SetHighestCombo(m_HighestCombo);
-            gameOverPanel.SetRewardsText(comboGain, accuracyGain);
-
-            gameOverPanel.replaySongButton.onClick.AddListener(LevelLoadManager.LoadArrowGameplayScene);
-
-            gameOverPanel.gameObject.SetActive(false);
-
-            Action activateEndScreen = () => gameOverPanel.gameObject.SetActive(true);
-
-            finishText.text = win ? "You WIN!" : "You LOSE!";
+            finishText.text = "You WIN!";
             finishText.gameObject.SetActive(true);
 
-            activateEndScreen.DelayAction(2);
+            endTutorial.DelayAction(2);
 
             //Show prizes
 
@@ -75,6 +74,6 @@ namespace Managers
 
             songData.UpdateValues(m_Combo, m_Score, accuracy);
             DataManager.UpdateSong(songData);
-        }*/
+        }
     }
 }
