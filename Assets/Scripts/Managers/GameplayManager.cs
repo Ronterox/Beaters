@@ -29,8 +29,6 @@ namespace Managers
         [Space]
         public Transform gameCanvas;
         public GameObject endGamePanel;
-        [Space]
-        public Button pauseButton;
         [Information("Prefab will not be instantiated, this has to be reference from the scene", InformationAttribute.InformationType.Info, false)]
         public GameObject pauseMenu;
 
@@ -58,7 +56,7 @@ namespace Managers
         public MKGlow mkGlow;
 
         protected int m_Combo, m_Score, m_StarsCount, m_Taps;
-        private bool m_Started, m_Ended, m_IsPaused;
+        private bool m_OnGoing, m_Ended, m_IsPaused, m_Started;
 
         protected int m_ComboPrizeCounter, m_HighestCombo, m_NotesHit;
         private int m_SongFactorialScore, m_FactorialCombo = 1;
@@ -120,8 +118,6 @@ namespace Managers
 
             m_SkillSliderPosition = skillBarSlider.transform.position;
 
-            SetPauseButton();
-
             SetGameplayCharacter();
 
             ResetValues();
@@ -129,11 +125,9 @@ namespace Managers
             ScriptableRune rune = GameManager.GetRune();
             if (rune) rune.ActivateRune(this);
 
-            CanMiss = false;
-
             feedbackImage.gameObject.SetActive(false);
         }
-        
+
         /// <summary>
         /// Saves the time played on the scene and the taps done, if not ended
         /// </summary>
@@ -150,7 +144,7 @@ namespace Managers
         /// </summary>
         private void Update()
         {
-            if (!m_Started) return;
+            if (!m_OnGoing) return;
             songTimeBar.value = songTimer.CurrentTime;
         }
 
@@ -160,7 +154,7 @@ namespace Managers
         public virtual void StartMap()
         {
             m_Ended = false;
-            m_Started = CanMiss = true;
+            m_OnGoing = CanMiss = m_Started = true;
 
             SoundMap soundMap = GameManager.GetSoundMap();
 
@@ -229,15 +223,14 @@ namespace Managers
         }
 
         /// <summary>
-        /// Sets the Pause Button Click Listener
+        /// Alternates between pause and unpause
         /// </summary>
-        protected void SetPauseButton() =>
-            pauseButton.onClick.AddListener(() =>
-            {
-                m_IsPaused = !m_IsPaused;
-                if (m_IsPaused) PauseMap();
-                else ResumeMap();
-            });
+        public void PauseUnpausePress()
+        {
+            m_IsPaused = !m_IsPaused;
+            if (m_IsPaused) PauseMap();
+            else ResumeMap();
+        }
 
         /// <summary>
         /// Activates the passive and sets the active skill
@@ -355,7 +348,7 @@ namespace Managers
         protected void ResetValues()
         {
             //Reset slider and private values to 0
-            m_Ended = false;
+            m_Ended = m_Started = m_OnGoing = CanMiss = false;
 
             Combo = m_Score = m_StarsCount = m_Taps = m_ComboPrizeCounter = m_HighestCombo = m_NotesHit = 0;
             scoreBar.value = songTimeBar.value = skillBarSlider.value = 0;
@@ -392,7 +385,7 @@ namespace Managers
         /// </summary>
         public void PauseMap()
         {
-            m_Started = false;
+            m_OnGoing = false;
             songTimer.PauseTimer();
             mapScroller.StopMap();
             pauseMenu.SetActive(true);
@@ -403,13 +396,13 @@ namespace Managers
         /// </summary>
         public void ResumeMap()
         {
-            if (m_IsPaused)
+            if (m_Started)
             {
-                m_Started = true;
+                m_OnGoing = true;
                 songTimer.UnpauseTimer();
                 mapScroller.ResumeMap();
-                m_IsPaused = false;
             }
+            m_IsPaused = false;
             pauseMenu.SetActive(false);
         }
 
@@ -420,7 +413,7 @@ namespace Managers
         {
             if (m_Ended) return;
 
-            m_Started = false;
+            m_OnGoing = false;
             songTimer.onTimerStop -= StopMap;
 
             ShowEndGameplayPanel(gameCanvas, true);

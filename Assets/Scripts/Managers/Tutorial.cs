@@ -22,11 +22,7 @@ namespace Managers
             skillBarSlider.gameObject.SetActive(false);
             feedbackImage.gameObject.SetActive(false);
 
-            SetPauseButton();
-
             ResetValues();
-
-            CanMiss = false;
         }
 
         public override void StartMap()
