@@ -1315,6 +1315,7 @@ MonoBehaviour:
   - {fileID: 1086043732}
   - {fileID: 1836214869}
   popUp: {fileID: 6960738808565414993, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
+  seeTutorial: 1
 --- !u!114 &1058471125
 MonoBehaviour:
   m_ObjectHideFlags: 0

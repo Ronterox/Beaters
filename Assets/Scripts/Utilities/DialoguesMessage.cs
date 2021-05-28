@@ -18,6 +18,8 @@ namespace Utilities
             SeeNextDialogue();
         }
 
+        public void AddDialogues(params string[] texts) => texts.ForEach(dialoguesQueue.Enqueue);
+
         public void SeeNextDialogue()
         {
             if (dialoguesQueue.Count < 1) gameObject.SetActive(false);
