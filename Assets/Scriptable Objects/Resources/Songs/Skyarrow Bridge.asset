@@ -357,7 +357,7 @@ MonoBehaviour:
       x: -3
       y: 170.34232
       z: 0
-  requiredItem1: {fileID: 0}
-  requiredItem2: {fileID: 0}
+  requiredItem1: {fileID: 11400000, guid: aa2a1a70bd2a5c744a3a6297d584f3d6, type: 2}
+  requiredItem2: {fileID: 11400000, guid: 34f3804b6ce795e4d93ba31427823ac8, type: 2}
   requiredQuantityItem1: 0
   requiredQuantityItem2: 0
