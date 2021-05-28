@@ -73,8 +73,8 @@ namespace Managers
             get => m_Combo;
             set
             {
-                float bloom = (m_Combo = value).GetPercentageValue(m_FactorialCombo) * 0.01f;
-                mkGlow.bloomIntensity = Mathf.Clamp(bloom, .01f, .08f);
+                float bloom = (m_Combo = value).GetPercentageValue(m_FactorialCombo);
+                mkGlow.bloomIntensity = bloom < .1f ? .1f : bloom;
             }
         }
 

@@ -123,9 +123,9 @@ MonoBehaviour:
   showEditorGlareBehavior: 0
   allowGeometryShaders: 0
   allowComputeShaders: 0
-  renderPriority: 1
+  renderPriority: 2
   debugView: 0
-  quality: 2
+  quality: 8
   antiFlickerMode: 0
   workflow: 0
   selectiveRenderLayerMask:
@@ -137,8 +137,8 @@ MonoBehaviour:
   bloomThreshold:
     minValue: 0
     maxValue: 8.75
-  bloomScattering: 4
-  bloomIntensity: 0.01
+  bloomScattering: 5
+  bloomIntensity: 0.1
   allowLensSurface: 0
   lensSurfaceDirtTexture: {fileID: 0}
   lensSurfaceDirtIntensity: 2.5
