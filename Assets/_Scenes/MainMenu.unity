@@ -1297,7 +1297,6 @@ MonoBehaviour:
     scene: Level Editor ArrowGame
   - button: {fileID: 3849721585298760674}
     scene: Settings
-  buttonSfx: {fileID: 8300000, guid: 3e9e4a0be2c271112b8e3394f3ba3fb0, type: 3}
 --- !u!114 &1058471124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1316,7 +1315,7 @@ MonoBehaviour:
   - {fileID: 1086043732}
   - {fileID: 1836214869}
   popUp: {fileID: 6960738808565414993, guid: 1d558ca42f607f0da878a81046e4d664, type: 3}
-  seeTutorial: 0
+  seeTutorial: 1
 --- !u!114 &1058471125
 MonoBehaviour:
   m_ObjectHideFlags: 0
