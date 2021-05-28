@@ -6,7 +6,6 @@ namespace Core.Arrow_Game
 {
     public class NoteObject : MonoBehaviour
     {
-        public Camera mainCamera;
         public ushort MakerId { get; set; }
 
         [Header("Config")]
@@ -22,11 +21,6 @@ namespace Core.Arrow_Game
         private ArrowButton m_ArrowButton;
 
         private bool m_WasPressed;
-
-        private void Awake()
-        {
-            if (!mainCamera) mainCamera = Camera.main;
-        }
 
         public void SetCombo(int length)
         {
@@ -50,7 +44,7 @@ namespace Core.Arrow_Game
 
             HitType hitType = GetHitType(buttonHeight);
 
-            GameplayManager.HitArrow(hitType, mainCamera.WorldToScreenPoint(transform.position), spriteRenderer.color, isCombo, comboLength);
+            GameplayManager.HitArrow(hitType, transform.position, spriteRenderer.color, isCombo, comboLength);
 
             gameObject.SetActive(false);
 

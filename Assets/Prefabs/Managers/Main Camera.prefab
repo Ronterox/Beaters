@@ -138,7 +138,7 @@ MonoBehaviour:
     minValue: 0
     maxValue: 8.75
   bloomScattering: 4
-  bloomIntensity: 0.1
+  bloomIntensity: 0.01
   allowLensSurface: 0
   lensSurfaceDirtTexture: {fileID: 0}
   lensSurfaceDirtIntensity: 2.5
