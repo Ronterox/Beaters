@@ -19,8 +19,8 @@ MonoBehaviour:
     bpm: 132
     genre: 5
     audioClip: {fileID: 0}
-    audioPath: "C:/Beaters/beaters/Assets/Audio/SongsSongsBLACKPINK - Kill This Love
-      (Color Coded Lyrics Eng-Rom-Han-\uAC00\uC0AC) (320 kbps).mp3"
+    audioPath: "/dades/dades/Rebecca/ProjecteFinal/Beaters/beaters/Assets/Audio/SongsSongsBLACKPINK
+      - Kill This Love (Color Coded Lyrics Eng-Rom-Han-\uAC00\uC0AC) (320 kbps).mp3"
     notes:
     - id: 1
       x: -1
@@ -161,10 +161,6 @@ MonoBehaviour:
     - id: 3
       x: 1
       y: 54
-      z: 0
-    - id: 3
-      x: 1
-      y: 55
       z: 0
     - id: 3
       x: 1
