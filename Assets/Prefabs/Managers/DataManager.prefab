@@ -47,9 +47,18 @@ MonoBehaviour:
     tapsDone: 0
     money: 0
     tickets: 0
+    bingoBoxes: 0
     timePlayed: 0
     timePlayedInGame: 0
     currentItems: []
     unlockedRunes: []
     unlockedSongs: []
     unlockedCharacters: []
+  playerSettings:
+    generalVolume: 1
+    sfxVolume: 1
+    musicVolume: 1
+    fullScreen: 1
+    resolution: -1
+    tapOffset: 0
+  resetPlayerPrefs: 1

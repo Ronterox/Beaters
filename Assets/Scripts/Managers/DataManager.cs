@@ -79,8 +79,11 @@ namespace Managers
         public PlayerData playerData;
         [ReadOnly]
         public Settings playerSettings = new Settings();
-        
+
         public int CharacterCount => playerData.unlockedCharacters.Count;
+#if UNITY_EDITOR
+        public bool resetPlayerPrefs;
+#endif
 
         private void Start()
         {
@@ -90,19 +93,19 @@ namespace Managers
             {
                 SettingsMenu.SetSettings(playerSettings = SaveLoadManager.Load<Settings>(SettingsMenu.SAVED_FILENAME));
             }
-            
+
 #if UNITY_EDITOR
-            PlayerPrefs.DeleteAll();
-            if(!EditorPrefs.HasKey(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY)) EditorPrefs.SetBool(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY, true);
+            if (resetPlayerPrefs) PlayerPrefs.DeleteAll();
+            if (!EditorPrefs.HasKey(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY)) EditorPrefs.SetBool(InformationAttribute.SHOW_INFORMATION_EDITOR_PREF_KEY, true);
 #endif
             if (SaveLoadManager.SaveExists(PLAYER_FILE)) playerData = SaveLoadManager.Load<PlayerData>(PLAYER_FILE);
         }
-        
+
         private void OnDestroy() => SaveData();
 
         private void OnApplicationPause(bool pauseStatus)
         {
-            if(pauseStatus) SaveData();
+            if (pauseStatus) SaveData();
         }
 
         public void SaveData()

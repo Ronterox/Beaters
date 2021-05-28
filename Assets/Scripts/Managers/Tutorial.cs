@@ -56,6 +56,7 @@ namespace Managers
             {
                 LevelLoadManager.LoadMainMenu();
                 PlayerPrefs.SetInt(TutorialButtons.FIRST_TIME_KEY, 1);
+                PlayerPrefs.Save();
             };
 
             finishText.text = "You WIN!";
