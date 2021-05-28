@@ -229,14 +229,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 563556794157037301, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Name
       value: Note Object (2)
@@ -422,10 +414,6 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.21603727
       objectReference: {fileID: 0}
-    - target: {fileID: 4853642860455057959, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5767362949335748098, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
       propertyPath: canBeClick
       value: 1
@@ -529,14 +517,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
-      propertyPath: m_SortingLayerID
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 563556794157037301, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
@@ -791,14 +771,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 563556794157037301, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_Name
       value: Note Object (3)
@@ -930,10 +902,6 @@ PrefabInstance:
     - target: {fileID: 4853642860455057959, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
       propertyPath: m_Color.r
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4853642860455057959, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5767362949335748098, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
       propertyPath: canBeClick
@@ -1068,10 +1036,6 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.86603355
       objectReference: {fileID: 0}
-    - target: {fileID: 4853642860455057959, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5767362949335748098, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
       propertyPath: canBeClick
       value: 1
@@ -1164,14 +1128,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 444572913049925083, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
-      propertyPath: m_SortingLayerID
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 563556794157037301, guid: e1ba7b8f2aeea540ea743eb9454ea83e, type: 3}
@@ -1662,10 +1618,6 @@ PrefabInstance:
     - target: {fileID: 1228323876072924199, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
       propertyPath: m_Name
       value: Arrow Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 4853642860455057959, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5767362949335748098, guid: 54c0749acd41c1f88ae175f3550f40a4, type: 3}
       propertyPath: canBeClick

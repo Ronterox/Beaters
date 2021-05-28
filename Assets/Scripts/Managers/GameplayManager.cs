@@ -80,7 +80,7 @@ namespace Managers
             get => m_Combo;
             set
             {
-                float bloom = (m_Combo = value) * m_FactorialCombo * 3.333f;
+                float bloom = (m_Combo = value) * .3f / m_FactorialCombo;
                 mkGlow.bloomIntensity = Mathf.Max(.1f, bloom);
             }
         }

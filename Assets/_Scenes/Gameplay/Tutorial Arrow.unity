@@ -2697,6 +2697,18 @@ PrefabInstance:
       value: Game UI
       objectReference: {fileID: 0}
     - target: {fileID: 8857276460501430906, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 3790687837986800329}
+    - target: {fileID: 8857276460501430906, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857276460501430906, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1040091745
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857276460501430906, guid: 3f2a513b5035c40898ef07fb5ba1e024, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
